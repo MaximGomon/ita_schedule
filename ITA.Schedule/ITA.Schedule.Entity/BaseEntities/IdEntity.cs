@@ -11,6 +11,6 @@ namespace ITA.Schedule.Entity
         }
 
         [Required]
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
     }
 }

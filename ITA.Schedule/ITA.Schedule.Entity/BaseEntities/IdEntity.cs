@@ -5,6 +5,7 @@ namespace ITA.Schedule.Entity
 {
     public class IdEntity
     {
+
         public IdEntity()
         {
             Id = Guid.NewGuid();

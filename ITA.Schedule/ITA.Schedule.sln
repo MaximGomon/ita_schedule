@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITA.Schedule", "ITA.Schedul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITA.Schedule.Entity", "ITA.Schedule.Entity\ITA.Schedule.Entity.csproj", "{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITA.Schedule.DAL", "ITA.Schedule.DAL\ITA.Schedule.DAL.csproj", "{4700E086-7E91-4E23-92DD-69FABBDA84ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4700E086-7E91-4E23-92DD-69FABBDA84ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4700E086-7E91-4E23-92DD-69FABBDA84ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4700E086-7E91-4E23-92DD-69FABBDA84ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4700E086-7E91-4E23-92DD-69FABBDA84ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,8 +44,27 @@
     <Compile Include="BaseEntities\DictionaryEntity.cs" />
     <Compile Include="BaseEntities\IdEntity.cs" />
     <Compile Include="BaseEntities\NamedEntity.cs" />
+    <Compile Include="Entities\DayInWeek.cs" />
+    <Compile Include="Entities\Grand.cs" />
+    <Compile Include="Entities\GrandsForGroup.cs" />
+    <Compile Include="Entities\RepeatPeriod.cs" />
+    <Compile Include="Entities\SecurityGroup.cs" />
+    <Compile Include="Entities\TeacherSubjects.cs" />
+    <Compile Include="Entities\TeacherTime.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\Room.cs" />
+    <Compile Include="Entities\ScheduleLesson.cs" />
+    <Compile Include="Entities\ScheduleSubGroup.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\SubGroup.cs" />
+    <Compile Include="Entities\Subject.cs" />
+    <Compile Include="Entities\Teacher.cs" />
+    <Compile Include="Entities\TimeZoneSch.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -51,10 +51,17 @@
   <ItemGroup>
     <Compile Include="ScheduleDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleDbInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITA.Schedule.Entity\ITA.Schedule.Entity.csproj">
+      <Project>{e70bfa1a-ec9c-459c-a9ef-4d3fa5bc97bf}</Project>
+      <Name>ITA.Schedule.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

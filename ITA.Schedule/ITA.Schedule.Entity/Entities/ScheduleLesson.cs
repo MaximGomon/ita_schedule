@@ -15,6 +15,6 @@ namespace ITA.Schedule.Entity.Entities
         public virtual TeacherTime TeacherTime { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual Room Room { get; set; }
-        public virtual ICollection<SubGroup> SubGroups { get; set; }
+        public virtual SubGroup SubGroup { get; set; }
     }
 }

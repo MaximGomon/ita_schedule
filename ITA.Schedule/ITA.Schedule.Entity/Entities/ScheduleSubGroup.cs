@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITA.Schedule.Entity.Entities
 {
-    public class ScheduleSubGroup : NamedEntity
+    public class ScheduleSubGroup : IdEntity
     {
         public virtual ScheduleLesson Schedule { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITA.Schedule.Entity.Entities
 {
-    public class DayInWeek : NamedEntity
+    public class DayInWeek : DictionaryEntity
     {
         public DayInWeek()
         {

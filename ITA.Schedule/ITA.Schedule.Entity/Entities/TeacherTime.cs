@@ -14,8 +14,8 @@ namespace ITA.Schedule.Entity.Entities
         [Required]
         public bool IsActive { get; set; }
 
-        public virtual IQueryable<TimeZoneSch> Time { get; set; }
-        public virtual IQueryable<Teacher> Teacher { get; set; }
-        public virtual IQueryable<DayInWeek> Day { get; set; }
+        public virtual TimeZoneSch TimeZoneSch { get; set; }
+        public virtual Teacher Teacher { get; set; }
+        public virtual DayInWeek Day { get; set; }
     }
 }

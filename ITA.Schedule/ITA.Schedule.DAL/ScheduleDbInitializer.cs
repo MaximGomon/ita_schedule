@@ -76,37 +76,37 @@ namespace ITA.Schedule.DAL
                     new DayInWeek()
                     {
                         Name = "Monday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 1
                     },
                     new DayInWeek()
                     {
                         Name = "Tuesday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 2
                     },
                     new DayInWeek()
                     {
                         Name = "Wednesday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 3
                     },
                     new DayInWeek()
                     {
                         Name = "Thursday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 4
                     },
                     new DayInWeek()
                     {
                         Name = "Friday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 5
                     },
                     new DayInWeek()
                     {
                         Name = "Saturday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 6
                     },
                     new DayInWeek()
                     {
                         Name = "Sunday",
-                        Times = context.TimeZonesSch.ToList()
+                        Code = 0
                     }
                 };
 
@@ -139,24 +139,24 @@ namespace ITA.Schedule.DAL
             {
                 context.Grands.Add(item);
             }
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
             var defaultSecurityGroups = new List<SecurityGroup>
                 {
                     new SecurityGroup()
                     {
-                        Name = "Full access",
+                        Name = "Watch, edit, add, delete schedule",
                         Code = 1
                     },
                     new SecurityGroup()
                     {
-                        Name = "Watch teacher schedule",
+                        Name = "Watch teacher's schedule",
                         Code = 2,
                     },
                     new SecurityGroup()
                     {
-                        Name = "Watch student schedule",
+                        Name = "Watch student's schedule",
                         Code = 3,
                     }
                 };
@@ -167,12 +167,37 @@ namespace ITA.Schedule.DAL
             }
             context.SaveChanges();
 
+            var defaultGrandsForGruop = new List<GrandsForGroup>
+                {
+                    new GrandsForGroup()
+                    {
+                        SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 1),
+                        Grand = context.Grands.FirstOrDefault(g => g.Code == 1)
+                    },
+                    new GrandsForGroup()
+                    {
+                        SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 2),
+                        Grand = context.Grands.FirstOrDefault(g => g.Code == 2)
+                    },
+                    new GrandsForGroup()
+                    {
+                        SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 3),
+                        Grand = context.Grands.FirstOrDefault(g => g.Code == 3)
+                    }
+                };
+
+            foreach (var item in defaultGrandsForGruop)
+            {
+                context.GrandsForGroups.Add(item);
+            }
+            //context.SaveChanges();
+
             var defaultSubjects = new List<Subject>
                 {
                     new Subject()
                     {
                         Name = "Math",
-                        Code = 1,
+                        Code = 1
                     },
                     new Subject()
                     {
@@ -205,7 +230,7 @@ namespace ITA.Schedule.DAL
             {
                 context.Subjects.Add(item);
             }
-            context.SaveChanges();
+            //context.SaveChanges();
 
             var defaultRooms = new List<Room>
                 {
@@ -235,7 +260,7 @@ namespace ITA.Schedule.DAL
             {
                 context.Rooms.Add(item);
             }
-            context.SaveChanges();
+            //context.SaveChanges();
 
             var defaultRepeatPeriods = new List<RepeatPeriod>
                 {
@@ -260,7 +285,7 @@ namespace ITA.Schedule.DAL
             {
                 context.RepeatPeriods.Add(item);
             }
-            context.SaveChanges();
+            //context.SaveChanges();
 
             var defaultGroups = new List<Group>
                 {
@@ -284,11 +309,138 @@ namespace ITA.Schedule.DAL
             }
             context.SaveChanges();
 
+            var defaultSubGroups = new List<SubGroup>
+                {
+                    new SubGroup()
+                    {
+                        Name = "Yellow",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.15"),
+
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Yellow",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Yellow",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Red",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.15")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Red",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Red",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Green",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.15")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Green",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
+                    },
+                    new SubGroup()
+                    {
+                        Name = "Green",
+                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
+                    }
+                };
+
+            foreach (var item in defaultSubGroups)
+            {
+                foreach (var student in context.Students)
+                {
+                    item.Students.Add(student);
+                }
+                context.SubGroups.Add(item);
+            }
+            context.SaveChanges();
+
+            var defaultStudents = new List<Student>
+                {
+                    new Student()
+                    {
+                        Name = "Tolik Terrorist",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Yellow" && s.Group.Name == "B.15")
+                    },
+                    new Student()
+                    {
+                        Name = "Vlad Zakordonnuy",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Yellow" && s.Group.Name == "A.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Vlad Benz",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Yellow" && s.Group.Name == "B.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Max Proffesor",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Red" && s.Group.Name == "B.15")
+                    },
+                    new Student()
+                    {
+                        Name = "Lydka Dudka",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Red" && s.Group.Name == "A.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Vetal Xyuzlovish",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Red" && s.Group.Name == "B.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Roman Antibiotik",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Green" && s.Group.Name == "B.15")
+                    },
+                    new Student()
+                    {
+                        Name = "Valya Kardan",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Green" && s.Group.Name == "A.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Olya Shpitc",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Green" && s.Group.Name == "B.16")
+                    },
+                    new Student()
+                    {
+                        Name = "Mukola Olen",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Green" && s.Group.Name == "B.15")
+                    },
+                    new Student()
+                    {
+                        Name = "Petro Pershuy",
+                        SubGroup = context.SubGroups.FirstOrDefault(s => s.Name == "Green" && s.Group.Name == "B.15")
+
+                    }
+                };
+
+            foreach (var item in defaultStudents)
+            {
+                context.Students.Add(item);
+            }
+            context.SaveChanges();
+
+
             var defaultTeachers = new List<Teacher>
                 {
                     new Teacher()
                     {
-                        Name = "Maxim Gomon",
+                        Name = "Maxim Gomon"
                     },
                     new Teacher()
                     {
@@ -297,6 +449,7 @@ namespace ITA.Schedule.DAL
                     new Teacher()
                     {
                         Name = "Alexey Turenkov",
+                        
                     },
                     new Teacher()
                     {
@@ -314,45 +467,95 @@ namespace ITA.Schedule.DAL
             }
             context.SaveChanges();
 
+            var defaultTeacherSubjects = new List<TeacherSubjects>
+                {
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Maxim Gomon"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 1)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alexey Turenkov"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 2)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alexey Turenkov"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 3)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alla Bobruk"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 3)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alla Bobruk"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 4)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Yurich Mitiyxa"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 4)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Yurich Mitiyxa"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 5)
+                    },
+                    new TeacherSubjects()
+                    {
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Yurich Mitiyxa"),
+                        Subject = context.Subjects.FirstOrDefault(x => x.Code == 6)
+                    }
+                };
+
+            foreach (var item in defaultTeacherSubjects)
+            {
+                context.TeacherSubjects.Add(item);
+            }
+            //context.SaveChanges();
+
             var defaultTeacherTime = new List<TeacherTime>
                 {
                     new TeacherTime()
                     {
-                        Teacher = context.Teachers.Where(x => x.Name == "Roman Melnyk"),
-                        Day = context.DayInWeeks.Where(x => x.Name == "Monday"),
-                        Time = context.TimeZonesSch.Where(x => x.Code == 2),
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Roman Melnyk"),
+                        Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Monday"),
+                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 2),
                         IsActive = true,
                         IsBusy = false
                     },
                     new TeacherTime()
                     {
-                        Teacher = context.Teachers.Where(x => x.Name == "Alexey Turenkov"),
-                        Day = context.DayInWeeks.Where(x => x.Name == "Tuesday"),
-                        Time = context.TimeZonesSch.Where(x => x.Code == 1),
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alexey Turenkov"),
+                        Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Tuesday"),
+                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 1),
                         IsActive = true,
                         IsBusy = true
                     },
                     new TeacherTime()
                     {
-                        Teacher = context.Teachers.Where(x => x.Name == "Alla Bobruk"),
-                        Day = context.DayInWeeks.Where(x => x.Name == "Wednesday"),
-                        Time = context.TimeZonesSch.Where(x => x.Code == 5),
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alla Bobruk"),
+                        Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Wednesday"),
+                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 5),
                         IsActive = false,
                         IsBusy = false
                     },
                     new TeacherTime()
                     {
-                        Teacher = context.Teachers.Where(x => x.Name == "Yurich Mitiyxa"),
-                        Day = context.DayInWeeks.Where(x => x.Name == "Friday"),
-                        Time = context.TimeZonesSch.Where(x => x.Code == 4),
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Yurich Mitiyxa"),
+                        Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Friday"),
+                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 4),
                         IsActive = true,
                         IsBusy = true
                     },
                     new TeacherTime()
                     {
-                        Teacher = context.Teachers.Where(x => x.Name == "Maxim Gomon"),
-                        Day = context.DayInWeeks.Where(x => x.Name == "Friday"),
-                        Time = context.TimeZonesSch.Where(x => x.Code == 6),
+                        Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Maxim Gomon"),
+                        Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Friday"),
+                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 6),
                         IsActive = true,
                         IsBusy = true
                     }
@@ -361,6 +564,155 @@ namespace ITA.Schedule.DAL
             foreach (var item in defaultTeacherTime)
             {
                 context.TeacherTimes.Add(item);
+            }
+            context.SaveChanges();
+
+
+            var defaultSchedule = new List<ScheduleLesson>
+            {
+                new ScheduleLesson()
+                {
+                    Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Roman Melnyk"),
+                    Subject = context.Subjects.FirstOrDefault(x => x.Code == 1),
+                    TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Roman Melnyk"),
+                    Room = context.Rooms.FirstOrDefault(x => x.Name == "Hell #1"),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "B.16"),
+                    LessonDate = new DateTime(2016, 11, 25)
+                },
+
+                new ScheduleLesson()
+                {
+                    Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Maxim Gomon"),
+                    Subject = context.Subjects.FirstOrDefault(x => x.Code == 3),
+                    TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Maxim Gomon"),
+                    Room = context.Rooms.FirstOrDefault(x => x.Name == "Square room"),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15"),
+                    LessonDate = new DateTime(2016, 11, 20)
+                },
+
+                new ScheduleLesson()
+                {
+                    Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Maxim Gomon"),
+                    Subject = context.Subjects.FirstOrDefault(x => x.Code == 4),
+                    TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Maxim Gomon"),
+                    Room = context.Rooms.FirstOrDefault(x => x.Name == "Square room"),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "A.15"),
+                    LessonDate = new DateTime(2016, 11, 24)
+                },
+
+                new ScheduleLesson()
+                {
+                    Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alexey Turenkov"),
+                    Subject = context.Subjects.FirstOrDefault(x => x.Code == 2),
+                    TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Alexey Turenkov"),
+                    Room = context.Rooms.FirstOrDefault(x => x.Name == "Magenta room"),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15"),
+                    LessonDate = new DateTime(2016, 11, 20)
+                },
+
+                new ScheduleLesson()
+                {
+                    Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alla Bobruk"),
+                    Subject = context.Subjects.FirstOrDefault(x => x.Code == 6),
+                    TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Alla Bobruk"),
+                    Room = context.Rooms.FirstOrDefault(x => x.Name == "Magenta room"),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "B.15"),
+                    LessonDate = new DateTime(2016, 11, 17)
+                }
+            };
+
+            foreach (var item in defaultSchedule)
+            {
+                context.SchedulesLesson.Add(item);
+            }
+            context.SaveChanges();
+
+            var defaultSubGroupSchedule = new List<ScheduleSubGroup>
+            {
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 1),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "B.16")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 2),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "A.16")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 3),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 5),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 4),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "B.15")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 6),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "B.15")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 2),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "A.16")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 3),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15")
+                },
+                new ScheduleSubGroup()
+                {
+                    Schedule = context.SchedulesLesson.FirstOrDefault(x => x.Subject.Code == 2),
+                    SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "A.16")
+                }
+            };
+
+            foreach (var item in defaultSubGroupSchedule)
+            {
+                context.ScheduleSubGroups.Add(item);
+            }
+            context.SaveChanges();
+
+            var defaultUsers = new List<User>
+            {
+                new User()
+                {
+                    Login = "t",
+                    Password = 2.ToString(),
+                    Teacher = context.Teachers.FirstOrDefault(t => t.Name == "Maxim Gomon"),
+                    SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 2)
+                },
+                new User()
+                {
+                    Login = "s",
+                    Password = 3.ToString(),
+                    Student = context.Students.FirstOrDefault(t => t.SubGroup.Name == "Red"),
+                    SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 3)
+                },
+                //todo we have teacher and student but don't have "admin" in users
+                //or may be insert Grand instead Teacher/User id
+                new User()
+                {
+                    Login = "a",
+                    Password = 1.ToString(),
+                    Teacher = context.Teachers.FirstOrDefault(t => t.Name == "Alexey Turenkov"),
+                    SecurityGroup = context.SecurityGroups.FirstOrDefault(s => s.Code == 1)
+                }
+
+            };
+
+            foreach (var item in defaultUsers)
+            {
+                context.Users.Add(item);
             }
             context.SaveChanges();
 

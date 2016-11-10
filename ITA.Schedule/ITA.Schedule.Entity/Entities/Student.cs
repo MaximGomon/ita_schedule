@@ -9,5 +9,7 @@ namespace ITA.Schedule.Entity.Entities
     public class Student : NamedEntity
     {
         public virtual SubGroup SubGroup { get; set; }
+
+ 
     }
 }

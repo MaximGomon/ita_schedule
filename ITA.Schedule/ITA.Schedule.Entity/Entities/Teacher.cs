@@ -10,10 +10,8 @@ namespace ITA.Schedule.Entity.Entities
     {
         public Teacher()
         {
-            Subjects = new List<Subject>();
             Times = new List<TimeZoneSch>();
         }
-        public virtual ICollection<Subject> Subjects { get; set; } 
         public virtual ICollection<TimeZoneSch> Times { get; set; } 
     }
 }

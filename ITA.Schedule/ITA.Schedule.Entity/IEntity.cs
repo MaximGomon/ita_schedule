@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITA.Schedule.Entity
 {
-    interface IEntity
+    public interface IEntity
     {
         
     }

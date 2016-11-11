@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\Interfaces\ICRUDRepository.cs" />
     <Compile Include="ScheduleDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleDbInitializer.cs" />
@@ -62,6 +63,9 @@
       <Project>{e70bfa1a-ec9c-459c-a9ef-4d3fa5bc97bf}</Project>
       <Name>ITA.Schedule.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\Implementations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

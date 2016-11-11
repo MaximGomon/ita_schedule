@@ -7,10 +7,10 @@ using ITA.Schedule.Entity;
 namespace ITA.Schedule.DAL.Repositories.Interfaces
 {
     /// <summary>
-    /// Base interface to be implemented by CRUDRepository class
+    /// Base interface to be implemented by CrudRepository class
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface ICRUDRepository<TEntity> where TEntity : IEntity
+    public interface ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
         // add an entity to DB
         void Add(TEntity entity);
@@ -22,8 +22,6 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
         void Delete(Guid id);
         // delete particular entity
         void Delete(TEntity entity);
-        // de;ete entities by predicate
-        void Delete(Expression<Func<TEntity, bool>> predicate);
         // update an entity in DB
         void Update(TEntity entity);
         // get all entities from DB

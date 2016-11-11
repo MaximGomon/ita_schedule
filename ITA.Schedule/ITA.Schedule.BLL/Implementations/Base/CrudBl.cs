@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using ITA.Schedule.BLL.Interface;
+using ITA.Schedule.BLL.Interface.Base;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity;
 
-namespace ITA.Schedule.BLL.Implementations
+namespace ITA.Schedule.BLL.Implementations.Base
 {
     public class CrudBll<TRepository, TEntity> : ICrudBl<TEntity>
         where TEntity : IdEntity, IEntity

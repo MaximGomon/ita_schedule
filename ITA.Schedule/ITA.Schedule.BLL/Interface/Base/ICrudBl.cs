@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using ITA.Schedule.Entity;
 
-namespace ITA.Schedule.BLL.Interface
+namespace ITA.Schedule.BLL.Interface.Base
 {
     public interface ICrudBl<TEntity>
         where TEntity : IdEntity, IEntity

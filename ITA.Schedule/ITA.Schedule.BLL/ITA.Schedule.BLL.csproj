@@ -45,16 +45,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BllModule.cs" />
-    <Compile Include="Implementations\CrudBl.cs" />
-    <Compile Include="Implementations\DictionaryBl.cs" />
-    <Compile Include="Interface\ICrudBl.cs" />
-    <Compile Include="Interface\IDictionaryBl.cs" />
+    <Compile Include="Implementations\Base\CrudBl.cs" />
+    <Compile Include="Implementations\Base\DictionaryBl.cs" />
+    <Compile Include="Implementations\GroupBl.cs" />
+    <Compile Include="Implementations\RoomBl.cs" />
+    <Compile Include="Implementations\StudentBl.cs" />
+    <Compile Include="Implementations\SubGroupBl.cs" />
+    <Compile Include="Implementations\SubjectBl.cs" />
+    <Compile Include="Implementations\TeacherBl.cs" />
+    <Compile Include="Implementations\UserBl.cs" />
+    <Compile Include="Interface\Base\ICrudBl.cs" />
+    <Compile Include="Interface\Base\IDictionaryBl.cs" />
+    <Compile Include="Interface\IGroupBl.cs" />
+    <Compile Include="Interface\IRoomBl.cs" />
+    <Compile Include="Interface\IStudentBl.cs" />
+    <Compile Include="Interface\ISubjectBl.cs" />
+    <Compile Include="Interface\ITeacherBl.cs" />
+    <Compile Include="Interface\IUserBl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ITA.Schedule.DAL\ITA.Schedule.DAL.csproj">
       <Project>{4700e086-7e91-4e23-92dd-69fabbda84ed}</Project>

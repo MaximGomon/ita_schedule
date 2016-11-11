@@ -44,10 +44,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\CrudBll.cs" />
+    <Compile Include="Implementations\DictionaryBll.cs" />
+    <Compile Include="Interface\ICrudBll.cs" />
+    <Compile Include="Interface\IDictionaryBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ITA.Schedule.DAL\ITA.Schedule.DAL.csproj">
+      <Project>{4700e086-7e91-4e23-92dd-69fabbda84ed}</Project>
+      <Name>ITA.Schedule.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITA.Schedule.Entity\ITA.Schedule.Entity.csproj">
+      <Project>{e70bfa1a-ec9c-459c-a9ef-4d3fa5bc97bf}</Project>
+      <Name>ITA.Schedule.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

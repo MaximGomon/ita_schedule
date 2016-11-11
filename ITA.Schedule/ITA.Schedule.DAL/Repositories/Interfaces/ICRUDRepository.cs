@@ -18,6 +18,8 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
         void Add(IEnumerable<TEntity> range);
         // get an entity from DB using ID
         TEntity GetById(Guid id);
+        // get an entity from DB using predicate
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
         // delete entity from DB by Id
         void Delete(Guid id);
         // delete particular entity

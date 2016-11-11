@@ -16,7 +16,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         // declare protected context to be accessible in the derived repositories
         protected ScheduleDbContext ContextDb { get; } = new ScheduleDbContext();
 
-        // addan entity to the DB
+        // add an entity to the DB
         public virtual void Add(TEntity entity)
         {
             ContextDb.Set<TEntity>().Add(entity);
@@ -34,6 +34,12 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         public virtual TEntity GetById(Guid id)
         {
             return ContextDb.Set<TEntity>().Find(id);
+        }
+
+        // get by predicate
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
+        {
+            return ContextDb.Set<TEntity>().Where(predicate);
         }
 
         // delete an entity by ID

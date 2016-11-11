@@ -5,15 +5,16 @@ using ITA.Schedule.Entity;
 namespace ITA.Schedule.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// Repository to perform CRUD operations ove rictionary entities
+    /// 
     /// </summary>
-    public class DictionaryRepository<DictionaryTEntity> : CrudRepository<DictionaryTEntity>, IDictionaryRepository<DictionaryTEntity>
-        where DictionaryTEntity : DictionaryEntity
+    /// <typeparam name="TDEntity"></typeparam>
+    public class DictionaryRepository<TDEntity> : CrudRepository<TDEntity>, IDictionaryRepository<TDEntity>
+        where TDEntity : DictionaryEntity
     {
         // get dictionary entity from DB by code
-        public DictionaryTEntity GetByCode(int code)
+        public TDEntity GetByCode(int code)
         {
-            return ContextDb.Set<DictionaryTEntity>().FirstOrDefault(x => x.Code == code);
+            return ContextDb.Set<TDEntity>().FirstOrDefault(x => x.Code == code);
         }
     }
 }

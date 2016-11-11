@@ -13,12 +13,6 @@ namespace ITA.Schedule.DAL
             //this.Configuration.ProxyCreationEnabled = false;// Configurations.
         }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    this.Configuration.ProxyCreationEnabled = false;// Configurations.
-        //    base.OnModelCreating(modelBuilder);
-        //}
-
         // Context entities
         public DbSet<DayInWeek> DayInWeeks { get; set; } //1
         public DbSet<Grand> Grands { get; set; } //2

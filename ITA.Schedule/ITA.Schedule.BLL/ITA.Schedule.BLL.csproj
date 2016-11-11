@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BllModule.cs" />
     <Compile Include="Implementations\CrudBll.cs" />
     <Compile Include="Implementations\DictionaryBll.cs" />
     <Compile Include="Interface\ICrudBll.cs" />

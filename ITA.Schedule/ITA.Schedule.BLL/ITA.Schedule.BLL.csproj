@@ -45,10 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BllModule.cs" />
-    <Compile Include="Implementations\CrudBll.cs" />
-    <Compile Include="Implementations\DictionaryBll.cs" />
-    <Compile Include="Interface\ICrudBll.cs" />
-    <Compile Include="Interface\IDictionaryBll.cs" />
+    <Compile Include="Implementations\CrudBl.cs" />
+    <Compile Include="Implementations\DictionaryBl.cs" />
+    <Compile Include="Interface\ICrudBl.cs" />
+    <Compile Include="Interface\IDictionaryBl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

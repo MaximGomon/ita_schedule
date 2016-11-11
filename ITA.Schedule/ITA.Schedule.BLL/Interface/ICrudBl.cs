@@ -6,7 +6,7 @@ using ITA.Schedule.Entity;
 
 namespace ITA.Schedule.BLL.Interface
 {
-    public interface ICrudBll<TEntity>
+    public interface ICrudBl<TEntity>
         where TEntity : IdEntity, IEntity
     {
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);

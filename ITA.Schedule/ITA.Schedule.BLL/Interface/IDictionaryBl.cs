@@ -4,7 +4,7 @@ using ITA.Schedule.Entity;
 
 namespace ITA.Schedule.BLL.Interface
 {
-    public interface IDictionaryBll : ICrudBll<DictionaryEntity>
+    public interface IDictionaryBl : ICrudBl<DictionaryEntity>
     {
         IQueryable<DictionaryEntity> GetByCode(int code);
     }

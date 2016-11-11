@@ -10,9 +10,9 @@ namespace ITA.Schedule.Entity.Entities
     {
         public DayInWeek()
         {
-            Times = new List<TimeZoneSch>();
+            Times = new List<LessonTime>();
         }
 
-        public virtual ICollection<TimeZoneSch> Times { get; set; } 
+        public virtual ICollection<LessonTime> Times { get; set; } 
     }
 }

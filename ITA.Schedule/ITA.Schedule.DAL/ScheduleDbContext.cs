@@ -29,7 +29,7 @@ namespace ITA.Schedule.DAL
         public DbSet<Teacher> Teachers { get; set; } //13
         public DbSet<TeacherSubjects> TeacherSubjects { get; set; } //14
         public DbSet<TeacherTime> TeacherTimes { get; set; } //15
-        public DbSet<TimeZoneSch> TimeZonesSch { get; set; } // 16
+        public DbSet<LessonTime> LessonTimes { get; set; } // 16
         public DbSet<User> Users { get; set; }//17
         
     }

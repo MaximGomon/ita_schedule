@@ -9,12 +9,12 @@ using ITA.Schedule.Entity;
 
 namespace ITA.Schedule.BLL.Implementations
 {
-    public class DictionaryBll<TDEntity> : CrudBll<DictionaryRepository<TDEntity>, TDEntity>,
+    public class DictionaryBl<TDEntity> : CrudBll<DictionaryRepository<TDEntity>, TDEntity>,
         IDictionaryRepository<TDEntity> where TDEntity : DictionaryEntity
     {
         private readonly IDictionaryRepository<TDEntity> _dictionaryRepository; 
 
-        public DictionaryBll(DictionaryRepository<TDEntity> repository) : base(repository)
+        public DictionaryBl(DictionaryRepository<TDEntity> repository) : base(repository)
         {
             _dictionaryRepository = repository;
         }

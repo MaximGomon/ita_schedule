@@ -28,7 +28,6 @@ namespace ITA.Schedule
             builder.RegisterModule(new BllModule());
             MvcApplication.Container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
-
         }
 
         protected virtual void Application_End()

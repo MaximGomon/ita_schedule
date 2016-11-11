@@ -14,7 +14,7 @@ namespace ITA.Schedule.Entity.Entities
         [Required]
         public bool IsActive { get; set; }
 
-        public virtual TimeZoneSch TimeZoneSch { get; set; }
+        public virtual LessonTime LessonTime { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual DayInWeek Day { get; set; }
     }

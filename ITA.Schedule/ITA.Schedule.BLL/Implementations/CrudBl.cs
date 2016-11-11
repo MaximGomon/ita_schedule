@@ -8,7 +8,7 @@ using ITA.Schedule.Entity;
 
 namespace ITA.Schedule.BLL.Implementations
 {
-    public class CrudBll<TRepository, TEntity> : ICrudBll<TEntity>
+    public class CrudBll<TRepository, TEntity> : ICrudBl<TEntity>
         where TEntity : IdEntity, IEntity
         where TRepository : class, ICrudRepository<TEntity>
     {

@@ -12,62 +12,62 @@ namespace ITA.Schedule.DAL
     {
         protected override void Seed(ScheduleDbContext context)
         {
-            var defaultTimes = new List<TimeZoneSch>
+            var defaultTimes = new List<LessonTime>
                 {
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "First para",
                         Code = 1,
-                        StartTimeInterval = 9.00,
-                        EndTimeInterval = 10.30
+                        StartLessonTime = new DateTime().AddHours(9).AddMinutes(0),
+                        EndLessonTime = new DateTime().AddHours(10).AddMinutes(30)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Second para",
                         Code = 2,
-                        StartTimeInterval = 10.40,
-                        EndTimeInterval = 12.10
+                        StartLessonTime = new DateTime().AddHours(10).AddMinutes(40),
+                        EndLessonTime = new DateTime().AddHours(12).AddMinutes(10)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Third para",
                         Code = 3,
-                        StartTimeInterval = 12.20,
-                        EndTimeInterval = 13.50
+                        StartLessonTime = new DateTime().AddHours(12).AddMinutes(20),
+                        EndLessonTime = new DateTime().AddHours(13).AddMinutes(50)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Fourth para",
                         Code = 4,
-                        StartTimeInterval = 14.00,
-                        EndTimeInterval = 15.30
+                        StartLessonTime = new DateTime().AddHours(14).AddMinutes(00),
+                        EndLessonTime = new DateTime().AddHours(15).AddMinutes(30)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Fifth para",
                         Code = 5,
-                        StartTimeInterval = 15.40,
-                        EndTimeInterval = 17.10
+                        StartLessonTime = new DateTime().AddHours(15).AddMinutes(40),
+                        EndLessonTime = new DateTime().AddHours(17).AddMinutes(10)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Sixth para",
                         Code = 6,
-                        StartTimeInterval = 18.00,
-                        EndTimeInterval = 19.30
+                        StartLessonTime = new DateTime().AddHours(18).AddMinutes(0),
+                        EndLessonTime = new DateTime().AddHours(19).AddMinutes(30)
                     },
-                    new TimeZoneSch()
+                    new LessonTime()
                     {
                         Name = "Seventh para",
                         Code = 7,
-                        StartTimeInterval = 19.40,
-                        EndTimeInterval = 21.00
+                        StartLessonTime = new DateTime().AddHours(19).AddMinutes(40),
+                        EndLessonTime = new DateTime().AddHours(21).AddMinutes(0)
                     }
                 };
 
             foreach (var item in defaultTimes)
             {
-                context.TimeZonesSch.Add(item);
+                context.LessonTimes.Add(item);
             }
             context.SaveChanges();
 
@@ -523,7 +523,7 @@ namespace ITA.Schedule.DAL
                     {
                         Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Roman Melnyk"),
                         Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Monday"),
-                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 2),
+                        LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 2),
                         IsActive = true,
                         IsBusy = false
                     },
@@ -531,7 +531,7 @@ namespace ITA.Schedule.DAL
                     {
                         Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alexey Turenkov"),
                         Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Tuesday"),
-                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 1),
+                        LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 1),
                         IsActive = true,
                         IsBusy = true
                     },
@@ -539,7 +539,7 @@ namespace ITA.Schedule.DAL
                     {
                         Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Alla Bobruk"),
                         Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Wednesday"),
-                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 5),
+                        LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 5),
                         IsActive = false,
                         IsBusy = false
                     },
@@ -547,7 +547,7 @@ namespace ITA.Schedule.DAL
                     {
                         Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Yurich Mitiyxa"),
                         Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Friday"),
-                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 4),
+                        LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 4),
                         IsActive = true,
                         IsBusy = true
                     },
@@ -555,7 +555,7 @@ namespace ITA.Schedule.DAL
                     {
                         Teacher = context.Teachers.FirstOrDefault(x => x.Name == "Maxim Gomon"),
                         Day = context.DayInWeeks.FirstOrDefault(x => x.Name == "Friday"),
-                        TimeZoneSch = context.TimeZonesSch.FirstOrDefault(x => x.Code == 6),
+                        LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 6),
                         IsActive = true,
                         IsBusy = true
                     }

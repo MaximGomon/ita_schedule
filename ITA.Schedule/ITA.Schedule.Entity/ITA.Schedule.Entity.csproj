@@ -59,7 +59,7 @@
     <Compile Include="Entities\SubGroup.cs" />
     <Compile Include="Entities\Subject.cs" />
     <Compile Include="Entities\Teacher.cs" />
-    <Compile Include="Entities\TimeZoneSch.cs" />
+    <Compile Include="Entities\LessonTime.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

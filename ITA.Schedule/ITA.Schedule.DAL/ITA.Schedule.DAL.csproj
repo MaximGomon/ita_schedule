@@ -57,12 +57,14 @@
     <Compile Include="Repositories\Implementations\CrudRepository.cs" />
     <Compile Include="Repositories\Implementations\DictionaryRepository.cs" />
     <Compile Include="Repositories\Implementations\StudentRepository.cs" />
+    <Compile Include="Repositories\Implementations\SubgroupRepository.cs" />
     <Compile Include="Repositories\Implementations\TeacherRepository.cs" />
     <Compile Include="Repositories\Implementations\UserRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICrudRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDictionaryRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGroupRepository.cs" />
     <Compile Include="Repositories\Interfaces\IStudentRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ISubgroupRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITeacherRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="ScheduleDbContext.cs" />

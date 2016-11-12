@@ -26,36 +26,40 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             Update(teacher);
         }
 
-        // todo come back to this method
-        public IQueryable<Teacher> GetFreeTeacherOnDate(DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-
-        // todo consult how this method should work
+        // set teacher busy on a particular day
+        //todo test this method more thoroughly
         public void SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DayInWeek day)
         {
             var teacher = GetById(teacherId);
-            //teacher.
-//            teacher.TeacherAllTimes.
+            teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime && x.Day == day).IsBusy = true;
+            Update(teacher);
         }
 
-        // todo consult how this method should work
+        // set teacher free on a particular day
+        //todo test this method more thoroughly
         public void SetTeacherFree(Guid teacherId, LessonTime lessonTime, DayInWeek day)
         {
-            throw new NotImplementedException();
+            var teacher = GetById(teacherId);
+            teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime && x.Day == day).IsBusy = false;
+            Update(teacher);
         }
 
-        // todo consult how this method should work
+        // set teacher active on a particular day
+        //todo test this method more thoroughly
         public void SetTeacherActive(Guid teacherId, LessonTime lessonTime, DayInWeek day)
         {
-            throw new NotImplementedException();
+            var teacher = GetById(teacherId);
+            teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime && x.Day == day).IsActive = true;
+            Update(teacher);
         }
 
-        // todo consult how this method should work
+        // set teacher inactive on a particular day
+        //todo test this method more thoroughly
         public void SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DayInWeek day)
         {
-            throw new NotImplementedException();
+            var teacher = GetById(teacherId);
+            teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime && x.Day == day).IsActive = false;
+            Update(teacher);
         }
     }
 }

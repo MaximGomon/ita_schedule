@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ITA.Schedule.BLL.Interface.Base;
+using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.BLL.Interface
 {
-    interface IGroupBl
+    interface IGroupBl : ICrudBl<Group>
     {
+        // add subgroup to a group
+        void AddSubgroupToGroup(Guid groupId, Guid subgroupId);
+        // unlink subgroup from a group
+        void UnlinkSubgroupFromGroup(Guid groupId, Guid subgroupId);
+
     }
 }

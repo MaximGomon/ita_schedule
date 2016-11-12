@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
 using ITA.Schedule.DAL.Repositories.Interfaces;
@@ -11,7 +8,7 @@ using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.BLL.Implementations
 {
-    class TeacherBl : CrudBll<ITeacherRepository, Teacher>, ITeacherBl
+    public class TeacherBl : CrudBll<ITeacherRepository, Teacher>, ITeacherBl
     {
        
         public TeacherBl(ITeacherRepository repository) : base(repository)
@@ -29,39 +26,44 @@ namespace ITA.Schedule.BLL.Implementations
             Repository.DeleteSubjectFromTeacher(teacherId, subjecId);
         }
 
+        public bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DateTime day)
+        {
+            return Repository.SetTeacherBusy(teacherId, lessonTime, day);
+        }
+
+        public bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DateTime day)
+        {
+            return Repository.SetTeacherFree(teacherId, lessonTime, day);
+        }
+
+        public bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DateTime day)
+        {
+            return Repository.SetTeacherActive(teacherId, lessonTime, day);
+        }
+
+        public bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day)
+        {
+            return Repository.SetTeacherInactive(teacherId, lessonTime, day);
+        }
+
         public IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date)
         {
-            //throw new NotImplementedException();
             var allTeachers = Repository.GetAllEntities();
-            var dayLessons = new ScheduleLesson();
-            var teachers = new List<Teacher>();
-            foreach (var teach in allTeachers)
+            var teachersFree = new List<Teacher>();
+
+            foreach (var teacher in allTeachers)
             {
-                //if(teach.TeacherAllTimes.FirstOrDefault() == date)
-                teachers.Add(teach);
+                if (teacher.TeacherAllTimes.Any(t => t.IsActive == true && t.IsBusy == false &&
+                    t.Date.Day == date.Day && t.Date.Month == date.Month && t.Date.Year == date.Year))
+                {
+                    teachersFree.Add(teacher);
+                }
+                    
             }
 
-            return teachers;
+            return teachersFree;
         }
 
-        public void SetTeacherBusy(Guid teacherId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetTeacherFree(Guid teacherId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetTeacherActive(Guid teacherId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetTeacherInactive(Guid teacherId)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

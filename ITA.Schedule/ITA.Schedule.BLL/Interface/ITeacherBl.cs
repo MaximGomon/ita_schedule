@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using ITA.Schedule.BLL.Interface.Base;
 using ITA.Schedule.Entity.Entities;
 
@@ -11,14 +7,20 @@ namespace ITA.Schedule.BLL.Interface
 {
     interface ITeacherBl : ICrudBl<Teacher>
     {
-       
+
+        // adding a subject to a teacher
         void AddSubjectToTeacher(Guid teacherId, Guid subjecId);
+        // delete subject from a teacher
         void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId);
+        // set teacher busy on a particular day
+        bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DateTime day);
+        // set teacher free on a particular day
+        bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DateTime day);
+        // set teacher active on a particular day
+        bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DateTime day);
+        // set teacher inactive on a particular day
+        bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day);
         IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date);
-        void SetTeacherBusy(Guid teacherId);
-        void SetTeacherFree(Guid teacherId);
-        void SetTeacherActive(Guid teacherId);
-        void SetTeacherInactive(Guid teacherId);
 
     }
 }

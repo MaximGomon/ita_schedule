@@ -59,6 +59,7 @@
     <Compile Include="Interface\IGroupBl.cs" />
     <Compile Include="Interface\IRoomBl.cs" />
     <Compile Include="Interface\IStudentBl.cs" />
+    <Compile Include="Interface\ISubGroupBl.cs" />
     <Compile Include="Interface\ISubjectBl.cs" />
     <Compile Include="Interface\ITeacherBl.cs" />
     <Compile Include="Interface\IUserBl.cs" />

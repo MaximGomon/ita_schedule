@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.BLL.Interface.Base;
 
 namespace ITA.Schedule.BLL.Interface
 {
-    interface IStudentBl
+    interface IStudentBl : ICrudBl<Student>
     {
+
     }
 }

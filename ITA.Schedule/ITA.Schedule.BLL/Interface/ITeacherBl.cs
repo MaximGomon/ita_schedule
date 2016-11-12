@@ -14,7 +14,7 @@ namespace ITA.Schedule.BLL.Interface
        
         void AddSubjectToTeacher(Guid teacherId, Guid subjecId);
         void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId);
-        IQueryable<Teacher> GetFreeTeacherOnDate(DateTime date);
+        IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date);
         void SetTeacherBusy(Guid teacherId);
         void SetTeacherFree(Guid teacherId);
         void SetTeacherActive(Guid teacherId);

@@ -24,11 +24,11 @@ namespace ITA.Schedule.Entity.Entities
         [Required]
         public virtual Room Room { get; set; }
 
+        public LessonTime LessonTime { get; set; }
+
         public virtual Teacher Teacher { get; set; }
         //public virtual TeacherTime TeacherTime { get; set; }
         
-        public LessonTime LessonTime { get; set; }
-
         public virtual ICollection<SubGroup> SubGroups { get; set; }
     }
 }

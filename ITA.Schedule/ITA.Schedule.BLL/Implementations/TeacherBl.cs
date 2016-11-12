@@ -6,65 +6,42 @@ using System.Text;
 using System.Threading.Tasks;
 using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
+using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.BLL.Implementations
 {
-    class TeacherBl : /*CrudBll<ITeacherRepositroy, Teacher>,*/ ITeacherBl
+    class TeacherBl : CrudBll<ITeacherRepository, Teacher>, ITeacherBl
     {
-        public IQueryable<Teacher> Get(Expression<Func<Teacher, bool>> predicate)
+       
+        public TeacherBl(ITeacherRepository repository) : base(repository)
         {
-            throw new NotImplementedException();
+
         }
 
-        public IQueryable<Teacher> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Teacher GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Teacher entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Teacher entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Teacher entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertRange(IEnumerable<Teacher> entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
-        
         public void AddSubjectToTeacher(Guid teacherId, Guid subjecId)
         {
-            throw new NotImplementedException();
+            Repository.AddSubjectToTeacher(teacherId, subjecId);
         }
 
         public void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId)
         {
-            throw new NotImplementedException();
+            Repository.DeleteSubjectFromTeacher(teacherId, subjecId);
         }
 
-        public IQueryable<Teacher> GetFreeTeacherOnDate(DateTime date)
+        public IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var allTeachers = Repository.GetAllEntities();
+            var dayLessons = new ScheduleLesson();
+            var teachers = new List<Teacher>();
+            foreach (var teach in allTeachers)
+            {
+                //if(teach.TeacherAllTimes.FirstOrDefault() == date)
+                teachers.Add(teach);
+            }
+
+            return teachers;
         }
 
         public void SetTeacherBusy(Guid teacherId)

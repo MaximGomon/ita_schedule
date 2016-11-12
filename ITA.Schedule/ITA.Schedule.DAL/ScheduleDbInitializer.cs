@@ -71,50 +71,50 @@ namespace ITA.Schedule.DAL
             }
             context.SaveChanges();
 
-            var defaultDayInWeek = new List<DayInWeek>
-                {
-                    new DayInWeek()
-                    {
-                        Name = "Monday",
-                        Code = 1
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Tuesday",
-                        Code = 2
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Wednesday",
-                        Code = 3
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Thursday",
-                        Code = 4
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Friday",
-                        Code = 5
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Saturday",
-                        Code = 6
-                    },
-                    new DayInWeek()
-                    {
-                        Name = "Sunday",
-                        Code = 0
-                    }
-                };
+            //var defaultDayInWeek = new List<DayInWeek>
+            //    {
+            //        new DayInWeek()
+            //        {
+            //            Name = "Monday",
+            //            Code = 1
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Tuesday",
+            //            Code = 2
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Wednesday",
+            //            Code = 3
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Thursday",
+            //            Code = 4
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Friday",
+            //            Code = 5
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Saturday",
+            //            Code = 6
+            //        },
+            //        new DayInWeek()
+            //        {
+            //            Name = "Sunday",
+            //            Code = 0
+            //        }
+            //    };
 
-            foreach (var item in defaultDayInWeek)
-            {
-                context.DayInWeeks.Add(item);
-            }
-            context.SaveChanges();
+            //foreach (var item in defaultDayInWeek)
+            //{
+            //    context.DayInWeeks.Add(item);
+            //}
+            //context.SaveChanges();
 
             var defaultGrands = new List<Grand>
                 {
@@ -578,7 +578,8 @@ namespace ITA.Schedule.DAL
                     //TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Roman Melnyk"),
                     Room = context.Rooms.FirstOrDefault(x => x.Name == "Hell #1"),
                     //SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Yellow" && x.Group.Name == "B.16"),
-                    LessonDate = new DateTime(2016, 11, 25)
+                    LessonDate = new DateTime(2016, 11, 25),
+                    LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 5)
                 },
 
                 new ScheduleLesson()
@@ -588,7 +589,8 @@ namespace ITA.Schedule.DAL
                     //TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Maxim Gomon"),
                     Room = context.Rooms.FirstOrDefault(x => x.Name == "Square room"),
                     //SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15"),
-                    LessonDate = new DateTime(2016, 11, 20)
+                    LessonDate = new DateTime(2016, 11, 20),
+                    LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 4)
                 },
 
                 new ScheduleLesson()
@@ -598,7 +600,8 @@ namespace ITA.Schedule.DAL
                     //TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Maxim Gomon"),
                     Room = context.Rooms.FirstOrDefault(x => x.Name == "Square room"),
                     //SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "A.15"),
-                    LessonDate = new DateTime(2016, 11, 24)
+                    LessonDate = new DateTime(2016, 11, 24),
+                    LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 4)
                 },
 
                 new ScheduleLesson()
@@ -608,7 +611,8 @@ namespace ITA.Schedule.DAL
                     //TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Alexey Turenkov"),
                     Room = context.Rooms.FirstOrDefault(x => x.Name == "Magenta room"),
                     //SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Green" && x.Group.Name == "B.15"),
-                    LessonDate = new DateTime(2016, 11, 20)
+                    LessonDate = new DateTime(2016, 11, 20),
+                    LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 6)
                 },
 
                 new ScheduleLesson()
@@ -618,7 +622,8 @@ namespace ITA.Schedule.DAL
                     //TeacherTime = context.TeacherTimes.FirstOrDefault(x => x.IsBusy == false && x.Teacher.Name == "Alla Bobruk"),
                     Room = context.Rooms.FirstOrDefault(x => x.Name == "Magenta room"),
                     //SubGroup = context.SubGroups.FirstOrDefault(x => x.Name == "Red" && x.Group.Name == "B.15"),
-                    LessonDate = new DateTime(2016, 11, 17)
+                    LessonDate = new DateTime(2016, 11, 17),
+                    LessonTime = context.LessonTimes.FirstOrDefault(x => x.Code == 5)
                 }
             };
 

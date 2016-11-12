@@ -8,13 +8,13 @@ namespace ITA.Schedule.DAL
         public ScheduleDbContext() : base ("dbConnection")
         {
             //setting DB initializer
-            //Database.SetInitializer(new ScheduleDbInitializer());
-            //Database.Initialize(true);
-            //this.Configuration.ProxyCreationEnabled = false;// Configurations.
+            Database.SetInitializer(new ScheduleDbInitializer());
+            Database.Initialize(true);
+            this.Configuration.ProxyCreationEnabled = false;// Configurations.
         }
 
         // Context entities
-        public DbSet<DayInWeek> DayInWeeks { get; set; } //1
+        //public DbSet<DayInWeek> DayInWeeks { get; set; } //1
         public DbSet<Grand> Grands { get; set; } //2
         public DbSet<Group> Groups { get; set; } //3
         public DbSet<LessonTime> LessonTimes { get; set; } // 4

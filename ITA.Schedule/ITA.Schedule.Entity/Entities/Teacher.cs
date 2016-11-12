@@ -10,10 +10,10 @@ namespace ITA.Schedule.Entity.Entities
     {
         public Teacher()
         {
-            LessonTimes = new List<LessonTime>();
+            TeacherAllTimes = new List<TeacherAllTime>();
             Subjects = new List<Subject>();
         }
-        public virtual ICollection<LessonTime> LessonTimes { get; set; } 
+        public virtual ICollection<TeacherAllTime> TeacherAllTimes { get; set; } 
         public virtual ICollection<Subject> Subjects { get; set; } 
     }
 }

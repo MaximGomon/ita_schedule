@@ -14,12 +14,12 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
         // delete subject from a teacher
         void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId);
         // set teacher busy on a particular day
-        void SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DayInWeek day);
+        bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DayInWeek day);
         // set teacher free on a particular day
-        void SetTeacherFree(Guid teacherId, LessonTime lessonTime, DayInWeek day);
+        bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DayInWeek day);
         // set teacher active on a particular day
-        void SetTeacherActive(Guid teacherId, LessonTime lessonTime, DayInWeek day);
+        bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DayInWeek day);
         // set teacher inactive on a particular day
-        void SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DayInWeek day);
+        bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DayInWeek day);
     }
 }

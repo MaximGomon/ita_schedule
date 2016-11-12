@@ -16,21 +16,18 @@ namespace ITA.Schedule.DAL
         // Context entities
         public DbSet<DayInWeek> DayInWeeks { get; set; } //1
         public DbSet<Grand> Grands { get; set; } //2
-        public DbSet<GrandsForGroup> GrandsForGroups { get; set; } //3
-        public DbSet<Group> Groups { get; set; } //4
+        public DbSet<Group> Groups { get; set; } //3
+        public DbSet<LessonTime> LessonTimes { get; set; } // 4
         public DbSet<RepeatPeriod> RepeatPeriods { get; set; } //5
         public DbSet<Room> Rooms { get; set; } //6
-        public DbSet<ScheduleLesson> SchedulesLesson { get; set; } //7
+        public DbSet<ScheduleLesson> ScheduleLessons { get; set; } //7
         public DbSet<SecurityGroup> SecurityGroups { get; set; } //8
-        public DbSet<ScheduleSubGroup> ScheduleSubGroups { get; set; } //9
-        public DbSet<Student> Students { get; set; } //10
-        public DbSet<SubGroup> SubGroups { get; set; } //11
-        public DbSet<Subject> Subjects { get; set; } //12
-        public DbSet<Teacher> Teachers { get; set; } //13
-        public DbSet<TeacherSubjects> TeacherSubjects { get; set; } //14
-        public DbSet<TeacherTime> TeacherTimes { get; set; } //15
-        public DbSet<LessonTime> LessonTimes { get; set; } // 16
-        public DbSet<User> Users { get; set; }//17
+        public DbSet<Student> Students { get; set; } //9
+        public DbSet<SubGroup> SubGroups { get; set; } //10
+        public DbSet<Subject> Subjects { get; set; } //11
+        public DbSet<Teacher> Teachers { get; set; } //12
+        public DbSet<TeacherAllTime> TeacherAllTimes { get; set; } //13
+        public DbSet<User> Users { get; set; }//14
         
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITA.Schedule.Entity.Entities
 {
-    public class TeacherTime : IdEntity
+    public class TeacherAllTime : IdEntity
     {
         [Required]
         public bool IsBusy { get; set; }

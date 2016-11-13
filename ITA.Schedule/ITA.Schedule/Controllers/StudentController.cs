@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace ITA.Schedule.Controllers
 {
-    public class AuthorizationController : Controller
+    public class StudentController : Controller
     {
-        // GET: Authorization
+        // GET: Student
         public ActionResult Index()
         {
-            return View();
+            return View("StudentSchedule");
         }
     }
 }

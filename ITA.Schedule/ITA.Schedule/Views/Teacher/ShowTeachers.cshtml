@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ITA.Schedule.Entity.Entities.Teacher>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowTeachers</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+<div>
+    @*<input class="btn btn-success" type="submit" value="Showteachers" />*@
+    
+    @foreach (var teacher in Model)
+    {
+        <div class="col-md-2 btn-success">
+            @Html.DisplayFor(teacherItem => teacher.Id)
+        </div>
+        <div class="col-md-offset-2 col-md-2 alert-danger">
+            @Html.DisplayFor(teacherItem => teacher.Name)
+        </div>
+    }
+</div>
+</body>
+</html>

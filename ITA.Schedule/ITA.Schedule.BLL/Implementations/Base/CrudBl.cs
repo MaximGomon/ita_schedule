@@ -15,7 +15,7 @@ namespace ITA.Schedule.BLL.Implementations.Base
 
         protected TRepository Repository { get; private set; }
 
-        protected CrudBll(TRepository repository)
+        public CrudBll(TRepository repository)
         {
             Repository = repository;
         } 

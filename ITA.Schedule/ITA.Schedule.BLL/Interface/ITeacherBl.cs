@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using ITA.Schedule.BLL.Interface.Base;
 using ITA.Schedule.Entity.Entities;
 
@@ -21,6 +22,8 @@ namespace ITA.Schedule.BLL.Interface
         // set teacher inactive on a particular day
         bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day);
         IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date);
+        //IEnumerable<Teacher> GetAllTeachers();
+        //Teacher Get(Expression<Func<Teacher, bool>> predicate);
 
     }
 }

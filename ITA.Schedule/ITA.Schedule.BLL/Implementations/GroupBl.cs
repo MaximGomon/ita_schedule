@@ -9,9 +9,10 @@ namespace ITA.Schedule.BLL.Implementations
 {
     public class GroupBl : CrudBll<IGroupRepository, Group>, IGroupBl
     {
-        public GroupBl(IGroupRepository repository) : base(repository)
+        private readonly ISubgroupRepository _subgroupRepository;
+        public GroupBl(IGroupRepository repository, ISubgroupRepository subgroupRepository) : base(repository)
         {
-
+            _subgroupRepository = subgroupRepository;
         }
 
         public void AddSubgroupToGroup(Guid groupId, Guid subgroupId)
@@ -26,12 +27,9 @@ namespace ITA.Schedule.BLL.Implementations
 
         public IEnumerable<SubGroup> GetAllSubGroups(Guid groupId)
         {
-            throw new NotImplementedException();
+            return _subgroupRepository.Get(sg => sg.Group.Id == groupId);
         }
 
-        public Group GetGroup(Guid groupId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

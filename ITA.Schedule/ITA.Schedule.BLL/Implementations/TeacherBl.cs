@@ -11,7 +11,7 @@ namespace ITA.Schedule.BLL.Implementations
 {
     public class TeacherBl : CrudBll<ITeacherRepository, Teacher>, ITeacherBl
     {
-       
+
         public TeacherBl(ITeacherRepository repository) : base(repository)
         {
 
@@ -63,7 +63,6 @@ namespace ITA.Schedule.BLL.Implementations
 
             return teachersFree;
         }
-
-       
+ 
     }
 }

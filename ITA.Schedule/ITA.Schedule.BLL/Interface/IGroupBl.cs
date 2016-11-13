@@ -12,7 +12,6 @@ namespace ITA.Schedule.BLL.Interface
         // unlink subgroup from a group
         void UnlinkSubgroupFromGroup(Guid groupId, Guid subgroupId);
         IEnumerable<SubGroup> GetAllSubGroups(Guid groupId);
-        Group GetGroup(Guid groupId);
-
+        
     }
 }

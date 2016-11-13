@@ -17,8 +17,15 @@ namespace ITA.Schedule.Controllers
         public ActionResult Index()
         {
 
-            var teacherBl = new TeacherRepository();
-            var teachers = teacherBl.GetAllEntities().ToList();
+            var teacherBl = new TeacherBl(new TeacherRepository());
+            var teachers = teacherBl.GetAll();
+
+            //var studentBl = new StudentBl(new StudentRepository());
+            //var student = studentBl.Get(s => s.Name == "Vetal Xyuzlovish").FirstOrDefault();
+            //var firstOrDefault = new SubGroupBl(new SubgroupRepository()).Get(sg => sg.Name == "Yellow").FirstOrDefault();
+            //if (firstOrDefault != null)
+            //    if (student != null) studentBl.ReplaceToAnotherSubGroup(student.Id, firstOrDefault.Id);
+
 
             return View("ShowTeachers", teachers);
         }

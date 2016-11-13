@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
+using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
@@ -25,13 +26,14 @@ namespace ITA.Schedule.BLL.Implementations
 
         public void ReplaceToAnotherSubGroup(Guid studentId, Guid newSubGroupId)
         {
-            var studentSubGroupId = Repository.GetById(studentId).SubGroup.Id;
-            if (studentSubGroupId == newSubGroupId)
+            var student = Repository.GetById(studentId);
+            if (student.SubGroup.Id == newSubGroupId)
             {
                 return;
             }
 
-
+            var newSubGroup = new SubGroupBl(new SubgroupRepository()).GetById(newSubGroupId);
+            student.SubGroup = newSubGroup;
         }
         
     }

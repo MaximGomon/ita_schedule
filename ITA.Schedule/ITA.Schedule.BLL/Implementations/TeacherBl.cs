@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ITA.Schedule.BLL.Helper;
 using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
 using ITA.Schedule.DAL.Repositories.Interfaces;
@@ -53,12 +54,11 @@ namespace ITA.Schedule.BLL.Implementations
 
             foreach (var teacher in allTeachers)
             {
-                if (teacher.TeacherAllTimes.Any(t => t.IsActive == true && t.IsBusy == false &&
-                    t.Date.Day == date.Day && t.Date.Month == date.Month && t.Date.Year == date.Year))
+                if (teacher.TeacherAllTimes.Any(t => t.IsActive && !t.IsBusy &&
+                    DateCompare.IsDateEqualWithoutTime(t.Date, date)))
                 {
                     teachersFree.Add(teacher);
                 }
-                    
             }
 
             return teachersFree;

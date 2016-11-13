@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BllModule.cs" />
+    <Compile Include="Helper\DateCompare.cs" />
     <Compile Include="Implementations\Base\CrudBl.cs" />
     <Compile Include="Implementations\Base\DictionaryBl.cs" />
     <Compile Include="Implementations\GroupBl.cs" />

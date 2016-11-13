@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\DateCompare.cs" />
     <Compile Include="Repositories\Implementations\GroupRepository.cs" />
     <Compile Include="Repositories\Implementations\CrudRepository.cs" />
     <Compile Include="Repositories\Implementations\DictionaryRepository.cs" />

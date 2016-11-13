@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ITA.Schedule.BLL.Interface.Base;
 using ITA.Schedule.Entity.Entities;
 
@@ -10,6 +11,8 @@ namespace ITA.Schedule.BLL.Interface
         void AddSubgroupToGroup(Guid groupId, Guid subgroupId);
         // unlink subgroup from a group
         void UnlinkSubgroupFromGroup(Guid groupId, Guid subgroupId);
+        IEnumerable<SubGroup> GetAllSubGroups(Guid groupId);
+        Group GetGroup(Guid groupId);
 
     }
 }

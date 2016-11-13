@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ITA.Schedule.DAL.Helper;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
@@ -34,8 +35,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime 
-                    && x.Date.Year == day.Year && x.Date.Month == day.Month
-                    && x.Date.Day == day.Day).IsBusy = true;
+                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsBusy = true;
                 Update(teacher);
                 return true;
             }
@@ -53,8 +53,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
-                    && x.Date.Year == day.Year && x.Date.Month == day.Month
-                    && x.Date.Day == day.Day).IsBusy = false;
+                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsBusy = false;
                 Update(teacher);
                 return true;
             }
@@ -72,8 +71,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
-                    && x.Date.Year == day.Year && x.Date.Month == day.Month
-                    && x.Date.Day == day.Day).IsActive = true;
+                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsActive = true;
                 Update(teacher);
                 return true;
             }
@@ -90,9 +88,8 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             var teacher = GetById(teacherId);
             try
             {
-                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime 
-                    && x.Date.Year == day.Year && x.Date.Month == day.Month
-                    && x.Date.Day == day.Day).IsActive = false;
+                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
+                    && Helper.DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsActive = false;
                 Update(teacher);
                 return true;
             }

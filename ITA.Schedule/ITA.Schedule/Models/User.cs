@@ -17,5 +17,8 @@ namespace ITA.Schedule.Models
         [MaxLength(100, ErrorMessage = "Too long password. Must be 1-100 chars")]
         [Required]
         public string Password { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime MyTime { get; set; }
     }
 }

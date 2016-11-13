@@ -12,7 +12,22 @@ namespace ITA.Schedule.Controllers
         // GET: Teacher
         public ActionResult Index()
         {
-            return View("ShowTeachers", new List<Teacher>());
+            List<Teacher> myTeach = new List<Teacher>
+            {
+                new Teacher
+                {
+                    Name = "Vitia"
+                },
+                new Teacher
+                {
+                    Name = "Vlad"
+                },
+                new Teacher
+                {
+                    Name = "Tolia"
+                }
+            };
+            return View("ShowTeachers", myTeach);
         }
 
         //[HttpGet]

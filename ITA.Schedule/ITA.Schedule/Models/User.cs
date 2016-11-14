@@ -18,7 +18,6 @@ namespace ITA.Schedule.Models
         [Required]
         public string Password { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime MyTime { get; set; }
+        
     }
 }

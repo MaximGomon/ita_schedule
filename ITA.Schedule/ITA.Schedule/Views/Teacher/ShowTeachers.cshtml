@@ -20,13 +20,20 @@
     
     @foreach (var teacher in Model)
     {
-        <div class="container-fluid row col-md-12">
+        <div class="container-fluid row col-md-4">
             <div class="col-md-2 btn-success">
                 @Html.DisplayFor(teacherItem => teacher.Id)
             </div>
             <div class="col-md-offset-4 col-md-2 alert-danger">
                 @Html.DisplayFor(teacherItem => teacher.Name)
             </div>
+
+            @*@foreach (var time in teacher.Times)
+            {
+                <div class="col-md-offset-4 col-md-2 alert-danger">
+                    @Html.DisplayFor(teacherItem => teacher.Name)
+                </div>
+            }*@
         </div>
     }
 </div>

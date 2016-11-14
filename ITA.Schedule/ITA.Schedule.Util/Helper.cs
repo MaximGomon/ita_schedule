@@ -8,12 +8,12 @@ namespace ITA.Schedule.Util
 {
     public static class Helper
     {
-        public static bool IsDateEqualWithoutTime(this DateTime curreDate, DateTime dateToCompare)
+        public static bool IsDateEqualWithoutTime(this DateTime currentDate, DateTime dateToCompare)
         {
             return
-                curreDate.Day == dateToCompare.Day &&
-                curreDate.Month == dateToCompare.Month &&
-                curreDate.Year == dateToCompare.Year;
+                currentDate.Day == dateToCompare.Day &&
+                currentDate.Month == dateToCompare.Month &&
+                currentDate.Year == dateToCompare.Year;
         }
     }
 }

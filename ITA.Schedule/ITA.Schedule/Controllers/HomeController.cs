@@ -14,5 +14,12 @@ namespace ITA.Schedule.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CheckForUser(User user)
+        {
+            return RedirectToAction("Index", "Teacher");
+        }
+       
     }
 }

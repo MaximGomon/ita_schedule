@@ -273,3 +273,5 @@ ITA5.CARService/CarService.Interface.Client/Forms(Windows)/UserMainWindow.xaml.c
 .gitignore.orig
 ITA5.CARService/CarService.Core.BusinessLogicLayer/Interfaces/IClientBusinessLogic.cs.orig
 ITA5.CARService/CarService.Interface.Client/Forms(Windows)/UserControls/UcWarehouse.xaml.orig
+ITA.Schedule/ITA.Schedule/Views/Teacher/ShowTeachers.cshtml.orig
+ITA.Schedule/ITA.Schedule/Controllers/TeacherController.cs.orig

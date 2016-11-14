@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ITA.Schedule.BLL.Helper;
 using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Util;
+
 
 namespace ITA.Schedule.BLL.Implementations
 {
@@ -55,7 +56,7 @@ namespace ITA.Schedule.BLL.Implementations
             foreach (var teacher in allTeachers)
             {
                 if (teacher.TeacherAllTimes.Any(t => t.IsActive && !t.IsBusy &&
-                    DateCompare.IsDateEqualWithoutTime(t.Date, date)))
+                    (t.Date.IsDateEqualWithoutTime(date))))
                 {
                     teachersFree.Add(teacher);
                 }

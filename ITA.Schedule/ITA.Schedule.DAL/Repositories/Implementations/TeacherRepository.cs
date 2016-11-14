@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ITA.Schedule.DAL.Helper;
+using ITA.Schedule.Util;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
@@ -35,7 +35,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime 
-                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsBusy = true;
+                    && x.Date.IsDateEqualWithoutTime(day)).IsBusy = true;
                 Update(teacher);
                 return true;
             }
@@ -53,7 +53,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
-                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsBusy = false;
+                    && x.Date.IsDateEqualWithoutTime(day)).IsBusy = false;
                 Update(teacher);
                 return true;
             }
@@ -71,7 +71,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
-                    && DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsActive = true;
+                    && x.Date.IsDateEqualWithoutTime(day)).IsActive = true;
                 Update(teacher);
                 return true;
             }
@@ -89,7 +89,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             try
             {
                 teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
-                    && Helper.DateCompare.IsDateEqualWithoutTime(x.Date, day)).IsActive = false;
+                    && x.Date.IsDateEqualWithoutTime(day)).IsActive = false;
                 Update(teacher);
                 return true;
             }

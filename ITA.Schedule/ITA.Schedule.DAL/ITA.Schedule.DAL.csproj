@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\DateCompare.cs" />
     <Compile Include="Repositories\Implementations\GroupRepository.cs" />
     <Compile Include="Repositories\Implementations\CrudRepository.cs" />
     <Compile Include="Repositories\Implementations\DictionaryRepository.cs" />
@@ -85,6 +84,10 @@
     <ProjectReference Include="..\ITA.Schedule.Entity\ITA.Schedule.Entity.csproj">
       <Project>{e70bfa1a-ec9c-459c-a9ef-4d3fa5bc97bf}</Project>
       <Name>ITA.Schedule.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITA.Schedule.Util\ITA.Schedule.Util.csproj">
+      <Project>{85bcf03a-dfa9-4a12-8a6d-2887ca1ae871}</Project>
+      <Name>ITA.Schedule.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

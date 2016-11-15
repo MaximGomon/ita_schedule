@@ -10,10 +10,10 @@ namespace ITA.Schedule.Models
     {
 
         [DataType(DataType.Date)]
-        public DateTime FromDateTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDateTime { get; set; } = DateTime.Now;
 
-        [DataType(DataType.Date)]
-        public DateTime ToDateTime { get; set; }
+        
 
     }
 }

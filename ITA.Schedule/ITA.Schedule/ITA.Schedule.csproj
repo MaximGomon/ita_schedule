@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SchedulerController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
@@ -150,6 +151,8 @@
     <Content Include="Views\Student\StudentSchedule.cshtml" />
     <Content Include="Views\Teacher\ShowTeachers.cshtml" />
     <Content Include="Views\Student\StudentHeader.cshtml" />
+    <Content Include="Views\_Layout1.cshtml" />
+    <Content Include="Views\Scheduler\ScheduleDay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

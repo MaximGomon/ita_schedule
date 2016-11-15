@@ -192,37 +192,75 @@ namespace ITA.Schedule.DAL
             //}
             //context.SaveChanges();
 
+            var defaultTeachers = new List<Teacher>
+                {
+                    new Teacher()
+                    {
+                        Name = "Maxim Gomon"
+
+                    },
+                    new Teacher()
+                    {
+                        Name = "Yurich Mitiyxa",
+                    },
+                    new Teacher()
+                    {
+                        Name = "Alexey Turenkov",
+
+                    },
+                    new Teacher()
+                    {
+                        Name = "Alla Bobruk",
+                    },
+                    new Teacher()
+                    {
+                        Name = "Roman Melnyk",
+                    }
+                };
+
+            foreach (var item in defaultTeachers)
+            {
+                context.Teachers.Add(item);
+            }
+            context.SaveChanges();
+
             var defaultSubjects = new List<Subject>
                 {
                     new Subject()
                     {
                         Name = "Math",
-                        Code = 1
+                        Code = 1,
+                        Teachers = context.Teachers.Where(t => t.Name == "Maxim Gomon").ToList()
                     },
                     new Subject()
                     {
                         Name = "C programming language",
-                        Code = 2
+                        Code = 2,
+                        Teachers = context.Teachers.Where(t => t.Name == "Alexey Turenkov").ToList()
                     },
                     new Subject()
                     {
                         Name = "C++ programming language",
-                        Code = 3
+                        Code = 3,
+                        Teachers = context.Teachers.Where(t => t.Name == "Alla Bobruk").ToList()
                     },
                     new Subject()
                     {
                         Name = "Networks",
-                        Code = 4
+                        Code = 4,
+                        Teachers = context.Teachers.Where(t => t.Name == "Yurich Mitiyxa").ToList()
                     },
                     new Subject()
                     {
                         Name = "C#/.Net",
-                        Code = 5
+                        Code = 5,
+                        Teachers = context.Teachers.Where(t => t.Name == "Roman Melnyk").ToList()
                     },
                     new Subject()
                     {
                         Name = "English",
-                        Code = 6
+                        Code = 6,
+                        Teachers = context.Teachers.Where(t => t.Name == "Yurich Mitiyxa").ToList()
                     }
                 };
 
@@ -433,38 +471,6 @@ namespace ITA.Schedule.DAL
             foreach (var item in defaultStudents)
             {
                 context.Students.Add(item);
-            }
-            context.SaveChanges();
-
-
-            var defaultTeachers = new List<Teacher>
-                {
-                    new Teacher()
-                    {
-                        Name = "Maxim Gomon"
-                    },
-                    new Teacher()
-                    {
-                        Name = "Yurich Mitiyxa",
-                    },
-                    new Teacher()
-                    {
-                        Name = "Alexey Turenkov",
-                        
-                    },
-                    new Teacher()
-                    {
-                        Name = "Alla Bobruk",
-                    },
-                    new Teacher()
-                    {
-                        Name = "Roman Melnyk",
-                    }
-                };
-
-            foreach (var item in defaultTeachers)
-            {
-                context.Teachers.Add(item);
             }
             context.SaveChanges();
 

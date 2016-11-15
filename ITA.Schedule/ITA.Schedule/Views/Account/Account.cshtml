@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ITA.Schedule.Entity.Entities.Student>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Account</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <h2>My Account</h2>
+    <div>
+       <input class="btn btn-warning" type="submit" value="Showstudents" />
+
+        @foreach (var student in Model)
+        {
+            <div class="container-fluid row col-md-12">
+                <div class="col-md-2 btn-success">
+                    @Html.DisplayFor(studentItem => student.Id)
+                </div>
+                <div class="col-md-offset-4 col-md-2 alert-danger">
+                    @Html.DisplayFor(studentItem => student.Name)
+                </div>
+                <div class="col-md-offset-6 col-md-2 alert-danger">
+                    @Html.DisplayFor(studentItem => student.SubGroup.Name)
+                </div>
+   
+            </div>
+        }
+
+
+    </div>
+</body>
+</html>

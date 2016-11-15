@@ -35,6 +35,10 @@ namespace ITA.Schedule.BLL.Implementations
             var newSubGroup = new SubGroupBl(new SubgroupRepository()).GetById(newSubGroupId);
             student.SubGroup = newSubGroup;
         }
-        
+
+        public IEnumerable<Student> GetAllBySubGroup(string subGroupName)
+        {
+            return Repository.Get(s => s.SubGroup.Name == subGroupName);
+        }
     }
 }

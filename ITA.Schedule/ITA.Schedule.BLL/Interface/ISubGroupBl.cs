@@ -12,5 +12,6 @@ namespace ITA.Schedule.BLL.Interface
         // remove a student from a subgroup
         void RemoveStudentFromSubgroup(Guid subgroupId, Guid studentId);
 
+        
     }
 }

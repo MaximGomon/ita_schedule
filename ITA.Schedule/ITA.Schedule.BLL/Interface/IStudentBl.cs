@@ -12,5 +12,7 @@ namespace ITA.Schedule.BLL.Interface
         //IEnumerable<Student> GetStudentsBySubject(Guid subGroupId);
         void ReplaceToAnotherSubGroup(Guid studentId, Guid newSubGroupId);
 
+        IEnumerable<Student> GetAllBySubGroup(string subGroupName);
+
     }
 }

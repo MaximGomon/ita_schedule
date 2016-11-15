@@ -14,7 +14,7 @@ namespace ITA.Schedule.Controllers
     public class SchedulerController : Controller
     {
         // GET: Scheduler
-        public ActionResult Index()
+        public ActionResult ScheduleDay()
         {
 
             using (var context = new ScheduleDbContext())

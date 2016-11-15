@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
 {
@@ -11,7 +12,10 @@ namespace ITA.Schedule.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            return View("StudentSchedule");
+            return View("StudentHeader", new StudentFilter
+            {
+                StartDateTime = DateTime.Now
+            });
         }
     }
 }

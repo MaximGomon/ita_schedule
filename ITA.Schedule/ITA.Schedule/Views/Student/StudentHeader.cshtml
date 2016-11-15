@@ -1,9 +1,5 @@
 ﻿@model ITA.Schedule.Models.StudentFilter
 
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 
 <html>
@@ -14,8 +10,26 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-<div>
+<div class="alert row">
     
+    <div class="col-md-12">
+        <div class="col-md-offset-1 col-md-1">
+            @Html.EditorFor(x => x.StartDateTime)
+        </div>
+        <div class="col-md-offset-1 col-md-1">
+            @Html.EditorFor(x => x.StartDateTime)
+        </div>
+        <div class="col-md-offset-3 btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Teacher")'"> День </button>
+            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Teacher")'"> Тиждень </button>
+            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Teacher")'"> Місяць </button>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        @*@RenderBody()*@
+    </div>
+
 </div>
 </body>
 </html>

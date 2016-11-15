@@ -34,7 +34,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             var teacher = GetById(teacherId);
             try
             {
-                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime 
+                teacher.TeacherAllTimes.First(x => x.LessonTime == lessonTime 
                     && x.Date.IsDateEqualWithoutTime(day)).IsBusy = true;
                 Update(teacher);
                 return true;

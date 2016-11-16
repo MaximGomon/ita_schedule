@@ -17,7 +17,11 @@
             @Html.EditorFor(x => x.StartDateTime)
         </div>
         <div class="col-md-offset-1 col-md-1">
-            @Html.EditorFor(x => x.StartDateTime)
+            @* ViewBag list of subjects *@
+            @Html.DropDownList("Model.MySubjects")
+        </div>
+        <div class="col-md-offset-1 col-md-1">
+            @* ViewBag list of teachers *@
         </div>
         <div class="col-md-offset-3 btn-group" role="group" aria-label="...">
             <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Teacher")'"> День </button>

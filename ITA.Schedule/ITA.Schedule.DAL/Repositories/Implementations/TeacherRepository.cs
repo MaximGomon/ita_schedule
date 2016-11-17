@@ -28,7 +28,6 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         }
 
         // set teacher busy on a particular day
-        //todo consult Max about it
         public bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
@@ -39,56 +38,53 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
                 Update(teacher);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
         }
 
         // set teacher free on a particular day
-        //todo consult Max about it
         public bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
             try
             {
-                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
+                teacher.TeacherAllTimes.First(x => x.LessonTime == lessonTime
                     && x.Date.IsDateEqualWithoutTime(day)).IsBusy = false;
                 Update(teacher);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
         }
 
         // set teacher active on a particular day
-        //todo consult Max about it
         public bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
             try
             {
-                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
+                teacher.TeacherAllTimes.First(x => x.LessonTime == lessonTime
                     && x.Date.IsDateEqualWithoutTime(day)).IsActive = true;
                 Update(teacher);
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
         }
 
         // set teacher inactive on a particular day
-        //todo consult Max about it
         public bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
             try
             {
-                teacher.TeacherAllTimes.FirstOrDefault(x => x.LessonTime == lessonTime
+                teacher.TeacherAllTimes.First(x => x.LessonTime == lessonTime
                     && x.Date.IsDateEqualWithoutTime(day)).IsActive = false;
                 Update(teacher);
                 return true;

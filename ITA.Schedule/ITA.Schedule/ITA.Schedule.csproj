@@ -105,10 +105,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\account.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\ITA_logo.png" />
+    <Content Include="Content\images\search-icon-png-11.png" />
+    <Content Include="Content\images\search-icon-png-13.png" />
+    <Content Include="Content\images\Search_png_12.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -168,7 +173,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <None Include="Scripts\jquery-1.12.4-vsdoc.js" />
+    <Content Include="Scripts\account.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />

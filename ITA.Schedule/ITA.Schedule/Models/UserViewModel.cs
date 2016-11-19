@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ITA.Schedule.Models
 {
-    public class User
+    public class UserViewModel
     {
         [MinLength(1, ErrorMessage = "Too short name. Must be 1-50 chars")]
         [MaxLength(50, ErrorMessage = "Too long name. Must be 1-50 chars")]

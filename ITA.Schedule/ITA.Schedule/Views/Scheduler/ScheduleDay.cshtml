@@ -1,47 +1,29 @@
 ﻿
-@using System.Globalization
-@model IEnumerable<ITA.Schedule.Entity.Entities.ScheduleLesson>
+@using Kendo.Mvc.UI
+@model  ITA.Schedule.Models.SchedulerViewModel
 
-@{
-    Layout = null;
-}
+    <div class="col-md-12">
+        <div class="h3 alert alert-info info col-sm-12 text-center">
+            <span class = "text-center">
+                @ViewBag.Date
+            </span>
+        </div>
+        <div class="col-md-2">
 
-<!DOCTYPE html>
+        </div>
+        @*<div class="col-md-2">
+            @foreach (var schedule in Model.ColumnHeaders)
+            {
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Subjects</title>
+            }
+        </div>
 
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-
-</head>
-<body>
-
-    <h2>Subjects</h2>
-    <div>
-        <input class="btn btn-info" type="submit" value="Show schedule" />
-
-        @foreach (var schedule in Model)
+        @foreach (var schedule in Model.Events)
         {
-            <div class="container-fluid row col-md-12">
-                <div class="col-md-2 btn-success">
-                    @Html.DisplayFor(scheduleItem => schedule.LessonDate)
-                </div>
-                <div class="col-md-offset-4 col-md-2 alert-danger">
-                    @Html.DisplayFor(scheduleItem => schedule.Teacher.Name)
-                </div>
-                <div class="col-md-offset-6 col-md-2 alert-warning">
-                    @Html.DisplayFor(scheduleItem => schedule.Room.Name)
-                </div>
-                <div class="col-md-offset-6 col-md-2 alert-default">
-                    @Html.DisplayFor(scheduleItem => schedule.Subject.Name)
-                </div>
-                
-            </div>
-        }
+            <div class="col-md-2">
 
+            </div>
+        }*@
 
     </div>
-</body>
-</html>
+

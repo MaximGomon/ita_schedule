@@ -8,9 +8,9 @@ namespace ITA.Schedule.DAL
         public ScheduleDbContext() : base ("dbConnection")
         {
             //setting DB initializer
-            //Database.SetInitializer(new ScheduleDbInitializer());
-            //Database.Initialize(true);
-            //this.Configuration.ProxyCreationEnabled = false;// Configurations.
+            Database.SetInitializer(new ScheduleDbInitializer());
+            Database.Initialize(true);
+            this.Configuration.ProxyCreationEnabled = false;// Configurations.
         }
 
         // Context entities

@@ -275,3 +275,7 @@ ITA5.CARService/CarService.Core.BusinessLogicLayer/Interfaces/IClientBusinessLog
 ITA5.CARService/CarService.Interface.Client/Forms(Windows)/UserControls/UcWarehouse.xaml.orig
 ITA.Schedule/ITA.Schedule/Views/Teacher/ShowTeachers.cshtml.orig
 ITA.Schedule/ITA.Schedule/Controllers/TeacherController.cs.orig
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201611191911455_init.Designer.cs
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201611191911455_init.cs
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201611191911455_init.resx
+ITA.Schedule/ITA.Schedule.DAL/Migrations/Configuration.cs

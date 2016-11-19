@@ -19,7 +19,7 @@ namespace ITA.Schedule.Models
         
         public List<string> Teachers { get; set; }
 
-        public TimePeriod MyTimePeriod { get; set; }
+        public LessonTime MyTimePeriod { get; set; }
 
     }
 }

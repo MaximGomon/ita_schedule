@@ -11,5 +11,6 @@ namespace ITA.Schedule.Entity.Entities
         }
         public virtual ICollection<TeacherAllTime> TeacherAllTimes { get; set; } 
         public virtual ICollection<Subject> Subjects { get; set; } 
+
     }
 }

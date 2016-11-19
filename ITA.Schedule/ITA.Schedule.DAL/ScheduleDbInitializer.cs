@@ -261,7 +261,19 @@ namespace ITA.Schedule.DAL
                         Name = "English",
                         Code = 6,
                         Teachers = context.Teachers.Where(t => t.Name == "Yurich Mitiyxa").ToList()
-                    }
+                    },
+                    new Subject()
+                    {
+                        Name = "C#/.Net",
+                        Code = 5,
+                        Teachers = context.Teachers.Where(t => t.Name == "Maxim Gomon").ToList()
+                    },
+                    new Subject()
+                    {
+                        Name = "C++ programming language",
+                        Code = 3,
+                        Teachers = context.Teachers.Where(t => t.Name == "Maxim Gomon").ToList()
+                    },
                 };
 
             foreach (var item in defaultSubjects)

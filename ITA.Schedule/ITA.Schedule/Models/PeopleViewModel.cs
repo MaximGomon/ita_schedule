@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.Models
 {

@@ -198,7 +198,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Element.cs" />
+    <Compile Include="Models\PeopleViewModel.cs" />
+    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
+    <Compile Include="Models\StudentFilter.cs" />
     <Compile Include="Models\StudentFilterViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

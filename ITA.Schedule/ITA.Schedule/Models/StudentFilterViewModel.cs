@@ -13,11 +13,10 @@ namespace ITA.Schedule.Models
 
         public DateTime StartDateTime { get; set; }
 
-
-        public DateTime Date { get; set; }
-        public string MySubject { get; set; }
+        /*ublic DateTime Date { get; set; }*/
+        public Guid MySubjectId { get; set; }
         
-        public string Teacher { get; set; }
+        public Guid TeacherId { get; set; }
 
         public TimePeriod MyTimePeriod { get; set; }
 

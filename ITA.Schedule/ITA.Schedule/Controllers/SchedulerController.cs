@@ -18,7 +18,7 @@ namespace ITA.Schedule.Controllers
         public ActionResult ScheduleDay(StudentFilterViewModel myFilter)
         {
             ViewBag.Date = $"{myFilter.StartDateTime.DayOfWeek} ({myFilter.StartDateTime.ToShortDateString()})" ;
-            ViewBag.Width = "30%";
+            ViewBag.Width = "width:30%";
             using (var context = new ScheduleDbContext())
             {
                 var scedules = new List<ScheduleLesson>();
@@ -27,7 +27,7 @@ namespace ITA.Schedule.Controllers
                 //    .Include(t => t.Subject).Include(t => t.SubGroups)
                 //    .ToList();
 
-                return View("ScheduleDay");
+                return PartialView("ScheduleDay");
             }
             
             

@@ -1,9 +1,9 @@
 ﻿@using Kendo.Mvc.UI
 @model ITA.Schedule.Models.StudentFilterViewModel
 
-@*@{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
+}
     <!DOCTYPE html>
 
     <html>
@@ -11,17 +11,14 @@
         <meta name="viewport" content="width=device-width" />
         <title>StudentHeader</title>
        
-
-        
-
-        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
         <link href="~/Content/Site.css" rel="stylesheet" />
         <link href="~/Content/themes/base/theme.css" rel="stylesheet" />
         <link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
-        <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+        <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />*@
         
        @* <script src="~/Scripts/jquery-1.12.4.js"></script>
-    <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>*@
+          <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>*@
         
         
         
@@ -36,11 +33,11 @@
                 </div>
 
                 <div class="col-sm-2">
-                    @Html.DropDownListFor(x => x.MySubject, (List<SelectListItem>)ViewBag.Subjects, "Всі предмети", new {@class= "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x => x.MySubjectId, (List<SelectListItem>)ViewBag.Subjects, "Всі предмети", new {@class= "col-md-offset-1 col-md-11" })
                 </div>
                 
                 <div class="col-md-2">
-                    @Html.DropDownListFor(x=>x.Teacher, (List<SelectListItem>)ViewBag.Teachers, "Всі викладачі", new { @class = "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x=>x.TeacherId, (List<SelectListItem>)ViewBag.Teachers, "Всі викладачі", new { @class = "col-md-offset-1 col-md-11" })
 
                 </div>
                 <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
@@ -61,7 +58,7 @@
         </div>
     }
     <div class="col-md-12">
-        @*RenderBody()*@
+        @*@RenderBody()*@
     </div>
   
    <script type="text/javascript">

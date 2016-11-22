@@ -190,6 +190,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SchedulerController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -219,6 +220,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Scheduler\ScheduleDay.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Admin\AdminBase.cshtml" />
+    <Content Include="Views\Admin\TeachersList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

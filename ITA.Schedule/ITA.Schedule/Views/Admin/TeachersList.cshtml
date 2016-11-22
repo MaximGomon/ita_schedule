@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "TeachersList";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+}
+
+<h2>TeachersList</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                <p>Name</p>
+            </th>
+            <th>
+                <p>Subject</p>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in ViewBag.Teachers)
+        {
+            <tr>
+                <td>
+                    <p>@teacher.Name</p>
+                </td>
+                <td>
+                    <p>@teacher.Name</p>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

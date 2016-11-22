@@ -1,4 +1,7 @@
 ﻿
+@using GridMvc.Html
+@model IEnumerable<ITA.Schedule.Entity.Entities.Teacher>
+
 @{
     ViewBag.Title = "TeachersList";
     Layout = "~/Views/Admin/AdminBase.cshtml";
@@ -8,30 +11,41 @@
 
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>
-                <p>Name</p>
-            </th>
-            <th>
-                <p>Subject</p>
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            <p>Name</p>
+        </th>
+        <th>
+            <p>Subject</p>
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var teacher in ViewBag.Teachers)
-        {
-            <tr>
-                <td>
-                    <p>@teacher.Name</p>
-                </td>
-                <td>
-                    <p>@teacher.Name</p>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        }
+    @foreach (var teacher in Model)
+    {
+        <tr>
+            <td>
+                <p>@teacher.Name</p>
+            </td>
+            <td>
+                <p>@foreach (var subject in @teacher.Subjects)
+                   {
+                       <span>@subject.Name</span>
+                   }
+                </p>
+            </td>
+            <td>
+                <input class="btn btn-success" type="submit" value="Update"/>
+            </td>
+            <td>
+                <input class="btn btn-danger" type="submit" value="Delete"/>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
+
+
+@*@Html.Grid(Model)*@

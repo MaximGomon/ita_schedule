@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Models;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Controllers
 {
@@ -14,6 +15,9 @@ namespace ITA.Schedule.Controllers
         // GET: Student
         public ActionResult Index()
         {
+            //test NLog
+            LoggerSchedule.log.Trace("run{0}", "In student controller log");
+
             //GetAllTeachers
             var teacherBl = new TeacherBl(new TeacherRepository());
             var teachers = teacherBl.GetAll();

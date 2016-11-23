@@ -69,8 +69,8 @@ namespace ITA.Schedule.Controllers
             var updateTeacherModel = new UpdateTeacherModel()
             {
                 Teacher = teacher,
-                Subjects = new List<>()
-                //Subjects = new List<string>()
+                //Subjects = new List<>()
+                Subjects = new List<string>()
             };
 
             var dbSubjects = _subjectBl.GetAll().ToList();

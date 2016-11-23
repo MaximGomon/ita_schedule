@@ -1,4 +1,5 @@
-﻿@using Kendo.Mvc.UI
+﻿@using ITA.Schedule.Models
+@using Kendo.Mvc.UI
 @using FormMethod = Microsoft.AspNetCore.Mvc.Rendering.FormMethod
 @model ITA.Schedule.Models.UpdateTeacherModel
 
@@ -6,11 +7,14 @@
     ViewBag.Title = "UpdateTeacher";
     Layout = "~/Views/Admin/AdminBase.cshtml";
     
-    var teacherSubjects = new List<string>();
+    
+
+
+    var teacherSubjects = new List<SubjectModel>();
 
     foreach (var teacherSubject in Model.Teacher.Subjects)
     {
-        teacherSubjects.Add(teacherSubject.Name);
+        teacherSubjects.Add(new SubjectModel() {Id = teacherSubject.Id, Name = teacherSubject.Name});
     }
 }
 
@@ -26,20 +30,28 @@
 
     @Html.TextBoxFor(x => x.Teacher.Name, Model.Teacher.Name, new { @class = "form-group" })
 
-    <div class="demo-section k-content">
-        <h2>Invite Attendees</h2>
-        <label>Subjects</label>
-        @(Html.Kendo().MultiSelectFor(x => x.Subjects)
-              .BindTo(Model.Subjects)
-              .Value(teacherSubjects)
-        )
-    </div>
+    
+        <div class="demo-section k-content">
+            <h2>Invite Attendees</h2>
+            <label>Subjects</label>
+            @(Html.Kendo().MultiSelect()
+                  .Name("SubjectIds")
+                  .DataValueField("Id")
+                  .DataTextField("Name")
+                  .BindTo(Model.Subjects)
+                  .Value(teacherSubjects)
+            )
+        </div>
 
-    @*ToDo consult Max about it
+
+       @*ToDo ask Max about it
         <div class="demo-section k-content">
         <h2>Invite Attendees</h2>
         <label>Subjects</label>
-        @(Html.Kendo().MultiSelectFor(x => x.Subjects)
+        @(Html.Kendo().MultiSelect()
+              .Name("Subjects")
+              .DataValueField("Id")
+              .DataValueField("Name")
               .DataTextField("Name")
               .BindTo(Model.Subjects)
               )

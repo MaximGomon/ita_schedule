@@ -1264,6 +1264,7 @@
     <Compile Include="Models\TeacherFilterViewModel.cs" />
     <Compile Include="Models\TeacherListViewModel.cs" />
     <Compile Include="Models\TeacherModel.cs" />
+    <Compile Include="Models\UpdatedTeacherModel.cs" />
     <Compile Include="Models\UpdateTeacherModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -69,25 +69,25 @@ namespace ITA.Schedule.Controllers
             var updateTeacherModel = new UpdateTeacherModel()
             {
                 Teacher = teacher,
-                //Subjects = new List<>()
-                Subjects = new List<string>()
+                Subjects = new List<SubjectModel>()
+                //Subjects = new List<string>()
             };
 
             var dbSubjects = _subjectBl.GetAll().ToList();
 
             foreach (var subject in dbSubjects)
             {
-                updateTeacherModel.Subjects.Add(subject.Name);
+                updateTeacherModel.Subjects.Add(new SubjectModel().ConvertSubjectToModel(subject, teacher));
             }
 
             return PartialView("UpdateTeacher", updateTeacherModel);
         }
 
         [HttpPost]
-        public ActionResult UpdateTeacher(UpdateTeacherModel updatedTeacher)
+        public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
         {
             var test = updatedTeacher;
-            return PartialView("UpdateTeacher", updatedTeacher);
+            return RedirectToAction("Index");
         }
     }
 }

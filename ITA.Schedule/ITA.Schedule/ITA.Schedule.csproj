@@ -866,6 +866,7 @@
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\account.js" />
+    <None Include="Scripts\jquery-1.12.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
@@ -923,23 +924,17 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ITA.Schedule.BLL\ITA.Schedule.BLL.csproj">
+      <Project>{A65EF8F1-574E-481F-ACBF-B6C0717FE8CA}</Project>
+      <Name>ITA.Schedule.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ITA.Schedule.DAL\ITA.Schedule.DAL.csproj">
       <Project>{4700E086-7E91-4E23-92DD-69FABBDA84ED}</Project>
       <Name>ITA.Schedule.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ITA.Schedule.Entity\ITA.Schedule.Entity.csproj">
-      <Project>{e70bfa1a-ec9c-459c-a9ef-4d3fa5bc97bf}</Project>
+      <Project>{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}</Project>
       <Name>ITA.Schedule.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ITA.Schedule.Util\ITA.Schedule.Util.csproj">
-      <Project>{85BCF03A-DFA9-4A12-8A6D-2887CA1AE871}</Project>
-      <Name>ITA.Schedule.Util</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ITA.Schedule.BLL\ITA.Schedule.BLL.csproj">
-      <Project>{A65EF8F1-574E-481F-ACBF-B6C0717FE8CA}</Project>
-      <Name>ITA.Schedule.BLL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

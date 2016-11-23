@@ -1,9 +1,11 @@
-﻿using System;
+﻿
+using ITA.Schedule.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ITA.Schedule.Models;
+
 
 namespace ITA.Schedule.Controllers
 {
@@ -18,8 +20,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult CheckForUser(UserViewModel user)
         {
-            return RedirectToAction("FilterStudent", "Student");
+            return RedirectToAction("Index", "Scheduler");
         }
-       
+
     }
 }

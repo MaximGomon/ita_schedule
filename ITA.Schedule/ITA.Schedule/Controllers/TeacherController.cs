@@ -8,6 +8,7 @@ using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.DAL;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
 {
@@ -27,7 +28,7 @@ namespace ITA.Schedule.Controllers
             //    if (student != null) studentBl.ReplaceToAnotherSubGroup(student.Id, firstOrDefault.Id);
 
 
-            return View("ShowTeachers", teachers);
+            return View("TeacherFilter", new TeacherFilterViewModel());
         }
 
         //[HttpGet]

@@ -202,8 +202,8 @@
     <Compile Include="Models\PeopleViewModel.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
-    <Compile Include="Models\StudentFilter.cs" />
     <Compile Include="Models\StudentFilterViewModel.cs" />
+    <Compile Include="Models\TeacherFilterViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebModule.cs" />
@@ -220,6 +220,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Scheduler\ScheduleDay.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Teacher\TeacherFilter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

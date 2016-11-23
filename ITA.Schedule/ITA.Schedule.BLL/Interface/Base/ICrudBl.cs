@@ -12,6 +12,7 @@ namespace ITA.Schedule.BLL.Interface.Base
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
         IQueryable<TEntity> GetAll();
         TEntity GetById(Guid id);
+        void Remove(Guid id);
         void Remove(TEntity entity);
         void Update(TEntity entity);
         void Insert(TEntity entity);

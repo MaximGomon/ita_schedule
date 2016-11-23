@@ -1,0 +1,48 @@
+﻿@using Kendo.Mvc.UI
+@using FormMethod = Microsoft.AspNetCore.Mvc.Rendering.FormMethod
+@model ITA.Schedule.Models.UpdateTeacherModel
+
+@{
+    ViewBag.Title = "UpdateTeacher";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+    
+    var teacherSubjects = new List<string>();
+
+    foreach (var teacherSubject in Model.Teacher.Subjects)
+    {
+        teacherSubjects.Add(teacherSubject.Name);
+    }
+}
+
+<script src="~/kendo/kendo.all.min.js"></script>
+<script src="~/kendo/kendo.aspnetmvc.min.js"></script>
+<link href="~/kendo/kendo_theme/kendo.bootstrap.min.css" rel="stylesheet" />
+<link href="~/kendo/kendo_theme/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/UpdateTeacher.css" rel="stylesheet" />
+<h2>UpdateTeacher</h2>
+
+@using (Html.BeginForm("UpdateTeacher", "Admin", FormMethod.Post))
+{
+
+    @Html.TextBoxFor(x => x.Teacher.Name, Model.Teacher.Name, new { @class = "form-group" })
+
+    <div class="demo-section k-content">
+        <h2>Invite Attendees</h2>
+        <label>Subjects</label>
+        @(Html.Kendo().MultiSelectFor(x => x.Subjects)
+              .BindTo(Model.Subjects)
+              .Value(teacherSubjects)
+        )
+    </div>
+
+    @*ToDo consult Max about it
+        <div class="demo-section k-content">
+        <h2>Invite Attendees</h2>
+        <label>Subjects</label>
+        @(Html.Kendo().MultiSelectFor(x => x.Subjects)
+              .DataTextField("Name")
+              .BindTo(Model.Subjects)
+              )
+    </div>*@
+    <input class="btn btn-success" type="submit" value="Update Teacher" />
+}

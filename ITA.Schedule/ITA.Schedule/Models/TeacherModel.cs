@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ITA.Schedule.Models
 {
@@ -7,9 +8,11 @@ namespace ITA.Schedule.Models
     /// </summary>
     public class TeacherModel
     {
+        // Teacher ID
+        public Guid Id { get; set; }
         // Teacher name
-        public string Name;
+        public string Name { get; set; }
         // Teacher subjects
-        public List<string> Subjects;
+        public string Subjects { get; set; }
     }
 }

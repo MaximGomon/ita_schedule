@@ -102,5 +102,14 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         {
             return ContextDb.Set<Teacher>().Include(x => x.Subjects);
         }
+
+        // gets all teachers with subjects which they lead
+        public override Teacher GetById(Guid id)
+        {
+            return ContextDb.Set<Teacher>()
+                .Where(x => x.Id == id)
+                .Include(x => x.Subjects)
+                .FirstOrDefault();
+        }
     }
 }

@@ -1,0 +1,46 @@
+﻿
+@model ITA.Schedule.Entity.Entities.Teacher
+    
+@{
+    ViewBag.Title = "Delete " + Model.Name + " Teacher" ;
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+}
+
+<h1>Видалити вчителя з бази даних?</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ім'я</th>
+            <th>Предмети</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Name</td>
+            <td>
+                @foreach (var subject in Model.Subjects)
+                {
+                    @subject.Name <br />
+                }
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+@*
+
+<h2>Ім'я</h2>
+<h3></h3>
+
+@if (Model.Subjects.Count > 0)
+{
+    <h2>Предмети:</h2>
+    
+}
+
+*@
+
+
+

@@ -14,14 +14,19 @@ namespace ITA.Schedule.Helper
             {
                 var teacherModel = new TeacherModel()
                 {
+                    Id = teacher.Id,
                     Name = teacher.Name
                 };
 
-                teacherModel.Subjects = new List<string>();
-
+                var i = 0;
                 foreach (var subject in teacher.Subjects)
                 {
-                    teacherModel.Subjects.Add(subject.Name);
+                    teacherModel.Subjects += subject.Name;
+                    i++;
+                    if (i < teacher.Subjects.Count)
+                    {
+                        teacherModel.Subjects += ", ";
+                    }
                 }
 
                 convertedTeachers.Add(teacherModel);

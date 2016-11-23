@@ -1,31 +1,199 @@
-﻿
+﻿@using ITA.Schedule.Models
 @using Kendo.Mvc.UI
-@model  ITA.Schedule.Models.SchedulerViewModel
+@model ITA.Schedule.Models.StudentViewModel
 
-    <div class="col-md-12">
-        <div class="h3 alert alert-info info col-sm-12 text-center">
-            <span class = "text-center">
-                @ViewBag.Date
-            </span>
-        </div>
-        <div class="col-md-2">
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
 
-        </div>
-        <div class="col-md-2">
-            @foreach (var schedule in Model.ColumnHeaders)
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StudentHeader</title>
+
+</head>
+<body>
+    <div class="alert row">
+        @using (Html.BeginForm("ScheduleDay", "Scheduler"))
+        {
+            <div class="col-md-12 row-bordered">
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.Filter.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
+                </div>
+
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(x => x.Filter.MySubjectId, Model.Filter.SubjectsList, "Всі предмети", new { @class = "col-md-offset-1 col-md-11" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.DropDownListFor(x => x.Filter.TeacherId, Model.Filter.TeachersList, "Всі викладачі", new { @class = "col-md-offset-1 col-md-11" })
+
+                </div>
+                <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new { name = "day", @checked = true }) День
+                    </label>
+
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new { name = "week" }) Тиждень
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new { name = "month" }) Місяць
+                    </label>
+                </div>
+                <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
+                    <button type="submit" class="btn btn-success"> Показати </button>
+                </div>
+            </div>
+        }
+        <div class="col-md-12">
+            @if (Model.Scheduler != null)
             {
-                <div style="width:@ViewBag.Width">
-                    
+                <div class="col-md-12">
+                    <div class="h3 alert alert-info info col-sm-12 text-center">
+                        <span class="text-center">
+                        @ViewBag.Date
+                    </span>
+                    </div>
+
+                    <div class="col-md-12" style="display: inline-block">
+                        <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                            Lesson
+                        </div>
+                        <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                            Time
+                        </div>
+                        @foreach (var schedule in Model.Scheduler.ColumnHeaders)
+                        {
+                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                <span>@schedule.Key</span>
+                            </div>
+                        }
+                    </div>
+                    @{
+                        var headers = new Dictionary<string, int>();
+
+                        var lessons = new List<string>();
+
+                        var lessonNumber = 0;
+                        foreach (var item in @Model.Scheduler.RowHeaders)
+                        {
+                            //begin draw row
+                            lessonNumber++;
+                            <div class="col-md-12" style="display: inline-block">
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                    Пара @lessonNumber
+                                </div>
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                    Початок о <br>
+                                    @item.ToShortTimeString()
+                                </div>
+                                @foreach (var teacher in Model.Scheduler.ColumnHeaders)
+                                {
+                                    var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
+                                    if (lesson != null)
+                                    {
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        <span>@lesson.Description</span>
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+
+                                    </div>
+                                    }
+                                }
+                                
+                            </div>
+                        }
+                    }
+
+
                 </div>
             }
         </div>
 
-        @foreach (var schedule in Model.Events)
-        {
-            <div class="col-md-2">
+        <script type="text/javascript">
+            $(document)
+                .ready(function() {
+                    var time = new Date();
 
-            </div>
-        }
+            $(function () {
+                $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", time);
+            });
+
+            // create DatePicker from input HTML element
+            //$("#datepicker").kendoDatePicker();
+
+            //$("#monthpicker").kendoDatePicker({
+            //    // defines the start view
+            //    start: "year",
+
+            //    // defines when the calendar should return date
+            //    depth: "year",
+
+            //    // display month and year in the input
+            //    format: "MMMM yyyy"
+            //});
+        });
+        </script>
 
     </div>
+</body>
+
+
+@*@using Kendo.Mvc.UI
+@model  ITA.Schedule.Models.StudentViewModel
+@{
+    Layout = "~/Views/Student/StudentHeader.cshtml";
+}
+    <div class="col-md-12">
+    <div class="h3 alert alert-info info col-sm-12 text-center">
+        <span class="text-center">
+            @ViewBag.Date
+        </span>
+    </div>
+    
+        <div class="col-md-12" style="display: inline-block">
+            <div style="width: @ViewBag.Width; display: inline-block">
+                Lesson
+            </div>
+            <div style="width: @ViewBag.Width; display: inline-block">
+                Time
+            </div>
+            @foreach (var schedule in Model.Scheduler.ColumnHeaders)
+            {
+                <div class="text-center" style="width: @ViewBag.Width; display: inline-block">
+                    @Html.Label(schedule.Key)
+                </div>
+            }
+        </div>
+            @{
+                var headers = new Dictionary<string, int>();
+
+                var lessons = new List<string>();
+
+                foreach (var item in lessons)
+                {
+                    //begin draw row
+                    for (int i = 0; i < lessons.Count; i++)
+                    {
+                        if (headers[item] == i)
+                        {
+                            //draw lesson in cell
+                        }
+                        else
+                        {
+                            //draw empty cell
+                        }
+                    }
+                    //end draw row
+                }
+            }
+        
+
+</div>*@
+
+
 

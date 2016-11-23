@@ -12,8 +12,14 @@ namespace ITA.Schedule.Controllers
     public class StudentController : Controller
     {
         // GET: Student
-        public ActionResult Index()
+        public ActionResult FilterStudent()
         {
+            StudentViewModel student = new StudentViewModel()
+            {
+                Filter = new StudentFilterViewModel(),
+                Scheduler = new SchedulerViewModel()
+            };
+
             //GetAllTeachers
             var teacherBl = new TeacherBl(new TeacherRepository());
             var teachers = teacherBl.GetAll();
@@ -21,11 +27,11 @@ namespace ITA.Schedule.Controllers
             var subjectBl = new SubjectBl(new SubjectRepository());
             var subjects = subjectBl.GetAll();
 
-            ViewBag.Teachers = teachers.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+            student.Filter.TeachersList = teachers.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
 
-            ViewBag.Subjects = subjects.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+            student.Filter.SubjectsList = subjects.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
 
-            return View("StudentHeader", new StudentFilterViewModel());
+            return View("StudentHeader", student);
         }
     }
 }

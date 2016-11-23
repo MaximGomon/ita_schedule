@@ -7,8 +7,12 @@ namespace ITA.Schedule.Models
 {
     public class Element
     {
+        //Lesson name
         public string Name { get; set; }
+
+        //adress
         public string Description { get; set; }
+
         public int LessonNumber { get; set; }
     }
 }

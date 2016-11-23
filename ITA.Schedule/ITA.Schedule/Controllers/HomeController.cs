@@ -18,7 +18,7 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult CheckForUser(UserViewModel user)
         {
-            return RedirectToAction("Index", "Student");
+            return RedirectToAction("FilterStudent", "Student");
         }
        
     }

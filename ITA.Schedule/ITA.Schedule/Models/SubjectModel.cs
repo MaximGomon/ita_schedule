@@ -10,7 +10,7 @@ namespace ITA.Schedule.Models
 
         public string Name { get; set; }
         
-        public SubjectModel ConvertSubjectToModel(Subject subjectToConvert, Teacher teacher)
+        public SubjectModel ConvertSubjectToModel(Subject subjectToConvert)
         {
             Name = subjectToConvert.Name;
             Id = subjectToConvert.Id;

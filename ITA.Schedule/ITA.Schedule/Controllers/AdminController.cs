@@ -23,6 +23,39 @@ namespace ITA.Schedule.Controllers
             _subjectBl = new SubjectBl(new SubjectRepository());
         }
 
+        public ActionResult AddTeacher()
+        {
+            var addTeacherModel = new UpdateTeacherModel()
+            {
+                Subjects = new List<SubjectModel>()
+            };
+
+            var dbSubjects = _subjectBl.GetAll().ToList();
+
+            foreach (var subject in dbSubjects)
+            {
+                addTeacherModel.Subjects.Add(new SubjectModel().ConvertSubjectToModel(subject));
+            }
+
+            return PartialView("AddTeacher", addTeacherModel);
+        }
+
+        // updating a teaher in the DB
+        [HttpPost]
+        public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
+        {
+            var newTeacher = new Teacher() {Name = addedTeacher.Name};
+
+            _teacherBl.Insert(newTeacher);
+
+            foreach (var subjectId in addedTeacher.SubjectIds)
+            {
+                _teacherBl.AddSubjectToTeacher(newTeacher.Id, subjectId);
+            }
+
+            return RedirectToAction("ShowTeachers");
+        }
+
         // Show teachers list
         [HttpGet]
         public ActionResult ShowTeachers()
@@ -82,7 +115,7 @@ namespace ITA.Schedule.Controllers
 
             foreach (var subject in dbSubjects)
             {
-                updateTeacherModel.Subjects.Add(new SubjectModel().ConvertSubjectToModel(subject, teacher));
+                updateTeacherModel.Subjects.Add(new SubjectModel().ConvertSubjectToModel(subject));
             }
 
             return PartialView("UpdateTeacher", updateTeacherModel);

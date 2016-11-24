@@ -22,14 +22,17 @@ namespace ITA.Schedule.Controllers
             _teacherBl = new TeacherBl(new TeacherRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
         }
-        // GET: Admin
+
+        // Show teachers list
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult ShowTeachers()
         {
             var teachers = _teacherBl.GetAll().ToList().ToTeacherModel();
             return PartialView("TeachersList", teachers);
         }
 
+        // action gets triggered once admin clicked on the Delete
+        // button of a particular teacher on the list of teachers
         [HttpGet]
         public ActionResult DeleteTeacher(Guid id)
         {
@@ -43,8 +46,9 @@ namespace ITA.Schedule.Controllers
             return PartialView("DeleteTeacher", teacher);
         }
 
+        // Delete a teacher from Db once admin has confirmed removal
         [HttpGet]
-        public ActionResult Delete(Guid id)
+        public ActionResult DeleteTeacherFromDb(Guid id)
         {
             var teacher = _teacherBl.GetById(id);
 
@@ -53,9 +57,11 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             _teacherBl.Remove(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("ShowTeachers");
         }
 
+        // action gets triggered once admin clicked on the Update
+        // button of a particular teacher on the list of teachers
         [HttpGet]
         public ActionResult UpdateTeacher(Guid id)
         {
@@ -70,7 +76,6 @@ namespace ITA.Schedule.Controllers
             {
                 Teacher = teacher,
                 Subjects = new List<SubjectModel>()
-                //Subjects = new List<string>()
             };
 
             var dbSubjects = _subjectBl.GetAll().ToList();
@@ -83,11 +88,14 @@ namespace ITA.Schedule.Controllers
             return PartialView("UpdateTeacher", updateTeacherModel);
         }
 
+        // updating a teaher in the DB
         [HttpPost]
         public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
         {
+
+
             var test = updatedTeacher;
-            return RedirectToAction("Index");
+            return RedirectToAction("ShowTeachers");
         }
     }
 }

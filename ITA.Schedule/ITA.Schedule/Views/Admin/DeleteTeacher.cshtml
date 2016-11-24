@@ -6,13 +6,13 @@
     Layout = "~/Views/Admin/AdminBase.cshtml";
 }
 
-<h1>Видалити вчителя з бази даних?</h1>
+<h1>Delete teacher from the database?</h1>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Ім'я</th>
-            <th>Предмети</th>
+            <th>Name</th>
+            <th>Subjects</th>
         </tr>
     </thead>
     <tbody>
@@ -28,19 +28,7 @@
     </tbody>
 
 </table>
-@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
-@*
-
-<h2>Ім'я</h2>
-<h3></h3>
-
-@if (Model.Subjects.Count > 0)
-{
-    <h2>Предмети:</h2>
-    
-}
-
-*@
+@Html.ActionLink("Delete", "DeleteTeacherFromDb", new { id = Model.Id }, new { @class = "btn btn-danger" })
 
 
 

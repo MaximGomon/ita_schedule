@@ -1,4 +1,5 @@
 ﻿@using ITA.Schedule.Models
+@using ITA.Schedule.Util
 @using Kendo.Mvc.UI
 @model ITA.Schedule.Models.StudentViewModel
 
@@ -47,13 +48,13 @@
             </div>
         }
         <div class="col-md-12">
-            @if (Model.Scheduler != null)
+            @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
             {
                 <div class="col-md-12">
-                    <div class="h3 alert alert-info info col-sm-12 text-center">
+                    <div class="h3 alert alert-info info col-sm-12 text-center"style="background: @($"#{new Random((int) DateTime.Now.Ticks).Next(0x1000000):X6}");" >
                         <span class="text-center">
-                        @ViewBag.Date
-                    </span>
+                            @Model.Scheduler.DayOfSchedule
+                        </span>
                     </div>
 
                     <div class="col-md-12" style="display: inline-block">
@@ -71,10 +72,6 @@
                         }
                     </div>
                     @{
-                        var headers = new Dictionary<string, int>();
-
-                        var lessons = new List<string>();
-
                         var lessonNumber = 0;
                         foreach (var item in @Model.Scheduler.RowHeaders)
                         {
@@ -111,6 +108,72 @@
 
 
                 </div>
+            }
+                        
+            @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
+            {
+                foreach (var day in Model.ScheduleForWeek)
+                {
+                    <div class="col-md-12">
+                        <div class="h3 alert alert-info info col-sm-12 text-center" style="background: @($"#{new Random((int) DateTime.Now.Ticks).Next(0x1000000):X6}");">
+                            <span class="text-center">
+                                @day.DayOfSchedule
+                            </span>
+                        </div>
+
+                        <div class="col-md-12" style="display: inline-block">
+                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                Lesson
+                            </div>
+                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                Time
+                            </div>
+                            @foreach (var schedule in day.ColumnHeaders)
+                            {
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                    <span>@schedule.Key</span>
+                                </div>
+                            }
+
+                        </div>
+                        @{
+                            var lessonNumber = 0;
+                            foreach (var item in @day.RowHeaders)
+                            {
+                                //begin draw row
+                                lessonNumber++;
+                                <div class="col-md-12" style="display: inline-block">
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        Пара @lessonNumber
+                                    </div>
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        Початок о <br>
+                                        @item.ToShortTimeString()
+                                    </div>
+                                    @foreach (var teacher in day.ColumnHeaders)
+                                    {
+                                        var lesson = day.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
+                                        if (lesson != null)
+                                        {
+                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                                <span>@lesson.Description</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            }
+                        }
+
+
+                    </div>
+                 }
             }
         </div>
 

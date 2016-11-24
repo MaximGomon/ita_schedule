@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
-using ITA.Schedule.Util;
+
 
 namespace ITA.Schedule.Controllers
 {

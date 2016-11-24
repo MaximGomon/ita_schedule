@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Kendo.Mvc.UI;
 
 namespace ITA.Schedule.Models
 {
@@ -10,5 +11,7 @@ namespace ITA.Schedule.Models
         public StudentFilterViewModel Filter { get; set; }
 
         public SchedulerViewModel Scheduler { get; set; }
+
+        public List<SchedulerViewModel> ScheduleForWeek { get; set; }
     }
 }

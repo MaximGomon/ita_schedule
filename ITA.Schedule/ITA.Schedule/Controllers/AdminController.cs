@@ -92,9 +92,11 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
         {
+            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name, updatedTeacher.SubjectIds))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-
-            var test = updatedTeacher;
             return RedirectToAction("ShowTeachers");
         }
     }

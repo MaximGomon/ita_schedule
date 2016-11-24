@@ -20,25 +20,26 @@
 <link href="~/kendo/kendo_theme/kendo.bootstrap.min.css" rel="stylesheet" />
 <link href="~/kendo/kendo_theme/kendo.common.min.css" rel="stylesheet" />
 <link href="~/Content/UpdateTeacher.css" rel="stylesheet" />
-<h2>UpdateTeacher</h2>
 
 @using (Html.BeginForm("UpdateTeacher", "Admin", FormMethod.Post))
 {
-
-    @Html.TextBoxFor(x => x.Teacher.Name, Model.Teacher.Name, new { @class = "form-group" })
+    @Html.ValidationSummary()
+    @Html.TextBoxFor(x => x.Teacher.Id, Model.Teacher.Id.ToString(), new { @style = "display: none;" })
+    <h2>Update teacher name</h2>
+    @Html.TextBox("Name", Model.Teacher.Name, new { @class = "form-group" })
 
     
-        <div class="demo-section k-content">
-            <h2>Invite Attendees</h2>
-            <label>Subjects</label>
-            @(Html.Kendo().MultiSelect()
-                  .Name("SubjectIds")
-                  .DataValueField("Id")
-                  .DataTextField("Name")
-                  .BindTo(Model.Subjects)
-                  .Value(teacherSubjects)
-            )
-        </div>
+    <div class="demo-section k-content">
+        <h2>Assign subjects</h2>
+        <label>Subjects</label>
+        @(Html.Kendo().MultiSelect()
+                .Name("SubjectIds")
+                .DataValueField("Id")
+                .DataTextField("Name")
+                .BindTo(Model.Subjects)
+                .Value(teacherSubjects)
+        )
+    </div>
 
 
        @*ToDo ask Max about it

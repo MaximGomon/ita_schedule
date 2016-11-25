@@ -1596,6 +1596,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\subject-validation.js" />
     <Content Include="Scripts\teacher-validation.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -1610,6 +1611,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddUpdateSubjectModel.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Models\PeopleViewModel.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -1620,7 +1622,7 @@
     <Compile Include="Models\TeacherFilterViewModel.cs" />
     <Compile Include="Models\TeacherModel.cs" />
     <Compile Include="Models\UpdatedTeacherModel.cs" />
-    <Compile Include="Models\UpdateTeacherModel.cs" />
+    <Compile Include="Models\AddUpdateTeacherModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebModule.cs" />

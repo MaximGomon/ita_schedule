@@ -37,10 +37,33 @@ namespace ITA.Schedule.Controllers
             return PartialView("SubjectsList", subjects);
         }
 
-        // add teacher initial screen
+        // add subject initial screen
+        [HttpGet]
         public ActionResult AddSubject()
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
+
+            return PartialView("AddSubject", subjectCodes);
+        }
+
+        // adding a subject to the DB
+        [HttpPost]
+        public ActionResult AddSubject(Subject newSubject)
+        {
+            if (newSubject.Name == null || newSubject.Name.Length > 400)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
+
+            if (newSubject.Code == 0 || subjectCodes.Exists(x => x == newSubject.Code))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+
+            return RedirectToAction("ShowSubjects");
         }
 
         // update subject initial screen
@@ -72,9 +95,10 @@ namespace ITA.Schedule.Controllers
         }
 
         // add teacher initial screen
+        [HttpGet]
         public ActionResult AddTeacher()
         {
-            var addTeacherModel = new UpdateTeacherModel()
+            var addTeacherModel = new AddUpdateTeacherModel()
             {
                 Subjects = new List<SubjectModel>()
             };
@@ -93,7 +117,7 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
         {
-            if (addedTeacher.Name == null)
+            if (addedTeacher.Name == null || addedTeacher.Name.Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -125,7 +149,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateTeacherModel = new UpdateTeacherModel()
+            var updateTeacherModel = new AddUpdateTeacherModel()
             {
                 Teacher = teacher,
                 Subjects = new List<SubjectModel>()

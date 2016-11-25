@@ -23,6 +23,15 @@ namespace ITA.Schedule.Controllers
             _subjectBl = new SubjectBl(new SubjectRepository());
         }
 
+        // Show teachers list
+        [HttpGet]
+        public ActionResult ShowTeachers()
+        {
+            var teachers = _teacherBl.GetAll().ToList().ToTeacherModel().OrderBy(x => x.Name).ToList();
+            return PartialView("TeachersList", teachers);
+        }
+
+        // add teacher initial screen
         public ActionResult AddTeacher()
         {
             var addTeacherModel = new UpdateTeacherModel()
@@ -44,52 +53,23 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
         {
+            if (addedTeacher.Name == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var newTeacher = new Teacher() {Name = addedTeacher.Name};
 
             _teacherBl.Insert(newTeacher);
 
-            foreach (var subjectId in addedTeacher.SubjectIds)
+            if (addedTeacher.SubjectIds != null)
             {
-                _teacherBl.AddSubjectToTeacher(newTeacher.Id, subjectId);
+                foreach (var subjectId in addedTeacher.SubjectIds)
+                {
+                    _teacherBl.AddSubjectToTeacher(newTeacher.Id, subjectId);
+                }
             }
 
-            return RedirectToAction("ShowTeachers");
-        }
-
-        // Show teachers list
-        [HttpGet]
-        public ActionResult ShowTeachers()
-        {
-            var teachers = _teacherBl.GetAll().ToList().ToTeacherModel();
-            return PartialView("TeachersList", teachers);
-        }
-
-        // action gets triggered once admin clicked on the Delete
-        // button of a particular teacher on the list of teachers
-        [HttpGet]
-        public ActionResult DeleteTeacher(Guid id)
-        {
-            var teacher = _teacherBl.GetById(id);
-
-            if (teacher == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            return PartialView("DeleteTeacher", teacher);
-        }
-
-        // Delete a teacher from Db once admin has confirmed removal
-        [HttpGet]
-        public ActionResult DeleteTeacherFromDb(Guid id)
-        {
-            var teacher = _teacherBl.GetById(id);
-
-            if (teacher == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            _teacherBl.Remove(id);
             return RedirectToAction("ShowTeachers");
         }
 
@@ -130,6 +110,35 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            return RedirectToAction("ShowTeachers");
+        }
+
+        // action gets triggered once admin clicked on the Delete
+        // button of a particular teacher on the list of teachers
+        [HttpGet]
+        public ActionResult DeleteTeacher(Guid id)
+        {
+            var teacher = _teacherBl.GetById(id);
+
+            if (teacher == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("DeleteTeacher", teacher);
+        }
+
+        // Delete a teacher from Db once admin has confirmed removal
+        [HttpGet]
+        public ActionResult DeleteTeacherFromDb(Guid id)
+        {
+            var teacher = _teacherBl.GetById(id);
+
+            if (teacher == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _teacherBl.Remove(id);
             return RedirectToAction("ShowTeachers");
         }
     }

@@ -1263,7 +1263,6 @@
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\StudentFilterViewModel.cs" />
     <Compile Include="Models\TeacherFilterViewModel.cs" />
-    <Compile Include="Models\TeacherListViewModel.cs" />
     <Compile Include="Models\TeacherModel.cs" />
     <Compile Include="Models\UpdatedTeacherModel.cs" />
     <Compile Include="Models\UpdateTeacherModel.cs" />

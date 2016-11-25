@@ -7,27 +7,67 @@ using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
-using ITA.Schedule.Helper;
 using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
 {
     public class AdminController : Controller
     {
-        private TeacherBl _teacherBl;
-        private SubjectBl _subjectBl;
+        private readonly TeacherBl _teacherBl;
+        private readonly SubjectBl _subjectBl;
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
         }
+        /// <summary>
+        /// Subjects group of methods
+        /// </summary>
+        /// <returns></returns>
+
+        // Show subjects list
+        [HttpGet]
+        public ActionResult ShowSubjects()
+        {
+            var subjectsDb = _subjectBl.GetAll().ToList();
+
+            var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Name);
+
+            return PartialView("SubjectsList", subjects);
+        }
+
+        // add teacher initial screen
+        public ActionResult AddSubject()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        // update subject initial screen
+        public ActionResult UpdateSubject()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        // delete subject initial screen
+        public ActionResult DeleteSubject()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        /// <summary>
+        /// Teachers group of methods
+        /// </summary>
+        /// <returns></returns>
 
         // Show teachers list
         [HttpGet]
         public ActionResult ShowTeachers()
         {
-            var teachers = _teacherBl.GetAll().ToList().ToTeacherModel().OrderBy(x => x.Name).ToList();
+            var teachersDb = _teacherBl.GetAll().ToList();
+            
+            var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Name);
+
             return PartialView("TeachersList", teachers);
         }
 

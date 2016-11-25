@@ -1610,7 +1610,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\TeacherModelConverter.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Models\PeopleViewModel.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -1643,6 +1642,8 @@
     <Content Include="Views\Admin\DeleteTeacher.cshtml" />
     <Content Include="Views\Admin\TeachersList.cshtml" />
     <Content Include="Views\Admin\UpdateTeacher.cshtml" />
+    <Content Include="Views\Admin\SubjectsList.cshtml" />
+    <Content Include="Views\Admin\AddSubject.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

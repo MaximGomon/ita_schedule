@@ -67,7 +67,7 @@
   </xs:complexType>
   <xs:complexType name="NLogRules">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="logger" type="NLogLoggerRule" />
+      <xs:element name="logger" type="NLogLoggerScheduleRule" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="NLogExtensions">
@@ -92,7 +92,7 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
-  <xs:complexType name="NLogLoggerRule">
+  <xs:complexType name="NLogLoggerScheduleRule">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="filters" type="NLogFilters" />
     </xs:choice>

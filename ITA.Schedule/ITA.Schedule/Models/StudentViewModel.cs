@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Kendo.Mvc.UI;
+
+namespace ITA.Schedule.Models
+{
+    public class StudentViewModel
+    {
+        public StudentFilterViewModel Filter { get; set; }
+
+        public SchedulerViewModel Scheduler { get; set; }
+
+        public List<SchedulerViewModel> ScheduleForWeek { get; set; }
+    }
+}

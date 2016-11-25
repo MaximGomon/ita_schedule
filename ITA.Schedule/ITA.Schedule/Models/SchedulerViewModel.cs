@@ -7,8 +7,10 @@ namespace ITA.Schedule.Models
 {
     public class SchedulerViewModel
     {
-        public List<string> ColumnHeaders { get; set; }
-        public List<string> RowHeaders { get; set; }
+        public Dictionary<string, int> ColumnHeaders { get; set; }
+
+        public string DayOfSchedule { get; set; }
+        public List<DateTime> RowHeaders { get; set; }
         public List<Element> Events { get; set; }
         
     }

@@ -68,9 +68,33 @@ namespace ITA.Schedule.Controllers
         }
 
         // update subject initial screen
-        public ActionResult UpdateSubject()
+        [HttpGet]
+        public ActionResult UpdateSubject(Guid id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var subject = _subjectBl.GetById(id);
+
+            if (subject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var updateSubjectModel = new AddUpdateSubjectModel()
+            {
+                Subject = subject,
+                SubjectCodes = _subjectBl.GetAll().Select(x => x.Code).ToList(),
+                Teachers = new List<TeacherModel>()
+            };
+
+            updateSubjectModel.SubjectCodes.Remove(subject.Code);
+
+            var dbTeachers = _teacherBl.GetAll().ToList();
+
+            foreach (var teacher in dbTeachers)
+            {
+                updateSubjectModel.Teachers.Add(new TeacherModel().ConvertTeacherToModel(teacher));
+            }
+
+            return PartialView("UpdateSubject", updateSubjectModel);
         }
 
         // delete subject initial screen

@@ -10,5 +10,6 @@ namespace ITA.Schedule.Models
     {
         public Subject Subject { get; set; }
         public List<int> SubjectCodes { get; set; }
+        public List<TeacherModel> Teachers { get; set; }
     }
 }

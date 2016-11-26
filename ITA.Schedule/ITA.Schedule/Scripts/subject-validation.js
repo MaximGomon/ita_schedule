@@ -1,4 +1,8 @@
-﻿function validateAddSubjectForm(arr) {
+﻿$(document).ready(function () {
+    $("#btn-submit").attr("disabled", true);
+});
+
+function validateAddSubjectForm(arr) {
     arr = JSON.parse(arr);
     var valid = true;
     valid = checkEmpty($("#Name"));

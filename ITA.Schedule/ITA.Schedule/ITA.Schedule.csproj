@@ -1621,6 +1621,7 @@
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\TeacherFilterViewModel.cs" />
     <Compile Include="Models\TeacherModel.cs" />
+    <Compile Include="Models\UpdatedSubjectModel.cs" />
     <Compile Include="Models\UpdatedTeacherModel.cs" />
     <Compile Include="Models\AddUpdateTeacherModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />

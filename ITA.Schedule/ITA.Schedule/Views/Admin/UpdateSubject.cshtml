@@ -28,18 +28,6 @@
     @Html.TextBox("Name", Model.Subject.Name, new { @class = "form-control", @oninput = "validateAddSubjectForm('" + subjectCodes + "')" })
     <h2 > Update subject code</h2>
     @Html.TextBox("Code", Model.Subject.Code, new { @class = "form-control", @oninput = "validateAddSubjectForm('" + subjectCodes + "')" })
-
-    <div class="demo-section k-content">
-        <h2>Assign teachers</h2>
-        @(Html.Kendo().MultiSelect()
-                .Name("TeacherIds")
-                .DataValueField("Id")
-                .DataTextField("Name")
-                .BindTo(Model.Teachers)
-                .Value(subjectTeachers)
-                .HtmlAttributes(new { onchange = "validateAddSubjectForm('" + subjectCodes + "')" })
-              )
-    </div>
     <br />
     <input class="btn btn-success" type="submit" value="Update Subject" id="btn-submit" />
     @Html.ActionLink("Cancel", "ShowSubjects", null, new { @class = "btn btn-default" })

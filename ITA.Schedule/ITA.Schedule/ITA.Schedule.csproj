@@ -1603,6 +1603,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SchedulerController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -1611,6 +1612,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddUpdateSubjectModel.cs" />
+    <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Models\PeopleViewModel.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -1648,6 +1650,8 @@
     <Content Include="Views\Admin\AddSubject.cshtml" />
     <Content Include="Views\Admin\DeleteSubject.cshtml" />
     <Content Include="Views\Admin\UpdateSubject.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -51,7 +51,7 @@
             @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
             {
                 <div class="col-md-12">
-                    <div class="h3 alert alert-info info col-sm-12 text-center"style="background: @($"#{new Random((int) DateTime.Now.Ticks).Next(0x1000000):X6}");" >
+                    <div class="h3 alert alert-info info col-sm-12 text-center">
                         <span class="text-center">
                             @Model.Scheduler.DayOfSchedule
                         </span>
@@ -110,12 +110,12 @@
                 </div>
             }
                         
-            @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
+            @if (Model.ScheduleForWeek != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
             {
                 foreach (var day in Model.ScheduleForWeek)
                 {
                     <div class="col-md-12">
-                        <div class="h3 alert alert-info info col-sm-12 text-center" style="background: @($"#{new Random((int) DateTime.Now.Ticks).Next(0x1000000):X6}");">
+                        <div class="h3 alert alert-info info col-sm-12 text-center">
                             <span class="text-center">
                                 @day.DayOfSchedule
                             </span>
@@ -173,7 +173,23 @@
 
 
                     </div>
-                 }
+                }
+            }
+            @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
+            {
+                
+                <div class="col-md-12 alert">
+                    @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
+                    {
+                    <div class="text-center" style="width: 13%; display: inline-block">
+                        <span> @dayOfWeek</span>
+                    </div>
+                    }
+                </div>
+                foreach (var day in Model.Calendar.ColumnHeaders)
+                {
+
+                }
             }
         </div>
 

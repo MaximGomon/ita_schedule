@@ -62,6 +62,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
+            _subjectBl.Insert(newSubject);
 
             return RedirectToAction("ShowSubjects");
         }
@@ -73,9 +74,32 @@ namespace ITA.Schedule.Controllers
         }
 
         // delete subject initial screen
-        public ActionResult DeleteSubject()
+        [HttpGet]
+        public ActionResult DeleteSubject(Guid id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var subject = _subjectBl.GetById(id);
+
+            if (subject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("DeleteSubject", subject);
+        }
+
+        // delete subject from db
+        [HttpGet]
+        public ActionResult DeleteSubjectFromDb(Guid id)
+        {
+            var subject = _subjectBl.GetById(id);
+
+            if (subject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _subjectBl.Remove(id);
+            return RedirectToAction("ShowSubjects");
         }
 
         /// <summary>

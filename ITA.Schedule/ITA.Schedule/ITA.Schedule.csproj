@@ -1646,6 +1646,7 @@
     <Content Include="Views\Admin\UpdateTeacher.cshtml" />
     <Content Include="Views\Admin\SubjectsList.cshtml" />
     <Content Include="Views\Admin\AddSubject.cshtml" />
+    <Content Include="Views\Admin\DeleteSubject.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

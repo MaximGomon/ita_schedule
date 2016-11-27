@@ -19,26 +19,27 @@ namespace ITA.Schedule.Controllers
     public class SchedulerController : Controller
     {
 
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public void ShedulerLogger()
         {
             int k = 42;
             int l = 100;
 
-            logger.Trace("Sample trace message, k={0}, l={1}", k, l);
-            logger.Debug("Sample debug message, k={0}, l={1}", k, l);
-            logger.Info("Sample informational message, k={0}, l={1}", k, l);
-            logger.Warn("Sample warning message, k={0}, l={1}", k, l);
-            logger.Error("Sample error message, k={0}, l={1}", k, l);
-            logger.Fatal("Sample fatal error message, k={0}, l={1}", k, l);
-            logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", k, l);
+            Logger.Trace("Sample trace message, k={0}, l={1}", k, l);
+            Logger.Debug("Sample debug message, k={0}, l={1}", k, l);
+            Logger.Info("Sample informational message, k={0}, l={1}", k, l);
+            Logger.Warn("Sample warning message, k={0}, l={1}", k, l);
+            Logger.Error("Sample error message, k={0}, l={1}", k, l);
+            Logger.Fatal("Sample fatal error message, k={0}, l={1}", k, l);
+            Logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", k, l);
         }
 
         // GET: Scheduler
         public ActionResult Index()
         {
             ShedulerLogger();
+
             StudentViewModel student = new StudentViewModel()
             {
                 Filter = new StudentFilterViewModel(),

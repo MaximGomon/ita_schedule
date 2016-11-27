@@ -8,19 +8,76 @@ using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
+using Kendo.Mvc.UI;
 
 namespace ITA.Schedule.Controllers
 {
     public class AdminController : Controller
     {
         private readonly TeacherBl _teacherBl;
+        private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
+        private readonly UserBl _userBl;
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
+            _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
+            _userBl = new UserBl(new UserRepository());
         }
+
+        /// <summary>
+        /// Users group of methods
+        /// </summary>
+        /// <returns></returns>
+
+        // show user list
+        [HttpGet]
+        public ActionResult ShowUsers()
+        {
+            return PartialView("UsersList", _userBl.GetAll().ToList());
+        }
+
+        // add user initial screen
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            // get all teachers and students from the db to check who of them is binded to a user
+            var teachers = _teacherBl.GetAll().ToList();
+            var students = _studentBl.GetAll().ToList();
+
+            // get all users from the db
+            var users = _userBl.GetAll().ToList();
+
+            // create new list of Ids to filter assigned users for the view
+            var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
+            usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
+
+            // create new model for the view, which contains all teachers and students
+            // without users
+            var addUserModel = new AddUserModel()
+            {
+                Students = new Dictionary<Guid, string>(),
+                Teachers = new Dictionary<Guid, string>()
+            };
+
+            // add teachers to the model
+            foreach (var teacher in teachers.Where(teacher => usersWithId.All(x => x != teacher.Id)))
+            {
+                addUserModel.Teachers.Add(teacher.Id, teacher.Name);
+            }
+
+            // add students to the model
+            foreach (var student in students.Where(student => usersWithId.All(x => x != student.Id)))
+            {
+                addUserModel.Students.Add(student.Id, student.Name);
+            }
+
+            return PartialView("AddUser", addUserModel);
+        }
+
+
         /// <summary>
         /// Subjects group of methods
         /// </summary>
@@ -78,7 +135,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateSubjectModel = new AddUpdateSubjectModel()
+            var updateSubjectModel = new UpdateSubjectModel()
             {
                 Subject = subject,
                 SubjectCodes = _subjectBl.GetAll().Select(x => x.Code).ToList()

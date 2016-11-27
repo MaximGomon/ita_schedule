@@ -1611,13 +1611,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddUpdateSubjectModel.cs" />
+    <Compile Include="Models\UpdateSubjectModel.cs" />
+    <Compile Include="Models\AddUserModel.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Models\PeopleViewModel.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\StudentFilterViewModel.cs" />
+    <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\TeacherFilterViewModel.cs" />
@@ -1652,6 +1654,8 @@
     <Content Include="Views\Admin\UpdateSubject.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Admin\UsersList.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

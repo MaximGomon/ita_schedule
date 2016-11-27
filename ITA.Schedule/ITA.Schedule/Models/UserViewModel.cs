@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
@@ -18,6 +19,7 @@ namespace ITA.Schedule.Models
         [Required]
         public string Password { get; set; }
 
-        
+        public Guid StudentId { get; set; }
+        public Guid TeacherId { get; set; }
     }
 }

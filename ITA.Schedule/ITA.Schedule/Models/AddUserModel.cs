@@ -11,5 +11,6 @@ namespace ITA.Schedule.Models
     {
         public Dictionary<Guid, string> Teachers { get; set; }
         public Dictionary<Guid, string> Students { get; set; }
+        public Dictionary<Guid, string> SecurityGroups { get; set; }
     }
 }

@@ -18,12 +18,14 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
+        private readonly SecurityGroupBl _securityGroupBl;
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
+            _securityGroupBl = new SecurityGroupBl(new SecurityGroupRepository());
             _userBl = new UserBl(new UserRepository());
         }
 
@@ -46,6 +48,7 @@ namespace ITA.Schedule.Controllers
             // get all teachers and students from the db to check who of them is binded to a user
             var teachers = _teacherBl.GetAll().ToList();
             var students = _studentBl.GetAll().ToList();
+            var securityGroups = _securityGroupBl.GetAll().ToList();
 
             // get all users from the db
             var users = _userBl.GetAll().ToList();
@@ -59,7 +62,8 @@ namespace ITA.Schedule.Controllers
             var addUserModel = new AddUserModel()
             {
                 Students = new Dictionary<Guid, string>(),
-                Teachers = new Dictionary<Guid, string>()
+                Teachers = new Dictionary<Guid, string>(),
+                SecurityGroups = new Dictionary<Guid, string>()
             };
 
             // add teachers to the model
@@ -74,16 +78,27 @@ namespace ITA.Schedule.Controllers
                 addUserModel.Students.Add(student.Id, student.Name);
             }
 
+            // add security groups
+            foreach (var securityGroup in securityGroups)
+            {
+                addUserModel.SecurityGroups.Add(securityGroup.Id, securityGroup.Name);
+            }
+
             return PartialView("AddUser", addUserModel);
         }
 
+        // add user initial screen
+        /*[HttpGet]
+        public ActionResult AddUser(UserViewModel)
+        {
+        }*/
 
         /// <summary>
         /// Subjects group of methods
         /// </summary>
         /// <returns></returns>
 
-        // Show subjects list
+            // Show subjects list
         [HttpGet]
         public ActionResult ShowSubjects()
         {

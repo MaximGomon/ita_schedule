@@ -5,41 +5,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
-using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.DAL;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
 using ITA.Schedule.Util;
-using Kendo.Mvc.UI;
-using NLog;
+
 
 namespace ITA.Schedule.Controllers
 {
     public class SchedulerController : Controller
     {
-
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        public void ShedulerLogger()
-        {
-            int k = 42;
-            int l = 100;
-
-            Logger.Trace("Sample trace message, k={0}, l={1}", k, l);
-            Logger.Debug("Sample debug message, k={0}, l={1}", k, l);
-            Logger.Info("Sample informational message, k={0}, l={1}", k, l);
-            Logger.Warn("Sample warning message, k={0}, l={1}", k, l);
-            Logger.Error("Sample error message, k={0}, l={1}", k, l);
-            Logger.Fatal("Sample fatal error message, k={0}, l={1}", k, l);
-            Logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", k, l);
-        }
-
         // GET: Scheduler
         public ActionResult Index()
         {
-            ShedulerLogger();
-
             StudentViewModel student = new StudentViewModel()
             {
                 Filter = new StudentFilterViewModel(),
@@ -69,27 +48,26 @@ namespace ITA.Schedule.Controllers
 
         public ActionResult ScheduleDay(StudentViewModel myFilter)
         {
-            ShedulerLogger();
-
+            
             if (myFilter.Filter == null)
                 return RedirectToAction("Index", myFilter);
 
             FillDefaultDropDown(myFilter);
-
-            if (myFilter.Filter.MyTimePeriod == TimePeriod.Week)
+            switch (myFilter.Filter.MyTimePeriod)
             {
-                myFilter=WeekTimePeriod(myFilter);
-            }
+                  case TimePeriod.Day:
+                    myFilter = DayTimePeriod(myFilter);
+                    break;
 
-            if (myFilter.Filter.MyTimePeriod == TimePeriod.Day)
-            {
-                myFilter=DayTimePeriod(myFilter);
-            }
+                  case TimePeriod.Week:
+                    myFilter = WeekTimePeriod(myFilter);
+                    break;
 
-            if (myFilter.Filter.MyTimePeriod == TimePeriod.Month)
-            {
-                myFilter=MonthTimePeriod(myFilter);
+                  case TimePeriod.Month:
+                    myFilter = MonthTimePeriod(myFilter);
+                    break;
             }
+          
             //ViewBag.Width = $"{100/(schedulerModel1.ColumnHeaders.Count+2)-1}%";
             ViewBag.Width ="15%";
             
@@ -104,7 +82,10 @@ namespace ITA.Schedule.Controllers
                 FirstDayOfWeekInMonth = MondayOfConreteMonth(myFilter.Filter.StartDateTime),
                 LastDayOfWeekInMonth = LastSundayOfMonth(myFilter.Filter.StartDateTime)
             };
-
+            //using (var context)
+            //{
+                
+            //}
             return myFilter;
         }
 

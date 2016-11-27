@@ -9,6 +9,7 @@ namespace ITA.Schedule.Models
     {
         public CalendarViewModel()
         {
+            Lessons = new List<Element>();
             ColumnHeaders=new List<string>
             {
                 "Понеділок",
@@ -26,6 +27,8 @@ namespace ITA.Schedule.Models
         public DateTime FirstDayOfWeekInMonth { get; set; }
 
         public DateTime LastDayOfWeekInMonth { get; set; }
+
+        public List<Element> Lessons { get; set; }
 
 
     }

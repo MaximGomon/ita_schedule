@@ -46,9 +46,9 @@ namespace ITA.Schedule.Controllers
         public ActionResult AddUser()
         {
             // get all teachers and students from the db to check who of them is binded to a user
-            var teachers = _teacherBl.GetAll().ToList();
-            var students = _studentBl.GetAll().ToList();
-            var securityGroups = _securityGroupBl.GetAll().ToList();
+            var teachersDb = _teacherBl.GetAll().ToList();
+            var studentsDb = _studentBl.GetAll().ToList();
+            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
 
             // get all users from the db
             var users = _userBl.GetAll().ToList();
@@ -57,48 +57,37 @@ namespace ITA.Schedule.Controllers
             var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
             usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
 
-            // create new model for the view, which contains all teachers and students
-            // without users
-            var addUserModel = new AddUserModel()
-            {
-                Students = new Dictionary<Guid, string>(),
-                Teachers = new Dictionary<Guid, string>(),
-                SecurityGroups = new Dictionary<Guid, string>()
-            };
+            // add teachers to the view
+            ViewBag.Teachers = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
 
-            // add teachers to the model
-            foreach (var teacher in teachers.Where(teacher => usersWithId.All(x => x != teacher.Id)))
-            {
-                addUserModel.Teachers.Add(teacher.Id, teacher.Name);
-            }
+            // add students to the view
+            ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id)).ToDictionary(student => student.Id, student => student.Name);
 
-            // add students to the model
-            foreach (var student in students.Where(student => usersWithId.All(x => x != student.Id)))
-            {
-                addUserModel.Students.Add(student.Id, student.Name);
-            }
+            // add security groups to the view
+            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
 
-            // add security groups
-            foreach (var securityGroup in securityGroups)
-            {
-                addUserModel.SecurityGroups.Add(securityGroup.Id, securityGroup.Name);
-            }
-
-            return PartialView("AddUser", addUserModel);
+            return PartialView("AddUser");
         }
 
         // add user initial screen
-        /*[HttpGet]
-        public ActionResult AddUser(UserViewModel)
+        [HttpPost]
+        public ActionResult AddUser(UserViewModel newUser)
         {
-        }*/
+            var test = newUser;
+            return PartialView("AddUser");
+        }
+
+        public ActionResult VerifyLogin(string Login)
+        {
+            return Json(!_userBl.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// Subjects group of methods
         /// </summary>
         /// <returns></returns>
 
-            // Show subjects list
+        // Show subjects list
         [HttpGet]
         public ActionResult ShowSubjects()
         {

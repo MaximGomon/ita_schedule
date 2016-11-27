@@ -1,9 +1,67 @@
-﻿@model ITA.Schedule.Models.AddUserModel
+﻿@using System.Web.Mvc.Html
+@using ITA.Schedule.Util
+@using FormMethod = System.Web.Mvc.FormMethod
+@using SelectList = System.Web.Mvc.SelectList
+@using SelectListItem = System.Web.Mvc.SelectListItem
+@model ITA.Schedule.Models.UserViewModel
 
 @{
     ViewBag.Title = "AddUser";
     Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var studentItems = new List<SelectListItem>();
+    foreach (var student in ViewBag.Students)
+    {
+        studentItems.Add(new SelectListItem() { Text = student.Value, Value = student.Key.ToString() });
+    }
+
+    var teacherItems = new List<SelectListItem>();
+    foreach (var teacher in ViewBag.Teachers)
+    {
+        teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString() });
+    }
+
+    var securityGroupItems = new List<SelectListItem>();
+    foreach (var securityGroup in ViewBag.SecurityGroups)
+    {
+        securityGroupItems.Add(new SelectListItem() { Text = securityGroup.Value, Value = securityGroup.Key.ToString() });
+    }
 }
 
-<h2>AddUser</h2>
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<h2>Add User</h2>
 
+@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Login:</label>
+        @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login" })
+        @Html.ValidationMessageFor(m => m.Login)
+    </div>
+    <div class="form-group">
+        <label>Password:</label>
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    <div class="form-group">
+        <label>User Type:</label>
+        @Html.DropDownList("Type", new SelectList(Enum.GetValues(typeof(UserType))), "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Student:</label>
+        @Html.DropDownListFor(x => x.StudentId, studentItems, "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Teacher:</label>
+        @Html.DropDownListFor(x => x.TeacherId, teacherItems, "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Access Group:</label>
+        @Html.DropDownListFor(x => x.SecurityGroupId, securityGroupItems, "", new { @class = "form-control" })
+    </div>
+        <br />
+    <input class="btn btn-success" type="submit" value="Add user" id="btn-submit" />
+    @Html.ActionLink("Cancel", "AddUser", null, new { @class = "btn btn-default" })
+}

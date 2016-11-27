@@ -1,0 +1,41 @@
+﻿
+@using GridMvc.Html
+@using GridMvc.Sorting
+@model IEnumerable<ITA.Schedule.Models.TeacherModel>
+
+@{
+    ViewBag.Title = "TeachersList";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+}
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+
+<h2>Teachers</h2>
+@Html.ActionLink("Add New Teacher", "AddTeacher", null, new { @class = "btn btn-default" })
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(x => x.Name)
+        .Titled("Name")
+        .Sortable(true)
+        .SortInitialDirection(GridSortDirection.Ascending)
+        .Filterable(true);
+    columns.Add(x => x.Subjects).Titled("Subjects")
+        .Sortable(true)
+        .Filterable(true);
+    columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(x => @Html.ActionLink("Schedule", null, new { id = x.Id }, new { @class = "btn btn-success", @disabled="disabled" }));
+    columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(x => @Html.ActionLink("Details", "UpdateTeacher", new { id = x.Id }, new { @class = "btn btn-primary" }));
+    columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(x => @Html.ActionLink("Delete", "DeleteTeacher", new { id = x.Id }, new { @class = "btn btn-danger" }));
+}).WithPaging(10)

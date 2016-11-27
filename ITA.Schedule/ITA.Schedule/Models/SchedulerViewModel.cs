@@ -9,6 +9,7 @@ namespace ITA.Schedule.Models
     {
         public Dictionary<string, int> ColumnHeaders { get; set; }
 
+        public string DayOfSchedule { get; set; }
         public List<DateTime> RowHeaders { get; set; }
         public List<Element> Events { get; set; }
         

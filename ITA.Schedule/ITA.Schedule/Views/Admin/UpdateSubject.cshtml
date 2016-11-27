@@ -1,0 +1,34 @@
+﻿@using ITA.Schedule.Models
+@using Kendo.Mvc.UI
+@using FormMethod = Microsoft.AspNetCore.Mvc.Rendering.FormMethod
+@model ITA.Schedule.Models.AddUpdateSubjectModel
+
+@{
+    ViewBag.Title = "UpdateTeacher";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var subjectTeachers = Model.Subject.Teachers.Select(subjectTeacher => new TeacherModel() {Id = subjectTeacher.Id, Name = subjectTeacher.Name}).ToList();
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var subjectCodes = serializer.Serialize(Model.SubjectCodes);
+
+}
+
+<script src="~/kendo/kendo.all.min.js"></script>
+<script src="~/kendo/kendo.aspnetmvc.min.js"></script>
+<script src="~/Scripts/subject-validation.js"></script>
+<link href="~/kendo/kendo_theme/kendo.bootstrap.min.css" rel="stylesheet" />
+<link href="~/kendo/kendo_theme/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/UpdateTeacher.css" rel="stylesheet" />
+
+@using (Html.BeginForm("UpdateSubject", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+    @Html.TextBoxFor(x => x.Subject.Id, Model.Subject.Id.ToString(), new { @style = "display: none;" })
+    <h2>Update subject name</h2>
+    @Html.TextBox("Name", Model.Subject.Name, new { @class = "form-control", @oninput = "validateAddSubjectForm('" + subjectCodes + "')" })
+    <h2 > Update subject code</h2>
+    @Html.TextBox("Code", Model.Subject.Code, new { @class = "form-control", @oninput = "validateAddSubjectForm('" + subjectCodes + "')" })
+    <br />
+    <input class="btn btn-success" type="submit" value="Update Subject" id="btn-submit" />
+    @Html.ActionLink("Cancel", "ShowSubjects", null, new { @class = "btn btn-default" })
+}

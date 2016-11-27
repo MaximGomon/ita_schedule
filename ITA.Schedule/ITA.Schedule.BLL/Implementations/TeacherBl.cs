@@ -64,6 +64,71 @@ namespace ITA.Schedule.BLL.Implementations
 
             return teachersFree;
         }
- 
+
+        // update teacher name and subjects
+        public bool UpdateTeacher(Guid teacherId, string newName, List<Guid> subjectsIds)
+        {
+            // if something is wrong with new name
+            if (newName == String.Empty || newName.Length > 400)
+            {
+                return false;
+            }
+
+            // looking for a teacher
+            var teacher = GetById(teacherId);
+
+            // if we couldn't find a teacher
+            if (teacher == null)
+            {
+                return false;
+            }
+
+            // change teacher's name
+            if (!teacher.Name.Equals(newName))
+            {
+                teacher.Name = newName;
+                Update(teacher);
+            }
+
+            // list of subjects to be removed
+            var subjectsToRemoveIds = new List<Guid>();
+
+            // if we don't update subjects
+            if (subjectsIds != null)
+            {
+                // determine which subjects are to be removed from and added to a teacher
+                foreach (var subject in teacher.Subjects)
+                {
+                    // if there is no such subject in the Ids list, it should be removed
+                    if (!subjectsIds.Exists(x => x.Equals(subject.Id)))
+                    {
+                        subjectsToRemoveIds.Add(subject.Id);
+                    }
+                    // else - remove subject from Ids list
+                    else
+                    {
+                        subjectsIds.Remove(subject.Id);
+                    }
+                }
+
+                // add subjects to a teacher
+                foreach (var subjectsId in subjectsIds)
+                {
+                    AddSubjectToTeacher(teacherId, subjectsId);
+                }
+            }
+            else
+            {
+                subjectsToRemoveIds.AddRange(teacher.Subjects.Select(subject => subject.Id));
+            }
+
+            // delete subjects which a teacher will not be leading any more
+            foreach (var subjectsToRemoveId in subjectsToRemoveIds)
+            {
+                DeleteSubjectFromTeacher(teacherId, subjectsToRemoveId);
+            }
+            
+            return true;
+        }
     }
 }

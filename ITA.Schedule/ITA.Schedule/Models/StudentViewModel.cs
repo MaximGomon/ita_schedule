@@ -10,5 +10,9 @@ namespace ITA.Schedule.Models
         public StudentFilterViewModel Filter { get; set; }
 
         public SchedulerViewModel Scheduler { get; set; }
+
+        public List<SchedulerViewModel> ScheduleForWeek { get; set; }
+
+        public CalendarViewModel Calendar { get; set; }
     }
 }

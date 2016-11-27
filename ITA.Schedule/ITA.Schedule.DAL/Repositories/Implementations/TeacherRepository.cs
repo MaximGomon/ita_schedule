@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ITA.Schedule.Util;
 using ITA.Schedule.DAL.Repositories.Interfaces;
@@ -93,6 +95,21 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             {
                 return false;
             }
+        }
+
+        // gets all teachers with subjects which they lead
+        public override IQueryable<Teacher> GetAllEntities()
+        {
+            return ContextDb.Set<Teacher>().Include(x => x.Subjects);
+        }
+
+        // gets all teachers with subjects which they lead
+        public override Teacher GetById(Guid id)
+        {
+            return ContextDb.Set<Teacher>()
+                .Where(x => x.Id == id)
+                .Include(x => x.Subjects)
+                .FirstOrDefault();
         }
     }
 }

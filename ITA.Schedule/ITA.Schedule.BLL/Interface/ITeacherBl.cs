@@ -24,6 +24,8 @@ namespace ITA.Schedule.BLL.Interface
         IEnumerable<Teacher> GetFreeTeacherOnDate(DateTime date);
         //IEnumerable<Teacher> GetAllTeachers();
         //Teacher Get(Expression<Func<Teacher, bool>> predicate);
+        // update teacher subjects and free time
+        bool UpdateTeacher(Guid teacherId, string newName, List<Guid> subjectsIds);
 
     }
 }

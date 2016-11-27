@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Util;
 
+
 namespace ITA.Schedule.Models
 {
     public class StudentFilterViewModel

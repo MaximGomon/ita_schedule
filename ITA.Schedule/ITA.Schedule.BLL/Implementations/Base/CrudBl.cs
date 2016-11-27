@@ -47,6 +47,11 @@ namespace ITA.Schedule.BLL.Implementations.Base
             Repository.Add(range);
         }
 
+        public void Remove(Guid id)
+        {
+            Repository.Delete(id);
+        }
+
         public void Remove(TEntity entity)
         {
             Repository.Delete(entity);

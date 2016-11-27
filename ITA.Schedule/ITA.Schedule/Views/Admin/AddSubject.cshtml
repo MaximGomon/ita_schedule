@@ -1,0 +1,29 @@
+﻿@using FormMethod = System.Web.Mvc.FormMethod
+@model List<int>
+
+@{
+    ViewBag.Title = "AddSubject";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var data = serializer.Serialize(Model);
+}
+
+<script src="~/Scripts/subject-validation.js"></script>
+
+<h2>Add new subject</h2>
+
+@using (Html.BeginForm("AddSubject", "Admin", FormMethod.Post))
+{
+    <h2>Subject name</h2>
+    @Html.TextBox("Name", null, new { @class = "form-control", @onblur = "validateAddSubjectForm('" + data + "')" })
+
+    <h2>Subject code</h2>
+    @Html.TextBox("Code", null, new { @class = "form-control", @type = "number", @oninput = "validateAddSubjectForm('" + data + "')" })
+
+    <br />
+    <input class="btn btn-success" type="submit" value="Add subject" id="btn-submit" disabled="disabled"/>
+    @Html.ActionLink("Cancel", "ShowSubjects", null, new { @class = "btn btn-default" })
+}
+
+

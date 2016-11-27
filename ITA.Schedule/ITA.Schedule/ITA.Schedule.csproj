@@ -936,6 +936,10 @@
       <Project>{E70BFA1A-EC9C-459C-A9EF-4D3FA5BC97BF}</Project>
       <Name>ITA.Schedule.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ITA.Schedule.Util\ITA.Schedule.Util.csproj">
+      <Project>{85bcf03a-dfa9-4a12-8a6d-2887ca1ae871}</Project>
+      <Name>ITA.Schedule.Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,14 +11,33 @@ using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
 using Kendo.Mvc.UI;
+using NLog;
 
 namespace ITA.Schedule.Controllers
 {
     public class SchedulerController : Controller
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public void ShedulerLogger()
+        {
+            int k = 42;
+            int l = 100;
+
+            logger.Trace("Sample trace message, k={0}, l={1}", k, l);
+            logger.Debug("Sample debug message, k={0}, l={1}", k, l);
+            logger.Info("Sample informational message, k={0}, l={1}", k, l);
+            logger.Warn("Sample warning message, k={0}, l={1}", k, l);
+            logger.Error("Sample error message, k={0}, l={1}", k, l);
+            logger.Fatal("Sample fatal error message, k={0}, l={1}", k, l);
+            logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", k, l);
+        }
+
         // GET: Scheduler
         public ActionResult Index()
         {
+            ShedulerLogger();
             StudentViewModel student = new StudentViewModel()
             {
                 Filter = new StudentFilterViewModel(),
@@ -48,6 +67,8 @@ namespace ITA.Schedule.Controllers
 
         public ActionResult ScheduleDay(StudentViewModel myFilter)
         {
+            ShedulerLogger();
+
             if (myFilter.Filter == null)
                 return RedirectToAction("Index", myFilter);
 
@@ -93,8 +114,6 @@ namespace ITA.Schedule.Controllers
 
             myFilter.Scheduler = schedulerModel;
             return View("ScheduleDay", myFilter);
-            
-            
             
         }
     }

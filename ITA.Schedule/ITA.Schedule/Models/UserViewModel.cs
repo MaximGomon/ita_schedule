@@ -16,12 +16,12 @@ namespace ITA.Schedule.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]
-        [StringLength(100, MinimumLength = 1, ErrorMessage = "Too long Password")]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$", ErrorMessage = "Password should be 8 to 15 chars and include 1+ number/1+ lowercase/1+ uppercase char")]
         public string Password { get; set; }
 
         public Guid? StudentId { get; set; }
         public Guid? TeacherId { get; set; }
+        [Required(ErrorMessage = "Please select security group")]
         public Guid SecurityGroupId { get; set; }
     }
 }

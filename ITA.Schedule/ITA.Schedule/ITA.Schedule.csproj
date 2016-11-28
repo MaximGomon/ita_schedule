@@ -1780,6 +1780,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\subject-validation.js" />
     <Content Include="Scripts\teacher-validation.js" />
+    <Content Include="Scripts\user-validation.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

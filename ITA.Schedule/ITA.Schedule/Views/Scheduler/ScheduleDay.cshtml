@@ -177,18 +177,45 @@
             }
             @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
             {
-                
-                <div class="col-md-12 alert">
+                <div class="col-md-12 alert text-center" >
+                    <span class="calendar-day">@Model.Filter.StartDateTime.Month </span>
+                </div>
+                <div class="col-md-12 ">
                     @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
                     {
-                    <div class="text-center" style="width: 13%; display: inline-block">
+                    <div class="text-center" style="width: 13%; display: inline-block; ">
                         <span> @dayOfWeek</span>
+                        
                     </div>
                     }
                 </div>
-                foreach (var day in Model.Calendar.ColumnHeaders)
+                for (;;)
                 {
+                    if (Model.Calendar.FirstDayOfWeekInMonth>Model.Calendar.LastDayOfWeekInMonth)
+                    {
+                        break;
+                    }
+                    <div class="" style="width: 13%; display: inline-block; border: 1px solid black; padding: 0; margin: -0.2rem">
+                        <span class="calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
+                        @for (var i = 1; i < 8; i++)
+                        {
+                            @*<div>*@
+                        var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
+                                                        && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
+                                                        && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
+                            if (@lesson)
+                            {
+                                <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
+                            }
+                            else
+                            {
+                                <span class="col-md-12" style="padding: 0;" >@i </span>
 
+                            }
+
+                        }
+                    </div>
+                    Model.Calendar.FirstDayOfWeekInMonth = Model.Calendar.FirstDayOfWeekInMonth.AddDays(1);
                 }
             }
         </div>

@@ -12,7 +12,10 @@ using ITA.Schedule.BLL;
 namespace ITA.Schedule
 {
     public class MvcApplication : System.Web.HttpApplication
+
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static IContainer Container { get; private set; }
 
         internal static Assembly Assembly { get; private set; }
@@ -28,11 +31,13 @@ namespace ITA.Schedule
             builder.RegisterModule(new BllModule());
             MvcApplication.Container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
+            
         }
 
         protected virtual void Application_End()
         {
             ((IDisposable)MvcApplication.Container).Dispose();
+            logger.Info("Application End");
         }
         protected void Application_Start()
         {
@@ -40,6 +45,31 @@ namespace ITA.Schedule
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+
+            //Logging
+            logger.Info("Application Start");
+            //AreaRegistration.RegisterAllAreas();
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+
         }
+
+        public void Init()
+        {
+            logger.Info("Application Init");
+        }
+
+        public void Dispose()
+        {
+            logger.Info("Application Dispose");
+        }
+
+        protected void Application_Error()
+        {
+            logger.Info("Application Error");
+        }
+
+
     }
 }

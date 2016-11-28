@@ -8,6 +8,7 @@ using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
+using NLog;
 using Kendo.Mvc.UI;
 
 namespace ITA.Schedule.Controllers
@@ -20,11 +21,14 @@ namespace ITA.Schedule.Controllers
         private readonly UserBl _userBl;
         private readonly SecurityGroupBl _securityGroupBl;
 
+        private static Logger _logger;
+
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
+            _logger = LogManager.GetCurrentClassLogger();
             _securityGroupBl = new SecurityGroupBl(new SecurityGroupRepository());
             _userBl = new UserBl(new UserRepository());
         }
@@ -91,6 +95,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowSubjects()
         {
+            ShedulerLogger();
+
             var subjectsDb = _subjectBl.GetAll().ToList();
 
             var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Name);
@@ -102,6 +108,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult AddSubject()
         {
+            ShedulerLogger();
+
             var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
 
             return PartialView("AddSubject", subjectCodes);
@@ -111,6 +119,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddSubject(Subject newSubject)
         {
+            ShedulerLogger();
+
             if (newSubject.Name == null || newSubject.Name.Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,6 +142,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateSubject(Guid id)
         {
+            ShedulerLogger();
+
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -154,6 +166,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateSubject(UpdatedSubjectModel updatedSubject)
         {
+            ShedulerLogger();
+
             if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name, updatedSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -166,6 +180,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeleteSubject(Guid id)
         {
+            ShedulerLogger();
+
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -180,6 +196,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeleteSubjectFromDb(Guid id)
         {
+            ShedulerLogger();
+
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -200,6 +218,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowTeachers()
         {
+            ShedulerLogger();
+
             var teachersDb = _teacherBl.GetAll().ToList();
             
             var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Name);
@@ -211,6 +231,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult AddTeacher()
         {
+            ShedulerLogger();
+
             var addTeacherModel = new AddUpdateTeacherModel()
             {
                 Subjects = new List<SubjectModel>()
@@ -230,6 +252,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
         {
+            ShedulerLogger();
+
             if (addedTeacher.Name == null || addedTeacher.Name.Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -255,6 +279,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateTeacher(Guid id)
         {
+            ShedulerLogger();
+
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -282,6 +308,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
         {
+            ShedulerLogger();
+
             if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name, updatedTeacher.SubjectIds))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -295,6 +323,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeleteTeacher(Guid id)
         {
+            ShedulerLogger();
+
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -309,6 +339,8 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeleteTeacherFromDb(Guid id)
         {
+            ShedulerLogger();
+
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -317,6 +349,20 @@ namespace ITA.Schedule.Controllers
             }
             _teacherBl.Remove(id);
             return RedirectToAction("ShowTeachers");
+        }
+
+        public void ShedulerLogger()
+        {
+            int k = 42;
+            int l = 100;
+
+            _logger.Trace("Sample trace message, k={0}, l={1}", k++, l++);
+            _logger.Debug("Sample debug message, k={0}, l={1}", k++, l++);
+            _logger.Info("Sample informational message, k={0}, l={1}", k++, l++);
+            _logger.Warn("Sample warning message, k={0}, l={1}", k++, l++);
+            _logger.Error("Sample error message, k={0}, l={1}", k++, l++);
+            _logger.Fatal("Sample fatal error message, k={0}, l={1}", k++, l++);
+            _logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", ++k, ++l);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
@@ -23,5 +24,6 @@ namespace ITA.Schedule.Models
         public Guid? TeacherId { get; set; }
         [Required(ErrorMessage = "Please select security group")]
         public Guid SecurityGroupId { get; set; }
+        
     }
 }

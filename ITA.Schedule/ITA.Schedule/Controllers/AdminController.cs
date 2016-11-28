@@ -8,6 +8,7 @@ using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
+using ITA.Schedule.Util;
 using NLog;
 using Kendo.Mvc.UI;
 
@@ -42,7 +43,13 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowUsers()
         {
-            return PartialView("UsersList", _userBl.GetAll().ToList());
+            ShedulerLogger();
+
+            var usersDb = _userBl.GetAll().ToList();
+
+            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderByDescending(x => x.Type).ThenBy(x => x.Owner);
+            
+            return PartialView("UsersList", users);
         }
 
         // add user initial screen
@@ -73,17 +80,78 @@ namespace ITA.Schedule.Controllers
             return PartialView("AddUser");
         }
 
-        // add user initial screen
+        // add user to the db
         [HttpPost]
         public ActionResult AddUser(UserViewModel newUser)
         {
-            var test = newUser;
-            return PartialView("AddUser");
+            // check owner type 
+            var ownerId = Guid.Empty;
+            UserType type;
+            if (newUser.StudentId != null && newUser.StudentId != Guid.Empty)
+            {
+                ownerId = (Guid)newUser.StudentId;
+                type = UserType.Student;
+            }
+            else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
+            {
+                ownerId = (Guid) newUser.TeacherId;
+                type = UserType.Teacher;
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // try to insert new user to the Db
+            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.SecurityGroupId, type))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowUsers");
         }
 
+        // method to asynchroniously check if a login is unique
         public ActionResult VerifyLogin(string Login)
         {
             return Json(!_userBl.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
+        }
+
+        // Update user initial screen
+        [HttpGet]
+        public ActionResult UpdateUser(Guid id)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        // Delete user initial screen
+        [HttpGet]
+        public ActionResult DeleteUser(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("DeleteUser", new ShowUserModel().ConvertUserToModel(user));
+        }
+
+        // Delete user initial screen
+        [HttpGet]
+        public ActionResult DeleteUserFromDb(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Remove(user);
+
+            return RedirectToAction("ShowUsers");
         }
 
         /// <summary>

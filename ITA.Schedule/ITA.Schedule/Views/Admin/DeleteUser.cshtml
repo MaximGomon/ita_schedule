@@ -1,0 +1,30 @@
+﻿@model ITA.Schedule.Models.ShowUserModel
+
+@{
+    ViewBag.Title = "DeleteUser";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+}
+
+<h1>Delete user from the database?</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Owner</th>
+            <th>Login</th>
+            <th>Type</th>
+            <th>Security group</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Owner</td>
+            <td>@Model.Login</td>
+            <td>@Model.Type</td>
+            <td>@Model.UserSecurityGroup</td>
+        </tr>
+    </tbody>
+
+</table>
+@Html.ActionLink("Delete", "DeleteUserFromDb", new { id = Model.Id }, new { @class = "btn btn-danger" })
+@Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })

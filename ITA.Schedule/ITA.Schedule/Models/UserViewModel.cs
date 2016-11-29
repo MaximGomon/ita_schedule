@@ -14,6 +14,7 @@ namespace ITA.Schedule.Models
         [Required(ErrorMessage = "Please enter Login")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Invalid Login length")]
         [Remote("VerifyLogin", "Admin", ErrorMessage = "Login is already in use")]
+        [RegularExpression("^[A-Za-z0-9]+$")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]

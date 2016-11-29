@@ -2,18 +2,13 @@
 @using Kendo.Mvc.UI
 @using FormMethod = System.Web.Mvc.FormMethod
 
-@model ITA.Schedule.Models.AddUpdateTeacherModel
+@model ITA.Schedule.Models.TeacherAddUpdateModel
 
 @{
     ViewBag.Title = "UpdateTeacher";
     Layout = "~/Views/Admin/AdminBase.cshtml";
     
-    var teacherSubjects = new List<SubjectModel>();
-
-    foreach (var teacherSubject in Model.Teacher.Subjects)
-    {
-        teacherSubjects.Add(new SubjectModel() {Id = teacherSubject.Id, Name = teacherSubject.Name});
-    }
+    var teacherSubjects = Model.Teacher.Subjects.Select(teacherSubject => new SubjectModel() {Id = teacherSubject.Id, Name = teacherSubject.Name}).ToList();
 }
 
 <script src="~/kendo/kendo.all.min.js"></script>

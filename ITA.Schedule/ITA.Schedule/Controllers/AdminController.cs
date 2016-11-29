@@ -94,7 +94,7 @@ namespace ITA.Schedule.Controllers
             }
             else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
             {
-                ownerId = (Guid) newUser.TeacherId;
+                ownerId = (Guid)newUser.TeacherId;
                 type = UserType.Teacher;
             }
             else
@@ -121,7 +121,41 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateUser(Guid id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            // check if user exists
+            var user = _userBl.Get(x => x.Id == id).FirstOrDefault();
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // get all logins from the db and pass them to the view
+            var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login).ToList();
+            loginsDb.Remove(user.Login);
+            ViewBag.Logins = loginsDb;
+
+            // get all teachers and students from the db to check who of them is binded to a user
+            var teachersDb = _teacherBl.GetAll().ToList();
+            var studentsDb = _studentBl.GetAll().ToList();
+            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
+
+            // get all users from the db
+            var users = _userBl.GetAll().ToList();
+
+            // create new list of Ids to filter assigned users for the view
+            var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
+            usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
+
+            // add teachers to the view
+            ViewBag.Teachers = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
+
+            // add students to the view
+            ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id)).ToDictionary(student => student.Id, student => student.Name);
+
+            // add security groups to the view
+            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
+
+
+            return PartialView("UpdateUser");
         }
 
         // Delete user initial screen
@@ -219,7 +253,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateSubjectModel = new UpdateSubjectModel()
+            var updateSubjectModel = new SubjectUpdateModel()
             {
                 Subject = subject,
                 SubjectCodes = _subjectBl.GetAll().Select(x => x.Code).ToList()
@@ -232,7 +266,7 @@ namespace ITA.Schedule.Controllers
 
         // update subject initial screen
         [HttpPost]
-        public ActionResult UpdateSubject(UpdatedSubjectModel updatedSubject)
+        public ActionResult UpdateSubject(SubjectUpdatedModel updatedSubject)
         {
             ShedulerLogger();
 
@@ -301,7 +335,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            var addTeacherModel = new AddUpdateTeacherModel()
+            var addTeacherModel = new TeacherAddUpdateModel()
             {
                 Subjects = new List<SubjectModel>()
             };
@@ -318,7 +352,7 @@ namespace ITA.Schedule.Controllers
 
         // updating a teaher in the DB
         [HttpPost]
-        public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
+        public ActionResult AddTeacher(TeacherUpdatedModel addedTeacher)
         {
             ShedulerLogger();
 
@@ -356,7 +390,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateTeacherModel = new AddUpdateTeacherModel()
+            var updateTeacherModel = new TeacherAddUpdateModel()
             {
                 Teacher = teacher,
                 Subjects = new List<SubjectModel>()
@@ -374,7 +408,7 @@ namespace ITA.Schedule.Controllers
 
         // updating a teaher in the DB
         [HttpPost]
-        public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
+        public ActionResult UpdateTeacher(TeacherUpdatedModel updatedTeacher)
         {
             ShedulerLogger();
 

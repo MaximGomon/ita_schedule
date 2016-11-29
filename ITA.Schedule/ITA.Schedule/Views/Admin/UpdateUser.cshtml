@@ -1,8 +1,34 @@
-﻿
+﻿@using FormMethod = System.Web.Mvc.FormMethod
+@model ITA.Schedule.Models.UserUpdateModel
+
 @{
     ViewBag.Title = "UpdateUser";
     Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var logins = new List<string>();
+
+    foreach (var login in ViewBag.Logins)
+    {
+        logins.Add(login);
+    }
 }
 
 <h2>UpdateUser</h2>
 
+@using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+    @Html.TextBoxFor(x => x.Login, Model.Login, new { @style = "display: none;" })
+    <h2>Update subject name</h2>
+    @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+    <h2> Update subject code</h2>
+    
+    <div class="form-group">
+        <label>Parent Company:</label>
+        @*@Html.DropDownListFor(x => x., items, "", new {@class = "form-control", @id = "newCompanyParent"})*@
+    </div>
+
+    <br />
+    <input class="btn btn-success" type="submit" value="Update Subject" id="btn-submit" />
+    @Html.ActionLink("Cancel", "ShowSubjects", null, new { @class = "btn btn-default" })
+}

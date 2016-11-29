@@ -12,5 +12,11 @@ namespace ITA.Schedule.BLL.Interface
 
         // create new user, get user data from HTML form
         bool CreateNewUser(string login, string password, Guid ownerId, Guid groupId, UserType type);
+        // attach student to the user
+        Student AttachStudent(Guid studentId);
+        // attach teacher to a user
+        Teacher AttachTeacher(Guid teachreId);
+        // set access group
+        SecurityGroup SetSecurityGroup(Guid groupId);
     }
 }

@@ -40,7 +40,7 @@ namespace ITA.Schedule.BLL.Implementations
             // attach student to the user, if it is a user
             if (type == UserType.Student)
             {
-                var student = Repository.AttachStudent(ownerId);
+                var student = AttachStudent(ownerId);
                 if (student == null)
                 {
                     return false;
@@ -50,7 +50,7 @@ namespace ITA.Schedule.BLL.Implementations
             // attach teacher to the user, if it is a user
             else if (type == UserType.Teacher)
             {
-                var teacher = Repository.AttachTeacher(ownerId);
+                var teacher = AttachTeacher(ownerId);
                 if (teacher == null)
                 {
                     return false;
@@ -63,7 +63,7 @@ namespace ITA.Schedule.BLL.Implementations
                 return false;
             }
 
-            var accessGroup = Repository.SetSecurityGroup(groupId);
+            var accessGroup = SetSecurityGroup(groupId);
 
             // check security group
             if (accessGroup == null)
@@ -75,6 +75,24 @@ namespace ITA.Schedule.BLL.Implementations
             Insert(user);
             
             return true;
+        }
+
+        // attach student to the user
+        public Student AttachStudent(Guid studentId)
+        {
+            return Repository.AttachStudent(studentId);
+        }
+
+        // attache teacher to the user
+        public Teacher AttachTeacher(Guid teachreId)
+        {
+            return Repository.AttachTeacher(teachreId);
+        }
+
+        // set user security group
+        public SecurityGroup SetSecurityGroup(Guid groupId)
+        {
+            return Repository.SetSecurityGroup(groupId);
         }
     }
 }

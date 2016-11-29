@@ -19,3 +19,7 @@ function userTypeValidation() {
         $("#TeacherId").prop("required", false);
     }
 }
+
+$(function () {
+    userTypeValidation();
+});

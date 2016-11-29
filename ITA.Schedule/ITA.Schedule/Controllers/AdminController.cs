@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
@@ -128,6 +129,16 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var personId = Guid.Empty;
+            if (user.Student != null)
+            {
+                personId = user.Student.Id;
+            }
+            else if (user.Teacher != null)
+            {
+                personId = user.Teacher.Id;
+            }
+
             // get all logins from the db and pass them to the view
             var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login).ToList();
             loginsDb.Remove(user.Login);
@@ -146,16 +157,83 @@ namespace ITA.Schedule.Controllers
             usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
 
             // add teachers to the view
-            ViewBag.Teachers = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
+            var test = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id || x == personId)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
+            ViewBag.Teachers = test;
 
             // add students to the view
-            ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id)).ToDictionary(student => student.Id, student => student.Name);
+            var test2 = studentsDb.Where(student => usersWithId.All(x => x != student.Id || x == personId)).ToDictionary(student => student.Id, student => student.Name);
+            ViewBag.Students = test2;
 
             // add security groups to the view
             ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
 
 
-            return PartialView("UpdateUser");
+            return PartialView("UpdateUser", new UserUpdateModel().UserToUserModel(user));
+        }
+
+        // Delete user initial screen
+        [HttpPost]
+        public ActionResult UpdateUser(UserUpdateModel user)
+        {
+            // get user from the Db
+            var userToUpdate = _userBl.GetById(user.Id);
+            
+            // check if we got a correct user
+            if (userToUpdate == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // check if he has a new password
+            if (user.Password != null)
+            {
+                userToUpdate.Password = user.Password;
+            }
+
+            // check if login was changed
+            if (userToUpdate.Login != user.Login)
+            {
+                userToUpdate.Login = user.Login;
+            }
+
+            // check security group
+            if (userToUpdate.SecurityGroup.Id != user.SecurityGroupId)
+            {
+                userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.SecurityGroupId);
+            }
+
+            // check if user type was changed
+            switch (user.TypeOfUser)
+            {
+                case UserType.Student:
+                {
+                    var owner = _userBl.AttachStudent(user.OwnerId);
+                    if (owner == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    userToUpdate.Teacher = null;
+                    userToUpdate.Student = owner;
+                }
+                    break;
+                case UserType.Teacher:
+                {
+                    var owner = _userBl.AttachTeacher(user.OwnerId);
+                    if (owner == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    userToUpdate.Student = null;
+                    userToUpdate.Teacher = owner;
+                }
+                    break;
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Update(userToUpdate);
+
+            return RedirectToAction("ShowUsers");
         }
 
         // Delete user initial screen

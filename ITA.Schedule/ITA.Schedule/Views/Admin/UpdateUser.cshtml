@@ -1,9 +1,26 @@
-﻿@using FormMethod = System.Web.Mvc.FormMethod
+﻿@using ITA.Schedule.Entity.Entities
+@using ITA.Schedule.Util
+@using FormMethod = System.Web.Mvc.FormMethod
+@using SelectList = System.Web.Mvc.SelectList
+@using SelectListItem = System.Web.Mvc.SelectListItem
 @model ITA.Schedule.Models.UserUpdateModel
 
 @{
     ViewBag.Title = "UpdateUser";
     Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var userTypes = new List<SelectListItem>();
+    if (Model.TypeOfUser == UserType.Teacher)
+    {
+        userTypes.Add(new SelectListItem() {Text = UserType.Teacher.ToString(), Selected = true});
+        userTypes.Add(new SelectListItem() {Text = UserType.Student.ToString()});
+    }
+    else
+    {
+        userTypes.Add(new SelectListItem() { Text = UserType.Teacher.ToString() });
+        userTypes.Add(new SelectListItem() { Text = UserType.Student.ToString(), Selected = true });
+    }
+
 
     var logins = new List<string>();
 
@@ -11,24 +28,80 @@
     {
         logins.Add(login);
     }
+
+    var studentItems = new List<SelectListItem>();
+    foreach (var student in ViewBag.Students)
+    {
+        if (student.Key == Model.OwnerId)
+        {
+            studentItems.Add(new SelectListItem() {Text = student.Value, Value = student.Key.ToString(), Selected = true});
+        }
+        else
+        {
+            studentItems.Add(new SelectListItem() { Text = student.Value, Value = student.Key.ToString() });
+        }
+    }
+
+    var teacherItems = new List<SelectListItem>();
+    foreach (var teacher in ViewBag.Teachers)
+    {
+        if (teacher.Key == Model.OwnerId)
+        {
+            teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString(), Selected = true });
+        }
+        else
+        {
+            teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString() });
+        }
+        //teacherItems.Add(teacher.Key == Model.OwnerId ? new SelectListItem() {Text = teacher.Value, Value = teacher.Key.ToString(), Selected = true} : new SelectListItem() {Text = teacher.Value, Value = teacher.Key.ToString()});
+    }
+
+    var securityGroupItems = new List<SelectListItem>();
+    foreach (var securityGroup in ViewBag.SecurityGroups)
+    {
+        securityGroupItems.Add(securityGroup.Key == Model.SecurityGroupId ? new SelectListItem() {Text = securityGroup.Value, Value = securityGroup.Key.ToString(), Selected = true} : new SelectListItem() {Text = securityGroup.Value, Value = securityGroup.Key.ToString()});
+    }
 }
 
-<h2>UpdateUser</h2>
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/user-validation.js"></script>
+<h2>Update User</h2>
 
 @using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post))
 {
-    @Html.ValidationSummary()
-    @Html.TextBoxFor(x => x.Login, Model.Login, new { @style = "display: none;" })
-    <h2>Update subject name</h2>
-    @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
-    <h2> Update subject code</h2>
-    
     <div class="form-group">
-        <label>Parent Company:</label>
-        @*@Html.DropDownListFor(x => x., items, "", new {@class = "form-control", @id = "newCompanyParent"})*@
+        <label>Login:</label>
+        @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login" })
+        @Html.ValidationMessageFor(x => x.Login)
     </div>
-
+    <div class="form-group">
+        <label>Password:</label>
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
+    <div class="form-group">
+        <label>User Type:</label>
+        @Html.DropDownList("Type", userTypes, new {@class = "form-control", @required = "required", @onchange = "userTypeValidation()"})
+        @Html.ValidationMessage("Type")
+    </div>
+    <div class="form-group" id="studentBlock" style="display: none">
+        <label>Student:</label>
+        @Html.DropDownListFor(x => x.OwnerId, studentItems, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.OwnerId)
+    </div>
+    <div class="form-group" id="teacherBlock" style="display: none">
+        <label>Teacher:</label>
+        @Html.DropDownListFor(x => x.OwnerId, teacherItems, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.OwnerId)
+    </div>
+    <div class="form-group">
+        <label>Access Group:</label>
+        @Html.DropDownListFor(x => x.SecurityGroupId, securityGroupItems, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.SecurityGroupId)
+    </div>
     <br />
     <input class="btn btn-success" type="submit" value="Update Subject" id="btn-submit" />
-    @Html.ActionLink("Cancel", "ShowSubjects", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })
 }

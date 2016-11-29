@@ -6,7 +6,6 @@ namespace ITA.Schedule.Models
     /// <summary>
     /// Model to be passed to the subjects list view
     /// </summary>
-    /// ToDO remove this model
     public class SubjectUpdateModel
     {
         public Subject Subject { get; set; }

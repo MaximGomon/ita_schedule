@@ -48,8 +48,8 @@
     </div>
     <div class="form-group">
         <label>User Type:</label>
-        @Html.DropDownList("Type", new SelectList(Enum.GetValues(typeof(UserType))), "", new { @class = "form-control", @required = "required", @onchange = "userTypeValidation()" })
-        @Html.ValidationMessage("Type")
+        @Html.DropDownList("TypeOfUser", new SelectList(Enum.GetValues(typeof(UserType))), "", new { @class = "form-control", @required = "required", @onchange = "userTypeValidation()" })
+        @Html.ValidationMessage("TypeOfUser")
     </div>
     <div class="form-group" id="studentBlock" style="display: none">
         <label>Student:</label>

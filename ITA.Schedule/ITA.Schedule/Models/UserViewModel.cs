@@ -9,6 +9,9 @@ using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
+    /// <summary>
+    /// User base model
+    /// </summary>
     public class UserViewModel
     {
         [Required(ErrorMessage = "Please enter Login")]

@@ -140,8 +140,9 @@ namespace ITA.Schedule.Controllers
             }
 
             // get all logins from the db and pass them to the view
-            var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login).ToList();
-            loginsDb.Remove(user.Login);
+            var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login.ToLower()).ToList();
+            loginsDb.Remove(user.Login.ToLower());
+
             ViewBag.Logins = loginsDb;
 
             // get all teachers and students from the db to check who of them is binded to a user
@@ -202,30 +203,31 @@ namespace ITA.Schedule.Controllers
                 userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.SecurityGroupId);
             }
 
+            // ToDo consult about null here
             // check if user type was changed
             switch (user.TypeOfUser)
             {
                 case UserType.Student:
-                {
-                    var owner = _userBl.AttachStudent(user.OwnerId);
-                    if (owner == null)
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        var owner = _userBl.AttachStudent(user.StudentId);
+                        if (owner == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        userToUpdate.Student = owner;
+                        userToUpdate.Teacher = null;
                     }
-                    userToUpdate.Teacher = null;
-                    userToUpdate.Student = owner;
-                }
                     break;
                 case UserType.Teacher:
-                {
-                    var owner = _userBl.AttachTeacher(user.OwnerId);
-                    if (owner == null)
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        var owner = _userBl.AttachTeacher(user.TeacherId);
+                        if (owner == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        userToUpdate.Teacher = owner;
+                        userToUpdate.Student = null;
                     }
-                    userToUpdate.Student = null;
-                    userToUpdate.Teacher = owner;
-                }
                     break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

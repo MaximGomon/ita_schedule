@@ -7,7 +7,7 @@ using ITA.Schedule.Util;
 namespace ITA.Schedule.Models
 {
     /// <summary>
-    /// 
+    /// Model to update user
     /// </summary>
     public class UserUpdateModel
     {
@@ -19,9 +19,8 @@ namespace ITA.Schedule.Models
 
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$", ErrorMessage = "Password should be 8 to 15 chars and include 1+ number/1+ lowercase/1+ uppercase char")]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "Please select account owner")]
-        public Guid OwnerId { get; set; }
+        public Guid StudentId { get; set; }
+        public Guid TeacherId { get; set; }
         [Required]
         public UserType TypeOfUser { get; set; }
         public Guid SecurityGroupId { get; set; }
@@ -33,12 +32,12 @@ namespace ITA.Schedule.Models
             if (user.Student != null)
             {
                 TypeOfUser = UserType.Student;
-                OwnerId = user.Student.Id;
+                StudentId = user.Student.Id;
             }
             else if (user.Teacher != null)
             {
                 TypeOfUser = UserType.Teacher;
-                OwnerId = user.Teacher.Id;
+                TeacherId = user.Teacher.Id;
             }
 
             SecurityGroupId = user.SecurityGroup.Id;

@@ -21,18 +21,13 @@
         userTypes.Add(new SelectListItem() { Text = UserType.Student.ToString(), Selected = true });
     }
 
-
-    var logins = new List<string>();
-
-    foreach (var login in ViewBag.Logins)
-    {
-        logins.Add(login);
-    }
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var logins = serializer.Serialize(ViewBag.Logins);
 
     var studentItems = new List<SelectListItem>();
     foreach (var student in ViewBag.Students)
     {
-        if (student.Key == Model.OwnerId)
+        if (Model.TypeOfUser == UserType.Student && student.Key == Model.StudentId)
         {
             studentItems.Add(new SelectListItem() {Text = student.Value, Value = student.Key.ToString(), Selected = true});
         }
@@ -45,7 +40,7 @@
     var teacherItems = new List<SelectListItem>();
     foreach (var teacher in ViewBag.Teachers)
     {
-        if (teacher.Key == Model.OwnerId)
+        if (Model.TypeOfUser == UserType.Teacher && teacher.Key == Model.TeacherId)
         {
             teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString(), Selected = true });
         }
@@ -53,7 +48,6 @@
         {
             teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString() });
         }
-        //teacherItems.Add(teacher.Key == Model.OwnerId ? new SelectListItem() {Text = teacher.Value, Value = teacher.Key.ToString(), Selected = true} : new SelectListItem() {Text = teacher.Value, Value = teacher.Key.ToString()});
     }
 
     var securityGroupItems = new List<SelectListItem>();
@@ -73,7 +67,7 @@
 {
     <div class="form-group">
         <label>Login:</label>
-        @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login" })
+        @Html.TextBoxFor(x => x.Login, new { @class = "form-control", placeholder = "Login", @oninput = "validateUpdateUserForm('"+ logins + "')" })
         @Html.ValidationMessageFor(x => x.Login)
     </div>
     <div class="form-group">
@@ -83,18 +77,18 @@
     </div>
     <div class="form-group">
         <label>User Type:</label>
-        @Html.DropDownList("Type", userTypes, new {@class = "form-control", @required = "required", @onchange = "userTypeValidation()"})
-        @Html.ValidationMessage("Type")
+        @Html.DropDownList("TypeOfUser", userTypes, new {@class = "form-control", @required = "required", @onchange = "userTypeValidation()"})
+        @Html.ValidationMessage("TypeOfUser")
     </div>
     <div class="form-group" id="studentBlock" style="display: none">
         <label>Student:</label>
-        @Html.DropDownListFor(x => x.OwnerId, studentItems, "", new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.OwnerId)
+        @Html.DropDownListFor(x => x.StudentId, studentItems, "", new { @class = "form-control", @id = "StudentId" })
+        @Html.ValidationMessageFor(x => x.StudentId)
     </div>
     <div class="form-group" id="teacherBlock" style="display: none">
         <label>Teacher:</label>
-        @Html.DropDownListFor(x => x.OwnerId, teacherItems, "", new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.OwnerId)
+        @Html.DropDownListFor(x => x.TeacherId, teacherItems, "", new { @class = "form-control", @id = "TeacherId" })
+        @Html.ValidationMessageFor(x => x.TeacherId)
     </div>
     <div class="form-group">
         <label>Access Group:</label>
@@ -102,6 +96,6 @@
         @Html.ValidationMessageFor(x => x.SecurityGroupId)
     </div>
     <br />
-    <input class="btn btn-success" type="submit" value="Update Subject" id="btn-submit" />
+    <input class="btn btn-success" type="submit" value="Update User" id="btn-submit" />
     @Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })
 }

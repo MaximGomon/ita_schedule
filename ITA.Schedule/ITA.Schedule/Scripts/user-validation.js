@@ -2,7 +2,7 @@
 function userTypeValidation() {
     var text = $("#TypeOfUser :selected").text();
     
-    if (text === "Teacher") {
+    if (text === "Teacher" || text === "Admin") {
         $("#studentBlock").css("display", "none");
         $("StudentId").prop("required", false);
         $("#teacherBlock").css("display", "block");

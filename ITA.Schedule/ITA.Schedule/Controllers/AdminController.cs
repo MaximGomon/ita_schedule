@@ -48,7 +48,7 @@ namespace ITA.Schedule.Controllers
 
             var usersDb = _userBl.GetAll().ToList();
 
-            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderByDescending(x => x.Type).ThenBy(x => x.Owner);
+            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Type).ThenBy(x => x.Owner);
             
             return PartialView("UsersList", users);
         }
@@ -60,7 +60,6 @@ namespace ITA.Schedule.Controllers
             // get all teachers and students from the db to check who of them is binded to a user
             var teachersDb = _teacherBl.GetAll().ToList();
             var studentsDb = _studentBl.GetAll().ToList();
-            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
 
             // get all users from the db
             var users = _userBl.GetAll().ToList();
@@ -74,10 +73,7 @@ namespace ITA.Schedule.Controllers
 
             // add students to the view
             ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id)).ToDictionary(student => student.Id, student => student.Name);
-
-            // add security groups to the view
-            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
-
+            
             return PartialView("AddUser");
         }
 
@@ -87,16 +83,14 @@ namespace ITA.Schedule.Controllers
         {
             // check owner type 
             var ownerId = Guid.Empty;
-            UserType type;
+
             if (newUser.StudentId != null && newUser.StudentId != Guid.Empty)
             {
                 ownerId = (Guid)newUser.StudentId;
-                type = UserType.Student;
             }
             else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
             {
                 ownerId = (Guid)newUser.TeacherId;
-                type = UserType.Teacher;
             }
             else
             {
@@ -104,7 +98,7 @@ namespace ITA.Schedule.Controllers
             }
 
             // try to insert new user to the Db
-            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.SecurityGroupId, type))
+            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.TypeOfUser))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -148,7 +142,6 @@ namespace ITA.Schedule.Controllers
             // get all teachers and students from the db to check who of them is binded to a user
             var teachersDb = _teacherBl.GetAll().ToList();
             var studentsDb = _studentBl.GetAll().ToList();
-            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
 
             // get all users from the db
             var users = _userBl.GetAll().ToList();
@@ -158,16 +151,10 @@ namespace ITA.Schedule.Controllers
             usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
 
             // add teachers to the view
-            var test = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id || x == personId)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
-            ViewBag.Teachers = test;
+            ViewBag.Teachers = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id || x == personId)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
 
             // add students to the view
-            var test2 = studentsDb.Where(student => usersWithId.All(x => x != student.Id || x == personId)).ToDictionary(student => student.Id, student => student.Name);
-            ViewBag.Students = test2;
-
-            // add security groups to the view
-            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
-
+            ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id || x == personId)).ToDictionary(student => student.Id, student => student.Name);
 
             return PartialView("UpdateUser", new UserUpdateModel().UserToUserModel(user));
         }
@@ -196,17 +183,23 @@ namespace ITA.Schedule.Controllers
             {
                 userToUpdate.Login = user.Login;
             }
-
-            // check security group
-            if (userToUpdate.SecurityGroup.Id != user.SecurityGroupId)
-            {
-                userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.SecurityGroupId);
-            }
-
-            // ToDo consult about null here
+            
             // check if user type was changed
             switch (user.TypeOfUser)
             {
+                case UserType.Admin:
+                case UserType.Teacher:
+                    {
+                        var owner = _userBl.AttachTeacher(user.TeacherId);
+                        if (owner == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        userToUpdate.Student = null;
+                        userToUpdate.Teacher = owner;
+
+                    }
+                    break;
                 case UserType.Student:
                     {
                         var owner = _userBl.AttachStudent(user.StudentId);
@@ -218,21 +211,12 @@ namespace ITA.Schedule.Controllers
                         userToUpdate.Teacher = null;
                     }
                     break;
-                case UserType.Teacher:
-                    {
-                        var owner = _userBl.AttachTeacher(user.TeacherId);
-                        if (owner == null)
-                        {
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                        }
-                        userToUpdate.Student = null;
-                        userToUpdate.Teacher = owner;
-                        
-                    }
-                    break;
+                
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.TypeOfUser.ToString());
 
             _userBl.Update(userToUpdate);
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.DAL
 {
@@ -120,17 +121,17 @@ namespace ITA.Schedule.DAL
                 {
                     new Grand()
                     {
-                        Name = "Administrator",
+                        Name = "Watch, edit, add, delete schedule",
                         Code = 1,
                     },
                     new Grand()
                     {
-                        Name = "Teacher",
+                        Name = "Watch teacher's schedule",
                         Code = 2,
                     },
                     new Grand()
                     {
-                        Name = "Student",
+                        Name = "Watch student's schedule",
                         Code = 3,
                     }
                 };
@@ -139,25 +140,28 @@ namespace ITA.Schedule.DAL
             {
                 context.Grands.Add(item);
             }
-            //context.SaveChanges();
+            context.SaveChanges();
 
 
             var defaultSecurityGroups = new List<SecurityGroup>
                 {
                     new SecurityGroup()
                     {
-                        Name = "Watch, edit, add, delete schedule",
-                        Code = 1
+                        Name = UserType.Admin.ToString(),
+                        Grands = context.Grands.Where(x => x.Code == 1).ToList(),
+                        Code = (int)UserType.Admin
                     },
                     new SecurityGroup()
                     {
-                        Name = "Watch teacher's schedule",
-                        Code = 2,
+                        Name = UserType.Teacher.ToString(),
+                        Grands = context.Grands.Where(x => x.Code == 2).ToList(),
+                        Code = (int)UserType.Teacher,
                     },
                     new SecurityGroup()
                     {
-                        Name = "Watch student's schedule",
-                        Code = 3,
+                        Name = UserType.Student.ToString(),
+                        Grands = context.Grands.Where(x => x.Code == 3).ToList(),
+                        Code = (int)UserType.Student,
                     }
                 };
 

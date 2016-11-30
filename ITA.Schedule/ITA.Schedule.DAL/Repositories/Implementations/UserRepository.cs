@@ -28,10 +28,11 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         {
             return ContextDb.Teachers.FirstOrDefault(x => x.Id == teachreId);
         }
+
         // set access group
-        public SecurityGroup SetSecurityGroup(Guid groupId)
+        public SecurityGroup SetSecurityGroup(string groupName)
         {
-            return ContextDb.SecurityGroups.FirstOrDefault(x => x.Id == groupId);
+            return ContextDb.SecurityGroups.FirstOrDefault(x => x.Name == groupName);
         }
 
         public override User GetById(Guid id)

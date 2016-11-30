@@ -17,7 +17,6 @@
     columns.Add(x => x.Owner)
         .Titled("Owner")
         .Sortable(true)
-        .SortInitialDirection(GridSortDirection.Ascending)
         .Filterable(true);
     columns.Add(x => x.Login)
         .Titled("Login")
@@ -25,10 +24,11 @@
         .Filterable(true);
     columns.Add(x => x.Type)
         .Titled("Type")
+        .Sortable(true)
         .Encoded(false)
         .Sanitized(false);
-    columns.Add(x => x.UserSecurityGroup)
-        .Titled("Group")
+    columns.Add(x => x.Grants)
+        .Titled("Grants")
         .Encoded(false)
         .Sanitized(false);
     columns.Add()

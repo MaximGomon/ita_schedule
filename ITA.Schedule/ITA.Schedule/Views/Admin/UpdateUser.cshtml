@@ -10,15 +10,23 @@
     Layout = "~/Views/Admin/AdminBase.cshtml";
 
     var userTypes = new List<SelectListItem>();
-    if (Model.TypeOfUser == UserType.Teacher)
+    switch (Model.TypeOfUser)
     {
-        userTypes.Add(new SelectListItem() {Text = UserType.Teacher.ToString(), Selected = true});
-        userTypes.Add(new SelectListItem() {Text = UserType.Student.ToString()});
-    }
-    else
-    {
-        userTypes.Add(new SelectListItem() { Text = UserType.Teacher.ToString() });
-        userTypes.Add(new SelectListItem() { Text = UserType.Student.ToString(), Selected = true });
+        case UserType.Admin:
+            userTypes.Add(new SelectListItem() { Text = UserType.Admin.ToString(), Selected = true });
+            userTypes.Add(new SelectListItem() { Text = UserType.Teacher.ToString() });
+            userTypes.Add(new SelectListItem() { Text = UserType.Student.ToString() });
+            break;
+        case UserType.Teacher:
+            userTypes.Add(new SelectListItem() { Text = UserType.Admin.ToString() });
+            userTypes.Add(new SelectListItem() {Text = UserType.Teacher.ToString(), Selected = true});
+            userTypes.Add(new SelectListItem() {Text = UserType.Student.ToString()});
+            break;
+        case UserType.Student:
+            userTypes.Add(new SelectListItem() { Text = UserType.Admin.ToString() });
+            userTypes.Add(new SelectListItem() { Text = UserType.Teacher.ToString() });
+            userTypes.Add(new SelectListItem() { Text = UserType.Student.ToString(), Selected = true });
+            break;
     }
 
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -48,12 +56,6 @@
         {
             teacherItems.Add(new SelectListItem() { Text = teacher.Value, Value = teacher.Key.ToString() });
         }
-    }
-
-    var securityGroupItems = new List<SelectListItem>();
-    foreach (var securityGroup in ViewBag.SecurityGroups)
-    {
-        securityGroupItems.Add(securityGroup.Key == Model.SecurityGroupId ? new SelectListItem() {Text = securityGroup.Value, Value = securityGroup.Key.ToString(), Selected = true} : new SelectListItem() {Text = securityGroup.Value, Value = securityGroup.Key.ToString()});
     }
 }
 
@@ -89,11 +91,6 @@
         <label>Teacher:</label>
         @Html.DropDownListFor(x => x.TeacherId, teacherItems, "", new { @class = "form-control", @id = "TeacherId" })
         @Html.ValidationMessageFor(x => x.TeacherId)
-    </div>
-    <div class="form-group">
-        <label>Access Group:</label>
-        @Html.DropDownListFor(x => x.SecurityGroupId, securityGroupItems, "", new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.SecurityGroupId)
     </div>
     <br />
     <input class="btn btn-success" type="submit" value="Update User" id="btn-submit" />

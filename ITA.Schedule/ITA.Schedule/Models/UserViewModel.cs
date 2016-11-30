@@ -17,7 +17,7 @@ namespace ITA.Schedule.Models
         [Required(ErrorMessage = "Please enter Login")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Invalid Login length")]
         [Remote("VerifyLogin", "Admin", ErrorMessage = "Login is already in use")]
-        [RegularExpression("^[A-Za-z0-9]+$")]
+        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Login should consist of latin alphabeth chars and numbers only")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]
@@ -26,8 +26,7 @@ namespace ITA.Schedule.Models
 
         public Guid? StudentId { get; set; }
         public Guid? TeacherId { get; set; }
-        [Required(ErrorMessage = "Please select security group")]
-        public Guid SecurityGroupId { get; set; }
-        
+        [Required]
+        public UserType TypeOfUser { get; set; }
     }
 }

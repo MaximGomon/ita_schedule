@@ -14,24 +14,24 @@ using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Controllers
 {
-    public class SchedulerController : Controller
+    public class StudentSchedulerController : Controller
     {
         // GET: Scheduler
         public ActionResult Index()
         {
-            StudentViewModel student = new StudentViewModel()
+            StudentFilterViewModel student = new StudentFilterViewModel()
             {
-                Filter = new StudentFilterViewModel(),
+                Filter = new FilterViewModel(),
                 Scheduler = null
             };
 
             //GetAllTeachers
             FillDefaultDropDown(student);
 
-            return View("ScheduleDay", student);
+            return View("~/Views/Scheduler/Schedule.cshtml", student);
         }
 
-        private static void FillDefaultDropDown(StudentViewModel student)
+        private static void FillDefaultDropDown(StudentFilterViewModel student)
         {
             var teacherBl = new TeacherBl(new TeacherRepository());
             var teachers = teacherBl.GetAll();
@@ -46,7 +46,7 @@ namespace ITA.Schedule.Controllers
                 subjects.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
         }
 
-        public ActionResult ScheduleDay(StudentViewModel myFilter)
+        public ActionResult Scheduler(StudentFilterViewModel myFilter)
         {
             
             if (myFilter.Filter == null)
@@ -68,24 +68,20 @@ namespace ITA.Schedule.Controllers
                     break;
             }
           
-            //ViewBag.Width = $"{100/(schedulerModel1.ColumnHeaders.Count+2)-1}%";
+            //ViewBag.Width = $"{100/(myFilter.Scheduler.ColumnHeaders.Count+2)-1}%";
             ViewBag.Width ="15%";
             
             
-            return View("ScheduleDay", myFilter);
+            return View("~/Views/Scheduler/Schedule.cshtml", myFilter);
         }
 
-        private StudentViewModel MonthTimePeriod(StudentViewModel myFilter)
+        private StudentFilterViewModel MonthTimePeriod(StudentFilterViewModel myFilter)
         {
             myFilter.Calendar = new CalendarViewModel
             {
-                FirstDayOfWeekInMonth = MondayOfConreteMonth(myFilter.Filter.StartDateTime),
-                LastDayOfWeekInMonth = LastSundayOfMonth(myFilter.Filter.StartDateTime)
+                FirstDayOfWeekInMonth = myFilter.Filter.StartDateTime.MondayOfConreteMonth(),
+                LastDayOfWeekInMonth = myFilter.Filter.StartDateTime.LastSundayOfMonth()
             };
-            //using (var context)
-            //{
-                
-            //}
             return myFilter;
         }
 
@@ -93,7 +89,7 @@ namespace ITA.Schedule.Controllers
         /// Get values for day by filter from db
         /// </summary>
         /// <param name="myFilter">Filter parameters</param>
-        private StudentViewModel DayTimePeriod(StudentViewModel myFilter)
+        private StudentFilterViewModel DayTimePeriod(StudentFilterViewModel myFilter)
         {
             SchedulerViewModel schedulerModel = new SchedulerViewModel
             {
@@ -139,7 +135,7 @@ namespace ITA.Schedule.Controllers
         /// Get values for day by filter from db
         /// </summary>
         /// <param name="myFilter">Filter parameters</param>                
-        private StudentViewModel WeekTimePeriod(StudentViewModel myFilter)
+        private StudentFilterViewModel WeekTimePeriod(StudentFilterViewModel myFilter)
         {
             myFilter.ScheduleForWeek = new List<SchedulerViewModel>();
             //Here use business logic  to get all lessons by user id, DateTime, TimePeriod
@@ -195,22 +191,6 @@ namespace ITA.Schedule.Controllers
             return myFilter;
         }
 
-        public DateTime MondayOfConreteMonth(DateTime date)
-        {
-            DateTime monday = new DateTime(date.Year, date.Month, 1);
-            monday = monday.AddDays(-1*(int) (monday.DayOfWeek) + 1);
-            return monday;
-        }
-
-        public DateTime LastSundayOfMonth(DateTime date)
-        {
-            DateTime sunday = (date.AddMonths(1).AddDays(-date.Day));
-            if (sunday.DayOfWeek == DayOfWeek.Sunday)
-                return sunday;
-
-            sunday = sunday.AddDays(7-(int) (sunday.DayOfWeek));
-            
-            return sunday;
-        }
+        
     }
 }

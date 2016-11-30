@@ -12,11 +12,14 @@ using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
 {
-    public class TeacherController : Controller
+    public class TeacherScheduleController : Controller
     {
         // GET: Teacher
         public ActionResult Index()
         {
+
+            var filter = new StudentFilterViewModel();
+            filter = new TeacherFilterViewModel();
 
             var teacherBl = new TeacherBl(new TeacherRepository());
             var teachers = teacherBl.GetAll();
@@ -28,10 +31,13 @@ namespace ITA.Schedule.Controllers
             //    if (student != null) studentBl.ReplaceToAnotherSubGroup(student.Id, firstOrDefault.Id);
 
 
-            return View("TeacherFilter", new TeacherFilterViewModel());
+            return View("~/Views/Scheduler/Schedule.cshtml", filter);
         }
 
-        //[HttpGet]
-        //public
+        public ActionResult ShowSchedule()
+        {
+
+            return View("TeacherFilter");
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace ITA.Schedule.Models
         public string Description { get; set; }
 
         public int LessonNumber { get; set; }
-
+        
         public DateTime LessonDate { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-@model ITA.Schedule.Models.TeacherFilterViewModel
+@model ITA.Schedule.Models.FilterViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,64 +24,65 @@
 
 </head>
 <body>
-    <div class="alert row">
-        @using (Html.BeginForm("ScheduleDay", "Scheduler", Model))
-            {
-            <div class="col-md-12 row-bordered">
-                <div class="col-md-2">
-                    @Html.TextBoxFor(model => model.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
-                </div>
 
-                <div class="col-sm-2">
-                    @*@Html.DropDownListFor(x => x.GroupId, (List<SelectListItem>)ViewBag.Groups, "Група", new { @class = "col-md-offset-1 col-md-11" })*@
-                </div>
-
-                <div class="col-md-2">
-                    @*@Html.DropDownListFor(x => x.SubgroupId, (List<SelectListItem>)ViewBag.Subgroups, "Підгрупа", new { @class = "col-md-offset-1 col-md-11" })*@
-
-                </div>
-                <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
-                    <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.MyTimePeriod, "day", new { name = "day", @checked = true }) День
-                    </label>
-
-                    <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.MyTimePeriod, "week", new { name = "week" }) Тиждень
-                    </label>
-                    <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.MyTimePeriod, "month", new { name = "month" }) Місяць
-                    </label>
-                </div>
-                <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
-                    <button type="submit" class="btn btn-success"> Показати </button>
-                </div>
+<div class="alert row">
+    @using (Html.BeginForm("ScheduleDay", "Scheduler", Model))
+    {
+        <div class="col-md-12 row-bordered">
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDateTime, new {@id = "datepicker", @class = "col-md-offset-1 col-md-12"})
             </div>
-        }
-        <div class="col-md-12">
-            @*@RenderBody()*@
+
+            <div class="col-sm-2">
+                @*@Html.DropDownListFor(x => x.GroupId, (List<SelectListItem>)ViewBag.Groups, "Група", new { @class = "col-md-offset-1 col-md-11" })*@
+            </div>
+
+            <div class="col-md-2">
+                @*@Html.DropDownListFor(x => x.SubgroupId, (List<SelectListItem>)ViewBag.Subgroups, "Підгрупа", new { @class = "col-md-offset-1 col-md-11" })*@
+
+            </div>
+            <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
+                <label class="btn btn-default">
+                    @Html.RadioButtonFor(model => model.MyTimePeriod, "day", new {name = "day", @checked = true}) День
+                </label>
+
+                <label class="btn btn-default">
+                    @Html.RadioButtonFor(model => model.MyTimePeriod, "week", new {name = "week"}) Тиждень
+                </label>
+                <label class="btn btn-default">
+                    @Html.RadioButtonFor(model => model.MyTimePeriod, "month", new {name = "month"}) Місяць
+                </label>
+            </div>
+            <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
+                <button type="submit" class="btn btn-success"> Показати </button>
+            </div>
         </div>
-
-        <script type="text/javascript">
-       $(document).ready(function () {
-           $(function () {
-               $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
-            });
-
-                // create DatePicker from input HTML element
-                //$("#datepicker").kendoDatePicker();
-
-                //$("#monthpicker").kendoDatePicker({
-                //    // defines the start view
-                //    start: "year",
-
-                //    // defines when the calendar should return date
-                //    depth: "year",
-
-                //    // display month and year in the input
-                //    format: "MMMM yyyy"
-                //});
-            });
-        </script>
-
+    }
+    <div class="col-md-12">
+        @*@RenderBody()*@
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
+            });
+
+            // create DatePicker from input HTML element
+            //$("#datepicker").kendoDatePicker();
+
+            //$("#monthpicker").kendoDatePicker({
+            //    // defines the start view
+            //    start: "year",
+
+            //    // defines when the calendar should return date
+            //    depth: "year",
+
+            //    // display month and year in the input
+            //    format: "MMMM yyyy"
+            //});
+        });
+    </script>
+
+</div>
 </body>

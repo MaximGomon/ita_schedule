@@ -2,29 +2,272 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
+using ITA.Schedule.Util;
 using NLog;
+using Kendo.Mvc.UI;
 
 namespace ITA.Schedule.Controllers
 {
     public class AdminController : Controller
     {
         private readonly TeacherBl _teacherBl;
+        private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
+        private readonly UserBl _userBl;
+        private readonly SecurityGroupBl _securityGroupBl;
 
         private static Logger _logger;
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
+            _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
             _logger = LogManager.GetCurrentClassLogger();
+            _securityGroupBl = new SecurityGroupBl(new SecurityGroupRepository());
+            _userBl = new UserBl(new UserRepository());
         }
+
+        /// <summary>
+        /// Users group of methods
+        /// </summary>
+        /// <returns></returns>
+
+        // show user list
+        [HttpGet]
+        public ActionResult ShowUsers()
+        {
+            ShedulerLogger();
+
+            var usersDb = _userBl.GetAll().ToList();
+
+            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderByDescending(x => x.Type).ThenBy(x => x.Owner);
+            
+            return PartialView("UsersList", users);
+        }
+
+        // add user initial screen
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            // get all teachers and students from the db to check who of them is binded to a user
+            var teachersDb = _teacherBl.GetAll().ToList();
+            var studentsDb = _studentBl.GetAll().ToList();
+            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
+
+            // get all users from the db
+            var users = _userBl.GetAll().ToList();
+
+            // create new list of Ids to filter assigned users for the view
+            var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
+            usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
+
+            // add teachers to the view
+            ViewBag.Teachers = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
+
+            // add students to the view
+            ViewBag.Students = studentsDb.Where(student => usersWithId.All(x => x != student.Id)).ToDictionary(student => student.Id, student => student.Name);
+
+            // add security groups to the view
+            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
+
+            return PartialView("AddUser");
+        }
+
+        // add user to the db
+        [HttpPost]
+        public ActionResult AddUser(UserViewModel newUser)
+        {
+            // check owner type 
+            var ownerId = Guid.Empty;
+            UserType type;
+            if (newUser.StudentId != null && newUser.StudentId != Guid.Empty)
+            {
+                ownerId = (Guid)newUser.StudentId;
+                type = UserType.Student;
+            }
+            else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
+            {
+                ownerId = (Guid)newUser.TeacherId;
+                type = UserType.Teacher;
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // try to insert new user to the Db
+            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.SecurityGroupId, type))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowUsers");
+        }
+
+        // method to asynchroniously check if a login is unique
+        public ActionResult VerifyLogin(string Login)
+        {
+            return Json(!_userBl.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
+        }
+
+        // Update user initial screen
+        [HttpGet]
+        public ActionResult UpdateUser(Guid id)
+        {
+            // check if user exists
+            var user = _userBl.Get(x => x.Id == id).FirstOrDefault();
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var personId = Guid.Empty;
+            if (user.Student != null)
+            {
+                personId = user.Student.Id;
+            }
+            else if (user.Teacher != null)
+            {
+                personId = user.Teacher.Id;
+            }
+
+            // get all logins from the db and pass them to the view
+            var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login.ToLower()).ToList();
+            loginsDb.Remove(user.Login.ToLower());
+
+            ViewBag.Logins = loginsDb;
+
+            // get all teachers and students from the db to check who of them is binded to a user
+            var teachersDb = _teacherBl.GetAll().ToList();
+            var studentsDb = _studentBl.GetAll().ToList();
+            var securityGroupsDb = _securityGroupBl.GetAll().ToList();
+
+            // get all users from the db
+            var users = _userBl.GetAll().ToList();
+
+            // create new list of Ids to filter assigned users for the view
+            var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
+            usersWithId.AddRange(users.Where(x => x.Teacher == null).Select(x => x.Student.Id).ToList());
+
+            // add teachers to the view
+            var test = teachersDb.Where(teacher => usersWithId.All(x => x != teacher.Id || x == personId)).ToDictionary(teacher => teacher.Id, teacher => teacher.Name);
+            ViewBag.Teachers = test;
+
+            // add students to the view
+            var test2 = studentsDb.Where(student => usersWithId.All(x => x != student.Id || x == personId)).ToDictionary(student => student.Id, student => student.Name);
+            ViewBag.Students = test2;
+
+            // add security groups to the view
+            ViewBag.SecurityGroups = securityGroupsDb.ToDictionary(securityGroup => securityGroup.Id, securityGroup => securityGroup.Name);
+
+
+            return PartialView("UpdateUser", new UserUpdateModel().UserToUserModel(user));
+        }
+
+        // Delete user initial screen
+        [HttpPost]
+        public ActionResult UpdateUser(UserUpdateModel user)
+        {
+            // get user from the Db
+            var userToUpdate = _userBl.GetById(user.Id);
+            
+            // check if we got a correct user
+            if (userToUpdate == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // check if he has a new password
+            if (user.Password != null)
+            {
+                userToUpdate.Password = user.Password;
+            }
+
+            // check if login was changed
+            if (userToUpdate.Login != user.Login)
+            {
+                userToUpdate.Login = user.Login;
+            }
+
+            // check security group
+            if (userToUpdate.SecurityGroup.Id != user.SecurityGroupId)
+            {
+                userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.SecurityGroupId);
+            }
+
+            // ToDo consult about null here
+            // check if user type was changed
+            switch (user.TypeOfUser)
+            {
+                case UserType.Student:
+                    {
+                        var owner = _userBl.AttachStudent(user.StudentId);
+                        if (owner == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        userToUpdate.Student = owner;
+                        userToUpdate.Teacher = null;
+                    }
+                    break;
+                case UserType.Teacher:
+                    {
+                        var owner = _userBl.AttachTeacher(user.TeacherId);
+                        if (owner == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        userToUpdate.Teacher = owner;
+                        userToUpdate.Student = null;
+                    }
+                    break;
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Update(userToUpdate);
+
+            return RedirectToAction("ShowUsers");
+        }
+
+        // Delete user initial screen
+        [HttpGet]
+        public ActionResult DeleteUser(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("DeleteUser", new ShowUserModel().ConvertUserToModel(user));
+        }
+
+        // Delete user initial screen
+        [HttpGet]
+        public ActionResult DeleteUserFromDb(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Remove(user);
+
+            return RedirectToAction("ShowUsers");
+        }
+
         /// <summary>
         /// Subjects group of methods
         /// </summary>
@@ -90,7 +333,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateSubjectModel = new AddUpdateSubjectModel()
+            var updateSubjectModel = new SubjectUpdateModel()
             {
                 Subject = subject,
                 SubjectCodes = _subjectBl.GetAll().Select(x => x.Code).ToList()
@@ -103,7 +346,7 @@ namespace ITA.Schedule.Controllers
 
         // update subject initial screen
         [HttpPost]
-        public ActionResult UpdateSubject(UpdatedSubjectModel updatedSubject)
+        public ActionResult UpdateSubject(SubjectUpdatedModel updatedSubject)
         {
             ShedulerLogger();
 
@@ -172,7 +415,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            var addTeacherModel = new AddUpdateTeacherModel()
+            var addTeacherModel = new TeacherAddUpdateModel()
             {
                 Subjects = new List<SubjectModel>()
             };
@@ -189,7 +432,7 @@ namespace ITA.Schedule.Controllers
 
         // updating a teaher in the DB
         [HttpPost]
-        public ActionResult AddTeacher(UpdatedTeacherModel addedTeacher)
+        public ActionResult AddTeacher(TeacherUpdatedModel addedTeacher)
         {
             ShedulerLogger();
 
@@ -227,7 +470,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var updateTeacherModel = new AddUpdateTeacherModel()
+            var updateTeacherModel = new TeacherAddUpdateModel()
             {
                 Teacher = teacher,
                 Subjects = new List<SubjectModel>()
@@ -245,7 +488,7 @@ namespace ITA.Schedule.Controllers
 
         // updating a teaher in the DB
         [HttpPost]
-        public ActionResult UpdateTeacher(UpdatedTeacherModel updatedTeacher)
+        public ActionResult UpdateTeacher(TeacherUpdatedModel updatedTeacher)
         {
             ShedulerLogger();
 

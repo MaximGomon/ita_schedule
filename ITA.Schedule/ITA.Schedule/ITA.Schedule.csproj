@@ -982,6 +982,19 @@
     <Content Include="kendo\kendo_themes\Flat\sprite_2x.png" />
     <Content Include="kendo\kendo_themes\Flat\sprite_kpi.png" />
     <Content Include="kendo\kendo_themes\Flat\sprite_kpi_2x.png" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif.ttf" />
     <Content Include="kendo\kendo_themes\fonts\DejaVu\LICENSE.txt" />
     <Content Include="kendo\kendo_themes\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="kendo\kendo_themes\HighContrast\editor.png" />
@@ -1318,6 +1331,19 @@
     <Content Include="kendo\kendo_theme\Flat\sprite_2x.png" />
     <Content Include="kendo\kendo_theme\Flat\sprite_kpi.png" />
     <Content Include="kendo\kendo_theme\Flat\sprite_kpi_2x.png" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif.ttf" />
     <Content Include="kendo\kendo_theme\fonts\DejaVu\LICENSE.txt" />
     <Content Include="kendo\kendo_theme\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="kendo\kendo_theme\HighContrast\editor.png" />
@@ -1336,6 +1362,8 @@
     <Content Include="kendo\kendo_theme\HighContrast\sprite_kpi_2x.png" />
     <Content Include="kendo\kendo_theme\images\back.png" />
     <Content Include="kendo\kendo_theme\images\kendoui.svg" />
+    <Content Include="kendo\kendo_theme\images\kendoui.ttf" />
+    <Content Include="kendo\kendo_theme\images\kendoui.woff" />
     <Content Include="kendo\kendo_theme\images\wp8_icons.png" />
     <Content Include="kendo\kendo_theme\images\wp8_inverseicons.png" />
     <Content Include="kendo\kendo_theme\kendo.black.min.css" />
@@ -1602,6 +1630,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Grid.mvc.readme" />
     <Content Include="kendo\jquery.min.map" />
     <Content Include="kendo\kendo.all.min.js.map" />
     <Content Include="kendo\kendo.angular.min.js.map" />
@@ -1723,43 +1752,14 @@
     <Content Include="kendo\kendo.web.min.js.map" />
     <Content Include="kendo\kendo.webcomponents.min.js.map" />
     <Content Include="kendo\kendo.window.min.js.map" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-Bold.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSans.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSansMono.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
-    <Content Include="kendo\kendo_themes\fonts\DejaVu\DejaVuSerif.ttf" />
     <Content Include="kendo\kendo_themes\fonts\glyphs\KendoUIGlyphs.eot" />
     <Content Include="kendo\kendo_themes\fonts\glyphs\KendoUIGlyphs.ttf" />
     <Content Include="kendo\kendo_themes\fonts\glyphs\KendoUIGlyphs.woff" />
     <Content Include="kendo\kendo_themes\images\kendoui.ttf" />
     <Content Include="kendo\kendo_themes\images\kendoui.woff" />
-    <Content Include="Grid.mvc.readme" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-Bold.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSans.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSansMono.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
-    <Content Include="kendo\kendo_theme\fonts\DejaVu\DejaVuSerif.ttf" />
     <Content Include="kendo\kendo_theme\fonts\glyphs\KendoUIGlyphs.eot" />
     <Content Include="kendo\kendo_theme\fonts\glyphs\KendoUIGlyphs.ttf" />
     <Content Include="kendo\kendo_theme\fonts\glyphs\KendoUIGlyphs.woff" />
-    <Content Include="kendo\kendo_theme\images\kendoui.ttf" />
-    <Content Include="kendo\kendo_theme\images\kendoui.woff" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1779,9 +1779,15 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\subject-validation.js" />
     <Content Include="Scripts\teacher-validation.js" />
+    <Content Include="Scripts\user-validation.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -1795,7 +1801,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddUpdateSubjectModel.cs" />
+    <Compile Include="Models\ShowUserModel.cs" />
+    <Compile Include="Models\SubjectUpdateModel.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Models\PeopleViewModel.cs" />
@@ -1803,13 +1810,15 @@
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\FilterViewModel.cs" />
     <Compile Include="Models\StudentFilterViewModel.cs" />
+    <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\TeacherFilter.cs" />
     <Compile Include="Models\TeacherFilterViewModel.cs" />
     <Compile Include="Models\TeacherModel.cs" />
-    <Compile Include="Models\UpdatedSubjectModel.cs" />
-    <Compile Include="Models\UpdatedTeacherModel.cs" />
-    <Compile Include="Models\AddUpdateTeacherModel.cs" />
+    <Compile Include="Models\SubjectUpdatedModel.cs" />
+    <Compile Include="Models\TeacherUpdatedModel.cs" />
+    <Compile Include="Models\TeacherAddUpdateModel.cs" />
+    <Compile Include="Models\UserUpdateModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebModule.cs" />
@@ -1838,6 +1847,10 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
+    <Content Include="Views\Admin\UsersList.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\UpdateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

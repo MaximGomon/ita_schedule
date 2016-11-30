@@ -3,21 +3,31 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
+    /// <summary>
+    /// User base model
+    /// </summary>
     public class UserViewModel
     {
-        [MinLength(1, ErrorMessage = "Too short name. Must be 1-50 chars")]
-        [MaxLength(50, ErrorMessage = "Too long name. Must be 1-50 chars")]
-        [Required]
+        [Required(ErrorMessage = "Please enter Login")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Invalid Login length")]
+        [Remote("VerifyLogin", "Admin", ErrorMessage = "Login is already in use")]
+        [RegularExpression("^[A-Za-z0-9]+$")]
         public string Login { get; set; }
 
-        [MinLength(1, ErrorMessage = "Too short password. Must be 1-100 chars")]
-        [MaxLength(100, ErrorMessage = "Too long password. Must be 1-100 chars")]
-        [Required]
+        [Required(ErrorMessage = "Please enter Password")]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$", ErrorMessage = "Password should be 8 to 15 chars and include 1+ number/1+ lowercase/1+ uppercase char")]
         public string Password { get; set; }
 
+        public Guid? StudentId { get; set; }
+        public Guid? TeacherId { get; set; }
+        [Required(ErrorMessage = "Please select security group")]
+        public Guid SecurityGroupId { get; set; }
         
     }
 }

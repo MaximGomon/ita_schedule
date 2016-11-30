@@ -6,7 +6,7 @@ namespace ITA.Schedule.Models
     /// <summary>
     /// Model to be passed to the subjects list view
     /// </summary>
-    public class AddUpdateSubjectModel
+    public class SubjectUpdateModel
     {
         public Subject Subject { get; set; }
         public List<int> SubjectCodes { get; set; }

@@ -18,11 +18,15 @@ namespace ITA.Schedule.Controllers
         public ActionResult Index()
         {
 
-            var filter = new StudentFilterViewModel();
-            filter = new TeacherFilterViewModel();
+            var filter = new UserFilterViewModel()
+            {
+                Filter = new FilterViewModel(),
+                Scheduler = null
+            };
 
-            var teacherBl = new TeacherBl(new TeacherRepository());
-            var teachers = teacherBl.GetAll();
+            FillDefaultDropDown(filter);
+            //var teacherBl = new TeacherBl(new TeacherRepository());
+            //var teachers = teacherBl.GetAll();
 
             //var studentBl = new StudentBl(new StudentRepository());
             //var student = studentBl.Get(s => s.Name == "Vetal Xyuzlovish").FirstOrDefault();
@@ -31,13 +35,26 @@ namespace ITA.Schedule.Controllers
             //    if (student != null) studentBl.ReplaceToAnotherSubGroup(student.Id, firstOrDefault.Id);
 
 
-            return View("~/Views/Scheduler/Schedule.cshtml", filter);
+            return View("TeacherFilter", filter);
         }
 
-        public ActionResult ShowSchedule()
+        public ActionResult ShowSchedule(UserFilterViewModel myFilter)
         {
 
             return View("TeacherFilter");
+        }
+
+        private void FillDefaultDropDown(UserFilterViewModel filter)
+        {
+            var groups = new GroupBl(new GroupRepository(), new SubgroupRepository()).GetAll();
+
+            var subGroups = new SubGroupBl(new SubgroupRepository()).GetAll();
+
+            filter.Filter.FirstList =
+                groups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+
+            filter.Filter.SecondList =
+                subGroups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
         }
     }
 }

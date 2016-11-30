@@ -1,7 +1,7 @@
 ﻿@using ITA.Schedule.Models
 @using ITA.Schedule.Util
 @using Kendo.Mvc.UI
-@model ITA.Schedule.Models.StudentFilterViewModel
+@model ITA.Schedule.Models.UserFilterViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -90,13 +90,13 @@
                             var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
                             if (lesson != null)
                             {
-                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('It was clicked')">
                                     <span>@lesson.Description</span>
                                 </div>
                             }
                             else
                             {
-                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('I am empty')">
 
                                 </div>
                             }
@@ -226,23 +226,12 @@
             var time = new Date();
             var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
             console.log(timeFromObject);
-            $(function() {
+            $(function () {
+                $.datepicker.setDefaults($.datepicker.regional["ru-UA"]);
                 $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
             });
 
-            // create DatePicker from input HTML element
-            //$("#datepicker").kendoDatePicker();
-
-            //$("#monthpicker").kendoDatePicker({
-            //    // defines the start view
-            //    start: "year",
-
-            //    // defines when the calendar should return date
-            //    depth: "year",
-
-            //    // display month and year in the input
-            //    format: "MMMM yyyy"
-            //});
+            
         });
 </script>
 

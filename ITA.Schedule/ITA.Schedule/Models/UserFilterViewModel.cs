@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ITA.Schedule.Models
 {
-    public class StudentFilterViewModel
+    public class UserFilterViewModel
     {
         public FilterViewModel Filter { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿@using ITA.Schedule.Models
 @using ITA.Schedule.Util
 @using Kendo.Mvc.UI
-@model ITA.Schedule.Models.TeacherFilterViewModel
+@model ITA.Schedule.Models.UserFilterViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,27 +20,27 @@
         {
             <div class="col-md-12 row-bordered">
                 <div class="col-md-2">
-                    @Html.TextBoxFor(model => model.FilterTeacher.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
+                    @Html.TextBoxFor(model => model.Filter.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
                 </div>
 
                 <div class="col-sm-2">
-                    @Html.DropDownListFor(x => x.FilterTeacher.GroupId, Model.FilterTeacher.GroupList, "Всі групи", new { @class = "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x => x.Filter.FirstId, Model.Filter.FirstList, "Всі групи", new { @class = "col-md-offset-1 col-md-11" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.DropDownListFor(x => x.FilterTeacher.SubgroupId, Model.FilterTeacher.SubGroups, "Всі підгрупи", new { @class = "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x => x.Filter.SecondId, Model.Filter.SecondList, "Всі підгрупи", new { @class = "col-md-offset-1 col-md-11" })
 
                 </div>
                 <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "day", new { name = "day", @checked = true }) День
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new { name = "day", @checked = true }) День
                     </label>
 
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "week", new { name = "week" }) Тиждень
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new { name = "week" }) Тиждень
                     </label>
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "month", new { name = "month" }) Місяць
+                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new { name = "month" }) Місяць
                     </label>
                 </div>
                 <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
@@ -49,7 +49,7 @@
             </div>
         }
         <div class="col-md-12">
-            @if (Model.Scheduler != null && Model.FilterTeacher.MyTimePeriod == TimePeriod.Day)
+            @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
             {
                 <div class="col-md-12">
                     <div class="h3 alert alert-info info col-sm-12 text-center">
@@ -250,58 +250,6 @@
     </div>
 </body>
 
-
-@*@using Kendo.Mvc.UI
-    @model  ITA.Schedule.Models.StudentViewModel
-    @{
-        Layout = "~/Views/Student/StudentHeader.cshtml";
-    }
-        <div class="col-md-12">
-        <div class="h3 alert alert-info info col-sm-12 text-center">
-            <span class="text-center">
-                @ViewBag.Date
-            </span>
-        </div>
-
-            <div class="col-md-12" style="display: inline-block">
-                <div style="width: @ViewBag.Width; display: inline-block">
-                    Lesson
-                </div>
-                <div style="width: @ViewBag.Width; display: inline-block">
-                    Time
-                </div>
-                @foreach (var schedule in Model.Scheduler.ColumnHeaders)
-                {
-                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block">
-                        @Html.Label(schedule.Key)
-                    </div>
-                }
-            </div>
-                @{
-                    var headers = new Dictionary<string, int>();
-
-                    var lessons = new List<string>();
-
-                    foreach (var item in lessons)
-                    {
-                        //begin draw row
-                        for (int i = 0; i < lessons.Count; i++)
-                        {
-                            if (headers[item] == i)
-                            {
-                                //draw lesson in cell
-                            }
-                            else
-                            {
-                                //draw empty cell
-                            }
-                        }
-                        //end draw row
-                    }
-                }
-
-
-    </div>*@
 
 
 

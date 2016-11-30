@@ -19,7 +19,7 @@ namespace ITA.Schedule.Controllers
         // GET: Scheduler
         public ActionResult Index()
         {
-            StudentFilterViewModel student = new StudentFilterViewModel()
+            UserFilterViewModel student = new UserFilterViewModel()
             {
                 Filter = new FilterViewModel(),
                 Scheduler = null
@@ -28,25 +28,23 @@ namespace ITA.Schedule.Controllers
             //GetAllTeachers
             FillDefaultDropDown(student);
 
-            return View("~/Views/Scheduler/Schedule.cshtml", student);
+            return View("Schedule", student);
         }
 
-        private static void FillDefaultDropDown(StudentFilterViewModel student)
+        private static void FillDefaultDropDown(UserFilterViewModel student)
         {
-            var teacherBl = new TeacherBl(new TeacherRepository());
-            var teachers = teacherBl.GetAll();
+            var teachers = new TeacherBl(new TeacherRepository()).GetAll();
 
-            var subjectBl = new SubjectBl(new SubjectRepository());
-            var subjects = subjectBl.GetAll();
+            var subjects = new SubjectBl(new SubjectRepository()).GetAll();
 
-            student.Filter.TeachersList =
+            student.Filter.FirstList=
                 teachers.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
 
-            student.Filter.SubjectsList =
+            student.Filter.SecondList =
                 subjects.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
         }
 
-        public ActionResult Scheduler(StudentFilterViewModel myFilter)
+        public ActionResult Scheduler(UserFilterViewModel myFilter)
         {
             
             if (myFilter.Filter == null)
@@ -72,10 +70,10 @@ namespace ITA.Schedule.Controllers
             ViewBag.Width ="15%";
             
             
-            return View("~/Views/Scheduler/Schedule.cshtml", myFilter);
+            return View("Schedule", myFilter);
         }
 
-        private StudentFilterViewModel MonthTimePeriod(StudentFilterViewModel myFilter)
+        private UserFilterViewModel MonthTimePeriod(UserFilterViewModel myFilter)
         {
             myFilter.Calendar = new CalendarViewModel
             {
@@ -89,7 +87,7 @@ namespace ITA.Schedule.Controllers
         /// Get values for day by filter from db
         /// </summary>
         /// <param name="myFilter">Filter parameters</param>
-        private StudentFilterViewModel DayTimePeriod(StudentFilterViewModel myFilter)
+        private UserFilterViewModel DayTimePeriod(UserFilterViewModel myFilter)
         {
             SchedulerViewModel schedulerModel = new SchedulerViewModel
             {
@@ -135,7 +133,7 @@ namespace ITA.Schedule.Controllers
         /// Get values for day by filter from db
         /// </summary>
         /// <param name="myFilter">Filter parameters</param>                
-        private StudentFilterViewModel WeekTimePeriod(StudentFilterViewModel myFilter)
+        private UserFilterViewModel WeekTimePeriod(UserFilterViewModel myFilter)
         {
             myFilter.ScheduleForWeek = new List<SchedulerViewModel>();
             //Here use business logic  to get all lessons by user id, DateTime, TimePeriod

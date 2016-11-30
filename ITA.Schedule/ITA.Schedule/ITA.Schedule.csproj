@@ -1809,7 +1809,7 @@
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\FilterViewModel.cs" />
-    <Compile Include="Models\StudentFilterViewModel.cs" />
+    <Compile Include="Models\UserFilterViewModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\TeacherFilter.cs" />
@@ -1832,7 +1832,7 @@
     <Content Include="Views\Student\StudentHeader.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Scheduler\Schedule.cshtml" />
+    <Content Include="Views\StudentScheduler\Schedule.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
     <Content Include="Views\Teacher\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\AddTeacher.cshtml" />

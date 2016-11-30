@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
@@ -31,6 +32,15 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         public SecurityGroup SetSecurityGroup(Guid groupId)
         {
             return ContextDb.SecurityGroups.FirstOrDefault(x => x.Id == groupId);
+        }
+
+        public override User GetById(Guid id)
+        {
+            return base.Get(x => x.Id == id)
+                .Include(x => x.Teacher)
+                .Include(x => x.Student)
+                .Include(x => x.SecurityGroup)
+                .FirstOrDefault();
         }
     }
 }

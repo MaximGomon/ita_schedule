@@ -225,8 +225,9 @@ namespace ITA.Schedule.Controllers
                         {
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
-                        userToUpdate.Teacher = owner;
                         userToUpdate.Student = null;
+                        userToUpdate.Teacher = owner;
+                        
                     }
                     break;
                 default:

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 
+
 namespace ITA.Schedule.BLL
 {
     public class BllModule : Module

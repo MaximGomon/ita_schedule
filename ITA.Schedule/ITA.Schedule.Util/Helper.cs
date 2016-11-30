@@ -15,5 +15,23 @@ namespace ITA.Schedule.Util
                 currentDate.Month == dateToCompare.Month &&
                 currentDate.Year == dateToCompare.Year;
         }
+
+        public static DateTime MondayOfConreteMonth(this DateTime date)
+        {
+            DateTime monday = new DateTime(date.Year, date.Month, 1);
+            monday = monday.AddDays(-1 * (int)(monday.DayOfWeek) + 1);
+            return monday;
+        }
+
+        public static DateTime LastSundayOfMonth(this DateTime date)
+        {
+            DateTime sunday = (date.AddMonths(1).AddDays(-date.Day));
+            if (sunday.DayOfWeek == DayOfWeek.Sunday)
+                return sunday;
+
+            sunday = sunday.AddDays(7 - (int)(sunday.DayOfWeek));
+
+            return sunday;
+        }
     }
 }

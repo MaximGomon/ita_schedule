@@ -1,45 +1,46 @@
 ﻿@using ITA.Schedule.Models
 @using ITA.Schedule.Util
 @using Kendo.Mvc.UI
-@model ITA.Schedule.Models.StudentViewModel
+@model ITA.Schedule.Models.TeacherFilterViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <!DOCTYPE html>
 
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>StudentHeader</title>
-
 </head>
 <body>
     <div class="alert row">
-        @using (Html.BeginForm("ScheduleDay", "Scheduler"))
+
+        @using (Html.BeginForm("ShowSchedule", "TeacherSchedule"))
         {
             <div class="col-md-12 row-bordered">
                 <div class="col-md-2">
-                    @Html.TextBoxFor(model => model.Filter.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
+                    @Html.TextBoxFor(model => model.FilterTeacher.StartDateTime, new { @id = "datepicker", @class = "col-md-offset-1 col-md-12" })
                 </div>
 
                 <div class="col-sm-2">
-                    @Html.DropDownListFor(x => x.Filter.MySubjectId, Model.Filter.SubjectsList, "Всі предмети", new { @class = "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x => x.FilterTeacher.GroupId, Model.FilterTeacher.GroupList, "Всі групи", new { @class = "col-md-offset-1 col-md-11" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.DropDownListFor(x => x.Filter.TeacherId, Model.Filter.TeachersList, "Всі викладачі", new { @class = "col-md-offset-1 col-md-11" })
+                    @Html.DropDownListFor(x => x.FilterTeacher.SubgroupId, Model.FilterTeacher.SubGroups, "Всі підгрупи", new { @class = "col-md-offset-1 col-md-11" })
 
                 </div>
                 <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new { name = "day", @checked = true }) День
+                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "day", new { name = "day", @checked = true }) День
                     </label>
 
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new { name = "week" }) Тиждень
+                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "week", new { name = "week" }) Тиждень
                     </label>
                     <label class="btn btn-default">
-                        @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new { name = "month" }) Місяць
+                        @Html.RadioButtonFor(model => model.FilterTeacher.MyTimePeriod, "month", new { name = "month" }) Місяць
                     </label>
                 </div>
                 <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
@@ -48,7 +49,7 @@
             </div>
         }
         <div class="col-md-12">
-            @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
+            @if (Model.Scheduler != null && Model.FilterTeacher.MyTimePeriod == TimePeriod.Day)
             {
                 <div class="col-md-12">
                     <div class="h3 alert alert-info info col-sm-12 text-center">
@@ -65,7 +66,7 @@
                             Time
                         </div>
                         @foreach (var schedule in Model.Scheduler.ColumnHeaders)
-                        {
+                {
                             <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
                                 <span>@schedule.Key</span>
                             </div>
@@ -90,26 +91,26 @@
                                     var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
                                     if (lesson != null)
                                     {
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                        <span>@lesson.Description</span>
-                                    </div>
+                                        <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                            <span>@lesson.Description</span>
+                                        </div>
                                     }
                                     else
                                     {
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
 
-                                    </div>
+                                        </div>
                                     }
                                 }
-                                
+
                             </div>
                         }
                     }
 
 
                 </div>
-            }
-                        
+                        }
+
             @if (Model.ScheduleForWeek != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
             {
                 foreach (var day in Model.ScheduleForWeek)
@@ -129,7 +130,7 @@
                                 Time
                             </div>
                             @foreach (var schedule in day.ColumnHeaders)
-                            {
+                    {
                                 <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
                                     <span>@schedule.Key</span>
                                 </div>
@@ -173,43 +174,43 @@
 
 
                     </div>
-                }
-            }
+                                }
+                            }
             @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
             {
-                <div class="col-md-12 alert text-center" >
-                    <span class="calendar-day">@Model.Filter.StartDateTime.Month </span>
+                <div class="col-md-12 alert text-center">
+                    <span class="calendar-day">@($"{Model.Filter.StartDateTime.Date.ToString("MMMM")}") </span>
                 </div>
                 <div class="col-md-12 ">
                     @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
                     {
-                    <div class="text-center" style="width: 13%; display: inline-block; ">
-                        <span> @dayOfWeek</span>
-                        
-                    </div>
+                        <div class="text-center" style="width: 13%; display: inline-block;">
+                            <span> @dayOfWeek</span>
+
+                        </div>
                     }
                 </div>
                 for (;;)
                 {
-                    if (Model.Calendar.FirstDayOfWeekInMonth>Model.Calendar.LastDayOfWeekInMonth)
+                    if (Model.Calendar.FirstDayOfWeekInMonth > Model.Calendar.LastDayOfWeekInMonth)
                     {
                         break;
                     }
                     <div class="" style="width: 13%; display: inline-block; border: 1px solid black; padding: 0; margin: -0.2rem">
-                        <span class="calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
+                        <span class="text-center calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
                         @for (var i = 1; i < 8; i++)
                         {
                             @*<div>*@
                         var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
-                                                        && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
-                                                        && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
-                            if (@lesson)
-                            {
-                                <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
+                                                                     && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
+                                                                     && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
+                        if (@lesson)
+                        {
+                            <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
                             }
                             else
                             {
-                                <span class="col-md-12" style="padding: 0;" >@i </span>
+                                <span class="col-md-12" style="padding: 0;">@i </span>
 
                             }
 
@@ -221,12 +222,13 @@
         </div>
 
         <script type="text/javascript">
-            $(document)
-                .ready(function() {
-                    var time = new Date();
-
-            $(function () {
-                $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", time);
+    $(document)
+        .ready(function() {
+            var time = new Date();
+            var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
+            console.log(timeFromObject);
+            $(function() {
+                $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
             });
 
             // create DatePicker from input HTML element
@@ -250,56 +252,56 @@
 
 
 @*@using Kendo.Mvc.UI
-@model  ITA.Schedule.Models.StudentViewModel
-@{
-    Layout = "~/Views/Student/StudentHeader.cshtml";
-}
-    <div class="col-md-12">
-    <div class="h3 alert alert-info info col-sm-12 text-center">
-        <span class="text-center">
-            @ViewBag.Date
-        </span>
-    </div>
-    
-        <div class="col-md-12" style="display: inline-block">
-            <div style="width: @ViewBag.Width; display: inline-block">
-                Lesson
-            </div>
-            <div style="width: @ViewBag.Width; display: inline-block">
-                Time
-            </div>
-            @foreach (var schedule in Model.Scheduler.ColumnHeaders)
-            {
-                <div class="text-center" style="width: @ViewBag.Width; display: inline-block">
-                    @Html.Label(schedule.Key)
-                </div>
-            }
+    @model  ITA.Schedule.Models.StudentViewModel
+    @{
+        Layout = "~/Views/Student/StudentHeader.cshtml";
+    }
+        <div class="col-md-12">
+        <div class="h3 alert alert-info info col-sm-12 text-center">
+            <span class="text-center">
+                @ViewBag.Date
+            </span>
         </div>
-            @{
-                var headers = new Dictionary<string, int>();
 
-                var lessons = new List<string>();
-
-                foreach (var item in lessons)
+            <div class="col-md-12" style="display: inline-block">
+                <div style="width: @ViewBag.Width; display: inline-block">
+                    Lesson
+                </div>
+                <div style="width: @ViewBag.Width; display: inline-block">
+                    Time
+                </div>
+                @foreach (var schedule in Model.Scheduler.ColumnHeaders)
                 {
-                    //begin draw row
-                    for (int i = 0; i < lessons.Count; i++)
-                    {
-                        if (headers[item] == i)
-                        {
-                            //draw lesson in cell
-                        }
-                        else
-                        {
-                            //draw empty cell
-                        }
-                    }
-                    //end draw row
+                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block">
+                        @Html.Label(schedule.Key)
+                    </div>
                 }
-            }
-        
+            </div>
+                @{
+                    var headers = new Dictionary<string, int>();
 
-</div>*@
+                    var lessons = new List<string>();
+
+                    foreach (var item in lessons)
+                    {
+                        //begin draw row
+                        for (int i = 0; i < lessons.Count; i++)
+                        {
+                            if (headers[item] == i)
+                            {
+                                //draw lesson in cell
+                            }
+                            else
+                            {
+                                //draw empty cell
+                            }
+                        }
+                        //end draw row
+                    }
+                }
+
+
+    </div>*@
 
 
 

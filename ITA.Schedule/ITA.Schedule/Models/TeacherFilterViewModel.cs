@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
     public class TeacherFilterViewModel
     {
-        public DateTime StartDateTime { get; set; }
+        public TeacherFilter FilterTeacher { get; set; }
 
-        public Guid GroupId { get; set; }
+        public SchedulerViewModel Scheduler { get; set; }
 
-        public Guid SubgroupId { get; set; }
+        public List<SchedulerViewModel> ScheduleForWeek { get; set; }
 
-        public TimePeriod MyTimePeriod { get; set; }
+        public CalendarViewModel Calendar { get; set; }
+
+        
     }
 }

@@ -20,7 +20,7 @@ namespace ITA.Schedule.BLL.Implementations
         }
 
         // create new user and insert to the Db
-        public bool CreateNewUser(string login, string password, Guid ownerId, Guid groupId, UserType type)
+        public bool CreateNewUser(string login, string password, Guid ownerId, UserType type)
         {
             var user = new User();
             // check if unique login
@@ -48,7 +48,7 @@ namespace ITA.Schedule.BLL.Implementations
                 user.Student = student;
             }
             // attach teacher to the user, if it is a user
-            else if (type == UserType.Teacher)
+            else if (type == UserType.Teacher || type == UserType.Admin)
             {
                 var teacher = AttachTeacher(ownerId);
                 if (teacher == null)
@@ -63,7 +63,7 @@ namespace ITA.Schedule.BLL.Implementations
                 return false;
             }
 
-            var accessGroup = SetSecurityGroup(groupId);
+            var accessGroup = SetSecurityGroup(type.ToString());
 
             // check security group
             if (accessGroup == null)
@@ -90,9 +90,9 @@ namespace ITA.Schedule.BLL.Implementations
         }
 
         // set user security group
-        public SecurityGroup SetSecurityGroup(Guid groupId)
+        public SecurityGroup SetSecurityGroup(string groupName)
         {
-            return Repository.SetSecurityGroup(groupId);
+            return Repository.SetSecurityGroup(groupName);
         }
     }
 }

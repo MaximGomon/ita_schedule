@@ -15,6 +15,6 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
         // attach teacher to a user
         Teacher AttachTeacher(Guid teachreId);
         // set access group
-        SecurityGroup SetSecurityGroup(Guid groupId);
+        SecurityGroup SetSecurityGroup(string groupName);
     }
 }

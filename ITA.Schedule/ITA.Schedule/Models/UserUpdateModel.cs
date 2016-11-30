@@ -14,7 +14,7 @@ namespace ITA.Schedule.Models
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Please enter Login")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Invalid Login length")]
-        [RegularExpression("^[A-Za-z0-9]+$")]
+        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Login should consist of latin alphabeth chars and numbers only")]
         public string Login { get; set; }
 
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$", ErrorMessage = "Password should be 8 to 15 chars and include 1+ number/1+ lowercase/1+ uppercase char")]
@@ -23,7 +23,7 @@ namespace ITA.Schedule.Models
         public Guid TeacherId { get; set; }
         [Required]
         public UserType TypeOfUser { get; set; }
-        public Guid SecurityGroupId { get; set; }
+
         public UserUpdateModel UserToUserModel(User user)
         {
             Id = user.Id;
@@ -36,11 +36,10 @@ namespace ITA.Schedule.Models
             }
             else if (user.Teacher != null)
             {
-                TypeOfUser = UserType.Teacher;
+                TypeOfUser = user.SecurityGroup.Code == (int) UserType.Admin ? UserType.Admin : UserType.Teacher;
+
                 TeacherId = user.Teacher.Id;
             }
-
-            SecurityGroupId = user.SecurityGroup.Id;
 
             return this;
         }

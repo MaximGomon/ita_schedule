@@ -15,6 +15,7 @@ namespace ITA.Schedule.Models
         public string Login { get; set; }
         public UserType Type { get; set; }
         public string  Grants { get; set; }
+        public EntityStatus Status { get; set; }
 
         // convers tubject to a subject model for a view
         public ShowUserModel ConvertUserToModel(User user)
@@ -43,7 +44,9 @@ namespace ITA.Schedule.Models
                 }
                 i++;
             }
-            
+
+            Status = user.IsDeleted ? EntityStatus.Deleted : EntityStatus.Active;
+
             return this;
         }
     }

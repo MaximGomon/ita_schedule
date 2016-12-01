@@ -238,7 +238,7 @@ namespace ITA.Schedule.Controllers
 
         // Delete user initial screen
         [HttpGet]
-        public ActionResult DeleteUserFromDb(Guid id)
+        public ActionResult DeactivateUser(Guid id)
         {
             var user = _userBl.GetById(id);
 
@@ -247,7 +247,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _userBl.Remove(user);
+            _userBl.Remove(id);
 
             return RedirectToAction("ShowUsers");
         }

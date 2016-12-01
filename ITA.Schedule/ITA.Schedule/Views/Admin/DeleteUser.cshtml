@@ -1,4 +1,5 @@
-﻿@model ITA.Schedule.Models.ShowUserModel
+﻿@using ITA.Schedule.Util
+@model ITA.Schedule.Models.ShowUserModel
 
 @{
     ViewBag.Title = "DeleteUser";
@@ -9,22 +10,33 @@
 
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>Owner</th>
-            <th>Login</th>
-            <th>Type</th>
-            <th>Security group</th>
-        </tr>
+    <tr>
+        <th>Owner</th>
+        <th>Login</th>
+        <th>Type</th>
+        <th>Security group</th>
+        <th>Status</th>
+    </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Model.Owner</td>
-            <td>@Model.Login</td>
-            <td>@Model.Type</td>
-            <td>@Model.Grants</td>
-        </tr>
+    <tr>
+        <td>@Model.Owner</td>
+        <td>@Model.Login</td>
+        <td>@Model.Type</td>
+        <td>@Model.Grants</td>
+        <td>@Model.Status</td>
+    </tr>
     </tbody>
 
 </table>
-@Html.ActionLink("Delete", "DeleteUserFromDb", new { id = Model.Id }, new { @class = "btn btn-danger" })
+@if (@Model.Status == EntityStatus.Active)
+{
+    @Html.ActionLink("Deactivate", "DeactivateUser", new {id = Model.Id}, new {@class = "btn btn-danger"})
+}
+else
+{
+    @Html.ActionLink("Activate", "DeactivateUser", new { id = Model.Id }, new { @class = "btn btn-success" })
+}
+
+
 @Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })

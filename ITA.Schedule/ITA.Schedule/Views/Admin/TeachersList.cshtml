@@ -28,6 +28,11 @@
         .Sanitized(false)
         .SetWidth(30)
         .RenderValueAs(x => @Html.ActionLink("Schedule", null, new { id = x.Id }, new { @class = "btn btn-success", @disabled="disabled" }));
+    columns.Add(x => x.Status)
+        .Titled("Status")
+        .Encoded(false)
+        .Sanitized(false)
+        .Filterable(true);
     columns.Add()
         .Encoded(false)
         .Sanitized(false)

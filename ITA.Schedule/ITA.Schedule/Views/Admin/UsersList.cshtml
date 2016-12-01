@@ -31,6 +31,11 @@
         .Titled("Grants")
         .Encoded(false)
         .Sanitized(false);
+    columns.Add(x => x.Status)
+        .Titled("Status")
+        .Encoded(false)
+        .Sanitized(false)
+        .Filterable(true);
     columns.Add()
         .Encoded(false)
         .Sanitized(false)

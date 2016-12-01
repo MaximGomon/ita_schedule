@@ -29,15 +29,6 @@
     </tbody>
 
 </table>
-@if (Model.IsWithScheduledLessons || Model.IsWithUser)
-{
-    <div class="alert alert-warning">
-        <strong>Warning!</strong> User cannot be deleted now. Delete scheduled lessons or unbind a user first
-    </div>
-}
-else
-{
-    @Html.ActionLink("Delete", "DeleteTeacherFromDb", new { id = Model.Teacher.Id }, new { @class = "btn btn-danger" })
-}
 
+@Html.ActionLink("Deactivate", "DeleteTeacherFromDb", new { id = Model.Teacher.Id }, new { @class = "btn btn-danger" })
 @Html.ActionLink("Cancel", "ShowTeachers", null, new { @class = "btn btn-default" })

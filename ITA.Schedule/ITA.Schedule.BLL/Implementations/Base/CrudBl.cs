@@ -51,17 +51,18 @@ namespace ITA.Schedule.BLL.Implementations.Base
         {
             Repository.Delete(id);
         }
-
-        public void Remove(TEntity entity)
-        {
-            Repository.Delete(entity);
-        }
-
+        
         //Todo do we need this method?
         public void SaveChanges()
         {
             Repository.SaveChanges();
         }
+
+        public void Activate(Guid id)
+        {
+            Repository.Activate(id);
+        }
+        
         //update if exist or create if not exist
         public void Update(TEntity entity)
         {

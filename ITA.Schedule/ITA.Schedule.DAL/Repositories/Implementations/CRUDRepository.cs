@@ -55,6 +55,19 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             Update(entity);
         }
 
+        // activate inactive entity
+        public void Activate(Guid id)
+        {
+            Activate(GetById(id));
+        }
+
+        // activate an entity itself
+        public void Activate(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            Update(entity);
+        }
+
         // update an entity
         public virtual void Update(TEntity entity)
         {

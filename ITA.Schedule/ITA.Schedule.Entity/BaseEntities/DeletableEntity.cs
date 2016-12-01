@@ -2,7 +2,7 @@
 
 namespace ITA.Schedule.Entity
 {
-    public class DeletableEntity : IdEntity
+    public class DeletableEntity
     {
         [Required]
         public bool IsDeleted { get; set; }

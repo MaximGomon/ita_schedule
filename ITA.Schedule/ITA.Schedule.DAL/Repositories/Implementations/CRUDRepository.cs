@@ -46,14 +46,13 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         public virtual void Delete(Guid id)
         {
             Delete(GetById(id));
-            SaveChanges();
         }
 
         // delete an entity itself
         public virtual void Delete(TEntity entity)
         {
-            ContextDb.Set<TEntity>().Remove(entity);
-            SaveChanges();
+            entity.IsDeleted = true;
+            Update(entity);
         }
 
         // update an entity

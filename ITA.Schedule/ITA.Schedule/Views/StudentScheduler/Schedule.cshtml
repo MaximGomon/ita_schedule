@@ -11,6 +11,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>StudentHeader</title>
+    
 </head>
 <body>
 <div class="alert row">
@@ -109,7 +110,7 @@
 
                 <div id="popover-content" class="hide">
                     <div>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add or update</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" value="">Add or update</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-danger">Delete</button>
@@ -237,16 +238,10 @@
                     <h4 class="modal-title" id="exampleModalLabel">New message</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
+                    @using (Html.BeginForm("Scheduler", "StudentScheduler"))
+                    {
+
+                    }
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -262,10 +257,29 @@
         .ready(function() {
             var time = new Date();
             var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
-            console.log(timeFromObject);
             $(function () {
-                $.datepicker.setDefaults($.datepicker.regional["ru-UA"]);
+                
+                $.datepicker.regional['ua'] = {clearText: 'Очистити', clearStatus: '',
+                        closeText: 'Закрити', closeStatus: '',
+                    	prevText: '&lt;&lt;',  prevStatus: '',
+                    	nextText: '&gt;&gt;', nextStatus: '',
+                    	currentText: 'Сьогодні', currentStatus: '',
+                    	monthNames: ['Січень','Лютий','Березень','Квітень','Травень','Червень',
+                    	'Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'],
+                    	monthNamesShort: ['Січ','Лют','Бер','Кві','Тра','Чер',
+                    	'Лип','Сер','Вер','Жов','Лис','Гру'],
+                    	monthStatus: '', yearStatus: '',
+                    	weekHeader: 'Не', weekStatus: '',
+                    	dayNames: ['неділя','понеділок','вівторок','середа','четвер','пятниця','суббота'],
+                    	dayNamesShort: ['нед','пнд','вів','срд','чтв','птн','сбт'],
+                    	dayNamesMin: ['Нд','Пн','Вт','Ср','Чт','Пт','Сб'],
+                    	dayStatus: 'DD', dateStatus: 'D, M d',
+                    	dateFormat: 'dd.mm.yy', firstDay: 1,
+                        initStatus: '', isRTL: false};
+                $.datepicker.setDefaults($.datepicker.regional['ua']);
+
                 $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
+                $.datepicker.setDefaults($.datepicker.regional["uk"]);
             });
 
             $("[data-toggle=popover]").popover({
@@ -283,7 +297,7 @@
                 var modal = $(this);
                 modal.find('.modal-title').text('New message to ' + recipient);
                 modal.find('.modal-body input').val(recipient);
-            })
+            });
         });
 </script>
 

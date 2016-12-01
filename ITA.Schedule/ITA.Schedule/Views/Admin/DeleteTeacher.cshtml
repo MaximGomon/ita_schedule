@@ -1,8 +1,8 @@
 ﻿
-@model ITA.Schedule.Entity.Entities.Teacher
+@model ITA.Schedule.Models.TeacherDeleteModel
     
 @{
-    ViewBag.Title = "Delete " + Model.Name + " Teacher" ;
+    ViewBag.Title = "Delete " + Model.Teacher.Name + " Teacher" ;
     Layout = "~/Views/Admin/AdminBase.cshtml";
 }
 
@@ -10,26 +10,34 @@
 
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Subjects</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Subjects</th>
+    </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Model.Name</td>
-            <td>
-                @foreach (var subject in Model.Subjects)
-                {
-                    @subject.Name <br />
-                }
-            </td>
-        </tr>
+    <tr>
+        <td>@Model.Teacher.Name</td>
+        <td>
+            @foreach (var subject in Model.Teacher.Subjects)
+            {
+                @subject.Name
+                <br/>
+            }
+        </td>
+    </tr>
     </tbody>
 
 </table>
-@Html.ActionLink("Delete", "DeleteTeacherFromDb", new { id = Model.Id }, new { @class = "btn btn-danger" })
+@if (Model.IsWithScheduledLessons || Model.IsWithUser)
+{
+    <div class="alert alert-warning">
+        <strong>Warning!</strong> User cannot be deleted now. Delete scheduled lessons or unbind a user first
+    </div>
+}
+else
+{
+    @Html.ActionLink("Delete", "DeleteTeacherFromDb", new { id = Model.Teacher.Id }, new { @class = "btn btn-danger" })
+}
+
 @Html.ActionLink("Cancel", "ShowTeachers", null, new { @class = "btn btn-default" })
-
-
-

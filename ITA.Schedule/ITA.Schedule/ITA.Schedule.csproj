@@ -1809,6 +1809,7 @@
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\FilterViewModel.cs" />
+    <Compile Include="Models\TeacherDeleteModel.cs" />
     <Compile Include="Models\UserFilterViewModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
@@ -1894,7 +1895,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12763</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

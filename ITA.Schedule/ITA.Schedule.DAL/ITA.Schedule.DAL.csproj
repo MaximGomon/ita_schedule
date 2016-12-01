@@ -53,14 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201611302057149_Init.cs" />
-    <Compile Include="Migrations\201611302057149_Init.Designer.cs">
-      <DependentUpon>201611302057149_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\Implementations\GroupRepository.cs" />
     <Compile Include="Repositories\Implementations\CrudRepository.cs" />
     <Compile Include="Repositories\Implementations\DictionaryRepository.cs" />
+    <Compile Include="Repositories\Implementations\ScheduleLessonRepository.cs" />
     <Compile Include="Repositories\Implementations\SecurityGroupRepository.cs" />
     <Compile Include="Repositories\Implementations\StudentRepository.cs" />
     <Compile Include="Repositories\Implementations\SubgroupRepository.cs" />
@@ -69,6 +65,7 @@
     <Compile Include="Repositories\Interfaces\ICrudRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDictionaryRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGroupRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IScheduleLessonRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISecurityGroupRepository.cs" />
     <Compile Include="Repositories\Interfaces\IStudentRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISubgroupRepository.cs" />
@@ -98,11 +95,6 @@
       <Project>{85bcf03a-dfa9-4a12-8a6d-2887ca1ae871}</Project>
       <Name>ITA.Schedule.Util</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611302057149_Init.resx">
-      <DependentUpon>201611302057149_Init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -21,8 +21,7 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
-        private readonly SecurityGroupBl _securityGroupBl;
-
+        private readonly ScheduleLessonBl _scheduleLessonBl;
         private static Logger _logger;
 
         public AdminController()
@@ -31,8 +30,8 @@ namespace ITA.Schedule.Controllers
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
             _logger = LogManager.GetCurrentClassLogger();
-            _securityGroupBl = new SecurityGroupBl(new SecurityGroupRepository());
             _userBl = new UserBl(new UserRepository());
+            _scheduleLessonBl = new ScheduleLessonBl(new ScheduleLessonRepository());
         }
 
         /// <summary>
@@ -84,17 +83,17 @@ namespace ITA.Schedule.Controllers
             // check owner type 
             var ownerId = Guid.Empty;
 
-            if (newUser.StudentId != null && newUser.StudentId != Guid.Empty)
+            switch (newUser.TypeOfUser)
             {
-                ownerId = (Guid)newUser.StudentId;
-            }
-            else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
-            {
-                ownerId = (Guid)newUser.TeacherId;
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                case UserType.Student:
+                    ownerId = newUser.StudentId;
+                    break;
+                case UserType.Teacher:
+                case UserType.Admin:
+                    ownerId = newUser.TeacherId;
+                    break;
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             // try to insert new user to the Db
@@ -492,14 +491,20 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            var teacher = _teacherBl.GetById(id);
+            var teacherModel = new TeacherDeleteModel()
+            {
+                IsWithScheduledLessons = _scheduleLessonBl.IsWithScheduledLessons(id),
+                IsWithUser = _userBl.GetAll().Any(x => x.Teacher.Id == id),
+                Teacher = _teacherBl.GetById(id)
+            };
+            
 
-            if (teacher == null)
+            if (teacherModel.Teacher == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteTeacher", teacher);
+            return PartialView("DeleteTeacher", teacherModel);
         }
 
         // Delete a teacher from Db once admin has confirmed removal

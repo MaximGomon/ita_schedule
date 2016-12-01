@@ -21,7 +21,6 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
-        private readonly ScheduleLessonBl _scheduleLessonBl;
         private static Logger _logger;
 
         public AdminController()
@@ -31,7 +30,6 @@ namespace ITA.Schedule.Controllers
             _subjectBl = new SubjectBl(new SubjectRepository());
             _logger = LogManager.GetCurrentClassLogger();
             _userBl = new UserBl(new UserRepository());
-            _scheduleLessonBl = new ScheduleLessonBl(new ScheduleLessonRepository());
         }
 
         /// <summary>
@@ -520,29 +518,23 @@ namespace ITA.Schedule.Controllers
         // action gets triggered once admin clicked on the Delete
         // button of a particular teacher on the list of teachers
         [HttpGet]
-        public ActionResult DeleteTeacher(Guid id)
+        public ActionResult ChangeTeacherStatus(Guid id)
         {
             ShedulerLogger();
 
-            var teacherModel = new TeacherDeleteModel()
-            {
-                IsWithScheduledLessons = _scheduleLessonBl.IsWithScheduledLessons(id),
-                IsWithUser = _userBl.GetAll().Any(x => x.Teacher.Id == id),
-                Teacher = _teacherBl.GetById(id)
-            };
-            
+            var teacher = _teacherBl.GetById(id);
 
-            if (teacherModel.Teacher == null)
+            if (teacher == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteTeacher", teacherModel);
+            return PartialView("ChangeTeacherStatus", new TeacherModel().ConvertTeacherToModel(teacher));
         }
 
         // Delete a teacher from Db once admin has confirmed removal
         [HttpGet]
-        public ActionResult DeleteTeacherFromDb(Guid id)
+        public ActionResult DeactivateTeacher(Guid id)
         {
             ShedulerLogger();
 
@@ -553,6 +545,22 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             _teacherBl.Remove(id);
+            return RedirectToAction("ShowTeachers");
+        }
+
+        // Delete a teacher from Db once admin has confirmed removal
+        [HttpGet]
+        public ActionResult ActivateTeacher(Guid id)
+        {
+            ShedulerLogger();
+
+            var teacher = _teacherBl.GetById(id);
+
+            if (teacher == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _teacherBl.Activate(id);
             return RedirectToAction("ShowTeachers");
         }
 

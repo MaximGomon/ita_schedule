@@ -29,14 +29,7 @@
     </tbody>
 
 </table>
-@if (@Model.Status == EntityStatus.Active)
-{
-    @Html.ActionLink("Deactivate", "DeactivateUser", new {id = Model.Id}, new {@class = "btn btn-danger"})
-}
-else
-{
-    @Html.ActionLink("Activate", "ActivateUser", new { id = Model.Id }, new { @class = "btn btn-success" })
-}
 
+@(@Model.Status == EntityStatus.Active ? Html.ActionLink("Deactivate", "DeactivateUser", new {id = Model.Id}, new {@class = "btn btn-danger"}) : Html.ActionLink("Activate", "ActivateUser", new {id = Model.Id}, new {@class = "btn btn-success"}))
 
 @Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })

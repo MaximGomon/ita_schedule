@@ -46,14 +46,26 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         public virtual void Delete(Guid id)
         {
             Delete(GetById(id));
-            SaveChanges();
         }
 
         // delete an entity itself
         public virtual void Delete(TEntity entity)
         {
-            ContextDb.Set<TEntity>().Remove(entity);
-            SaveChanges();
+            entity.IsDeleted = true;
+            Update(entity);
+        }
+
+        // activate inactive entity
+        public void Activate(Guid id)
+        {
+            Activate(GetById(id));
+        }
+
+        // activate an entity itself
+        public void Activate(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            Update(entity);
         }
 
         // update an entity

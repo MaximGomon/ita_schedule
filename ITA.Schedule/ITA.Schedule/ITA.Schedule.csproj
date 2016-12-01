@@ -1837,19 +1837,19 @@
     <Content Include="Views\Teacher\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\AddTeacher.cshtml" />
     <Content Include="Views\Admin\AdminBase.cshtml" />
-    <Content Include="Views\Admin\DeleteTeacher.cshtml" />
+    <Content Include="Views\Admin\ChangeTeacherStatus.cshtml" />
     <Content Include="Views\Admin\TeachersList.cshtml" />
     <Content Include="Views\Admin\UpdateTeacher.cshtml" />
     <Content Include="Views\Admin\SubjectsList.cshtml" />
     <Content Include="Views\Admin\AddSubject.cshtml" />
-    <Content Include="Views\Admin\DeleteSubject.cshtml" />
+    <Content Include="Views\Admin\ChangeSubjectStatus.cshtml" />
     <Content Include="Views\Admin\UpdateSubject.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
-    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\ChangeUserStatus.cshtml" />
     <Content Include="Views\Admin\UpdateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1894,7 +1894,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12763</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

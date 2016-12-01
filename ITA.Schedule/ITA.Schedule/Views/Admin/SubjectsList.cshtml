@@ -26,6 +26,11 @@
         .Titled("Code")
         .Sortable(true)
         .Filterable(true);
+    columns.Add(x => x.Status)
+        .Titled("Status")
+        .Encoded(false)
+        .Sanitized(false)
+        .Filterable(true);
     columns.Add()
         .Encoded(false)
         .Sanitized(false)
@@ -35,5 +40,5 @@
         .Encoded(false)
         .Sanitized(false)
         .SetWidth(30)
-        .RenderValueAs(x => @Html.ActionLink("Delete", "DeleteSubject", new { id = x.Id }, new { @class = "btn btn-danger" }));
+        .RenderValueAs(x => @Html.ActionLink("Change Status", "ChangeSubjectStatus", new { id = x.Id }, new { @class = "btn btn-danger" }));
 }).WithPaging(10)

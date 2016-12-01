@@ -1,0 +1,35 @@
+﻿@using ITA.Schedule.Util
+@model ITA.Schedule.Models.ShowUserModel
+
+@{
+    ViewBag.Title = "DeleteUser";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+}
+
+<h1>Change user status?</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Owner</th>
+        <th>Login</th>
+        <th>Type</th>
+        <th>Security group</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@Model.Owner</td>
+        <td>@Model.Login</td>
+        <td>@Model.Type</td>
+        <td>@Model.Grants</td>
+        <td>@Model.Status</td>
+    </tr>
+    </tbody>
+
+</table>
+
+@(@Model.Status == EntityStatus.Active ? Html.ActionLink("Deactivate", "DeactivateUser", new {id = Model.Id}, new {@class = "btn btn-danger"}) : Html.ActionLink("Activate", "ActivateUser", new {id = Model.Id}, new {@class = "btn btn-success"}))
+
+@Html.ActionLink("Cancel", "ShowUsers", null, new { @class = "btn btn-default" })

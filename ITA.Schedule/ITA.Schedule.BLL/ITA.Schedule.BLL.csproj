@@ -49,6 +49,7 @@
     <Compile Include="Implementations\Base\DictionaryBl.cs" />
     <Compile Include="Implementations\GroupBl.cs" />
     <Compile Include="Implementations\RoomBl.cs" />
+    <Compile Include="Implementations\ScheduleLessonBl.cs" />
     <Compile Include="Implementations\SecurityGroupBl.cs" />
     <Compile Include="Implementations\StudentBl.cs" />
     <Compile Include="Implementations\SubGroupBl.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Implementations\UserBl.cs" />
     <Compile Include="Interface\Base\ICrudBl.cs" />
     <Compile Include="Interface\Base\IDictionaryBl.cs" />
+    <Compile Include="Interface\IScheduleLessonBl.cs" />
     <Compile Include="Interface\IGroupBl.cs" />
     <Compile Include="Interface\IRoomBl.cs" />
     <Compile Include="Interface\ISecurityGroupBl.cs" />

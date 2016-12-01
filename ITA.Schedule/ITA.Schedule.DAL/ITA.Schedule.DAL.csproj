@@ -56,6 +56,7 @@
     <Compile Include="Repositories\Implementations\GroupRepository.cs" />
     <Compile Include="Repositories\Implementations\CrudRepository.cs" />
     <Compile Include="Repositories\Implementations\DictionaryRepository.cs" />
+    <Compile Include="Repositories\Implementations\ScheduleLessonRepository.cs" />
     <Compile Include="Repositories\Implementations\SecurityGroupRepository.cs" />
     <Compile Include="Repositories\Implementations\StudentRepository.cs" />
     <Compile Include="Repositories\Implementations\SubgroupRepository.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Repositories\Interfaces\ICrudRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDictionaryRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGroupRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IScheduleLessonRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISecurityGroupRepository.cs" />
     <Compile Include="Repositories\Interfaces\IStudentRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISubgroupRepository.cs" />

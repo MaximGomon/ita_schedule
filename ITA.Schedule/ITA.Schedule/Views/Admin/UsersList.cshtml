@@ -31,6 +31,11 @@
         .Titled("Grants")
         .Encoded(false)
         .Sanitized(false);
+    columns.Add(x => x.Status)
+        .Titled("Status")
+        .Encoded(false)
+        .Sanitized(false)
+        .Filterable(true);
     columns.Add()
         .Encoded(false)
         .Sanitized(false)
@@ -40,5 +45,5 @@
         .Encoded(false)
         .Sanitized(false)
         .SetWidth(30)
-        .RenderValueAs(x => @Html.ActionLink("Delete", "DeleteUser", new { id = x.Id }, new { @class = "btn btn-danger" }));
+        .RenderValueAs(x => @Html.ActionLink("Change Status", "ChangeUserStatus", new { id = x.Id }, new { @class = "btn btn-danger" }));
 }).WithPaging(10)

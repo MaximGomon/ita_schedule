@@ -24,6 +24,10 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
         void Delete(Guid id);
         // delete particular entity
         void Delete(TEntity entity);
+        // activate entity from DB by Id
+        void Activate(Guid id);
+        // activate particular entity
+        void Activate(TEntity entity);
         // update an entity in DB
         void Update(TEntity entity);
         // get all entities from DB

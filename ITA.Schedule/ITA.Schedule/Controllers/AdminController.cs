@@ -21,8 +21,6 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
-        private readonly SecurityGroupBl _securityGroupBl;
-
         private static Logger _logger;
 
         public AdminController()
@@ -31,7 +29,6 @@ namespace ITA.Schedule.Controllers
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
             _logger = LogManager.GetCurrentClassLogger();
-            _securityGroupBl = new SecurityGroupBl(new SecurityGroupRepository());
             _userBl = new UserBl(new UserRepository());
         }
 
@@ -84,17 +81,17 @@ namespace ITA.Schedule.Controllers
             // check owner type 
             var ownerId = Guid.Empty;
 
-            if (newUser.StudentId != null && newUser.StudentId != Guid.Empty)
+            switch (newUser.TypeOfUser)
             {
-                ownerId = (Guid)newUser.StudentId;
-            }
-            else if (newUser.TeacherId != null && newUser.TeacherId != Guid.Empty)
-            {
-                ownerId = (Guid)newUser.TeacherId;
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                case UserType.Student:
+                    ownerId = newUser.StudentId;
+                    break;
+                case UserType.Teacher:
+                case UserType.Admin:
+                    ownerId = newUser.TeacherId;
+                    break;
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             // try to insert new user to the Db
@@ -225,7 +222,7 @@ namespace ITA.Schedule.Controllers
 
         // Delete user initial screen
         [HttpGet]
-        public ActionResult DeleteUser(Guid id)
+        public ActionResult ChangeUserStatus(Guid id)
         {
             var user = _userBl.GetById(id);
 
@@ -234,12 +231,12 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteUser", new ShowUserModel().ConvertUserToModel(user));
+            return PartialView("ChangeUserStatus", new ShowUserModel().ConvertUserToModel(user));
         }
 
         // Delete user initial screen
         [HttpGet]
-        public ActionResult DeleteUserFromDb(Guid id)
+        public ActionResult DeactivateUser(Guid id)
         {
             var user = _userBl.GetById(id);
 
@@ -248,7 +245,23 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _userBl.Remove(user);
+            _userBl.Remove(id);
+
+            return RedirectToAction("ShowUsers");
+        }
+
+        // Activate user initial screen
+        [HttpGet]
+        public ActionResult ActivateUser(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Activate(id);
 
             return RedirectToAction("ShowUsers");
         }
@@ -345,7 +358,7 @@ namespace ITA.Schedule.Controllers
 
         // delete subject initial screen
         [HttpGet]
-        public ActionResult DeleteSubject(Guid id)
+        public ActionResult ChangeSubjectStatus(Guid id)
         {
             ShedulerLogger();
 
@@ -356,12 +369,12 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteSubject", subject);
+            return PartialView("ChangeSubjectStatus", subject);
         }
 
-        // delete subject from db
+        // deactivate subject
         [HttpGet]
-        public ActionResult DeleteSubjectFromDb(Guid id)
+        public ActionResult DeactivateSubject(Guid id)
         {
             ShedulerLogger();
 
@@ -373,6 +386,23 @@ namespace ITA.Schedule.Controllers
             }
 
             _subjectBl.Remove(id);
+            return RedirectToAction("ShowSubjects");
+        }
+
+        // activate subject
+        [HttpGet]
+        public ActionResult ActivateSubject(Guid id)
+        {
+            ShedulerLogger();
+
+            var subject = _subjectBl.GetById(id);
+
+            if (subject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _subjectBl.Activate(id);
             return RedirectToAction("ShowSubjects");
         }
 
@@ -488,7 +518,7 @@ namespace ITA.Schedule.Controllers
         // action gets triggered once admin clicked on the Delete
         // button of a particular teacher on the list of teachers
         [HttpGet]
-        public ActionResult DeleteTeacher(Guid id)
+        public ActionResult ChangeTeacherStatus(Guid id)
         {
             ShedulerLogger();
 
@@ -499,12 +529,12 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteTeacher", teacher);
+            return PartialView("ChangeTeacherStatus", new TeacherModel().ConvertTeacherToModel(teacher));
         }
 
         // Delete a teacher from Db once admin has confirmed removal
         [HttpGet]
-        public ActionResult DeleteTeacherFromDb(Guid id)
+        public ActionResult DeactivateTeacher(Guid id)
         {
             ShedulerLogger();
 
@@ -515,6 +545,22 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             _teacherBl.Remove(id);
+            return RedirectToAction("ShowTeachers");
+        }
+
+        // Delete a teacher from Db once admin has confirmed removal
+        [HttpGet]
+        public ActionResult ActivateTeacher(Guid id)
+        {
+            ShedulerLogger();
+
+            var teacher = _teacherBl.GetById(id);
+
+            if (teacher == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _teacherBl.Activate(id);
             return RedirectToAction("ShowTeachers");
         }
 

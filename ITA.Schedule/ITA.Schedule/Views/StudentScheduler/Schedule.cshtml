@@ -31,15 +31,15 @@
 
         </div>
         <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
-            <label class="btn btn-default">
-                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new {name = "day", @checked = true}) День
+            <label class="btn btn-default active">
+                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new {name = "day", type="radio", autocomplete = "off", @checked=true }) День
             </label>
 
             <label class="btn btn-default">
-                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new {name = "week"}) Тиждень
+                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new {name = "week", type = "radio", autocomplete = "off" }) Тиждень
             </label>
             <label class="btn btn-default">
-                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new {name = "month"}) Місяць
+                @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new {name = "month", type = "radio", autocomplete = "off" }) Місяць
             </label>
         </div>
         <div class="col-md-offset-1 btn-group" role="group" aria-label="...">
@@ -75,7 +75,6 @@
                 var lessonNumber = 0;
                 foreach (var item in @Model.Scheduler.RowHeaders)
                 {
-                    //begin draw row
                     lessonNumber++;
                     <div class="col-md-12" style="display: inline-block">
                         <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
@@ -90,13 +89,16 @@
                             var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
                             if (lesson != null)
                             {
-                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('It was clicked')">
+                                <div class="text-center" tabindex="0" data-toggle="popover" data-trigger="focus"
+                                     data-content="Some content inside the popover"
+                                     style="width: @ViewBag.Width; display: inline-block; border: 1px solid black"> 
+                                     
                                     <span>@lesson.Description</span>
                                 </div>
                             }
                             else
                             {
-                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('I am empty')">
+                                <div class="text-center" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('I am empty')">
 
                                 </div>
                             }
@@ -185,7 +187,6 @@
             {
                 <div class="text-center" style="width: 13%; display: inline-block;">
                     <span> @dayOfWeek</span>
-                        
                 </div>
             }
         </div>
@@ -205,7 +206,7 @@
                                                                  && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
                     if (@lesson)
                     {
-                        <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
+                        <span class="col-md-12"  style="padding: 0; background-color: red; height: 0.5rem">@i </span>
                     }
                     else
                     {
@@ -231,7 +232,7 @@
                 $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
             });
 
-            
+            $('[data-toggle="popover"]').popover();
         });
 </script>
 

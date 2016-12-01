@@ -280,3 +280,6 @@ ITA.Schedule/ITA.Schedule.DAL/Migrations/201611191911455_init.cs
 ITA.Schedule/ITA.Schedule.DAL/Migrations/201611191911455_init.resx
 ITA.Schedule/ITA.Schedule.DAL/Migrations/Configuration.cs
 ITA.Schedule/ITA.Schedule/ITA.Schedule.csproj.orig
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201612012112385_init.Designer.cs
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201612012112385_init.cs
+ITA.Schedule/ITA.Schedule.DAL/Migrations/201612012112385_init.resx

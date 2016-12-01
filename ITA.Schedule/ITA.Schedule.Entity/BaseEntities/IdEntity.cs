@@ -13,8 +13,5 @@ namespace ITA.Schedule.Entity
 
         [Required]
         public Guid Id { get; private set; }
-
-        [Required]
-        public bool IsDeleted { get; set; }
     }
 }

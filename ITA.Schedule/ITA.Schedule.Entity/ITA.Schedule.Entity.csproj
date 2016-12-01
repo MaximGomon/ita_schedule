@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntities\DeletableEntity.cs" />
     <Compile Include="BaseEntities\DictionaryEntity.cs" />
     <Compile Include="BaseEntities\IdEntity.cs" />
     <Compile Include="BaseEntities\NamedEntity.cs" />

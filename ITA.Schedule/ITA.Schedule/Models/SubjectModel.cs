@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
@@ -14,7 +15,8 @@ namespace ITA.Schedule.Models
         public int Code { get; set; }
         // Teachers who lead the subject
         public string Teachers { get; set; }
-
+        // subject status
+        public EntityStatus Status { get; set; }
 
         // convers tubject to a subject model for a view
         public SubjectModel ConvertSubjectToModel(Subject subjectToConvert)
@@ -33,6 +35,9 @@ namespace ITA.Schedule.Models
                     Teachers += ", ";
                 }
             }
+
+            Status = subjectToConvert.IsDeleted ? EntityStatus.Deleted : EntityStatus.Active;
+
             return this;
         }
     }

@@ -1843,7 +1843,7 @@
     <Content Include="Views\Admin\UpdateTeacher.cshtml" />
     <Content Include="Views\Admin\SubjectsList.cshtml" />
     <Content Include="Views\Admin\AddSubject.cshtml" />
-    <Content Include="Views\Admin\DeleteSubject.cshtml" />
+    <Content Include="Views\Admin\ChangeSubjectStatus.cshtml" />
     <Content Include="Views\Admin\UpdateSubject.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />

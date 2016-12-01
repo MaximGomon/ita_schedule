@@ -360,7 +360,7 @@ namespace ITA.Schedule.Controllers
 
         // delete subject initial screen
         [HttpGet]
-        public ActionResult DeleteSubject(Guid id)
+        public ActionResult ChangeSubjectStatus(Guid id)
         {
             ShedulerLogger();
 
@@ -371,12 +371,12 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteSubject", subject);
+            return PartialView("ChangeSubjectStatus", subject);
         }
 
-        // delete subject from db
+        // deactivate subject
         [HttpGet]
-        public ActionResult DeleteSubjectFromDb(Guid id)
+        public ActionResult DeactivateSubject(Guid id)
         {
             ShedulerLogger();
 
@@ -388,6 +388,23 @@ namespace ITA.Schedule.Controllers
             }
 
             _subjectBl.Remove(id);
+            return RedirectToAction("ShowSubjects");
+        }
+
+        // activate subject
+        [HttpGet]
+        public ActionResult ActivateSubject(Guid id)
+        {
+            ShedulerLogger();
+
+            var subject = _subjectBl.GetById(id);
+
+            if (subject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _subjectBl.Activate(id);
             return RedirectToAction("ShowSubjects");
         }
 

@@ -16,6 +16,7 @@ namespace ITA.Schedule.Models
         public string Name { get; set; }
         // Teacher subjects
         public string Subjects { get; set; }
+        // teacher status
         public EntityStatus Status { get; set; }
 
         // convers tubject to a subject model for a view

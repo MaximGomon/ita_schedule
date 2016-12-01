@@ -6,7 +6,7 @@
     Layout = "~/Views/Admin/AdminBase.cshtml";
 }
 
-<h1>Delete user from the database?</h1>
+<h1>Change user status?</h1>
 
 <table class="table table-striped">
     <thead>
@@ -35,7 +35,7 @@
 }
 else
 {
-    @Html.ActionLink("Activate", "DeactivateUser", new { id = Model.Id }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Activate", "ActivateUser", new { id = Model.Id }, new { @class = "btn btn-success" })
 }
 
 

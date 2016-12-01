@@ -224,7 +224,7 @@ namespace ITA.Schedule.Controllers
 
         // Delete user initial screen
         [HttpGet]
-        public ActionResult DeleteUser(Guid id)
+        public ActionResult ChangeUserStatus(Guid id)
         {
             var user = _userBl.GetById(id);
 
@@ -233,7 +233,7 @@ namespace ITA.Schedule.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return PartialView("DeleteUser", new ShowUserModel().ConvertUserToModel(user));
+            return PartialView("ChangeUserStatus", new ShowUserModel().ConvertUserToModel(user));
         }
 
         // Delete user initial screen
@@ -248,6 +248,22 @@ namespace ITA.Schedule.Controllers
             }
 
             _userBl.Remove(id);
+
+            return RedirectToAction("ShowUsers");
+        }
+
+        // Activate user initial screen
+        [HttpGet]
+        public ActionResult ActivateUser(Guid id)
+        {
+            var user = _userBl.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _userBl.Activate(id);
 
             return RedirectToAction("ShowUsers");
         }

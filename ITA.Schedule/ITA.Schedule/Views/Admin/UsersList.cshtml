@@ -45,5 +45,5 @@
         .Encoded(false)
         .Sanitized(false)
         .SetWidth(30)
-        .RenderValueAs(x => @Html.ActionLink("Delete", "DeleteUser", new { id = x.Id }, new { @class = "btn btn-danger" }));
+        .RenderValueAs(x => @Html.ActionLink("Change Status", "ChangeUserStatus", new { id = x.Id }, new { @class = "btn btn-danger" }));
 }).WithPaging(10)

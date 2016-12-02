@@ -32,6 +32,11 @@ namespace ITA.Schedule.Controllers
             _userBl = new UserBl(new UserRepository());
         }
 
+        /// <summary>
+        /// Students group of methods
+        /// </summary>
+        /// <returns></returns>
+
         // show student list
         [HttpGet]
         public ActionResult ShowStudents()

@@ -373,43 +373,13 @@ namespace ITA.Schedule.DAL
                     },
                     new SubGroup()
                     {
-                        Name = "Yellow",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
-                    },
-                    new SubGroup()
-                    {
-                        Name = "Yellow",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
-                    },
-                    new SubGroup()
-                    {
                         Name = "Red",
                         Group = context.Groups.FirstOrDefault(g => g.Name == "B.15")
                     },
                     new SubGroup()
                     {
-                        Name = "Red",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
-                    },
-                    new SubGroup()
-                    {
-                        Name = "Red",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
-                    },
-                    new SubGroup()
-                    {
                         Name = "Green",
                         Group = context.Groups.FirstOrDefault(g => g.Name == "B.15")
-                    },
-                    new SubGroup()
-                    {
-                        Name = "Green",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "A.16")
-                    },
-                    new SubGroup()
-                    {
-                        Name = "Green",
-                        Group = context.Groups.FirstOrDefault(g => g.Name == "B.16")
                     }
                 };
 

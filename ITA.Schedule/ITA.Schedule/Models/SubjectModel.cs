@@ -16,7 +16,7 @@ namespace ITA.Schedule.Models
         // Teachers who lead the subject
         public string Teachers { get; set; }
         // subject status
-        public EntityStatus Status { get; set; }
+        public string Status { get; set; }
 
         // convers tubject to a subject model for a view
         public SubjectModel ConvertSubjectToModel(Subject subjectToConvert)
@@ -36,7 +36,7 @@ namespace ITA.Schedule.Models
                 }
             }
 
-            Status = subjectToConvert.IsDeleted ? EntityStatus.Deleted : EntityStatus.Active;
+            Status = subjectToConvert.IsDeleted ? EntityStatus.Deleted.ToString() : EntityStatus.Active.ToString();
 
             return this;
         }

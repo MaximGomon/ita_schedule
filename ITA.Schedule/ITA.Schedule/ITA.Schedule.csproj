@@ -1801,6 +1801,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ShowStudentModel.cs" />
     <Compile Include="Models\ShowUserModel.cs" />
     <Compile Include="Models\SubjectUpdateModel.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
@@ -1846,6 +1847,7 @@
     <Content Include="Views\Admin\UpdateSubject.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Admin\StudentsList.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />

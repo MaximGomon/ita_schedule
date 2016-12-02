@@ -32,6 +32,20 @@ namespace ITA.Schedule.Controllers
             _userBl = new UserBl(new UserRepository());
         }
 
+        // show student list
+        [HttpGet]
+        public ActionResult ShowStudents()
+        {
+            ShedulerLogger();
+
+            var studentsDb = _studentBl.GetAll().ToList();
+
+            var students = studentsDb.Select(student => new ShowStudentModel().ConvertStudentToModel(student)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Group).ThenBy(x => x.Name);
+
+            return PartialView("StudentsList", students);
+        }
+
+
         /// <summary>
         /// Users group of methods
         /// </summary>
@@ -45,7 +59,7 @@ namespace ITA.Schedule.Controllers
 
             var usersDb = _userBl.GetAll().ToList();
 
-            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Type).ThenBy(x => x.Owner);
+            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Type).ThenBy(x => x.Owner);
             
             return PartialView("UsersList", users);
         }
@@ -279,7 +293,7 @@ namespace ITA.Schedule.Controllers
 
             var subjectsDb = _subjectBl.GetAll().ToList();
 
-            var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Name);
+            var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
             return PartialView("SubjectsList", subjects);
         }
@@ -419,7 +433,7 @@ namespace ITA.Schedule.Controllers
 
             var teachersDb = _teacherBl.GetAll().ToList();
             
-            var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Name);
+            var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
             return PartialView("TeachersList", teachers);
         }

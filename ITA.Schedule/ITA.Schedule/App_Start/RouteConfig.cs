@@ -16,7 +16,7 @@ namespace ITA.Schedule
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Admin", action = "UserList", id = UrlParameter.Optional }
+                defaults: new { controller = "Admin", action = "ShowUsers", id = UrlParameter.Optional }
             );
         }
     }

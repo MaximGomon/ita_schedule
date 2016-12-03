@@ -1,7 +1,7 @@
-﻿function validateAddStudentForm(subjects) {
-    subjects = JSON.parse(subjects);
+﻿function validateAddStudentForm(groups) {
+    groups = JSON.parse(groups);
 
-    $.each(subjects, function (key, value) {
+    $.each(groups, function (key, value) {
         if (value["GroupId"] === $("#groupSelect").val()) {
 
             $("#SubgroupId").remove();
@@ -15,7 +15,8 @@
             $("#subgroup").append(select);
 
             $("#SubgroupId option").each(function () {
-                if ($(this).is(":selected") && checkEmpty($("#Name"))) {
+                console.log("Works");
+                if ($(this).is(":selected") ) {
                     $("#btn-submit").attr("disabled", false);
                     return;
                 }

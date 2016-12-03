@@ -1805,6 +1805,7 @@
     <Compile Include="Models\AddStudentModel.cs" />
     <Compile Include="Models\ShowStudentModel.cs" />
     <Compile Include="Models\ShowUserModel.cs" />
+    <Compile Include="Models\StudentUpdateModel.cs" />
     <Compile Include="Models\SubjectUpdateModel.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\Element.cs" />
@@ -1852,6 +1853,7 @@
     <Content Include="Views\Admin\StudentsList.cshtml" />
     <Content Include="Views\Admin\AddStudent.cshtml" />
     <Content Include="Views\Admin\ChangeStudentStatus.cshtml" />
+    <Content Include="Views\Admin\UpdateStudent.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />

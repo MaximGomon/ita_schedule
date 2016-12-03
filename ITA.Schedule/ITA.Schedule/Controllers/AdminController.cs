@@ -92,6 +92,58 @@ namespace ITA.Schedule.Controllers
             return RedirectToAction("ShowStudents");
         }
 
+        // Update user initial screen
+        [HttpGet]
+        public ActionResult UpdateStudent(Guid id)
+        {
+            var updateStudentModel = new StudentUpdateModel() { Groups = new List<AddStudentModel>()};
+
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            updateStudentModel.Student = new ShowStudentModel().ConvertStudentToModel(student);
+
+            if (student.SubGroup != null)
+            {
+                updateStudentModel.StudentSubgroupId = student.SubGroup.Id;
+                updateStudentModel.StudentGroupId = student.SubGroup.Group.Id;
+            }
+            
+            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+
+            foreach (var group in groups)
+            {
+                var addUserModel = new AddStudentModel() { GroupName = group.Name, GroupId = group.Id, Subgroups = new Dictionary<string, string>() };
+
+                var subgroups = group.SubGroups;
+                foreach (var subgroup in subgroups)
+                {
+                    addUserModel.Subgroups.Add(subgroup.Id.ToString(), subgroup.Name);
+                }
+                updateStudentModel.Groups.Add(addUserModel);
+            }
+
+            return PartialView("UpdateStudent", updateStudentModel);
+        }
+
+        // update student in the DB
+        [HttpPost]
+        public ActionResult UpdateStudent(StudentModel studentToUpdate)
+        {
+            var student = _studentBl.GetById(studentToUpdate.StudentId);
+            if (student == null ||
+                !_studentBl.UpdateStudent(studentToUpdate.StudentId, studentToUpdate.Name, studentToUpdate.SubgroupId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowStudents");
+        }
+
         // deactivate/activate student initial screen
         [HttpGet]
         public ActionResult ChangeStudentStatus(Guid id)

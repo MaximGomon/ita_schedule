@@ -20,7 +20,6 @@
 
 @using (Html.BeginForm("UpdateTeacher", "Admin", FormMethod.Post))
 {
-    @Html.ValidationSummary()
     @Html.TextBoxFor(x => x.Teacher.Id, Model.Teacher.Id.ToString(), new { @style = "display: none;" })
     <h2>Update teacher name</h2>
     @Html.TextBox("Name", Model.Teacher.Name, new { @class = "form-control", @oninput = "validateAddTeacherForm()" })

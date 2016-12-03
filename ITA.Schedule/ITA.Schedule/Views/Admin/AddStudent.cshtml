@@ -8,9 +8,6 @@
 
     var groupItems = Model.Select(@group => new SelectListItem() { Text = @group.GroupName, Value = @group.GroupId.ToString() }).ToList();
 
-
-    //var groupItems = Model.Select(@group => new SelectListItem() {Text = @group.Name, Value = @group.Id.ToString()}).ToList();
-
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 }
 <script src="~/Scripts/student-validation.js"></script>
@@ -18,7 +15,7 @@
 
 <h2>Add Student</h2>
 
-@using (Html.BeginForm("AddStudent", "Admin", FormMethod.Post, new { @id = "studentForm" }))
+@using (Html.BeginForm("AddStudent", "Admin", FormMethod.Post))
 {
     <div class="form-group">
         <label>Name:</label>

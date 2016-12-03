@@ -48,7 +48,7 @@ namespace ITA.Schedule.Controllers
 
             var studentsDb = _studentBl.GetAll().ToList();
 
-            var students = studentsDb.Select(student => new ShowStudentModel().ConvertStudentToModel(student)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Group).ThenBy(x => x.Name);
+            var students = studentsDb.Select(student => new ShowStudentModel().ConvertStudentToModel(student)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Group).ThenBy(x => x.Subgroup).ThenBy(x => x.Name);
 
             return PartialView("StudentsList", students);
         }
@@ -88,6 +88,52 @@ namespace ITA.Schedule.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            return RedirectToAction("ShowStudents");
+        }
+
+        // deactivate/activate student initial screen
+        [HttpGet]
+        public ActionResult ChangeStudentStatus(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("ChangeStudentStatus", new ShowStudentModel().ConvertStudentToModel(student));
+        }
+
+        // Deactivate student method
+        [HttpGet]
+        public ActionResult DeactivateStudent(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _studentBl.Remove(id);
+
+            return RedirectToAction("ShowStudents");
+        }
+
+        // Activate student method
+        [HttpGet]
+        public ActionResult ActivateStudent(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _studentBl.Activate(id);
 
             return RedirectToAction("ShowStudents");
         }

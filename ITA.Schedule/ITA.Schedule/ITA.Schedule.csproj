@@ -1851,6 +1851,7 @@
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Admin\StudentsList.cshtml" />
     <Content Include="Views\Admin\AddStudent.cshtml" />
+    <Content Include="Views\Admin\ChangeStudentStatus.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />

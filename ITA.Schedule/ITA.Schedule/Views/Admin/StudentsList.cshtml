@@ -24,7 +24,8 @@
         .SortInitialDirection(GridSortDirection.Ascending)
         .Filterable(true);
     columns.Add(x => x.Subgroup)
-        .Titled("Subgroup");
+        .Titled("Subgroup")
+        .Filterable(true);
     columns.Add(x => x.Status)
         .Titled("Status")
         .Sortable(true);

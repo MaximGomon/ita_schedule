@@ -1,4 +1,5 @@
-﻿using ITA.Schedule.Entity.Entities;
+﻿using System;
+using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.DAL.Repositories.Interfaces
 {
@@ -7,6 +8,7 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface IStudentRepository : ICrudRepository<Student>
     {
-         //todo think about methods here
+        // attach subgroup to a student
+        SubGroup AttachSubgroup(Guid subgroupId);
     }
 }

@@ -1785,6 +1785,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\student-validation.js" />
     <Content Include="Scripts\subject-validation.js" />
     <Content Include="Scripts\teacher-validation.js" />
     <Content Include="Scripts\user-validation.js" />
@@ -1801,6 +1802,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddStudentModel.cs" />
     <Compile Include="Models\ShowStudentModel.cs" />
     <Compile Include="Models\ShowUserModel.cs" />
     <Compile Include="Models\SubjectUpdateModel.cs" />
@@ -1848,6 +1850,7 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Admin\StudentsList.cshtml" />
+    <Content Include="Views\Admin\AddStudent.cshtml" />
     <None Include="Views\TeacherSchedule\TeacherFilter.cshtml" />
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />

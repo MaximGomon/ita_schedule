@@ -16,8 +16,11 @@ namespace ITA.Schedule.Models
         {
             Id = student.Id;
             Name = student.Name;
-            Group = student.SubGroup.Group.Name;
-            Subgroup = student.SubGroup.Name;
+            if (student.SubGroup != null)
+            {
+                Group = student.SubGroup.Group.Name;
+                Subgroup = student.SubGroup.Name;
+            }
 
             Status = student.IsDeleted ? EntityStatus.Deleted : EntityStatus.Active;
 

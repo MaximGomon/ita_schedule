@@ -21,13 +21,16 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
+        private readonly GroupBl _groupBl;
         private static Logger _logger;
+        
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
+            _groupBl = new GroupBl(new GroupRepository(), new SubgroupRepository());
             _logger = LogManager.GetCurrentClassLogger();
             _userBl = new UserBl(new UserRepository());
         }
@@ -50,6 +53,44 @@ namespace ITA.Schedule.Controllers
             return PartialView("StudentsList", students);
         }
 
+        // show student list
+        [HttpGet]
+        public ActionResult AddStudent()
+        {
+            ShedulerLogger();
+
+            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+
+            var addUserModels = new List<AddStudentModel>();
+
+            foreach (var group in groups)
+            {
+                var addUserModel = new AddStudentModel() { GroupName = group.Name, GroupId = group.Id, Subgroups = new Dictionary<string, string>() };
+
+                var subgroups = group.SubGroups;
+                foreach (var subgroup in subgroups)
+                {
+                    addUserModel.Subgroups.Add(subgroup.Id.ToString(), subgroup.Name);
+                }
+                addUserModels.Add(addUserModel);
+            }
+            
+            return PartialView("AddStudent", addUserModels);
+        }
+
+        // add student Post Menthod
+        [HttpPost]
+        public ActionResult AddStudent(StudentModel student)
+        {
+            ShedulerLogger();
+
+            if (!_studentBl.AddNewStudent(student.Name, student.SubgroupId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowStudents");
+        }
 
         /// <summary>
         /// Users group of methods
@@ -114,7 +155,7 @@ namespace ITA.Schedule.Controllers
             }
 
             // try to insert new user to the Db
-            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.TypeOfUser))
+            if (!_userBl.CreateNewUser(newUser.Login.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -191,13 +232,13 @@ namespace ITA.Schedule.Controllers
             // check if he has a new password
             if (user.Password != null)
             {
-                userToUpdate.Password = user.Password;
+                userToUpdate.Password = user.Password.Trim();
             }
 
             // check if login was changed
-            if (userToUpdate.Login != user.Login)
+            if (userToUpdate.Login != user.Login.Trim())
             {
-                userToUpdate.Login = user.Login;
+                userToUpdate.Login = user.Login.Trim();
             }
             
             // check if user type was changed
@@ -320,10 +361,11 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (newSubject.Name == null || newSubject.Name.Length > 400)
+            if (newSubject.Name.Trim() == String.Empty || newSubject.Name.Trim().Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            newSubject.Name = newSubject.Name.Trim();
 
             var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
 
@@ -367,7 +409,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name, updatedSubject.Code))
+            if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -526,7 +568,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name, updatedTeacher.SubjectIds))
+            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

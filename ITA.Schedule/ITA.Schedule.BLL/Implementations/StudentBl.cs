@@ -40,5 +40,28 @@ namespace ITA.Schedule.BLL.Implementations
         {
             return Repository.Get(s => s.SubGroup.Name == subGroupName);
         }
+
+        public bool AddNewStudent(string name, Guid subgroupId)
+        {
+            var student = new Student();
+
+            if (name.Trim() == String.Empty && name.Length > 400)
+            {
+                return false;
+            }
+            student.Name = name;
+
+            var subgroup = Repository.AttachSubgroup(subgroupId);
+
+            if (subgroup == null)
+            {
+                return false;
+            }
+            student.SubGroup = subgroup;
+
+            Repository.Add(student);
+
+            return true;
+        }
     }
 }

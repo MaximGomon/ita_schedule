@@ -1,4 +1,6 @@
-﻿using ITA.Schedule.DAL.Repositories.Interfaces;
+﻿using System;
+using System.Linq;
+using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.DAL.Repositories.Implementations
@@ -8,6 +10,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class StudentRepository : CrudRepository<Student>, IStudentRepository
     {
-         
+        public SubGroup AttachSubgroup(Guid subgroupId)
+        {
+            return ContextDb.SubGroups.FirstOrDefault(x => x.Id == subgroupId);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
 
@@ -25,5 +27,11 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             group.SubGroups.Remove(ContextDb.SubGroups.FirstOrDefault(x => x.Id == subgroupId));
             Update(group);
         }
+
+        /*public override IQueryable<Group> Get(Expression<Func<Group, bool>> predicate)
+        {
+            return base.Get(predicate)
+                .Include(x => x.SubGroups);
+        }*/
     }
 }

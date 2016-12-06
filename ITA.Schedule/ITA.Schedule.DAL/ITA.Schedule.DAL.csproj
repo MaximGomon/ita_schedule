@@ -53,9 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201612012112385_init.cs" />
-    <Compile Include="Migrations\201612012112385_init.Designer.cs">
-      <DependentUpon>201612012112385_init.cs</DependentUpon>
+    <Compile Include="Migrations\201612031619505_Init.cs" />
+    <Compile Include="Migrations\201612031619505_Init.Designer.cs">
+      <DependentUpon>201612031619505_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\Implementations\GroupRepository.cs" />
@@ -102,8 +102,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612012112385_init.resx">
-      <DependentUpon>201612012112385_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612031619505_Init.resx">
+      <DependentUpon>201612031619505_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

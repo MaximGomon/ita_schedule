@@ -18,11 +18,11 @@ namespace ITA.Schedule.Models
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Invalid Login length")]
         [Remote("VerifyLogin", "Admin", ErrorMessage = "Login is already in use")]
         [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Login should consist of latin alphabeth chars and numbers only")]
-        public virtual string Login { get; set; }
+        public string Login { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$", ErrorMessage = "Password should be 8 to 15 chars and include 1+ number/1+ lowercase/1+ uppercase char")]
-        public virtual string Password { get; set; }
+        public string Password { get; set; }
 
         public Guid StudentId { get; set; }
         public Guid TeacherId { get; set; }

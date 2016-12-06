@@ -1,0 +1,80 @@
+﻿@using FormMethod = System.Web.Mvc.FormMethod
+@using SelectListItem = System.Web.Mvc.SelectListItem
+@model ITA.Schedule.Models.StudentUpdateModel
+
+@{
+    ViewBag.Title = "UpdateStudent";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var groupItems = new List<SelectListItem>();
+    var subgroupItems = new List<SelectListItem>();
+
+    if (Model.StudentSubgroupId != null)
+    {
+        foreach (var group in Model.Groups)
+        {
+            if (group.GroupId == Model.StudentGroupId)
+            {
+                groupItems.Add(new SelectListItem() {Text = group.GroupName, Value = group.GroupId.ToString(), Selected = true});
+
+                foreach (var subgroup in group.Subgroups)
+                {
+                    if (subgroup.Key == Model.StudentSubgroupId.ToString())
+                    {
+                        subgroupItems.Add(new SelectListItem() {Text = subgroup.Value, Value = subgroup.Key, Selected = true});
+                    }
+                    else
+                    {
+                        subgroupItems.Add(new SelectListItem() { Text = subgroup.Value, Value = subgroup.Key});
+                    }
+                }
+            }
+            else
+            {
+                groupItems.Add(new SelectListItem() {Text = group.GroupName, Value = group.GroupId.ToString()});
+            }
+        }
+    }
+    else
+    {
+        groupItems = Model.Groups.Select(@group => new SelectListItem() { Text = @group.GroupName, Value = @group.GroupId.ToString() }).ToList();
+    }
+
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<script src="~/Scripts/student-validation.js"></script>
+
+<h2>Update Student</h2>
+
+
+@using (Html.BeginForm("UpdateStudent", "Admin", FormMethod.Post, new { @id = "studentForm" }))
+{
+    @Html.TextBox("StudentId", Model.Student.Id.ToString(), new { @style = "display: none;" })
+    <div class="form-group">
+        <label>Name:</label>
+        @Html.TextBox("Name", Model.Student.Name, new { @class = "form-control", @oninput = "validateStudentName()" })
+    </div>
+    <div class="form-group">
+        <label>Group:</label>
+        @Html.DropDownList("GroupId", groupItems, "", new { @class = "form-control", @id = "groupSelect", @onchange = "validateAddStudentForm('" + serializer.Serialize(Model.Groups) + "')" })
+    </div>
+
+    if (Model.StudentSubgroupId == null)
+    {
+        <div class="form-group" id="subgroup" style="display: none">
+            <label>Subgroup:</label>
+        </div>
+    }
+    else
+    {
+        <div class="form-group" id="subgroup">
+            <label>Subgroup:</label>
+            @Html.DropDownList("SubgroupId", subgroupItems, new { @class = "form-control", @onchange = "validateAddStudentForm('" + serializer.Serialize(Model.Groups) + "')" })
+        </div>
+    }
+
+
+    <br />
+    <input class="btn btn-success" type="submit" value="Update student" id="btn-submit" disabled="disabled" />
+    @Html.ActionLink("Cancel", "ShowStudents", null, new { @class = "btn btn-default" })
+}

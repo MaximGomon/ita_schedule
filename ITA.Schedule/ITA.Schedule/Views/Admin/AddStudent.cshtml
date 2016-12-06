@@ -1,0 +1,36 @@
+﻿@using FormMethod = System.Web.Mvc.FormMethod
+@using SelectListItem = System.Web.Mvc.SelectListItem
+@model IEnumerable<ITA.Schedule.Models.AddStudentModel>
+
+@{
+    ViewBag.Title = "AddStudent";
+    Layout = "~/Views/Admin/AdminBase.cshtml";
+
+    var groupItems = Model.Select(@group => new SelectListItem() { Text = @group.GroupName, Value = @group.GroupId.ToString() }).ToList();
+
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<script src="~/Scripts/student-validation.js"></script>
+
+
+<h2>Add Student</h2>
+
+@using (Html.BeginForm("AddStudent", "Admin", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Name:</label>
+        @Html.TextBox("Name", null, new { @class = "form-control", @oninput = "validateStudentName()"})
+    </div>
+    <div class="form-group">
+        <label>Group:</label>
+        @Html.DropDownList("GroupId", groupItems, "", new { @class = "form-control", @id = "groupSelect", @onchange = "validateAddStudentForm('" + serializer.Serialize(Model) + "')" })
+    </div>
+
+    <div class="form-group" id="subgroup" style="display:none">
+        <label>Subgroup:</label>
+    </div>
+
+    <br />
+    <input class="btn btn-success" type="submit" value="Add student" id="btn-submit" disabled="disabled" />
+    @Html.ActionLink("Cancel", "ShowStudents", null, new { @class = "btn btn-default" })
+}

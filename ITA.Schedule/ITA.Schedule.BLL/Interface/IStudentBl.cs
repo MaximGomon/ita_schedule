@@ -13,6 +13,6 @@ namespace ITA.Schedule.BLL.Interface
         void ReplaceToAnotherSubGroup(Guid studentId, Guid newSubGroupId);
 
         IEnumerable<Student> GetAllBySubGroup(string subGroupName);
-
+        bool AddNewStudent(string name, Guid subgroupId);
     }
 }

@@ -21,15 +21,173 @@ namespace ITA.Schedule.Controllers
         private readonly StudentBl _studentBl;
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
+        private readonly GroupBl _groupBl;
         private static Logger _logger;
+        
 
         public AdminController()
         {
             _teacherBl = new TeacherBl(new TeacherRepository());
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
+            _groupBl = new GroupBl(new GroupRepository(), new SubgroupRepository());
             _logger = LogManager.GetCurrentClassLogger();
             _userBl = new UserBl(new UserRepository());
+        }
+
+        /// <summary>
+        /// Students group of methods
+        /// </summary>
+        /// <returns></returns>
+
+        // show student list
+        [HttpGet]
+        public ActionResult ShowStudents()
+        {
+            ShedulerLogger();
+
+            var studentsDb = _studentBl.GetAll().ToList();
+
+            var students = studentsDb.Select(student => new ShowStudentModel().ConvertStudentToModel(student)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Group).ThenBy(x => x.Subgroup).ThenBy(x => x.Name);
+
+            return PartialView("StudentsList", students);
+        }
+
+        // show student list
+        [HttpGet]
+        public ActionResult AddStudent()
+        {
+            ShedulerLogger();
+
+            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+
+            var addUserModels = new List<AddStudentModel>();
+
+            foreach (var group in groups)
+            {
+                var addUserModel = new AddStudentModel() { GroupName = group.Name, GroupId = group.Id, Subgroups = new Dictionary<string, string>() };
+
+                var subgroups = group.SubGroups;
+                foreach (var subgroup in subgroups)
+                {
+                    addUserModel.Subgroups.Add(subgroup.Id.ToString(), subgroup.Name);
+                }
+                addUserModels.Add(addUserModel);
+            }
+            
+            return PartialView("AddStudent", addUserModels);
+        }
+
+        // add student Post Menthod
+        [HttpPost]
+        public ActionResult AddStudent(StudentModel student)
+        {
+            ShedulerLogger();
+
+            if (!_studentBl.AddNewStudent(student.Name, student.SubgroupId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowStudents");
+        }
+
+        // Update user initial screen
+        [HttpGet]
+        public ActionResult UpdateStudent(Guid id)
+        {
+            var updateStudentModel = new StudentUpdateModel() { Groups = new List<AddStudentModel>()};
+
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            updateStudentModel.Student = new ShowStudentModel().ConvertStudentToModel(student);
+
+            if (student.SubGroup != null)
+            {
+                updateStudentModel.StudentSubgroupId = student.SubGroup.Id;
+                updateStudentModel.StudentGroupId = student.SubGroup.Group.Id;
+            }
+            
+            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+
+            foreach (var group in groups)
+            {
+                var addUserModel = new AddStudentModel() { GroupName = group.Name, GroupId = group.Id, Subgroups = new Dictionary<string, string>() };
+
+                var subgroups = group.SubGroups;
+                foreach (var subgroup in subgroups)
+                {
+                    addUserModel.Subgroups.Add(subgroup.Id.ToString(), subgroup.Name);
+                }
+                updateStudentModel.Groups.Add(addUserModel);
+            }
+
+            return PartialView("UpdateStudent", updateStudentModel);
+        }
+
+        // update student in the DB
+        [HttpPost]
+        public ActionResult UpdateStudent(StudentModel studentToUpdate)
+        {
+            var student = _studentBl.GetById(studentToUpdate.StudentId);
+            if (student == null ||
+                !_studentBl.UpdateStudent(studentToUpdate.StudentId, studentToUpdate.Name, studentToUpdate.SubgroupId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("ShowStudents");
+        }
+
+        // deactivate/activate student initial screen
+        [HttpGet]
+        public ActionResult ChangeStudentStatus(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return PartialView("ChangeStudentStatus", new ShowStudentModel().ConvertStudentToModel(student));
+        }
+
+        // Deactivate student method
+        [HttpGet]
+        public ActionResult DeactivateStudent(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _studentBl.Remove(id);
+
+            return RedirectToAction("ShowStudents");
+        }
+
+        // Activate student method
+        [HttpGet]
+        public ActionResult ActivateStudent(Guid id)
+        {
+            var student = _studentBl.GetById(id);
+
+            if (student == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _studentBl.Activate(id);
+
+            return RedirectToAction("ShowStudents");
         }
 
         /// <summary>
@@ -45,7 +203,7 @@ namespace ITA.Schedule.Controllers
 
             var usersDb = _userBl.GetAll().ToList();
 
-            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Type).ThenBy(x => x.Owner);
+            var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Type).ThenBy(x => x.Owner);
             
             return PartialView("UsersList", users);
         }
@@ -95,7 +253,7 @@ namespace ITA.Schedule.Controllers
             }
 
             // try to insert new user to the Db
-            if (!_userBl.CreateNewUser(newUser.Login, newUser.Password, ownerId, newUser.TypeOfUser))
+            if (!_userBl.CreateNewUser(newUser.Login.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -172,13 +330,13 @@ namespace ITA.Schedule.Controllers
             // check if he has a new password
             if (user.Password != null)
             {
-                userToUpdate.Password = user.Password;
+                userToUpdate.Password = user.Password.Trim();
             }
 
             // check if login was changed
-            if (userToUpdate.Login != user.Login)
+            if (userToUpdate.Login != user.Login.Trim())
             {
-                userToUpdate.Login = user.Login;
+                userToUpdate.Login = user.Login.Trim();
             }
             
             // check if user type was changed
@@ -279,7 +437,7 @@ namespace ITA.Schedule.Controllers
 
             var subjectsDb = _subjectBl.GetAll().ToList();
 
-            var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Name);
+            var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
             return PartialView("SubjectsList", subjects);
         }
@@ -301,10 +459,11 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (newSubject.Name == null || newSubject.Name.Length > 400)
+            if (newSubject.Name.Trim() == String.Empty || newSubject.Name.Trim().Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            newSubject.Name = newSubject.Name.Trim();
 
             var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
 
@@ -348,7 +507,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name, updatedSubject.Code))
+            if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -419,7 +578,7 @@ namespace ITA.Schedule.Controllers
 
             var teachersDb = _teacherBl.GetAll().ToList();
             
-            var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Name);
+            var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
             return PartialView("TeachersList", teachers);
         }
@@ -507,7 +666,7 @@ namespace ITA.Schedule.Controllers
         {
             ShedulerLogger();
 
-            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name, updatedTeacher.SubjectIds))
+            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

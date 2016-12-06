@@ -19,7 +19,9 @@ function checkEmpty(obj) {
     var name = $(obj).attr("name");
     $("." + name + "-validation").html("");
     $(obj).css("border", "");
-    if ($(obj).val() == "" || $(obj).val().length > 400) {
+    var nameVal = $.trim($(obj).val());
+
+    if (nameVal === "" || nameVal.length > 400) {
         $(obj).css("border", "#FF0000 1px solid");
         $("." + name + "-validation").html("Required");
         return false;

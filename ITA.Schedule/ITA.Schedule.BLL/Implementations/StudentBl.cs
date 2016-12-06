@@ -40,5 +40,71 @@ namespace ITA.Schedule.BLL.Implementations
         {
             return Repository.Get(s => s.SubGroup.Name == subGroupName);
         }
+
+        public bool AddNewStudent(string name, Guid subgroupId)
+        {
+            var student = new Student();
+
+            if (name.Trim() == String.Empty && name.Length > 400)
+            {
+                return false;
+            }
+            student.Name = name;
+
+            var subgroup = Repository.AttachSubgroup(subgroupId);
+
+            if (subgroup == null)
+            {
+                return false;
+            }
+            student.SubGroup = subgroup;
+
+            Repository.Add(student);
+
+            return true;
+        }
+
+        // update teacher name and subjects
+        public bool UpdateStudent(Guid studentId, string newName, Guid subgroupId)
+        {
+            // if something is wrong with new name
+            if (newName == String.Empty || newName.Length > 400)
+            {
+                return false;
+            }
+
+            // looking for a studentId
+            var student = GetById(studentId);
+
+            // if we couldn't find a student
+            if (student == null)
+            {
+                return false;
+            }
+
+            // change teacher's name
+            if (!student.Name.Equals(newName))
+            {
+                student.Name = newName;
+            }
+
+            // if the subgroup ID is wrong
+            var subgroup = Repository.AttachSubgroup(subgroupId);
+            if (subgroup == null)
+            {
+                return false;
+            }
+
+            // change subgroup
+            if (student.SubGroup == null || student.SubGroup.Id != subgroupId)
+            {
+                student.SubGroup = subgroup;
+            }
+
+            // update student
+            Update(student);
+
+            return true;
+        }
     }
 }

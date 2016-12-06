@@ -16,5 +16,7 @@ namespace ITA.Schedule.Models
         public int LessonNumber { get; set; }
         
         public DateTime LessonDate { get; set; }
+
+        public Guid ElementId { get; set; }
     }
 }

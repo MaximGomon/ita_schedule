@@ -119,6 +119,7 @@ namespace ITA.Schedule.Controllers
                 var lesson = new Element()
                 {
                     Name = teacher.Teacher.Name,
+                    ElementId = teacher.Subject.Id,
                     LessonNumber = teacher.LessonTime.Code,
                     Description = $"{teacher.Subject.Name}, {teacher.Room.Name}, {teacher.Room.Address}"
                 };

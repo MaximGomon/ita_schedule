@@ -1,0 +1,56 @@
+﻿
+@model ITA.Schedule.Models.LessonViewModel
+
+@{
+    ViewBag.Title = "Lesson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add or update</title>
+
+</head>
+<body>
+<div>
+    <div class="col-sm-2">
+        @{
+            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList, "Всі ", new {@class = "col-md-offset-1 col-md-11", @onchange = "SetSubjects(this)"})
+
+        }
+    </div>
+    <div>
+        <select id="subject-list">
+
+        </select>
+    </div>
+    <div>
+        <select></select>
+    </div>
+    <div>
+        <select></select>
+    </div>
+    <div>
+        <select></select>
+    </div>
+    <div>
+        <select></select>
+    </div>
+    <div>
+        <select></select>
+    </div>
+</div>
+<script>
+    
+    
+    function SetSubjects(parameters) {
+
+        $.getJSON("/Lesson/GetSubjects?id="+parameters.value);
+    }
+</script>
+</body>
+
+
+

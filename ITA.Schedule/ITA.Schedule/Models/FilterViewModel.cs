@@ -18,7 +18,7 @@ namespace ITA.Schedule.Models
         /// <summary>
         /// Subject ID for student or Group ID for teacher
         /// </summary>
-        public Guid FirstId { get; set; }
+        public string FirstId { get; set; }
 
         
         /// <summary>

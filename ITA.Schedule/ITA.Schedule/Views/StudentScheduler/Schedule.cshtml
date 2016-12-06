@@ -11,6 +11,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>StudentHeader</title>
+
     
 </head>
 <body>
@@ -32,14 +33,14 @@
 
         </div>
         <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
-            <label class="btn btn-default active">
+            <label id="day" class="btn btn-default">
                 @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "day", new {name = "day", type="radio", autocomplete = "off", @checked=true }) День
             </label>
 
-            <label class="btn btn-default">
+            <label id="week" class="btn btn-default">
                 @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "week", new {name = "week", type = "radio", autocomplete = "off" }) Тиждень
             </label>
-            <label class="btn btn-default">
+            <label id="month" class="btn btn-default">
                 @Html.RadioButtonFor(model => model.Filter.MyTimePeriod, "month", new {name = "month", type = "radio", autocomplete = "off" }) Місяць
             </label>
         </div>
@@ -49,216 +50,233 @@
     </div>
 }
 <div class="col-md-12">
-    @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
-    {
-        <div class="col-md-12">
-            <div class="h3 alert alert-info info col-sm-12 text-center">
-                <span class="text-center">
+        @if (Model.Scheduler != null && Model.Filter.MyTimePeriod == TimePeriod.Day)
+        {
+            <div class="table">
+
+                
+                    <div class="h3 alert alert-info info text-center">
+                        <span class="text-center">
                             @Model.Scheduler.DayOfSchedule
                         </span>
-            </div>
-
-            <div class="col-md-12" style="display: inline-block">
-                <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                    Lesson
-                </div>
-                <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                    Time
-                </div>
-                @foreach (var schedule in Model.Scheduler.ColumnHeaders)
-                {
-                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                        <span>@schedule.Key</span>
                     </div>
-                }
-            </div>
-            @{
-                var lessonNumber = 0;
-                foreach (var item in @Model.Scheduler.RowHeaders)
-                {
-                    lessonNumber++;
-                    <div class="col-md-12" style="display: inline-block">
-                        <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                            Пара @lessonNumber
-                        </div>
-                        <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                            Початок о <br>
-                            @item.ToShortTimeString()
-                        </div>
-                        @foreach (var teacher in Model.Scheduler.ColumnHeaders)
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="warning">
+
+                        <th class="text-center">
+                            Lesson
+                        </th>
+                        <th class="text-center">
+                            Time
+                        </th>
+                        @foreach (var schedule in Model.Scheduler.ColumnHeaders)
                         {
-                            var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
-                            if (lesson != null)
+                            <th class="text-center">
+                                <span>@schedule.Key</span>
+                            </th>
+                        }
+
+                    </tr>
+                    </thead>
+                    @{
+                        var lessonNumber = 0;
+                        foreach (var item in @Model.Scheduler.RowHeaders)
+                        {
+                            lessonNumber++;
+                            <tbody class="">
+                            <th >
+                                <span class="text-center">
+                                    Пара @lessonNumber
+                                </span>
+                            </th>
+                            <th >
+                                <span class="text-center" >
+                                    Початок о @item.ToShortTimeString()
+                                </span>
+                            </th>
+                            @foreach (var teacher in Model.Scheduler.ColumnHeaders)
                             {
-                                <div class="text-center" tabindex="0" data-toggle="popover" data-trigger="focus"
-                                     data-container="body" data-html="true"
-                                     style="width: @ViewBag.Width; display: inline-block; border: 1px solid black"> 
-                                     
-                                    <span>@lesson.Description</span>
+                                var lesson = Model.Scheduler.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
+                                if (lesson != null)
+                                {
+                                    <td class="text-center lesson" tabindex="0" data-toggle="popover" data-trigger="focus"
+                                        data-container="body" data-html="true" idLesson="@lesson.ElementId">
+                                        @lesson.Description
+                                        
+                                    </td>
+
+                                }
+                                else
+                                {
+                                    <td class="text-center lesson" tabindex="1" data-toggle="popover-empty"
+                                        data-trigger="focus" data-html="true" data-container="body"
+                                        ondblclick="alert('I am empty')">
+
+                                    </td>
+                                }
+                            }
+
+                            </tbody>
+                        }
+
+
+                    }
+
+                </table>
+                <div id="popover-content-empty" class="hide">
+                    <button type="button" class="btn btn-success">Add</button>
+                </div>
+
+                <div id="popover-content" class="hide" style="position: absolute">
+                    <div>
+                        <button type="button" class="btn btn-success">Update</button>
+                    </div>
+                    <div>
+                        <button id="deleteLesson" type="button" class="btn btn-danger" onclick="window.location = '/Lesson/Index'">Delete</button>
+                    </div>
+                </div>
+            </div>
+                        }
+
+            @if (Model.ScheduleForWeek != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
+            {
+                foreach (var day in Model.ScheduleForWeek)
+                {
+                    <div class="col-md-12">
+                        <div class="h3 alert alert-info info col-sm-12 text-center">
+                            <span class="text-center">
+                                @day.DayOfSchedule
+                            </span>
+                        </div>
+
+                        <div class="col-md-12" style="display: inline-block">
+                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                Lesson
+                            </div>
+                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                Time
+                            </div>
+                            @foreach (var schedule in day.ColumnHeaders)
+                            {
+                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                    <span>@schedule.Key</span>
                                 </div>
                             }
-                            else
+
+                        </div>
+                        @{
+                            var lessonNumber = 0;
+                            foreach (var item in @day.RowHeaders)
                             {
-                                <div class="text-center" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black" ondblclick="alert('I am empty')">
+                                //begin draw row
+                                lessonNumber++;
+                                <div class="col-md-12" style="display: inline-block">
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        Пара @lessonNumber
+                                    </div>
+                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                        Початок о <br>
+                                        @item.ToShortTimeString()
+                                    </div>
+                                    @foreach (var teacher in day.ColumnHeaders)
+                            {
+                                var lesson = day.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
+                                if (lesson != null)
+                                {
+                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                                <span>@lesson.Description</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+
+                                            </div>
+                                        }
+                                    }
 
                                 </div>
                             }
                         }
 
+
                     </div>
-                }
-
-                <div id="popover-content" class="hide">
-                    <div>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" value="">Add or update</button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            }
-
-
-        </div>
-    }
-
-    @if (Model.ScheduleForWeek != null && Model.Filter.MyTimePeriod == TimePeriod.Week)
-    {
-        foreach (var day in Model.ScheduleForWeek)
-        {
-            <div class="col-md-12">
-                <div class="h3 alert alert-info info col-sm-12 text-center">
-                    <span class="text-center">
-                                @day.DayOfSchedule
-                            </span>
-                </div>
-
-                <div class="col-md-12" style="display: inline-block">
-                    <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                        Lesson
-                    </div>
-                    <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                        Time
-                    </div>
-                    @foreach (var schedule in day.ColumnHeaders)
-                    {
-                        <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                            <span>@schedule.Key</span>
-                        </div>
-                    }
-
-                </div>
-                @{
-                    var lessonNumber = 0;
-                    foreach (var item in @day.RowHeaders)
-                    {
-                        //begin draw row
-                        lessonNumber++;
-                        <div class="col-md-12" style="display: inline-block">
-                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                Пара @lessonNumber
-                            </div>
-                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                Початок о <br>
-                                @item.ToShortTimeString()
-                            </div>
-                            @foreach (var teacher in day.ColumnHeaders)
-                            {
-                                var lesson = day.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
-                                if (lesson != null)
-                                {
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                        <span>@lesson.Description</span>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-
-                                    </div>
                                 }
                             }
-
+            @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
+            {
+                <div class="col-md-12 alert text-center">
+                    <span class="calendar-day">@($"{Model.Filter.StartDateTime.Date.ToString("MMMM")}") </span>
+                </div>
+                <div class="col-md-12 ">
+                    @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
+                    {
+                        <div class="text-center" style="width: 13%; display: inline-block;">
+                            <span> @dayOfWeek</span>
                         </div>
                     }
-                }
-
-
-            </div>
-        }
-    }
-    @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
-    {
-        <div class="col-md-12 alert text-center">
-            <span class="calendar-day">@($"{Model.Filter.StartDateTime.Date.ToString("MMMM")}") </span>
-        </div>
-        <div class="col-md-12 ">
-            @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
-            {
-                <div class="text-center" style="width: 13%; display: inline-block;">
-                    <span> @dayOfWeek</span>
                 </div>
-            }
-        </div>
-        for (;;)
-        {
-            if (Model.Calendar.FirstDayOfWeekInMonth > Model.Calendar.LastDayOfWeekInMonth)
-            {
-                break;
-            }
-            <div class="" style="width: 13%; display: inline-block; border: 1px solid black; padding: 0; margin: -0.2rem">
-                <span class="text-center calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
-                @for (var i = 1; i < 8; i++)
+                for (;;)
                 {
+                    if (Model.Calendar.FirstDayOfWeekInMonth > Model.Calendar.LastDayOfWeekInMonth)
+                    {
+                        break;
+                    }
+                    <div class="" style="width: 13%; display: inline-block; border: 1px solid black; padding: 0; margin: -0.2rem">
+                        <span class="text-center calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
+                        @for (var i = 1; i < 8; i++)
+                        {
                             @*<div>*@
-                    var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
-                                                                 && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
-                                                                 && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
-                    if (@lesson)
-                    {
-                        <span class="col-md-12"  style="padding: 0; background-color: red; height: 0.5rem">@i </span>
-                    }
-                    else
-                    {
-                        <span class="col-md-12" style="padding: 0;" >@i </span>
+                        var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
+                                                                     && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
+                                                                     && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
+                        if (@lesson)
+                        {
+                            <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
+                            }
+                            else
+                            {
+                                <span class="col-md-12" style="padding: 0;">@i </span>
 
-                    }
+                            }
 
+                        }
+                    </div>
+                    Model.Calendar.FirstDayOfWeekInMonth = Model.Calendar.FirstDayOfWeekInMonth.AddDays(1);
                 }
-            </div>
-            Model.Calendar.FirstDayOfWeekInMonth = Model.Calendar.FirstDayOfWeekInMonth.AddDays(1);
-        }
-    }
+            }
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-                </div>
-                <div class="modal-body">
-                    @using (Html.BeginForm("Scheduler", "StudentScheduler"))
-                    {
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("Scheduler", "StudentScheduler"))
+                            {
 
-                    }
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Send message</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 <script type="text/javascript">
     $(document)
         .ready(function() {
-            var time = new Date();
+
             var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
             $(function () {
-                
+
                 $.datepicker.regional['ua'] = {clearText: 'Очистити', clearStatus: '',
                         closeText: 'Закрити', closeStatus: '',
                     	prevText: '&lt;&lt;',  prevStatus: '',
@@ -282,13 +300,47 @@
                 $.datepicker.setDefaults($.datepicker.regional["uk"]);
             });
 
-            $("[data-toggle=popover]").popover({
-                html: true,
-                content: function () {
-                    return $('#popover-content').html();
-                }
+            var myidLesson;
+            $(".lesson").click( function() {
+                myidLesson = (($(this).attr('idLesson')));
+                console.log(myidLesson);
             });
 
+            $("[data-toggle=popover]").popover({
+                html: true,
+
+                content: function() {
+                    //console.log($(this).attr('idLesson'));
+                    return $('#popover-content').html();
+                }
+
+            });
+            $("[data-toggle=popover-empty]").popover({
+                html: true,
+
+                content: function() {
+                    //console.log($(this).attr('idLesson'));
+                    return $('#popover-content-empty').html();
+                }
+
+            });
+            function deletefunc() {
+                
+            }
+            //$("#deleteLesson").on("click", function(){
+            //    console.log("deleted");
+            //});
+            
+            $(document).on("click", "#deleteLesson", function() {
+                window.location = '/Lesson/Index';
+            });
+            $(document).on("click", "#deleteLesson", function() {
+                window.location = '/Lesson/Index';
+            });
+
+            function deletefunc() {
+                
+            }
             $('#exampleModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var recipient = button.data('whatever'); // Extract info from data-* attributes
@@ -298,6 +350,25 @@
                 modal.find('.modal-title').text('New message to ' + recipient);
                 modal.find('.modal-body input').val(recipient);
             });
+
+
+            switch (@((int)(Model.Filter.MyTimePeriod)))
+            {
+                case @((int)(TimePeriod.Day)):
+                    $("#day").addClass("active");
+                    break;
+
+                case @((int)(TimePeriod.Month)):
+                    $("#month").addClass("active");
+                    break;
+
+                case @((int)(TimePeriod.Week)):
+                    $("#week").addClass("active");
+                    break;
+                default :
+                    $("#day").addClass("active");
+                    break;
+            }
         });
 </script>
 
@@ -316,7 +387,7 @@
             @ViewBag.Date
         </span>
     </div>
-    
+
         <div class="col-md-12" style="display: inline-block">
             <div style="width: @ViewBag.Width; display: inline-block">
                 Lesson
@@ -353,7 +424,7 @@
                     //end draw row
                 }
             }
-        
+
 
 </div>*@
 

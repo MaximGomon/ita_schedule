@@ -11,28 +11,44 @@
     <meta name="viewport" content="width=device-width" />
     <title>Add or update</title>
 
+    <script src="~/Scripts/DatePicker-ua-locale.js"></script>
 </head>
 <body>
-<div>
+<div class="container-fluid">
     @using (Html.BeginForm("GetForm", "Lesson", Model))
     {
-        <div class="col-md-offset-1 col-md-11">
-            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}), "Please Select", new {@id = "teacher"})
+
+        <div class="col-md-12 alert">
+            @Html.TextBoxFor(model => model.LessonDate, new { @id = "datepicker", @class = "col-md-offset-4 col-md-4" })
+        </div>
+        <div class="col-md-12 alert">
+            <span class="col-md-3 right">Викладач</span>
+            
+            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}),
+                                    "Please Select", new { @class = "col-md-offset-1 col-md-4", @id = "teacher"})
         </div>
 
-        <div class="col-md-offset-1 col-md-11">
-            @Html.DropDownListFor(x => x.SubjectId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-offset-1 col-md-11 disabled", @id = "subject-list"})
+        <div class="col-md-12 alert">
+            <span class="col-md-3 right">Предмет</span>
+            @Html.DropDownListFor(x => x.SubjectId, Enumerable.Empty<SelectListItem>(), "Please Select",
+                new {@class = "col-md-offset-1 col-md-11 disabled", @id = "subject-list"})
         </div>
-        <div>
-            @Html.DropDownListFor(x => x.MyGroupId, Model.Groups, "Please Select", new { @id = "myGroup" })
+        <div class="col-md-12 alert">
+            <span class="col-md-3 right">Група</span>
+            
+            @Html.DropDownListFor(x => x.MyGroupId, Model.Groups, "Please Select", new {@class = "col-md-offset-1 col-md-4", @id = "myGroup"})
         </div>
-        <div class="col-md-offset-1 col-md-11">
-            @Html.DropDownListFor(x => x.SubGroupId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-offset-1 col-md-11 disabled", @id = "subgroup"})
+        <div class="col-md-12 alert">
+            <span class="col-md-3 right">Підгрупа</span>
+
+            @Html.DropDownListFor(x => x.SubGroupId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-offset-1 col-md-4", @id = "subgroup"})
         </div>
-        <div>
-            @*//@Html.DropDownList("GroupsId", Model.Groups, "Please Select", new {@id = "myGroup"})*@
+        @*<div>
+            @*//@Html.DropDownList("GroupsId", Model.Groups, "Please Select", new {@id = "myGroup"})
+        </div>*@
+        <div class="col-md-12 alert">
+            <button class="btn btn-default btn-success right" type="submit">Внести зміни</button>
         </div>
-        <button type="submit" >Send</button>
     }
     @*<div>
         <select></select>
@@ -62,7 +78,7 @@
 
         $('#myGroup').change(function () {
             var idGroup = $(this).val();
-            
+
                     $('#subgroup').empty();
                     $("#subgroup").append($("<option></option>").html("Please Select"));
 
@@ -75,6 +91,13 @@
                 console.log(idGroup);
             });
 
+        $(function () {
+            var timeFromObject = new Date("@Model.LessonDate.Date.ToString("MM/dd/yyyy")");
+
+            $.datepicker.setDefaults($.datepicker.regional['ua']);
+            $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
+            $.datepicker.setDefaults($.datepicker.regional["uk"]);
+        });
     });
 
 </script>

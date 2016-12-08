@@ -21,8 +21,13 @@ namespace ITA.Schedule.Controllers
         {
             UserFilterViewModel student = new UserFilterViewModel()
             {
-                Filter = new FilterViewModel(),
-                Scheduler = null
+                Filter = new FilterViewModel()
+                {
+                    MyTimePeriod = TimePeriod.Day,
+                    StartDateTime = DateTime.Today
+                },
+                Scheduler = null,
+                
             };
 
             //GetAllTeachers
@@ -71,6 +76,15 @@ namespace ITA.Schedule.Controllers
             
             
             return View("Schedule", myFilter);
+        }
+
+        public ActionResult DeleteLesson(Guid id)
+        {
+            using (var context = new ScheduleDbContext())
+            {
+                //context.ScheduleLessons.Find(id).IsDeleted = true;
+            }
+            return View("Schedule");
         }
 
         private UserFilterViewModel MonthTimePeriod(UserFilterViewModel myFilter)

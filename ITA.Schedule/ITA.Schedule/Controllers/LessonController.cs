@@ -26,12 +26,33 @@ namespace ITA.Schedule.Controllers
                 
                 lesson.LessonDate=DateTime.Today;
 
+                var firstOrDefault = context.Teachers.FirstOrDefault(x => x.IsDeleted == false);
+                if (firstOrDefault != null)
+                    lesson.TeacherId = firstOrDefault.Id;
             }
             return View("Lesson", lesson);
         }
 
-       
 
+        [HttpGet]
+        public ActionResult UpdateLesson(Guid id)
+        {
+            var lesson = new LessonViewModel();
+
+            using (var context = new ScheduleDbContext())
+            {
+                lesson.Groups = context.Groups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+
+                lesson.TeacherList = context.Teachers.ToList();
+
+                lesson.LessonDate = DateTime.Today;
+
+                var firstOrDefault = context.Teachers.FirstOrDefault(x => x.IsDeleted == false);
+                if (firstOrDefault != null)
+                    lesson.TeacherId = firstOrDefault.Id;
+            }
+            return View("Lesson", lesson);
+        }
         public JsonResult GetSubjects(Guid id)
         {
             using (var context = new ScheduleDbContext())

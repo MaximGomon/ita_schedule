@@ -82,10 +82,11 @@
                     </thead>
                     @{
                         var lessonNumber = 0;
-                        foreach (var item in @Model.Scheduler.RowHeaders)
-                        {
-                            lessonNumber++;
-                            <tbody class="">
+                    
+                                            foreach (var item in @Model.Scheduler.RowHeaders)
+                                            {
+                                                lessonNumber++;
+                                                <tbody class="">
                             <th >
                                 <span class="text-center">
                                     Пара @lessonNumber
@@ -110,14 +111,11 @@
                                 else
                                 {
                                     <td class="text-center lesson" tabindex="1" data-toggle="popover-empty"
-                                        data-trigger="focus" data-html="true" data-container="body"
-                                        ondblclick="alert('I am empty')">
+                                        data-trigger="focus" data-html="true" data-container="body" idLesson=''>
 
                                     </td>
                                 }
-                            }
-
-                            </tbody>
+                            } </tbody>
                         }
 
 
@@ -125,15 +123,17 @@
 
                 </table>
                 <div id="popover-content-empty" class="hide">
-                    <button type="button" class="btn btn-success">Add</button>
+                    <div id="deleteDiv">
+                        <a id='addLesson' class="btn btn-success">Додати</a>
+                    </div>
                 </div>
 
                 <div id="popover-content" class="hide" style="position: absolute">
                     <div>
-                        <a href="javascript:myFunc()" type="button" class="btn btn-success">Update</a>
+                        <a id='updateLesson' class="btn btn-success">Змінити</a>
                     </div>
                     <div id ="deleteDiv">
-                        <a id='deleteLesson' class="deleteLesson btn btn-danger">Delete</a>
+                        <a id='deleteLesson' class="btn btn-danger">Видалити</a>
                     </div>
                 </div>
             </div>
@@ -143,65 +143,87 @@
             {
                 foreach (var day in Model.ScheduleForWeek)
                 {
-                    <div class="col-md-12">
+                    <div class="table">
                         <div class="h3 alert alert-info info col-sm-12 text-center">
                             <span class="text-center">
                                 @day.DayOfSchedule
                             </span>
                         </div>
 
-                        <div class="col-md-12" style="display: inline-block">
-                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                Lesson
-                            </div>
-                            <div class="col-md-1 text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                Time
-                            </div>
-                            @foreach (var schedule in day.ColumnHeaders)
-                            {
-                                <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                    <span>@schedule.Key</span>
-                                </div>
-                            }
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="warning">
 
-                        </div>
-                        @{
-                            var lessonNumber = 0;
-                            foreach (var item in @day.RowHeaders)
-                            {
-                                //begin draw row
-                                lessonNumber++;
-                                <div class="col-md-12" style="display: inline-block">
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                        Пара @lessonNumber
-                                    </div>
-                                    <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                        Початок о <br>
-                                        @item.ToShortTimeString()
-                                    </div>
-                                    @foreach (var teacher in day.ColumnHeaders)
-                            {
-                                var lesson = day.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
-                                if (lesson != null)
+                                <th class="text-center">
+                                    Lesson
+                                </th>
+
+                                <th class="text-center">
+                                    Time
+                                </th>
+
+                                @foreach (var schedule in day.ColumnHeaders)
                                 {
-                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
-                                                <span>@lesson.Description</span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="text-center" style="width: @ViewBag.Width; display: inline-block; border: 1px solid black">
+                                    <td class="text-center">
+                                        <span>@schedule.Key</span>
+                                    </td>
+                                }
 
-                                            </div>
+                            </tr>
+                            </thead>
+                            
+                            @{
+                                var lessonNumber = 0;
+                                foreach (var item in @day.RowHeaders)
+                                {
+                                    //begin draw row
+                                    lessonNumber++;
+                                    <tbody>
+                                            <th class="text-center">
+                                                Пара @lessonNumber
+                                            </th>
+                                            <th class="text-center">
+                                                Початок о @item.ToShortTimeString()
+                                            </th>
+                                            @foreach (var teacher in day.ColumnHeaders)
+                                            {
+                                                var lesson = day.Events.FirstOrDefault(x => x.Name == teacher.Key && x.LessonNumber == lessonNumber);
+                                                if (lesson != null)
+                                                {
+                                                    <td class="text-center lesson" tabindex="0" data-toggle="popover" data-trigger="focus"
+                                                        data-container="body" data-html="true" idLesson="@lesson.ElementId">
+                                                        @lesson.Description
+
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center lesson" tabindex="1" data-toggle="popover-empty"
+                                                        data-trigger="focus" data-html="true" data-container="body" idLesson=''></td>
+                                                }
+                                            }
+                                    </tbody>
+                                }
+
+                            }
+                        </table>
+                        <div id="popover-content-empty" class="hide">
+                            <div id="deleteDiv">
+                                <a id='addLesson' class="btn btn-success">Додати</a>
+                            </div>
+                        </div>
+
+                        <div id="popover-content" class="hide" style="position: absolute">
+                            <div>
+                                <a id='updateLesson' class="btn btn-success">Змінити</a>
+                            </div>
+                            <div id="deleteDiv">
+                                <a id='deleteLesson' class="btn btn-danger">Видалити</a>
+                            </div>
+                        </div>
+                    </div>
                                         }
                                     }
-
-                                </div>
-                            }
-                        }
-                    </div>
-                                }
-                            }
             @if (Model.Calendar != null && Model.Filter.MyTimePeriod == TimePeriod.Month)
             {
                 <div class="col-md-12 alert text-center">
@@ -284,8 +306,10 @@
 
             
             $(".lesson").click( function() {
-                myidLesson = '/Lesson/GetSubjects/' + (($(this).attr('idLesson')));
-                $('#deleteLesson').attr("href", myidLesson);
+                myidLesson = (($(this).attr('idLesson')));
+                $('#deleteLesson').attr("href", '/StudentScheduler/DeleteLesson/' + myidLesson);
+                $('#updateLesson').attr("href", '/Lesson/UpdateLesson/' + myidLesson);
+                $('#addLesson').attr("href", '/Lesson/AddLesson/' + myidLesson);
                 console.log(myidLesson);
             });
             ////deleteLesson
@@ -306,9 +330,9 @@
                 }
 
             });
-            function myFunc() {
-                console.log(myidLesson);
-            }
+            //function myFunc() {
+            //    console.log(myidLesson);
+            //}
             $("[data-toggle=popover-empty]").popover({
                 html: true,
 
@@ -324,8 +348,10 @@
             //});
             
             $('#popover-content').on("click", ".deleteLesson", function() {
-                alert("I was clicked");
-                window.location = '/Lesson/Index';
+                //alert("I was clicked");
+                //window.location = '/Lesson/DeleteLesson/' + myidLesson;
+
+                $('#deleteLesson').attr("href", '/Lesson/DeleteLesson/' + myidLesson);
             });
             //$(document).on("click", "#deleteLesson", function() {
             //    window.location = '/Lesson/Index';

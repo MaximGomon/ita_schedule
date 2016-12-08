@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using ITA.Schedule.DAL;
 using ITA.Schedule.Models;
+using Newtonsoft.Json;
 
 namespace ITA.Schedule.Controllers
 {
@@ -12,56 +14,49 @@ namespace ITA.Schedule.Controllers
     {
         // GET: Lesson
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult AddLesson()
         {
-            var newLesson = new LessonViewModel()
+            var lesson = new LessonViewModel();
+
+            using (var context = new ScheduleDbContext())
             {
-                TeacherList = new List<SelectListItem>
-                {
-new SelectListItem()
-{
-    Text = "Gomon Maxim",
-    Value = "13"
-},
-new SelectListItem()
-{
-    Text = "Gomon Maxi",
-    Value = "14"
-},
-new SelectListItem()
-{
-    Text = "Gomon Maxi",
-    Value = "15"
-},
-new SelectListItem()
-{
-    Text = "Gomon Maxim",
-    Value = "13"
-},
-            new SelectListItem()
-        {
-            Text = "Gomon Maxim",
-            Value = "13"
-        }
-                }
-            };
-            return View("Lesson", newLesson);
+                lesson.Groups= context.Groups.Select(x=> new SelectListItem() {Value = x.Id.ToString(), Text = x.Name}).ToList();
+                
+                lesson.TeacherList = context.Teachers.ToList();
+                
+                lesson.LessonDate=DateTime.Today;
+
+            }
+            return View("Lesson", lesson);
         }
 
-        //[HttpPost]
-        //public ActionResult Index(Guid id)
-        //{
-        //    return PartialView("/Views/Lesson/Lesson.cshtml");
-        //}
+       
 
         public JsonResult GetSubjects(Guid id)
         {
             using (var context = new ScheduleDbContext())
             {
-                var subjects = context.Subjects.Where(x => x.Teachers.Any(y => y.Id == id)).ToList();
-
-                return Json(subjects.Select(x=>x.Id));
+                var subjects = context.Subjects.ToList();
+                var subjectsDropdown = subjects.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name});
+                string json = JsonConvert.SerializeObject(subjectsDropdown);
+                return Json(subjectsDropdown, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult GetSubGroupss(Guid id)
+        {
+            using (var context = new ScheduleDbContext())
+            {
+                var subgroups = context.SubGroups.Where(x => x.Group.Id == id).ToList();
+                var subjectsDropdown = subgroups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name });
+                return Json(subjectsDropdown, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public void GetForm(LessonViewModel model)
+        {
+            var a = model;
+        }
+
     }
 }

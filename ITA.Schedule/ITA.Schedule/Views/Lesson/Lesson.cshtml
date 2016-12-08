@@ -1,5 +1,4 @@
-﻿
-@model ITA.Schedule.Models.LessonViewModel
+﻿@model ITA.Schedule.Models.LessonViewModel
 
 @{
     ViewBag.Title = "Lesson";
@@ -15,18 +14,27 @@
 </head>
 <body>
 <div>
-    <div class="col-sm-2">
-        @{
-            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList, "Всі ", new {@class = "col-md-offset-1 col-md-11", @onchange = "SetSubjects(this)"})
+    @using (Html.BeginForm("GetForm", "Lesson", Model))
+    {
+        <div class="col-md-offset-1 col-md-11">
+            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}), "Please Select", new {@id = "teacher"})
+        </div>
 
-        }
-    </div>
-    <div>
-        <select id="subject-list">
-
-        </select>
-    </div>
-    <div>
+        <div class="col-md-offset-1 col-md-11">
+            @Html.DropDownListFor(x => x.SubjectId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-offset-1 col-md-11 disabled", @id = "subject-list"})
+        </div>
+        <div>
+            @Html.DropDownListFor(x => x.MyGroupId, Model.Groups, "Please Select", new { @id = "myGroup" })
+        </div>
+        <div class="col-md-offset-1 col-md-11">
+            @Html.DropDownListFor(x => x.SubGroupId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-offset-1 col-md-11 disabled", @id = "subgroup"})
+        </div>
+        <div>
+            @*//@Html.DropDownList("GroupsId", Model.Groups, "Please Select", new {@id = "myGroup"})*@
+        </div>
+        <button type="submit" >Send</button>
+    }
+    @*<div>
         <select></select>
     </div>
     <div>
@@ -34,21 +42,41 @@
     </div>
     <div>
         <select></select>
-    </div>
-    <div>
-        <select></select>
-    </div>
-    <div>
-        <select></select>
-    </div>
+    </div>*@
 </div>
 <script>
-    
-    
-    function SetSubjects(parameters) {
 
-        $.getJSON("/Lesson/GetSubjects?id="+parameters.value);
-    }
+    $(document).ready(function() {
+        $('#teacher').change(function () {
+            console.log("on change Jquery");
+            $('#subject-list').empty();
+            $("#subject-list").append($("<option></option>").html("Please Select"));
+
+            $.getJSON("/Lesson/GetSubjects/" + $(this).val(), null, function (data) {
+                $.each(data, function () {
+                    $("#subject-list").append($("<option></option>").val(this.Value).html(this.Text));
+                });
+
+            });
+        });
+
+        $('#myGroup').change(function () {
+            var idGroup = $(this).val();
+            
+                    $('#subgroup').empty();
+                    $("#subgroup").append($("<option></option>").html("Please Select"));
+
+                    $.getJSON("/Lesson/GetSubGroupss/" + $(this).val(), null, function (data) {
+                        $.each(data, function () {
+                            $("#subgroup").append($("<option></option>").val(this.Value).html(this.Text));
+                        });
+                    });
+
+                console.log(idGroup);
+            });
+
+    });
+
 </script>
 </body>
 

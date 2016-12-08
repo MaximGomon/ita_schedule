@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>StudentHeader</title>
 
-    
+    <script src="~/Scripts/DatePicker-ua-locale.js"></script>
 </head>
 <body>
 <div class="alert row">
@@ -106,7 +106,6 @@
                                         @lesson.Description
                                         
                                     </td>
-
                                 }
                                 else
                                 {
@@ -131,10 +130,10 @@
 
                 <div id="popover-content" class="hide" style="position: absolute">
                     <div>
-                        <button type="button" class="btn btn-success">Update</button>
+                        <a href="javascript:myFunc()" type="button" class="btn btn-success">Update</a>
                     </div>
-                    <div>
-                        <button id="deleteLesson" type="button" class="btn btn-danger" onclick="window.location = '/Lesson/Index'">Delete</button>
+                    <div id ="deleteDiv">
+                        <a id='deleteLesson' class="deleteLesson btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>
@@ -200,8 +199,6 @@
                                 </div>
                             }
                         }
-
-
                     </div>
                                 }
                             }
@@ -271,41 +268,35 @@
         </div>
 
 <script type="text/javascript">
+    var myidLesson;
     $(document)
         .ready(function() {
 
             var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
             $(function () {
 
-                $.datepicker.regional['ua'] = {clearText: 'Очистити', clearStatus: '',
-                        closeText: 'Закрити', closeStatus: '',
-                    	prevText: '&lt;&lt;',  prevStatus: '',
-                    	nextText: '&gt;&gt;', nextStatus: '',
-                    	currentText: 'Сьогодні', currentStatus: '',
-                    	monthNames: ['Січень','Лютий','Березень','Квітень','Травень','Червень',
-                    	'Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'],
-                    	monthNamesShort: ['Січ','Лют','Бер','Кві','Тра','Чер',
-                    	'Лип','Сер','Вер','Жов','Лис','Гру'],
-                    	monthStatus: '', yearStatus: '',
-                    	weekHeader: 'Не', weekStatus: '',
-                    	dayNames: ['неділя','понеділок','вівторок','середа','четвер','пятниця','суббота'],
-                    	dayNamesShort: ['нед','пнд','вів','срд','чтв','птн','сбт'],
-                    	dayNamesMin: ['Нд','Пн','Вт','Ср','Чт','Пт','Сб'],
-                    	dayStatus: 'DD', dateStatus: 'D, M d',
-                    	dateFormat: 'dd.mm.yy', firstDay: 1,
-                        initStatus: '', isRTL: false};
+                
                 $.datepicker.setDefaults($.datepicker.regional['ua']);
 
                 $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
                 $.datepicker.setDefaults($.datepicker.regional["uk"]);
             });
 
-            var myidLesson;
+            
             $(".lesson").click( function() {
-                myidLesson = (($(this).attr('idLesson')));
+                myidLesson = '/Lesson/GetSubjects/' + (($(this).attr('idLesson')));
+                $('#deleteLesson').attr("href", myidLesson);
                 console.log(myidLesson);
             });
-
+            ////deleteLesson
+            //$("#deleteLesson").click( function() {
+            //    // myidLesson = (($(this).attr('idLesson')));
+            //    console.log(myidLesson + 'click');
+            //});
+            //$(".deleteLesson").click( function() {
+            //    // myidLesson = (($(this).attr('idLesson')));
+            //    console.log(myidLesson + 'click');
+            //});
             $("[data-toggle=popover]").popover({
                 html: true,
 
@@ -315,6 +306,9 @@
                 }
 
             });
+            function myFunc() {
+                console.log(myidLesson);
+            }
             $("[data-toggle=popover-empty]").popover({
                 html: true,
 
@@ -324,50 +318,49 @@
                 }
 
             });
-            function deletefunc() {
-                
-            }
+            
             //$("#deleteLesson").on("click", function(){
             //    console.log("deleted");
             //});
             
-            $(document).on("click", "#deleteLesson", function() {
+            $('#popover-content').on("click", ".deleteLesson", function() {
+                alert("I was clicked");
                 window.location = '/Lesson/Index';
             });
-            $(document).on("click", "#deleteLesson", function() {
-                window.location = '/Lesson/Index';
-            });
+            //$(document).on("click", "#deleteLesson", function() {
+            //    window.location = '/Lesson/Index';
+            //});
 
-            function deletefunc() {
+            //function deletefunc() {
                 
-            }
-            $('#exampleModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var recipient = button.data('whatever'); // Extract info from data-* attributes
-                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                var modal = $(this);
-                modal.find('.modal-title').text('New message to ' + recipient);
-                modal.find('.modal-body input').val(recipient);
-            });
+            //}
+            //$('#exampleModal').on('show.bs.modal', function (event) {
+            //    var button = $(event.relatedTarget); // Button that triggered the modal
+            //    var recipient = button.data('whatever'); // Extract info from data-* attributes
+            //    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            //    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            //    var modal = $(this);
+            //    modal.find('.modal-title').text('New message to ' + recipient);
+            //    modal.find('.modal-body input').val(recipient);
+            //});
 
 
             switch (@((int)(Model.Filter.MyTimePeriod)))
             {
-                case @((int)(TimePeriod.Day)):
-                    $("#day").addClass("active");
-                    break;
+            case @((int)(TimePeriod.Day)):
+                $("#day").addClass("active");
+                break;
 
-                case @((int)(TimePeriod.Month)):
-                    $("#month").addClass("active");
-                    break;
+            case @((int)(TimePeriod.Month)):
+                $("#month").addClass("active");
+                break;
 
-                case @((int)(TimePeriod.Week)):
-                    $("#week").addClass("active");
-                    break;
-                default :
-                    $("#day").addClass("active");
-                    break;
+            case @((int)(TimePeriod.Week)):
+                $("#week").addClass("active");
+                break;
+            default :
+                $("#day").addClass("active");
+                break;
             }
         });
 </script>

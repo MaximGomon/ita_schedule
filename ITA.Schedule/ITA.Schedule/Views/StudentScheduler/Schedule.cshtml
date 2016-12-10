@@ -229,64 +229,56 @@
                 <div class="col-md-12 alert text-center">
                     <span class="calendar-day">@($"{Model.Filter.StartDateTime.Date.ToString("MMMM")}") </span>
                 </div>
-                <div class="col-md-12 ">
-                    @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
-                    {
-                        <div class="text-center" style="width: 13%; display: inline-block;">
-                            <span> @dayOfWeek</span>
-                        </div>
-                    }
-                </div>
-                for (;;)
-                {
-                    if (Model.Calendar.FirstDayOfWeekInMonth > Model.Calendar.LastDayOfWeekInMonth)
-                    {
-                        break;
-                    }
-                    <div class="" style="width: 13%; display: inline-block; border: 1px solid black; padding: 0; margin: -0.2rem">
-                        <span class="text-center calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
-                        @for (var i = 1; i < 8; i++)
-                        {
-                            @*<div>*@
-                        var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
-                                                                     && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
-                                                                     && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
-                        if (@lesson)
-                        {
-                            <span class="col-md-12" style="padding: 0; background-color: red; height: 0.5rem">@i </span>
-                            }
-                            else
+                <div class="table">
+                    <table class="table table-bordered">
+                        <tr>
+                            @foreach (var dayOfWeek in Model.Calendar.ColumnHeaders)
                             {
-                                <span class="col-md-12" style="padding: 0;">@i </span>
-
+                                <th class="text-center">
+                                    <span> @dayOfWeek</span>
+                                </th>
                             }
+                        </tr>
 
+
+
+                        @for (;;)
+                        {
+                            if (Model.Calendar.FirstDayOfWeekInMonth > Model.Calendar.LastDayOfWeekInMonth)
+                            {
+                                break;
+                            }
+                            <tr class="">
+                                @for (var j = 1; j < 8; j++)
+                                {
+                                    <td>
+                                        <span class="text-center calendar-day col-md-12" style="background-color: lightgrey;">@Model.Calendar.FirstDayOfWeekInMonth.Day </span>
+                                        @for (var i = 1; i < 8; i++)
+                                        {
+
+                                            var lesson = Model.Calendar.Lessons.Any(x => x.LessonNumber == i && x.LessonDate.Year == Model.Calendar.FirstDayOfWeekInMonth.Year
+                                                                                         && x.LessonDate.Month == Model.Calendar.FirstDayOfWeekInMonth.Month
+                                                                                         && x.LessonDate.Day == Model.Calendar.FirstDayOfWeekInMonth.Day);
+                                            if (@lesson)
+                                            {
+                                                <span class="col-md-12" style="padding: 0; background-color: red;">@i </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="col-md-12">@i</span>
+                                            }
+
+                                        }
+                                    </td>
+                                    Model.Calendar.FirstDayOfWeekInMonth = Model.Calendar.FirstDayOfWeekInMonth.AddDays(1);
+                                }
+                            </tr>
                         }
-                    </div>
-                    Model.Calendar.FirstDayOfWeekInMonth = Model.Calendar.FirstDayOfWeekInMonth.AddDays(1);
-                }
+                    </table>
+                </div>
             }
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-                        </div>
-                        <div class="modal-body">
-                            @using (Html.BeginForm("Scheduler", "StudentScheduler"))
-                            {
-
-                            }
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Send message</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
 <script type="text/javascript">

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Util;
 
 namespace ITA.Schedule.DAL.Repositories.Interfaces
 {
@@ -10,5 +12,12 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     {
         // check if a teacher has scheduled lessons
         bool IsWithScheduledLessons(Guid teacherId);
+
+        IEnumerable<ScheduleLesson> GetStudentScheduleLessonsByFilter(Guid subgroupId, DateTime date, Guid teacherId,
+            Guid subjectId, TimePeriod period);
+
+        IEnumerable<ScheduleLesson> GetTeacherScheduleLessonsByFilter(Guid teacherId, DateTime date, Guid groupId,
+            Guid subgroupId, TimePeriod period);
+
     }
 }

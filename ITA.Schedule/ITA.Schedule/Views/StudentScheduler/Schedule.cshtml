@@ -25,11 +25,11 @@
         </div>
 
         <div class="col-sm-2">
-            @Html.DropDownListFor(x => x.Filter.FirstId, Model.Filter.FirstList, "Всі предмети", new {@class = "col-md-offset-1 col-md-11"})
+            @Html.DropDownListFor(x => x.Filter.FirstId, Model.Filter.FirstList, "Всі викладачі", new {@class = "col-md-offset-1 col-md-11", id="teacher"})
         </div>
 
         <div class="col-md-2">
-            @Html.DropDownListFor(x => x.Filter.SecondId, Model.Filter.SecondList, "Всі викладачі", new {@class = "col-md-offset-1 col-md-11"})
+            @Html.DropDownListFor(x => x.Filter.SecondId, Model.Filter.SecondList, "Всі предмети", new {@class = "col-md-offset-1 col-md-11", id = "subject" })
 
         </div>
         <div class="col-md-offset-1 btn-group" data-toggle="buttons" role="group" aria-label="...">
@@ -289,17 +289,26 @@
             var timeFromObject = new Date("@Model.Filter.StartDateTime.Date.ToString("MM/dd/yyyy")");
             $(function () {
 
-                
+
                 $.datepicker.setDefaults($.datepicker.regional['ua']);
 
                 $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", timeFromObject);
                 $.datepicker.setDefaults($.datepicker.regional["uk"]);
             });
 
-            
+
             $(".lesson").click( function() {
                 myidLesson = (($(this).attr('idLesson')));
-                $('#deleteLesson').attr("href", '/StudentScheduler/DeleteLesson/' + myidLesson);
+                $('#deleteLesson').attr("href", '/StudentScheduler/DeleteLesson/' + myidLesson + '?date='+
+                    '@Model.Filter.StartDateTime' + '&teacherId=' +
+                    $('#teacher').val() + '&subjectId=' +
+                    $('#subject').val() + '&timePeriod=' +
+                    '@Model.Filter.MyTimePeriod');
+                console.log('/StudentScheduler/DeleteLesson/' + myidLesson + '?date=' +
+                    '@Model.Filter.StartDateTime' + '&teacherId=' +
+                     $('#teacher').val() + '&subjectId=' +
+                     $('#subject').val() + '&timePeriod=' +
+                    '@Model.Filter.MyTimePeriod');
                 $('#updateLesson').attr("href", '/Lesson/UpdateLesson/' + myidLesson);
                 $('#addLesson').attr("href", '/Lesson/AddLesson/' + myidLesson);
                 console.log(myidLesson);
@@ -334,11 +343,11 @@
                 }
 
             });
-            
+
             //$("#deleteLesson").on("click", function(){
             //    console.log("deleted");
             //});
-            
+
             $('#popover-content').on("click", ".deleteLesson", function() {
                 //alert("I was clicked");
                 //window.location = '/Lesson/DeleteLesson/' + myidLesson;
@@ -350,7 +359,7 @@
             //});
 
             //function deletefunc() {
-                
+
             //}
             //$('#exampleModal').on('show.bs.modal', function (event) {
             //    var button = $(event.relatedTarget); // Button that triggered the modal

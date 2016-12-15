@@ -10,5 +10,7 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     {
         // attach subgroup to a student
         SubGroup AttachSubgroup(Guid subgroupId);
+
+        
     }
 }

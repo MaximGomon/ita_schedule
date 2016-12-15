@@ -16,14 +16,14 @@ namespace ITA.Schedule.Util
                 currentDate.Year == dateToCompare.Year;
         }
 
-        public static DateTime MondayOfConreteMonth(this DateTime date)
+        public static DateTime MondayOfConcreteMonth(this DateTime date)
         {
             DateTime monday = new DateTime(date.Year, date.Month, 1);
             monday = monday.AddDays(-1 * (int)(monday.DayOfWeek) + 1);
             return monday;
         }
 
-        public static DateTime LastSundayOfMonth(this DateTime date)
+        public static DateTime LastSundayOfConcreteMonth(this DateTime date)
         {
             DateTime sunday = (date.AddMonths(1).AddDays(-date.Day));
             if (sunday.DayOfWeek == DayOfWeek.Sunday)

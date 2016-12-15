@@ -22,32 +22,32 @@
             <span class="col-md-3 text-right">Дата</span>
             @Html.TextBoxFor(model => model.LessonDate, new {@id = "datepicker", @class = "col-md-1"})
             <span class="col-md-1 text-right">Час</span>
-            @Html.DropDownListFor(model => model.LessonDate, Enumerable.Empty<SelectListItem>(), new {@id = "timepicker", @class = "col-md-1"})
+            @Html.DropDownListFor(x => x.LessonTimeId, Model.LessonsTimeList, "Please Select", new {@id = "timepicker", @class = "col-md-1"})
         </div>
         <div class="col-md-12 alert">
             <span class="col-md-3 text-right">Викладач</span>
-            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}),
-                                    "Please Select", new { @class = "col-md-4", @id = "teacher"})
+            @Html.DropDownListFor(x => x.TeacherId, Model.TeacherList, "Please Select", new { @class = "col-md-4", @id = "teacher"})
         </div>
 
         <div class="col-md-12 alert">
             <span class="col-md-3 text-right">Предмет</span>
-            @Html.DropDownListFor(x => x.SubjectId, Enumerable.Empty<SelectListItem>(), "Please Select",
-                new {@class = "col-md-11 disabled", @id = "subject-list"})
+            @Html.DropDownListFor(x => x.SubjectId, Model.SubjectList, "Please Select", new {@class = "col-md-11 disabled", @id = "subject-list"})
         </div>
         <div class="col-md-12 alert">
             <span class="col-md-3 text-right" >Група</span>
             
-            @Html.DropDownListFor(x => x.MyGroupId, Model.Groups, "Please Select", new {@class = "col-md-4", @id = "myGroup"})
+            @Html.DropDownListFor(x => x.MyGroupId, Model.GroupsList, "Please Select", new {@class = "col-md-4", @id = "myGroup"})
         </div>
         <div class="col-md-12 alert">
             <span class="col-md-3 text-right">Підгрупа</span>
 
-            @Html.DropDownListFor(x => x.SubGroupId, Enumerable.Empty<SelectListItem>(), "Please Select", new {@class = "col-md-4", @id = "subgroup"})
+            @Html.DropDownListFor(x => x.SubGroupId, Model.SubgroupsList, "Please Select", new {@class = "col-md-4", @id = "subgroup"})
         </div>
-        @*<div>
-            @*//@Html.DropDownList("GroupsId", Model.Groups, "Please Select", new {@id = "myGroup"})
-        </div>*@ 
+        <div class="col-md-12 alert">
+            <span class="col-md-3 text-right">Кімната</span>
+
+            @Html.DropDownListFor(x => x.RoomId, Model.RoomsList, "Please Select", new { @class = "col-md-4", @id = "subgroup" })
+        </div>
         <div class="col-md-12 alert">
             <button class="col-md-offset-4 btn btn-default btn-success right" type="submit">Внести зміни</button>
         </div>
@@ -66,8 +66,6 @@
                     $("#subject-list").append($("<option></option>").val(this.Value).html(this.Text));
                 });
             });
-
-
         });
 
 

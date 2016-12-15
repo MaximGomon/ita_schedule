@@ -13,21 +13,29 @@ namespace ITA.Schedule.Models
     {
         public Guid TeacherId { get; set; }
 
-        public List<Teacher> TeacherList { get; set; }
-        
+        public List<SelectListItem> TeacherList { get; set; } = new List<SelectListItem>();
+
         public Guid SubjectId { get; set; }
 
-        public List<Subject> SubjectList { get; set; }
+        public List<SelectListItem> SubjectList { get; set; } = new List<SelectListItem>();
 
         public DateTime LessonDate { get; set; }
 
+        public Guid LessonTimeId { get; set; }
+
+        public  List<SelectListItem> LessonsTimeList { get; set; } = new List<SelectListItem>();
+
         public Guid MyGroupId { get; set; }
 
-        public List<SelectListItem> Groups { get; set; } 
+        public List<SelectListItem> GroupsList { get; set; } = new List<SelectListItem>(); 
 
         public Guid SubGroupId { get; set; }
 
-        public List<SubGroup> Subgroups { get; set; } 
+        public List<SelectListItem> SubgroupsList { get; set; } = new List<SelectListItem>();
+
+        public Guid RoomId { get; set; }
+
+        public  List<SelectListItem> RoomsList { get; set; } = new List<SelectListItem>();
 
     }
 }

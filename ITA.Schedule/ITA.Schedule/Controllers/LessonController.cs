@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -20,9 +21,9 @@ namespace ITA.Schedule.Controllers
 
             using (var context = new ScheduleDbContext())
             {
-                lesson.Groups= context.Groups.Select(x=> new SelectListItem() {Value = x.Id.ToString(), Text = x.Name}).ToList();
+                lesson.GroupsList= context.Groups.Select(x=> new SelectListItem() {Value = x.Id.ToString(), Text = x.Name}).ToList();
                 
-                lesson.TeacherList = context.Teachers.ToList();
+                lesson.TeacherList = context.Teachers.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
                 
                 lesson.LessonDate=DateTime.Today;
 
@@ -41,15 +42,18 @@ namespace ITA.Schedule.Controllers
 
             using (var context = new ScheduleDbContext())
             {
-                lesson.Groups = context.Groups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                var less = context.ScheduleLessons.FirstOrDefault(x=>x.Id == id);
 
-                lesson.TeacherList = context.Teachers.ToList();
+                lesson.GroupsList = context.Groups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                lesson.TeacherList = context.Teachers.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                lesson.SubjectList = context.Subjects.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-                lesson.LessonDate = DateTime.Today;
+                lesson.LessonDate = less.LessonDate;
+                lesson.TeacherId = less.Teacher.Id;
+                lesson.SubjectId = less.Subject.Id;
+                //todo subgroup must know group
+                lesson.MyGroupId = less.SubGroups.Select(x => x.Group.Id).First();
 
-                var firstOrDefault = context.Teachers.FirstOrDefault(x => x.IsDeleted == false);
-                if (firstOrDefault != null)
-                    lesson.TeacherId = firstOrDefault.Id;
             }
             return View("Lesson", lesson);
         }

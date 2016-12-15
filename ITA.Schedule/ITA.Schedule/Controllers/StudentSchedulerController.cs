@@ -91,8 +91,8 @@ namespace ITA.Schedule.Controllers
         {
             myFilter.Calendar = new CalendarViewModel
             {
-                FirstDayOfWeekInMonth = myFilter.Filter.StartDateTime.MondayOfConreteMonth(),
-                LastDayOfWeekInMonth = myFilter.Filter.StartDateTime.LastSundayOfMonth()
+                FirstDayOfWeekInMonth = myFilter.Filter.StartDateTime.MondayOfConcreteMonth(),
+                LastDayOfWeekInMonth = myFilter.Filter.StartDateTime.LastSundayOfConcreteMonth()
             };
             return myFilter;
         }
@@ -133,7 +133,7 @@ namespace ITA.Schedule.Controllers
                 var lesson = new Element()
                 {
                     Name = teacher.Teacher.Name,
-                    ElementId = teacher.Subject.Id,
+                    ElementId = teacher.Id,
                     LessonNumber = teacher.LessonTime.Code,
                     Description = $"{teacher.Subject.Name}, {teacher.Room.Name}, {teacher.Room.Address}"
                 };

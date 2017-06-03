@@ -207,6 +207,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Gridmvc.css" />
+    <Content Include="Content\images\Hexagon-1.jpg" />
     <Content Include="Content\images\ITA_logo.png" />
     <Content Include="Content\images\search-icon-png-11.png" />
     <Content Include="Content\images\search-icon-png-13.png" />
@@ -1718,6 +1719,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlertsMassege.cs" />
     <Compile Include="Models\LessonViewModel.cs" />
     <Compile Include="Models\AddStudentModel.cs" />
     <Compile Include="Models\ShowStudentModel.cs" />
@@ -1777,6 +1779,7 @@
     <Content Include="Views\Admin\AddUser.cshtml" />
     <Content Include="Views\Admin\ChangeUserStatus.cshtml" />
     <Content Include="Views\Admin\UpdateUser.cshtml" />
+    <Content Include="Views\ViewBag\AlertsView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,7 +1,7 @@
 ﻿namespace epamEntryTask.Controllers
 {
     /// <summary>Special class for displaying messages on the home page using Bootstrap Alerts</summary>
-    public class AlertsMassege
+    public class AlertsMessege
     {
         /// <summary>Represents the types of notifications that Bootstrap Alerts contains</summary>
         public enum StatusesEnum

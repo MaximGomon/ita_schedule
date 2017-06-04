@@ -1719,7 +1719,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AlertsMassege.cs" />
+    <Compile Include="Models\AlertsMessege.cs" />
     <Compile Include="Models\LessonViewModel.cs" />
     <Compile Include="Models\AddStudentModel.cs" />
     <Compile Include="Models\ShowStudentModel.cs" />

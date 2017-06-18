@@ -37,8 +37,8 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult Login(string emailLogin, string passwordLogin)
         {
-
-            if (new UserBl(new UserRepository()).AuthorizeApp(emailLogin, passwordLogin) == null)
+            User user = new UserBl(new UserRepository()).AuthorizeApp(emailLogin, passwordLogin);
+            if (user == null)
             {
                 TempData["AlertLogin"] = new AlertsMessege
                 {
@@ -48,14 +48,15 @@ namespace ITA.Schedule.Controllers
                 };
                 return RedirectToAction("Authorization");
             }
-            
-            TempData["AlertLogin"] = new AlertsMessege
-            {
-                Status = AlertsMessege.StatusesEnum.Success,
-                Tittle = "Success",
-                Text = "case of login"
-            };
-            return RedirectToAction("Authorization");
+
+            return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction("Index", "Admin",   new { area = "Admin" })   :
+                    user.SecurityGroup.Name == "Teacher" ? RedirectToAction("Index", "Student", new { area = "Student" }) :
+                    user.SecurityGroup.Name == "Student" ? RedirectToAction("Index", "Teacher", new { area = "Teacher" }) :
+                    View("Authorization", ViewBag.AlertLogin = new AlertsMessege{
+                            Status = AlertsMessege.StatusesEnum.Warning,
+                            Tittle = "Warning!",
+                            Text = "something went wrong"
+                        });
         }
 
         [HttpPost]

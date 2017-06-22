@@ -5,22 +5,26 @@ using ITA.Schedule.BLL.Interface;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
+using NLog;
 
 namespace ITA.Schedule.BLL.Implementations
 {
     public class StudentBl : CrudBll<IStudentRepository, Student>, IStudentBl
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public StudentBl(IStudentRepository repository) : base(repository)
         {
         }
 
         public IEnumerable<Student> GetAllByGroup(Guid groupId)
         {
+            _logger.Info("GetAllByGroup ({0})", groupId);
             return Repository.Get(s => s.SubGroup.Group.Id == groupId);
         }
 
         public IEnumerable<Student> GetAllBySubGroup(Guid subGroupId)
         {
+            _logger.Info("GetAllBySubGroup ({0})", subGroupId);
             return Repository.Get(s => s.SubGroup.Id == subGroupId);
         }
 
@@ -34,10 +38,12 @@ namespace ITA.Schedule.BLL.Implementations
 
             var newSubGroup = new SubGroupBl(new SubgroupRepository()).GetById(newSubGroupId);
             student.SubGroup = newSubGroup;
+            _logger.Info("ReplaceToAnotherSubGroup ({0} , {1})", studentId, newSubGroupId);
         }
 
         public IEnumerable<Student> GetAllBySubGroup(string subGroupName)
         {
+            _logger.Info("GetAllBySubGroup ({0})", subGroupName);
             return Repository.Get(s => s.SubGroup.Name == subGroupName);
         }
 
@@ -59,6 +65,7 @@ namespace ITA.Schedule.BLL.Implementations
             }
             student.SubGroup = subgroup;
 
+            _logger.Info("AddNewStudent ({0} , {1})", name, subgroupId);
             Repository.Add(student);
 
             return true;
@@ -100,7 +107,7 @@ namespace ITA.Schedule.BLL.Implementations
             {
                 student.SubGroup = subgroup;
             }
-
+            _logger.Info("UpdateStudent ({0} , {1}, {2})", studentId, newName, subgroupId);
             // update student
             Update(student);
 

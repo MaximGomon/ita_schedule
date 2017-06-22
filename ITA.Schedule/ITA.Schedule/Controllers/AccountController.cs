@@ -12,10 +12,10 @@ using ITA.Schedule.Models;
 namespace ITA.Schedule.Controllers
 {
 
-    [ActionLog]
     public class AccountController : Controller
     {
         // GET: Account
+        [ActionLog]
         public ActionResult Show()
         {
             var people = new PeopleViewModel();

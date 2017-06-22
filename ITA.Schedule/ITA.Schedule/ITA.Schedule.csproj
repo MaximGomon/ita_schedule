@@ -1536,6 +1536,8 @@
     <Content Include="kendo\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="kendo\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="kendo\pako_deflate.min.js" />
+    <Content Include="Logs\ControllersLogs\ErrorsLogsControllers.txt" />
+    <Content Include="Logs\ControllersLogs\SuccessLogsControllers.txt" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1734,6 +1736,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logs\Filters\ActionLogAttribute.cs" />
+    <Compile Include="Logs\Filters\ErrorLogAttribute.cs" />
     <Compile Include="Models\AlertsMessege.cs" />
     <Compile Include="Models\LessonViewModel.cs" />
     <Compile Include="Models\AddStudentModel.cs" />

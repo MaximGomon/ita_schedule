@@ -6,12 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
+using ITA.Schedule.Logs.Filters;
 using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
 {
-    
 
+    [ActionLog]
     public class AccountController : Controller
     {
         // GET: Account

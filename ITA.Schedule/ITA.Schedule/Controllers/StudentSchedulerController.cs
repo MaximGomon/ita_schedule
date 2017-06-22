@@ -8,12 +8,14 @@ using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Logs.Filters;
 using ITA.Schedule.Models;
 using ITA.Schedule.Util;
 
 
 namespace ITA.Schedule.Controllers
 {
+    [ActionLog]
     public class StudentSchedulerController : Controller
     {
         // GET: Scheduler

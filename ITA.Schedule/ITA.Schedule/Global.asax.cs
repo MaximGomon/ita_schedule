@@ -8,13 +8,14 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using ITA.Schedule.BLL;
+using ITA.Schedule.Logs.Filters;
 
 namespace ITA.Schedule
 {
     public class MvcApplication : System.Web.HttpApplication
 
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        //private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static IContainer Container { get; private set; }
 
@@ -34,20 +35,20 @@ namespace ITA.Schedule
             
         }
 
-        protected virtual void Application_End()
-        {
-            ((IDisposable)MvcApplication.Container).Dispose();
-            logger.Info("Application End");
-        }
+        //protected virtual void Application_End()
+        //{
+        //    ((IDisposable)MvcApplication.Container).Dispose();
+        //    logger.Info("Application End");
+        //}
         protected void Application_Start()
         {
             Start(typeof(MvcApplication).Assembly);
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            GlobalFilters.Filters.Add(new ErrorLogAttribute());
 
             //Logging
-            logger.Info("Application Start");
+            //logger.Info("Application Start");
             //AreaRegistration.RegisterAllAreas();
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -55,20 +56,20 @@ namespace ITA.Schedule
 
         }
 
-        public void Init()
-        {
-            logger.Info("Application Init");
-        }
+        //public void Init()
+        //{
+        //    logger.Info("Application Init");
+        //}
 
-        public void Dispose()
-        {
-            logger.Info("Application Dispose");
-        }
+        //public void Dispose()
+        //{
+        //    logger.Info("Application Dispose");
+        //}
 
-        protected void Application_Error()
-        {
-            logger.Info("Application Error");
-        }
+        //protected void Application_Error()
+        //{
+        //    logger.Info("Application Error");
+        //}
 
 
     }

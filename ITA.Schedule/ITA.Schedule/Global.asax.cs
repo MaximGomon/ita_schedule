@@ -45,6 +45,7 @@ namespace ITA.Schedule
             Start(typeof(MvcApplication).Assembly);
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            // Error Filter
             GlobalFilters.Filters.Add(new ErrorLogAttribute());
 
             //Logging

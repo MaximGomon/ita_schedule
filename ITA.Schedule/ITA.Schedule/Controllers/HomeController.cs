@@ -10,14 +10,21 @@ using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Models;
 using ITA.Schedule.Util;
 
-using System.Net.Mail; //using for email sending
+using System.Net.Mail;
+using ITA.Schedule.Logs.Filters;
+using NLog;
+using NLog.Fluent;
+
+//using for email sending
 
 
 namespace ITA.Schedule.Controllers
 {
     public class HomeController : Controller
     {
+
         // GET: Authorization
+        [ActionLog]
         public ActionResult Authorization()
         {
             ViewBag.AlertLogin = TempData["AlertLogin"];
@@ -27,13 +34,14 @@ namespace ITA.Schedule.Controllers
 
             return View();
         }
-
+        [ActionLog]
         [HttpPost]
         public ActionResult CheckForUser(UserViewModel user)
         {
             return RedirectToAction("Index", "StudentScheduler");
         }
 
+        [ActionLog]
         [HttpPost]
         public ActionResult Login(string emailLogin, string passwordLogin)
         {
@@ -59,6 +67,7 @@ namespace ITA.Schedule.Controllers
                         });
         }
 
+        [ActionLog]
         [HttpPost]
         public ActionResult Register(
             string firstNameRegister, 

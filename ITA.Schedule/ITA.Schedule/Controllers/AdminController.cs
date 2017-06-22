@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Logs.Filters;
 using ITA.Schedule.Models;
 using ITA.Schedule.Util;
 using NLog;
@@ -22,7 +23,7 @@ namespace ITA.Schedule.Controllers
         private readonly SubjectBl _subjectBl;
         private readonly UserBl _userBl;
         private readonly GroupBl _groupBl;
-        private static Logger _logger;
+        //private static Logger _logger;
         
 
         public AdminController()
@@ -31,7 +32,7 @@ namespace ITA.Schedule.Controllers
             _studentBl = new StudentBl(new StudentRepository());
             _subjectBl = new SubjectBl(new SubjectRepository());
             _groupBl = new GroupBl(new GroupRepository(), new SubgroupRepository());
-            _logger = LogManager.GetCurrentClassLogger();
+           // _logger = LogManager.GetCurrentClassLogger();
             _userBl = new UserBl(new UserRepository());
         }
 
@@ -41,10 +42,11 @@ namespace ITA.Schedule.Controllers
         /// <returns></returns>
 
         // show student list
+        [ActionLog]
         [HttpGet]
         public ActionResult ShowStudents()
         {
-            ShedulerLogger();
+            //ShedulerLogger();
 
             var studentsDb = _studentBl.GetAll().ToList();
 
@@ -54,10 +56,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // show student list
+        [ActionLog]
         [HttpGet]
         public ActionResult AddStudent()
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
 
@@ -79,10 +82,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // add student Post Menthod
+        [ActionLog]
         [HttpPost]
         public ActionResult AddStudent(StudentModel student)
         {
-            ShedulerLogger();
+          //  ShedulerLogger();
 
             if (!_studentBl.AddNewStudent(student.Name, student.SubgroupId))
             {
@@ -93,6 +97,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Update user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult UpdateStudent(Guid id)
         {
@@ -131,6 +136,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // update student in the DB
+        [ActionLog]
         [HttpPost]
         public ActionResult UpdateStudent(StudentModel studentToUpdate)
         {
@@ -145,6 +151,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // deactivate/activate student initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult ChangeStudentStatus(Guid id)
         {
@@ -159,6 +166,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Deactivate student method
+        [ActionLog]
         [HttpGet]
         public ActionResult DeactivateStudent(Guid id)
         {
@@ -175,6 +183,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Activate student method
+        [ActionLog]
         [HttpGet]
         public ActionResult ActivateStudent(Guid id)
         {
@@ -196,10 +205,11 @@ namespace ITA.Schedule.Controllers
         /// <returns></returns>
 
         // show user list
+        [ActionLog]
         [HttpGet]
         public ActionResult ShowUsers()
         {
-            ShedulerLogger();
+            //ShedulerLogger();
 
             var usersDb = _userBl.GetAll().ToList();
 
@@ -209,6 +219,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // add user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult AddUser()
         {
@@ -233,6 +244,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // add user to the db
+        [ActionLog]
         [HttpPost]
         public ActionResult AddUser(UserViewModel newUser)
         {
@@ -262,12 +274,14 @@ namespace ITA.Schedule.Controllers
         }
 
         // method to asynchroniously check if a login is unique
+        [ActionLog]
         public ActionResult VerifyLogin(string Login)
         {
             return Json(!_userBl.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
         }
 
         // Update user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult UpdateUser(Guid id)
         {
@@ -315,6 +329,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Delete user initial screen
+        [ActionLog]
         [HttpPost]
         public ActionResult UpdateUser(UserUpdateModel user)
         {
@@ -379,6 +394,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Delete user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult ChangeUserStatus(Guid id)
         {
@@ -393,6 +409,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Delete user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult DeactivateUser(Guid id)
         {
@@ -409,6 +426,7 @@ namespace ITA.Schedule.Controllers
         }
 
         // Activate user initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult ActivateUser(Guid id)
         {
@@ -430,10 +448,11 @@ namespace ITA.Schedule.Controllers
         /// <returns></returns>
 
         // Show subjects list
+        [ActionLog]
         [HttpGet]
         public ActionResult ShowSubjects()
         {
-            ShedulerLogger();
+          //  ShedulerLogger();
 
             var subjectsDb = _subjectBl.GetAll().ToList();
 
@@ -443,10 +462,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // add subject initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult AddSubject()
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
 
@@ -454,10 +474,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // adding a subject to the DB
+        [ActionLog]
         [HttpPost]
         public ActionResult AddSubject(Subject newSubject)
         {
-            ShedulerLogger();
+            //ShedulerLogger();
 
             if (newSubject.Name.Trim() == String.Empty || newSubject.Name.Trim().Length > 400)
             {
@@ -478,10 +499,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // update subject initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult UpdateSubject(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var subject = _subjectBl.GetById(id);
 
@@ -502,10 +524,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // update subject initial screen
+        [ActionLog]
         [HttpPost]
         public ActionResult UpdateSubject(SubjectUpdatedModel updatedSubject)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
             {
@@ -516,10 +539,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // delete subject initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult ChangeSubjectStatus(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var subject = _subjectBl.GetById(id);
 
@@ -532,10 +556,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // deactivate subject
+        [ActionLog]
         [HttpGet]
         public ActionResult DeactivateSubject(Guid id)
         {
-            ShedulerLogger();
+            //ShedulerLogger();
 
             var subject = _subjectBl.GetById(id);
 
@@ -549,10 +574,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // activate subject
+        [ActionLog]
         [HttpGet]
         public ActionResult ActivateSubject(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var subject = _subjectBl.GetById(id);
 
@@ -571,10 +597,11 @@ namespace ITA.Schedule.Controllers
         /// <returns></returns>
 
         // Show teachers list
+        [ActionLog]
         [HttpGet]
         public ActionResult ShowTeachers()
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var teachersDb = _teacherBl.GetAll().ToList();
             
@@ -584,10 +611,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // add teacher initial screen
+        [ActionLog]
         [HttpGet]
         public ActionResult AddTeacher()
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var addTeacherModel = new TeacherAddUpdateModel()
             {
@@ -605,10 +633,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // updating a teaher in the DB
+        [ActionLog]
         [HttpPost]
         public ActionResult AddTeacher(TeacherUpdatedModel addedTeacher)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             if (addedTeacher.Name == null || addedTeacher.Name.Length > 400)
             {
@@ -632,10 +661,11 @@ namespace ITA.Schedule.Controllers
 
         // action gets triggered once admin clicked on the Update
         // button of a particular teacher on the list of teachers
+        [ActionLog]
         [HttpGet]
         public ActionResult UpdateTeacher(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var teacher = _teacherBl.GetById(id);
 
@@ -661,10 +691,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // updating a teaher in the DB
+        [ActionLog]
         [HttpPost]
         public ActionResult UpdateTeacher(TeacherUpdatedModel updatedTeacher)
         {
-            ShedulerLogger();
+             //ShedulerLogger();
 
             if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
             {
@@ -676,10 +707,11 @@ namespace ITA.Schedule.Controllers
 
         // action gets triggered once admin clicked on the Delete
         // button of a particular teacher on the list of teachers
+        [ActionLog]
         [HttpGet]
         public ActionResult ChangeTeacherStatus(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var teacher = _teacherBl.GetById(id);
 
@@ -692,10 +724,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // Delete a teacher from Db once admin has confirmed removal
+        [ActionLog]
         [HttpGet]
         public ActionResult DeactivateTeacher(Guid id)
         {
-            ShedulerLogger();
+            //ShedulerLogger();
 
             var teacher = _teacherBl.GetById(id);
 
@@ -708,10 +741,11 @@ namespace ITA.Schedule.Controllers
         }
 
         // Delete a teacher from Db once admin has confirmed removal
+        [ActionLog]
         [HttpGet]
         public ActionResult ActivateTeacher(Guid id)
         {
-            ShedulerLogger();
+           // ShedulerLogger();
 
             var teacher = _teacherBl.GetById(id);
 
@@ -723,18 +757,18 @@ namespace ITA.Schedule.Controllers
             return RedirectToAction("ShowTeachers");
         }
 
-        public void ShedulerLogger()
-        {
-            int k = 42;
-            int l = 100;
+        //public void ShedulerLogger()
+        //{
+        //    int k = 42;
+        //    int l = 100;
 
-            _logger.Trace("Sample trace message, k={0}, l={1}", k++, l++);
-            _logger.Debug("Sample debug message, k={0}, l={1}", k++, l++);
-            _logger.Info("Sample informational message, k={0}, l={1}", k++, l++);
-            _logger.Warn("Sample warning message, k={0}, l={1}", k++, l++);
-            _logger.Error("Sample error message, k={0}, l={1}", k++, l++);
-            _logger.Fatal("Sample fatal error message, k={0}, l={1}", k++, l++);
-            _logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", ++k, ++l);
-        }
+        //    _logger.Trace("Sample trace message, k={0}, l={1}", k++, l++);
+        //    _logger.Debug("Sample debug message, k={0}, l={1}", k++, l++);
+        //    _logger.Info("Sample informational message, k={0}, l={1}", k++, l++);
+        //    _logger.Warn("Sample warning message, k={0}, l={1}", k++, l++);
+        //    _logger.Error("Sample error message, k={0}, l={1}", k++, l++);
+        //    _logger.Fatal("Sample fatal error message, k={0}, l={1}", k++, l++);
+        //    _logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", ++k, ++l);
+        //}
     }
 }

@@ -8,6 +8,7 @@ using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.DAL;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
+using ITA.Schedule.Logs.Filters;
 using ITA.Schedule.Models;
 
 namespace ITA.Schedule.Controllers
@@ -15,6 +16,7 @@ namespace ITA.Schedule.Controllers
     public class TeacherScheduleController : Controller
     {
         // GET: Teacher
+        [ActionLog]
         public ActionResult Index()
         {
 
@@ -38,12 +40,14 @@ namespace ITA.Schedule.Controllers
             return View("TeacherFilter", filter);
         }
 
+        [ActionLog]
         public ActionResult ShowSchedule(UserFilterViewModel myFilter)
         {
 
             return View("TeacherFilter");
         }
 
+        [ActionLog]
         private void FillDefaultDropDown(UserFilterViewModel filter)
         {
             var groups = new GroupBl(new GroupRepository(), new SubgroupRepository()).GetAll();

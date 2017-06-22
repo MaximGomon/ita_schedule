@@ -15,9 +15,10 @@ using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Controllers
 {
-    [ActionLog]
+   
     public class StudentSchedulerController : Controller
     {
+        [ActionLog]
         // GET: Scheduler
         public ActionResult Index()
         {
@@ -38,6 +39,7 @@ namespace ITA.Schedule.Controllers
             return View("Schedule", student);
         }
 
+        [ActionLog]
         private static void FillDefaultDropDown(UserFilterViewModel student)
         {
             var teachers = new TeacherBl(new TeacherRepository()).GetAll();
@@ -51,6 +53,7 @@ namespace ITA.Schedule.Controllers
                 subjects.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
         }
 
+        [ActionLog]
         public ActionResult Scheduler(UserFilterViewModel myFilter)
         {
             
@@ -80,6 +83,7 @@ namespace ITA.Schedule.Controllers
             return View("Schedule", myFilter);
         }
 
+        [ActionLog]
         public ActionResult DeleteLesson(Guid id)
         {
             using (var context = new ScheduleDbContext())
@@ -89,6 +93,7 @@ namespace ITA.Schedule.Controllers
             return View("Schedule");
         }
 
+        [ActionLog]
         private UserFilterViewModel MonthTimePeriod(UserFilterViewModel myFilter)
         {
             myFilter.Calendar = new CalendarViewModel
@@ -99,10 +104,12 @@ namespace ITA.Schedule.Controllers
             return myFilter;
         }
 
+
         /// <summary>
         /// Get values for day by filter from db
         /// </summary>
         /// <param name="myFilter">Filter parameters</param>
+        [ActionLog]
         private UserFilterViewModel DayTimePeriod(UserFilterViewModel myFilter)
         {
             SchedulerViewModel schedulerModel = new SchedulerViewModel
@@ -146,10 +153,12 @@ namespace ITA.Schedule.Controllers
             return myFilter;
         }
 
+
         /// <summary>
         /// Get values for day by filter from db
         /// </summary>
-        /// <param name="myFilter">Filter parameters</param>                
+        /// <param name="myFilter">Filter parameters</param> 
+        [ActionLog]
         private UserFilterViewModel WeekTimePeriod(UserFilterViewModel myFilter)
         {
             myFilter.ScheduleForWeek = new List<SchedulerViewModel>();

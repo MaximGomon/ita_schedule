@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using ITA.Schedule.DAL;
+using ITA.Schedule.Logs.Filters;
 using ITA.Schedule.Models;
 using Newtonsoft.Json;
 
@@ -14,6 +15,7 @@ namespace ITA.Schedule.Controllers
     public class LessonController : Controller
     {
         // GET: Lesson
+        [ActionLog]
         [HttpGet]
         public ActionResult AddLesson()
         {
@@ -34,7 +36,7 @@ namespace ITA.Schedule.Controllers
             return View("Lesson", lesson);
         }
 
-
+        [ActionLog]
         [HttpGet]
         public ActionResult UpdateLesson(Guid id)
         {
@@ -57,6 +59,7 @@ namespace ITA.Schedule.Controllers
             }
             return View("Lesson", lesson);
         }
+        [ActionLog]
         public JsonResult GetSubjects(Guid id)
         {
             using (var context = new ScheduleDbContext())
@@ -68,6 +71,7 @@ namespace ITA.Schedule.Controllers
             }
         }
 
+        [ActionLog]
         public JsonResult GetSubGroupss(Guid id)
         {
             using (var context = new ScheduleDbContext())
@@ -78,6 +82,7 @@ namespace ITA.Schedule.Controllers
             }
         }
 
+        [ActionLog]
         public void GetForm(LessonViewModel model)
         {
             var a = model;

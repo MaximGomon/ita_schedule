@@ -5,11 +5,13 @@ using ITA.Schedule.BLL.Implementations.Base;
 using ITA.Schedule.BLL.Interface;
 using ITA.Schedule.DAL.Repositories.Interfaces;
 using ITA.Schedule.Entity.Entities;
+using NLog;
 
 namespace ITA.Schedule.BLL.Implementations
 {
     public class SubjectBl : CrudBll<ISubjectRepository, Subject>, ISubjectBl
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public SubjectBl(ISubjectRepository repository) : base(repository)
         {
         }
@@ -49,7 +51,7 @@ namespace ITA.Schedule.BLL.Implementations
             {
                 subject.Name = newSubjectName;
             }
-
+            _logger.Info("UpdateSubject ({0} , {1} , {2})", subjectId, newSubjectName, newCode);
             Update(subject);
             return true;
         }

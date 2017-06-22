@@ -53,20 +53,22 @@
         <div class="tab-content">
             <div class="tab-pane active" id="login" role="tabpanel" style="">
 
-                <form data-toggle="validator" role="form" id="login-form" action="/Home/Login" method="post">
-
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                    //<form data-toggle="validator" role="form" id="login-form" action="/Home/Login" method="post">
+                {
                     <div class="modal-body">
 
                         @using epamEntryTask.Controllers
                         <!-- Alert -->
                         <div id="AleartConteinerLogin">
 
-                            @{if (alertLogin != null)
-                              {
-                                  <div class="alert @alertLogin.ClassNames[(int) alertLogin.Status]" role="alert">
-                                      <strong>@alertLogin.Tittle</strong> @alertLogin.Text
-                                  </div>
-                              }
+                            @{
+                                if (alertLogin != null)
+                                {
+                                    <div class="alert @alertLogin.ClassNames[(int) alertLogin.Status]" role="alert">
+                                        <strong>@alertLogin.Tittle</strong> @alertLogin.Text
+                                    </div>
+                                }
                             }
                         </div>
                         <!--end Alert -->
@@ -107,7 +109,8 @@
 
                     </div>
 
-                </form>
+                }
+                @*</form>*@
 
             </div>
 

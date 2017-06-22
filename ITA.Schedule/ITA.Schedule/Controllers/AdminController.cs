@@ -452,8 +452,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowSubjects()
         {
-          //  ShedulerLogger();
-
             var subjectsDb = _subjectBl.GetAll().ToList();
 
             var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
@@ -466,8 +464,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult AddSubject()
         {
-           // ShedulerLogger();
-
             var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
 
             return PartialView("AddSubject", subjectCodes);
@@ -478,8 +474,6 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddSubject(Subject newSubject)
         {
-            //ShedulerLogger();
-
             if (newSubject.Name.Trim() == String.Empty || newSubject.Name.Trim().Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -503,8 +497,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateSubject(Guid id)
         {
-           // ShedulerLogger();
-
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -528,8 +520,6 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateSubject(SubjectUpdatedModel updatedSubject)
         {
-           // ShedulerLogger();
-
             if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -543,8 +533,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeSubjectStatus(Guid id)
         {
-           // ShedulerLogger();
-
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -560,8 +548,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateSubject(Guid id)
         {
-            //ShedulerLogger();
-
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -578,8 +564,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateSubject(Guid id)
         {
-           // ShedulerLogger();
-
             var subject = _subjectBl.GetById(id);
 
             if (subject == null)
@@ -601,8 +585,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowTeachers()
         {
-           // ShedulerLogger();
-
             var teachersDb = _teacherBl.GetAll().ToList();
             
             var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
@@ -615,8 +597,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult AddTeacher()
         {
-           // ShedulerLogger();
-
             var addTeacherModel = new TeacherAddUpdateModel()
             {
                 Subjects = new List<SubjectModel>()
@@ -637,8 +617,6 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult AddTeacher(TeacherUpdatedModel addedTeacher)
         {
-           // ShedulerLogger();
-
             if (addedTeacher.Name == null || addedTeacher.Name.Length > 400)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -665,8 +643,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateTeacher(Guid id)
         {
-           // ShedulerLogger();
-
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -695,8 +671,6 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateTeacher(TeacherUpdatedModel updatedTeacher)
         {
-             //ShedulerLogger();
-
             if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -711,8 +685,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeTeacherStatus(Guid id)
         {
-           // ShedulerLogger();
-
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -728,8 +700,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateTeacher(Guid id)
         {
-            //ShedulerLogger();
-
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -745,8 +715,6 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateTeacher(Guid id)
         {
-           // ShedulerLogger();
-
             var teacher = _teacherBl.GetById(id);
 
             if (teacher == null)
@@ -756,19 +724,5 @@ namespace ITA.Schedule.Controllers
             _teacherBl.Activate(id);
             return RedirectToAction("ShowTeachers");
         }
-
-        //public void ShedulerLogger()
-        //{
-        //    int k = 42;
-        //    int l = 100;
-
-        //    _logger.Trace("Sample trace message, k={0}, l={1}", k++, l++);
-        //    _logger.Debug("Sample debug message, k={0}, l={1}", k++, l++);
-        //    _logger.Info("Sample informational message, k={0}, l={1}", k++, l++);
-        //    _logger.Warn("Sample warning message, k={0}, l={1}", k++, l++);
-        //    _logger.Error("Sample error message, k={0}, l={1}", k++, l++);
-        //    _logger.Fatal("Sample fatal error message, k={0}, l={1}", k++, l++);
-        //    _logger.Log(LogLevel.Info, "Sample informational message, k={0}, l={1}", ++k, ++l);
-        //}
     }
 }

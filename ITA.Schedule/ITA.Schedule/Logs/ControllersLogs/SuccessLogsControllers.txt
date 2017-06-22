@@ -1,1 +1,25 @@
-﻿
+﻿                    2017-06-22 15:04:29.0763)DESKTOP-7QP2SJTInfo:ActionResult AddLesson () is succesfull ITA.Schedule.Controllers.LessonController              
+                    2017-06-22 15:05:28.7547)DESKTOP-7QP2SJTInfo:ActionResult GetSubjects () is succesfull ITA.Schedule.Controllers.LessonController              
+                    2017-06-22 15:05:35.1361)DESKTOP-7QP2SJTInfo:ActionResult GetSubGroupss () is succesfull ITA.Schedule.Controllers.LessonController              
+                    2017-06-22 15:05:40.3494)DESKTOP-7QP2SJTInfo:ActionResult GetSubGroupss () is succesfull ITA.Schedule.Controllers.LessonController              
+                    2017-06-22 15:05:45.2204)DESKTOP-7QP2SJTInfo:ActionResult GetForm () is succesfull ITA.Schedule.Controllers.LessonController              
+                    2017-06-22 19:39:18.5092)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:39:57.4552)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:02.7252)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 111111)              
+                    2017-06-22 19:40:04.0266)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:19.9777)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:20.2299)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 111111)              
+                    2017-06-22 19:40:20.3590)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:37.5969)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:37.8721)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 333333)              
+                    2017-06-22 19:40:38.0542)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:58.7967)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:40:59.0309)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 222222)              
+                    2017-06-22 19:40:59.2005)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:41:16.7512)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:41:17.2080)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 111111)              
+                    2017-06-22 19:41:17.5753)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:49:31.7361)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:54:41.0131)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:55:22.9209)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-22 19:57:09.1785)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 111111)              

@@ -1,4 +1,4 @@
-﻿namespace epamEntryTask.Controllers
+﻿namespace ITA.Schedule.Models
 {
     /// <summary>Special class for displaying messages on the home page using Bootstrap Alerts</summary>
     public class AlertsMessege

@@ -14,14 +14,14 @@
     <title>Authorization</title>
     
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
 
-    <!-- download later -->
+
+
     @*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-    <!---->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>*@
 
     <style>
         body {
@@ -54,11 +54,10 @@
             <div class="tab-pane active" id="login" role="tabpanel" style="">
 
                 @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-                    //<form data-toggle="validator" role="form" id="login-form" action="/Home/Login" method="post">
                 {
                     <div class="modal-body">
 
-                        @using epamEntryTask.Controllers
+                        @using ITA.Schedule.Models;
                         <!-- Alert -->
                         <div id="AleartConteinerLogin">
 
@@ -110,23 +109,24 @@
                     </div>
 
                 }
-                @*</form>*@
 
             </div>
 
             <div class="tab-pane" id="profile" role="tabpanel">
-
-                <form data-toggle="validator" role="form" id="contact-form" action="/Home/Register" method="post">
+                
+                @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+                {
                     <div class="modal-body">
 
                         <!-- Alert -->
                         <div id="AleartConteinerRegister">
-                            @{if (alertRegister != null)
-                              {
-                                  <div class="alert @alertRegister.ClassNames[(int) alertRegister.Status]" role="alert">
-                                      <strong>@alertRegister.Tittle</strong> @alertRegister.Text
-                                  </div>
-                              }
+                            @{
+                                if (alertRegister != null)
+                                {
+                                    <div class="alert @alertRegister.ClassNames[(int) alertRegister.Status]" role="alert">
+                                        <strong>@alertRegister.Tittle</strong> @alertRegister.Text
+                                    </div>
+                                }
                             }
                         </div>
                         <!--end Alert -->
@@ -224,7 +224,7 @@
                         <button class="btn btn-primary" type="submit">Register</button>
 
                     </div>
-                </form>
+                }
 
             </div>
 

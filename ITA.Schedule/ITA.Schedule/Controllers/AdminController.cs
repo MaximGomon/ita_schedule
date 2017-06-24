@@ -265,7 +265,7 @@ namespace ITA.Schedule.Controllers
             }
 
             // try to insert new user to the Db
-            if (!_userBl.CreateNewUser(newUser.Login.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
+            if (!_userBl.CreateNewUser(newUser.Email.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

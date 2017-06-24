@@ -23,3 +23,105 @@
                     2017-06-22 19:54:41.0131)DESKTOP-7QP2SJTInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-06-22 19:55:22.9209)DESKTOP-7QP2SJTInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-06-22 19:57:09.1785)DESKTOP-7QP2SJTInfo:AuthorizeApp (a@a , 111111)              
+                    2017-06-24 12:38:47.8344)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 12:41:01.6181)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 12:42:44.9018)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 12:42:58.3860)BUBNOInfo:AuthorizeApp (a@a , 111111)              
+                    2017-06-24 13:18:57.7346)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:20:04.3607)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:20:13.2053)BUBNOInfo:AuthorizeApp (t@a , 222222)              
+                    2017-06-24 13:25:05.5786)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:34:24.6860)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:38:44.2253)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:43:24.6529)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 13:43:49.3020)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:15:38.1728)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:16:53.4830)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:17:58.5172)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:18:09.8896)BUBNOInfo:AuthorizeApp ( , )              
+                    2017-06-24 16:18:10.9638)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:19:05.5187)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:20:33.7024)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:24:18.2599)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:24:20.2057)BUBNOInfo:AuthorizeApp ( , )              
+                    2017-06-24 16:24:20.5557)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:27:36.7242)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:32:53.7464)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:35:32.6171)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:45:39.2897)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:49:07.1101)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:49:22.4203)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:49:29.6061)BUBNOInfo:AuthorizeApp ( , )              
+                    2017-06-24 16:49:30.5882)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:50:28.5408)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:52:11.9805)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:52:20.3010)BUBNOInfo:System.Web.HttpCompileException (0x80004005): H:\ita_schedule\ITA.Schedule\ITA.Schedule\Views\Home\Authorization.cshtml(61): error CS0246: The type or namespace name 'epamEntryTask' could not be found (are you missing a using directive or an assembly reference?)
+   at System.Web.Compilation.AssemblyBuilder.Compile()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)              
+                    2017-06-24 16:53:03.3822)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 16:53:09.6591)BUBNOInfo:System.Web.HttpCompileException (0x80004005): H:\ita_schedule\ITA.Schedule\ITA.Schedule\Views\Home\Authorization.cshtml(61): error CS0246: The type or namespace name 'epamEntryTask' could not be found (are you missing a using directive or an assembly reference?)
+   at System.Web.Compilation.AssemblyBuilder.Compile()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)              
+                    2017-06-24 16:55:59.0812)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:00:21.0951)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:01:14.4028)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:01:29.8343)BUBNOInfo:System.Web.HttpCompileException (0x80004005): H:\ita_schedule\ITA.Schedule\ITA.Schedule\Views\Home\Authorization.cshtml(79): error CS1503: Argument 3: cannot convert from '<anonymous type: string class>' to 'string'
+   at System.Web.Compilation.AssemblyBuilder.Compile()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)              
+                    2017-06-24 17:04:08.4615)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:16:16.9335)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:18:00.3397)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:29:15.1709)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:52:27.5592)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:53:00.9614)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 17:53:10.4461)BUBNOInfo:AuthorizeApp ( , )              
+                    2017-06-24 17:53:11.3597)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-24 18:07:39.3221)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              

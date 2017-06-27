@@ -1,4 +1,5 @@
 ﻿@model ITA.Schedule.Models.UserViewModel
+@using ITA.Schedule.Models
 @{AlertsMessege alertLogin = ViewBag.AlertLogin;}
 @{AlertsMessege alertRegister = ViewBag.AlertRegister;}
 
@@ -21,7 +22,7 @@
     <style>
         body {
             background-color: #c7b39b;
-            background-image: url(/Content/images/Hexagon-1.jpg);
+            /*background-image: url(/Content/images/Hexagon-1.jpg);*/
             background-size: 100%;
         }
 
@@ -33,212 +34,172 @@
 </head>
 <body>
 
-<div class="modal-dialog" role="document" style="margin-top: 10%">
-    <div class="modal-content">
+    <div class="modal-dialog" role="document" style="margin-top: 10%">
+        <div class="modal-content">
 
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active" style="">
-                <a class="nav-link " data-toggle="tab" href="#login" role="tab">Login</a>
-            </li>
-            <li class="nav-item" style="">
-                <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Register</a>
-            </li>
-        </ul>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item active" style="">
+                    <a class="nav-link " data-toggle="tab" href="#login" role="tab">Login</a>
+                </li>
+                <li class="nav-item" style="">
+                    <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Register</a>
+                </li>
+            </ul>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="login" role="tabpanel" style="">
-                @*<form data-toggle="validator" role="form" id="login-form" action="/Home/Login" method="post">*@
-                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-                {
-                
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="login" role="tabpanel" style="">
                     <div class="modal-body">
 
-                        @using ITA.Schedule.Models
-                        <!-- Alert -->
-                        <div id="AleartConteinerLogin">
+                        <div data-toggle="validator" role="form" id="login-form">
+                            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                            {                                
+                                <!-- Alert -->
+                                <div id="AleartConteinerLogin">
 
-                            @{
-                                if (alertLogin != null)
-                                {
-                                    <div class="alert @alertLogin.ClassNames[(int) alertLogin.Status]" role="alert">
-                                        <strong>@alertLogin.Tittle</strong> @alertLogin.Text
+                                    @{
+                                        if (alertLogin != null)
+                                        {
+                                            <div class="alert @alertLogin.ClassNames[(int) alertLogin.Status]" role="alert">
+                                                <strong>@alertLogin.Tittle</strong> @alertLogin.Text
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                                <!--end Alert -->
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.Email, new { @class = "input-group-addon"})
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "YourEmail@gmail.com", @type = "email" })
                                     </div>
-                                }
+                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block with-errors" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.Password, new { @class = "input-group-addon"})
+                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Enter your password", @type = "password" })
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                </div>
+
+                                <div class="inline">
+                                    <input class="btn btn-primary" type="submit" value="Login" />
+                                    <a href="#" style="margin-left: 15px">forgot your password?</a>
+                                </div>
+
                             }
                         </div>
-                        <!--end Alert -->
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                @*<span for="inputEmailLogin" class="input-group-addon">Email</span>*@
-                                @Html.LabelFor(x => x.Email, new {@class = "input-group-addon"})
-                                @Html.TextBoxFor(x => x.Email, new {@class = "form-control", @placeholder = "YourEmail@gmail.com"})
-                                @*<input class="form-control"
-                                       name="emailLogin"
-                                       id="inputEmailLogin"
-                                       data-error="that email address is invalid"
-                                       placeholder="YourEmail@gmail.com"
-                                       type="email" required/>*@
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                @Html.LabelFor(x => x.Password, new { @class = "input-group-addon" })
-                                @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Enter your password" })
-                                @*<span for="inputPasswordLogin" class="input-group-addon">Password</span>
-                                <input class="form-control"
-                                       name="passwordLogin"
-                                       id="inputPasswordLogin"
-                                       pattern="^[_A-z0-9]{1,}$"
-                                       data-minlength="6"
-                                       maxlength="15"
-                                       data-error="must enter minimum of 6 characters"
-                                       placeholder="Enter your password"
-                                       type="password" required/>*@
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <div class="inline">
-                            <button class="btn btn-primary" type="submit">Login</button>
-                            <a href="#" style="margin-left: 15px">forgot your password?</a>
-                        </div>
-
                     </div>
+                    
+                </div>
 
-                }
-                @*</form>*@
+                <div class="tab-pane" id="profile" role="tabpanel">
 
-            </div>
+                    <div data-toggle="validator" role="form" id="Register-form">
+                        @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+                        {
+                            <div class="modal-body">
 
-            <div class="tab-pane" id="profile" role="tabpanel">
+                                <!-- Alert -->
+                                <div id="AleartConteinerRegister">
+                                    @{
+                                        if (alertRegister != null)
+                                        {
+                                <div class="alert @alertRegister.ClassNames[(int) alertRegister.Status]" role="alert">
+                                    <strong>@alertRegister.Tittle</strong> @alertRegister.Text
+                                </div>
+                                    }
+                                    }
+                                </div>
+                                <!--end Alert -->
 
-                @*<form data-toggle="validator" role="form" id="contact-form" action="/Home/Register" method="post">*@
-                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-                {
-                    <div class="modal-body">
-
-                        <!-- Alert -->
-                        <div id="AleartConteinerRegister">
-                            @{
-                                if (alertRegister != null)
-                                {
-                                    <div class="alert @alertRegister.ClassNames[(int) alertRegister.Status]" role="alert">
-                                        <strong>@alertRegister.Tittle</strong> @alertRegister.Text
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.FirstName, new { @class = "input-group-addon"})
+                                        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", @placeholder = "First Name", @type = "text" })
                                     </div>
-                                }
-                            }
-                        </div>
-                        <!--end Alert -->
+                                    @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "help-block with-errors" })
+                                </div>
 
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span for="inputFirstNameRegister" class="input-group-addon">First name</span>
-                                <input class="form-control"
-                                       name="firstNameRegister"
-                                       id="inputFirstNamRegistere"
-                                       pattern="^[_A-z0-9]{1,}$"
-                                       data-minlength="3"
-                                       maxlength="15"
-                                       data-error="Must enter minimum of 3 & without special characters"
-                                       placeholder="enter your first name"
-                                       type="text" required/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.LastName, new { @class = "input-group-addon"})
+                                        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", @placeholder = "Last Name", @type = "text" })
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "help-block with-errors" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.Email, new { @class = "input-group-addon" })
+                                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "YourEmail@gmail.com", @type = "email" })
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block with-errors" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.Password, new { @class = "input-group-addon" })
+                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.LabelFor(x => x.Role, new { @class = "input-group-addon" })
+                                        @*@Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })*@
+                                        @Html.EnumDropDownListFor(x => x.Role, new { @class = "form-control" })
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                </div>
+                                                                
+                                <button class="btn btn-primary" type="submit">Register</button>
+
                             </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span for="inputLastNameRegister" class="input-group-addon">Last name</span>
-                                <input class="form-control"
-                                       name="lastNameRegister"
-                                       id="inputLastNameRegister"
-                                       pattern="^[_A-z0-9]{1,}$"
-                                       data-minlength="3"
-                                       maxlength="25"
-                                       data-error="Must enter minimum of 3 & without special characters"
-                                       placeholder="enter your last name"
-                                       type="text" required/>
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span for="inputEmailRegister" class="input-group-addon">Email</span>
-                                <input class="form-control"
-                                       name="emailRegister"
-                                       id="inputEmailRegister"
-                                       data-error="that email address is invalid"
-                                       placeholder="YourEmail@gmail.com"
-                                       type="email" required/>
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span for="inputPasswordRegister" class="input-group-addon">Password</span>
-                                <input class="form-control"
-                                       name="passwordRegister"
-                                       id="inputPasswordRegister"
-                                       pattern="^[_A-z0-9]{1,}$"
-                                       data-minlength="6"
-                                       maxlength="15"
-                                       data-error="must enter minimum of 6 characters"
-                                       placeholder="Enter your password"
-                                       type="password" required/>
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <input class="form-control-static" id="selectorRegister" name="selectorRegister" type="text" value="" hidden>
-                            <div class="input-group" style="height: 34px;">
-
-                                <span class="input-group-addon" style="background-color: #fff">
-                                        <input type="radio" 
-                                               onclick="SetRadioBtnInput('Student')"
-                                               name="underwear"
-                                               aria-label="Checkbox for following text input" 
-                                               value="Student" data-error="must choose who you are, teacher or student." required>
-
-                                        Student
-
-                                    </span>
-                                <span class="input-group-addon" style="background-color: #fff">
-                                        <input type="radio" 
-                                               onclick="SetRadioBtnInput('Teacher')"
-                                               name="underwear"
-                                               aria-label="Checkbox for following text input" 
-                                               value="Teacher" required>
-
-                                        Teacher
-
-                                    </span>
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-
-                        <button class="btn btn-primary" type="submit">Register</button>
+                        }
 
                     </div>
-                }
-                @*</form>*@
 
             </div>
 
         </div>
-
     </div>
-</div>
-<script>
-    function SetRadioBtnInput(value) {
-        document.getElementById("selectorRegister").value = value;
-    }
-</script>
+    <script>
+        function SetRadioBtnInput(value) {
+            document.getElementById("selectorRegister").value = value;
+        }
+    </script>
+    <script src="~/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script>
+        (function ($) {
+            var defaultOptions = {
+                validClass: '',
+                errorClass: 'has-error',
+                highlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-group")
+                        .removeClass(validClass)
+                        .addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-group")
+                    .removeClass('has-error')
+                    .addClass(validClass);
+                }
+            };
+
+            $.validator.setDefaults(defaultOptions);
+
+            $.validator.unobtrusive.options = {
+                errorClass: defaultOptions.errorClass,
+                validClass: defaultOptions.validClass,
+            };
+        })(jQuery);
+    </script>
 </body>
 </html>

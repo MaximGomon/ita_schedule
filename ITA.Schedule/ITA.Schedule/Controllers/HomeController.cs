@@ -41,30 +41,38 @@ namespace ITA.Schedule.Controllers
             return RedirectToAction("Index", "StudentScheduler");
         }
 
+        //[ActionLog]
+        //[HttpPost]
+        //public ActionResult Login(string emailLogin, string passwordLogin)
+        //{
+        //    User user = new UserBl(new UserRepository()).AuthorizeApp(emailLogin, passwordLogin);
+        //    if (user == null)
+        //    {
+        //        TempData["AlertLogin"] = new AlertsMessege
+        //        {
+        //            Status = AlertsMessege.StatusesEnum.Danger,
+        //            Tittle = "Error",
+        //            Text = "In the database is no user with such Email address & password"
+        //        };
+        //        return RedirectToAction("Authorization");
+        //    }
+
+        //    return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction("Index", "Admin",   new { area = "Admin" })   :
+        //            user.SecurityGroup.Name == "Teacher" ? RedirectToAction("Index", "Student", new { area = "Student" }) :
+        //            user.SecurityGroup.Name == "Student" ? RedirectToAction("Index", "Teacher", new { area = "Teacher" }) :
+        //            View("Authorization", ViewBag.AlertLogin = new AlertsMessege{
+        //                    Status = AlertsMessege.StatusesEnum.Warning,
+        //                    Tittle = "Warning!",
+        //                    Text = "something went wrong"
+        //                });
+        //}
+
         [ActionLog]
         [HttpPost]
-        public ActionResult Login(string emailLogin, string passwordLogin)
+        public ActionResult Login(UserViewModel user)
         {
-            User user = new UserBl(new UserRepository()).AuthorizeApp(emailLogin, passwordLogin);
-            if (user == null)
-            {
-                TempData["AlertLogin"] = new AlertsMessege
-                {
-                    Status = AlertsMessege.StatusesEnum.Danger,
-                    Tittle = "Error",
-                    Text = "In the database is no user with such Email address & password"
-                };
+            var e = new AlertsMessege().Status.GetType();
                 return RedirectToAction("Authorization");
-            }
-
-            return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction("Index", "Admin",   new { area = "Admin" })   :
-                    user.SecurityGroup.Name == "Teacher" ? RedirectToAction("Index", "Student", new { area = "Student" }) :
-                    user.SecurityGroup.Name == "Student" ? RedirectToAction("Index", "Teacher", new { area = "Teacher" }) :
-                    View("Authorization", ViewBag.AlertLogin = new AlertsMessege{
-                            Status = AlertsMessege.StatusesEnum.Warning,
-                            Tittle = "Warning!",
-                            Text = "something went wrong"
-                        });
         }
 
         [ActionLog]

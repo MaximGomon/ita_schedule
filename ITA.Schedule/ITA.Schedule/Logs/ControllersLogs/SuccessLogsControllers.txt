@@ -125,3 +125,139 @@
                     2017-06-24 17:53:10.4461)BUBNOInfo:AuthorizeApp ( , )              
                     2017-06-24 17:53:11.3597)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-06-24 18:07:39.3221)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:03:59.7999)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:07:59.0155)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:08:48.8974)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:12:28.7525)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:14:24.4638)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:19:54.4609)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:26:16.6604)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:26:46.7812)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:33:10.0542)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 16:36:39.5485)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 19:03:28.4627)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 21:48:50.8488)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:05:27.8841)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:15:38.8359)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:16:20.0522)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:25:09.5470)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:30:59.5457)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:42:51.1306)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:43:49.4279)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:53:29.3226)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 22:55:20.2783)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:00:28.7600)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:02:46.8597)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:10:16.9458)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:10:17.0738)BUBNOInfo:System.Web.HttpParseException (0x80004005): Unexpected "using" keyword after "@" character.  Once inside code, you do not need to prefix constructs like "using" with "@".
+
+   at System.Web.WebPages.Razor.RazorBuildProvider.EnsureGeneratedCode()
+   at System.Web.WebPages.Razor.RazorBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)              
+                    2017-06-27 23:12:03.4700)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:12:03.5770)BUBNOInfo:System.Web.HttpParseException (0x80004005): Unexpected "using" keyword after "@" character.  Once inside code, you do not need to prefix constructs like "using" with "@".
+
+   at System.Web.WebPages.Razor.RazorBuildProvider.EnsureGeneratedCode()
+   at System.Web.WebPages.Razor.RazorBuildProvider.get_CodeCompilerType()
+   at System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   at System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)              
+                    2017-06-27 23:12:16.0271)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:12:46.4920)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:12:56.3017)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:13:09.6639)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:13:15.2492)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:14:17.5556)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:14:50.5378)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:14:52.8526)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:15:10.7779)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:15:13.3682)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:16:19.5336)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:16:21.6389)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:16:54.1235)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:17:12.0753)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:17:16.2604)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:17:56.6685)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:19:05.0023)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:20:42.4167)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:22:47.7152)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:23:39.5368)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:23:59.1238)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:24:01.9302)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:25:40.4603)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:25:44.3648)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:32:18.2558)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:33:19.4831)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:33:22.1385)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:33:46.5282)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:34:28.4940)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:34:34.4923)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:47:10.3418)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:47:10.5773)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:47:44.4601)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:48:05.1418)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:48:25.7238)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:48:29.2793)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:48:40.1332)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:49:03.3462)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:49:16.2513)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:51:57.4025)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:52:32.5865)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:53:15.4280)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:55:56.0647)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:56:19.4191)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:56:19.5342)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-27 23:58:13.0732)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:08:52.5889)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:27:24.8750)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:29:26.2725)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:29:35.0106)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:30:08.0257)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:30:17.0788)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:39:12.8075)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:39:14.1536)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:45:24.0744)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:45:25.5446)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:53:33.3209)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:53:42.2660)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:55:58.0584)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:55:58.7025)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:57:34.8973)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:57:44.3880)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:58:44.9523)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 00:58:54.3150)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 01:05:54.4583)BUBNOInfo:ActionResult Register () is succesfull ITA.Schedule.Controllers.HomeController              

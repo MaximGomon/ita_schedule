@@ -151,7 +151,6 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         @Html.LabelFor(x => x.Role, new { @class = "input-group-addon" })
-                                        @*@Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })*@
                                         @Html.EnumDropDownListFor(x => x.Role, new { @class = "form-control" })
                                     </div>
                                     @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })

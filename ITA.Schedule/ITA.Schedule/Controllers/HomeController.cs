@@ -7,7 +7,6 @@ using ITA.Schedule.Models;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
-using ITA.Schedule.Models;
 using ITA.Schedule.Util;
 
 using System.Net.Mail;
@@ -69,60 +68,67 @@ namespace ITA.Schedule.Controllers
 
         [ActionLog]
         [HttpPost]
-        public ActionResult Login(UserViewModel user)
+        public ActionResult Login(UserViewModel userModel)
         {
-            var e = new AlertsMessege().Status.GetType();
-                return RedirectToAction("Authorization");
+            User user = null;
+            if (ModelState.IsValidField("Email") && ModelState.IsValidField("Password")){
+                user = new UserBl(new UserRepository()).AuthorizeApp(userModel.Email, userModel.Password);
+            }else{
+                return RedirectToAction("Authorization", userModel);
+            }
+
+            if(user == null){
+                return RedirectToAction("Authorization", userModel);
+            }
+
+            return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction( "Index", "Admin",   new { area = "Admin" })   :
+                    user.SecurityGroup.Name == "Teacher" ? RedirectToAction( "Index", "Student", new { area = "Student" }) :
+                    user.SecurityGroup.Name == "Student" ? RedirectToAction( "Index", "Teacher", new { area = "Teacher" }) :
+                    RedirectToAction("Authorization", userModel);
         }
 
         [ActionLog]
         [HttpPost]
-        public ActionResult Register(
-            string firstNameRegister, 
-            string lastNameRegister,
-            string emailRegister, 
-            string passwordRegister,
-            string selectorRegister // value == Student or Teacher
-            )
+        public ActionResult Register(UserViewModel userModel)
         {
-            if (new UserBl(new UserRepository()).CreateNewUser(
-                emailRegister,
-                passwordRegister,
-                Guid.NewGuid(),
-                selectorRegister == "Student" ? UserType.Student : UserType.Teacher)
-                )
-            {
-                #region -- Email sending --
-                MailMessage mail = new MailMessage("testEmailSend@yourcompany.com", emailRegister);
-                SmtpClient client = new SmtpClient
-                {
-                    Port = 25,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Host = "smtp.google.com"
-                };
-                mail.Subject = "INTITA Schedule registration";
-                mail.Body = "Congratulations! You just registered on INTITA Schedule \r\nlogin email: " 
-                    + emailRegister + "\n\npassword: " + passwordRegister;
-                client.Send(mail);
-                #endregion
+            //if (new UserBl(new UserRepository()).CreateNewUser(
+            //    emailRegister,
+            //    passwordRegister,
+            //    Guid.NewGuid(),
+            //    selectorRegister == "Student" ? UserType.Student : UserType.Teacher)
+            //    )
+            //{
+            //    #region -- Email sending --
+            //    MailMessage mail = new MailMessage("testEmailSend@yourcompany.com", emailRegister);
+            //    SmtpClient client = new SmtpClient
+            //    {
+            //        Port = 25,
+            //        DeliveryMethod = SmtpDeliveryMethod.Network,
+            //        UseDefaultCredentials = false,
+            //        Host = "smtp.google.com"
+            //    };
+            //    mail.Subject = "INTITA Schedule registration";
+            //    mail.Body = "Congratulations! You just registered on INTITA Schedule \r\nlogin email: " 
+            //        + emailRegister + "\n\npassword: " + passwordRegister;
+            //    client.Send(mail);
+            //    #endregion
 
-                TempData["AlertLogin"] = new AlertsMessege
-                {
-                    Status = AlertsMessege.StatusesEnum.Success,
-                    Tittle = "Success",
-                    Text = "You have successfully registered, please try logging in using your email and password. " +
-                           "Also we sent you mail with your registration data"
-                };
-                return RedirectToAction("Authorization");
-            }
+            //    TempData["AlertLogin"] = new AlertsMessege
+            //    {
+            //        Status = AlertsMessege.StatusesEnum.Success,
+            //        Tittle = "Success",
+            //        Text = "You have successfully registered, please try logging in using your email and password. " +
+            //               "Also we sent you mail with your registration data"
+            //    };
+            //    return RedirectToAction("Authorization");
+            //}
 
-            TempData["AlertRegister"] = new AlertsMessege
-            {
-                Status = AlertsMessege.StatusesEnum.Danger,
-                Tittle = "Error",
-                Text = "Something went wrong!"
-            };
+            //TempData["AlertRegister"] = new AlertsMessege
+            //{
+            //    Status = AlertsMessege.StatusesEnum.Danger,
+            //    Tittle = "Error",
+            //    Text = "Something went wrong!"
+            //};
             return RedirectToAction("Authorization");
         }
     }

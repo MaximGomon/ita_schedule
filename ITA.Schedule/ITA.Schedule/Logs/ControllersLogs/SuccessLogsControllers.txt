@@ -292,3 +292,35 @@
                     2017-06-28 02:23:05.7003)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-06-28 02:23:14.0733)BUBNOInfo:AuthorizeApp (asdasd@asd.com , adasdasd)              
                     2017-06-28 02:23:29.8109)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 11:56:55.4418)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:02:28.9265)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:02:30.5992)BUBNOInfo:AuthorizeApp (admin@mail.com , 111111)              
+                    2017-06-28 12:02:57.5532)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:02:58.4853)BUBNOInfo:AuthorizeApp (student@mail.com , 1111111)              
+                    2017-06-28 12:02:58.7403)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:06:22.8793)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:06:23.4104)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:10:13.7542)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:10:27.5245)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:10:28.1901)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:10:54.6564)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:11:10.4010)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:11:21.3404)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:11:21.7490)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:11:21.8295)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:11:52.2999)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:12:20.1659)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:12:20.7715)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:12:20.8665)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:12:51.2839)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:12:51.7334)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:12:51.8030)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:16:15.8905)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:16:16.2800)BUBNOInfo:AuthorizeApp (admin@mail.com , 111111)              
+                    2017-06-28 12:16:38.8844)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:16:39.1535)BUBNOInfo:AuthorizeApp (teacher@mail.com , 111111)              
+                    2017-06-28 12:26:44.9659)BUBNOInfo:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:27:00.2644)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:27:01.9196)BUBNOInfo:AuthorizeApp (student@mail.com , 111111)              
+                    2017-06-28 12:27:29.1376)BUBNOInfo:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-06-28 12:27:29.3966)BUBNOInfo:AuthorizeApp (teacher@mail.com , 111111)              

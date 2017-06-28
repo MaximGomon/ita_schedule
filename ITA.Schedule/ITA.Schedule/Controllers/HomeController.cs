@@ -71,19 +71,11 @@ namespace ITA.Schedule.Controllers
         public ActionResult Login(UserViewModel userModel)
         {
             User user = null;
-            if (ModelState.IsValidField("Email") && ModelState.IsValidField("Password")){
-                user = new UserBl(new UserRepository()).AuthorizeApp(userModel.Email, userModel.Password);
-            }else{
-                return RedirectToAction("Authorization", userModel);
-            }
-
-            if(user == null){
-                return RedirectToAction("Authorization", userModel);
-            }
-
-            return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction( "Index", "Admin",   new { area = "Admin" })   :
-                    user.SecurityGroup.Name == "Teacher" ? RedirectToAction( "Index", "Student", new { area = "Student" }) :
-                    user.SecurityGroup.Name == "Student" ? RedirectToAction( "Index", "Teacher", new { area = "Teacher" }) :
+            return !ModelState.IsValidField("Email") && ModelState.IsValidField("Password") ? SetAlertsMessege(userModel, MessegeFormNotValid) :
+                        !TryAuthorizeUser(out user, userModel) ? SetAlertsMessege(userModel, MessegeNoMatchesInDb)        :
+                    user.SecurityGroup.Name == "Admin"   ? RedirectToAction( "Index", "Admin",   new { area = "Admin" })   :
+                    user.SecurityGroup.Name == "Student" ? RedirectToAction( "Index", "Student", new { area = "Student" }) :
+                    user.SecurityGroup.Name == "Teacher" ? RedirectToAction( "Index", "Teacher", new { area = "Teacher" }) :
                     RedirectToAction("Authorization", userModel);
         }
 
@@ -131,5 +123,38 @@ namespace ITA.Schedule.Controllers
             //};
             return RedirectToAction("Authorization");
         }
+
+        public bool TryAuthorizeUser(out User user, UserViewModel userModel)
+        {
+            user = new UserBl(new UserRepository()).AuthorizeApp(userModel.Email, userModel.Password);
+            return user != null ? true : false;
+        }
+
+        public ActionResult SetAlertsMessege(UserViewModel userModel, AlertsMessege Messege)
+        {
+            ViewBag.AlertsMessege = Messege;
+            return RedirectToAction("Authorization", userModel);
+        }
+
+        public AlertsMessege MessegeFormNotValid = new AlertsMessege
+        {
+            Status = AlertsMessege.StatusesEnum.Warning,
+            Tittle = "Warning!",
+            Text   = "The entered data are not valid"
+        };
+
+        public AlertsMessege MessegeNoMatchesInDb = new AlertsMessege
+        {
+            Status = AlertsMessege.StatusesEnum.Warning,
+            Tittle = "Warning!",
+            Text   = "There is no user with such login and password"
+        };
+
+        public AlertsMessege MessegeSomethingWentWrong = new AlertsMessege
+        {
+            Status = AlertsMessege.StatusesEnum.Warning,
+            Tittle = "Warning!",
+            Text = "Sorry something went wrong, contact the administration"
+        };
     }
 }

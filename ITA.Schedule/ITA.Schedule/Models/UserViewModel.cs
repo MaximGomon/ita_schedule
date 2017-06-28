@@ -21,7 +21,7 @@ namespace ITA.Schedule.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Enter your Password")]
-        [StringLength(15, MinimumLength = 6, ErrorMessage = "Password should be at least 3 characters and not longer than 50 characters")]
+        [StringLength(15, MinimumLength = 6, ErrorMessage = "Password should be at least 6 characters and not longer than 15 characters")]
         [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Password should be without special characters")]
         public string Password { get; set; }
 

@@ -9,9 +9,7 @@ using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
-    /// <summary>
-    /// User base model
-    /// </summary>
+    /// <summary>User base model</summary>
     public class UserViewModel
     {
         [Required(ErrorMessage = "Enter your Email addres")]

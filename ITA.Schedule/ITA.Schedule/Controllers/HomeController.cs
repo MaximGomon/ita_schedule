@@ -26,63 +26,44 @@ namespace ITA.Schedule.Controllers
         [ActionLog]
         public ActionResult Authorization()
         {
-            ViewBag.AlertLogin = TempData["AlertLogin"];
-            ViewBag.AlertRegister = TempData["AlertRegister"];
-            TempData["AlertLogin"] = null;
-            TempData["AlertRegister"] = null;
+            ViewBag.AlertsMessege = TempData["a"];
 
             return View();
         }
-        [ActionLog]
-        [HttpPost]
-        public ActionResult CheckForUser(UserViewModel user)
-        {
-            return RedirectToAction("Index", "StudentScheduler");
-        }
-
-        //[ActionLog]
-        //[HttpPost]
-        //public ActionResult Login(string emailLogin, string passwordLogin)
-        //{
-        //    User user = new UserBl(new UserRepository()).AuthorizeApp(emailLogin, passwordLogin);
-        //    if (user == null)
-        //    {
-        //        TempData["AlertLogin"] = new AlertsMessege
-        //        {
-        //            Status = AlertsMessege.StatusesEnum.Danger,
-        //            Tittle = "Error",
-        //            Text = "In the database is no user with such Email address & password"
-        //        };
-        //        return RedirectToAction("Authorization");
-        //    }
-
-        //    return  user.SecurityGroup.Name == "Admin"   ? RedirectToAction("Index", "Admin",   new { area = "Admin" })   :
-        //            user.SecurityGroup.Name == "Teacher" ? RedirectToAction("Index", "Student", new { area = "Student" }) :
-        //            user.SecurityGroup.Name == "Student" ? RedirectToAction("Index", "Teacher", new { area = "Teacher" }) :
-        //            View("Authorization", ViewBag.AlertLogin = new AlertsMessege{
-        //                    Status = AlertsMessege.StatusesEnum.Warning,
-        //                    Tittle = "Warning!",
-        //                    Text = "something went wrong"
-        //                });
-        //}
 
         [ActionLog]
         [HttpPost]
         public ActionResult Login(UserViewModel userModel)
         {
             User user = null;
-            return !ModelState.IsValidField("Email") && ModelState.IsValidField("Password") ? SetAlertsMessege(userModel, MessegeFormNotValid) :
-                        !TryAuthorizeUser(out user, userModel) ? SetAlertsMessege(userModel, MessegeNoMatchesInDb)        :
+            return  !ModelState.IsValidField("Email") && !ModelState.IsValidField("Password") ? SetAlertsMessege(userModel, new AlertsMessege().LoginFormNotValid()) : 
+                    !TryToAuthorizeUser(out user, userModel) ? SetAlertsMessege(userModel, new AlertsMessege().LoginNoMatchesInDb()) :
                     user.SecurityGroup.Name == "Admin"   ? RedirectToAction( "Index", "Admin",   new { area = "Admin" })   :
                     user.SecurityGroup.Name == "Student" ? RedirectToAction( "Index", "Student", new { area = "Student" }) :
                     user.SecurityGroup.Name == "Teacher" ? RedirectToAction( "Index", "Teacher", new { area = "Teacher" }) :
-                    RedirectToAction("Authorization", userModel);
+                    SetAlertsMessege(userModel, new AlertsMessege().LoginSomethingWentWrong());
         }
 
         [ActionLog]
         [HttpPost]
         public ActionResult Register(UserViewModel userModel)
         {
+            User user = null;
+            bool fuuu = GetUserByLogin(out user, userModel);
+            return !ModelState.IsValidField("Email") && !ModelState.IsValidField("Password") &&
+                    !ModelState.IsValidField("FirstName") && !ModelState.IsValidField("LastName") && !ModelState.IsValidField("Role") ?
+                        SetAlertsMessege(userModel, new AlertsMessege().RegisterFormNotValid()) :
+                    !GetUserByLogin(out user, userModel) ? SetAlertsMessege(userModel, new AlertsMessege().RegisterEmailAlreadyExist()) :
+
+                    SetAlertsMessege(userModel, new AlertsMessege()
+                    {
+                        Status = AlertsMessege.StatusesEnum.Info,
+                        Tittle = "I don't know what to do further!",
+                        Text   = "do something someone!"
+                    })
+
+                    ;
+
             //if (new UserBl(new UserRepository()).CreateNewUser(
             //    emailRegister,
             //    passwordRegister,
@@ -121,40 +102,24 @@ namespace ITA.Schedule.Controllers
             //    Tittle = "Error",
             //    Text = "Something went wrong!"
             //};
-            return RedirectToAction("Authorization");
         }
 
-        public bool TryAuthorizeUser(out User user, UserViewModel userModel)
+        public bool TryToAuthorizeUser(out User user, UserViewModel userModel)
         {
             user = new UserBl(new UserRepository()).AuthorizeApp(userModel.Email, userModel.Password);
             return user != null ? true : false;
         }
 
-        public ActionResult SetAlertsMessege(UserViewModel userModel, AlertsMessege Messege)
+        public bool GetUserByLogin(out User user, UserViewModel userModel)
         {
-            ViewBag.AlertsMessege = Messege;
-            return RedirectToAction("Authorization", userModel);
+            user = new UserBl(new UserRepository()).GetByLogin(userModel.Email);
+            return user != null ? true : false;
         }
 
-        public AlertsMessege MessegeFormNotValid = new AlertsMessege
+        public ActionResult SetAlertsMessege(UserViewModel userModel, AlertsMessege Messege)
         {
-            Status = AlertsMessege.StatusesEnum.Warning,
-            Tittle = "Warning!",
-            Text   = "The entered data are not valid"
-        };
-
-        public AlertsMessege MessegeNoMatchesInDb = new AlertsMessege
-        {
-            Status = AlertsMessege.StatusesEnum.Warning,
-            Tittle = "Warning!",
-            Text   = "There is no user with such login and password"
-        };
-
-        public AlertsMessege MessegeSomethingWentWrong = new AlertsMessege
-        {
-            Status = AlertsMessege.StatusesEnum.Warning,
-            Tittle = "Warning!",
-            Text = "Sorry something went wrong, contact the administration"
-        };
+            TempData["a"] = Messege;
+            return RedirectToAction("Authorization", userModel);
+        }
     }
 }

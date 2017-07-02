@@ -10,7 +10,7 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface IScheduleLessonRepository : ICrudRepository<ScheduleLesson>
     {
-        // check if a teacher has scheduled lessons
+        /// <summary>check if a teacher has scheduled lessons</summary>
         bool IsWithScheduledLessons(Guid teacherId);
 
         IEnumerable<ScheduleLesson> GetStudentScheduleLessonsByFilter(Guid subgroupId, DateTime date, Guid teacherId,

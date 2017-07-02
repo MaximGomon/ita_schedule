@@ -3,14 +3,14 @@ using ITA.Schedule.Entity.Entities;
 
 namespace ITA.Schedule.DAL.Repositories.Interfaces
 {
-    /// <summary>
+    /// </summary>
     /// To be implemented by GroupRepository
     /// </summary>
     public interface IGroupRepository : ICrudRepository<Group>
     {
-        // add subgroup to a group
+        /// <summary>add subgroup to a group</summary>
         void AddSubgroupToGroup(Guid groupId, Guid subgroupId);
-        // unlink subgroup from a group
+        /// <summary>unlink subgroup from a group</summary>
         void UnlinkSubgroupFromGroup(Guid groupId, Guid subgroupId);
     }
 }

@@ -12,27 +12,27 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// <typeparam name="TEntity"></typeparam>
     public interface ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
-        // add an entity to DB
+        /// <summary>add an entity to DB </summary>
         void Add(TEntity entity);
-        // add range of entities to DB
+        /// <summary>add range of entities to DB</summary>
         void Add(IEnumerable<TEntity> range);
-        // get an entity from DB using ID
+        /// <summary>get an entity from DB using ID</summary>
         TEntity GetById(Guid id);
-        // get an entity from DB using predicate
+        /// <summary>get an entity from DB using predicate</summary>
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
-        // delete entity from DB by Id
+        /// <summary>delete entity from DB by Id</summary>
         void Delete(Guid id);
-        // delete particular entity
+        /// <summary>delete particular entity</summary>
         void Delete(TEntity entity);
-        // activate entity from DB by Id
+        /// <summary>activate entity from DB by Id</summary>
         void Activate(Guid id);
-        // activate particular entity
+        /// <summary>activate particular entity</summary>
         void Activate(TEntity entity);
-        // update an entity in DB
+        /// <summary>update an entity in DB</summary>
         void Update(TEntity entity);
-        // get all entities from DB
+        /// <summary>get all entities from DB</summary>
         IQueryable<TEntity> GetAllEntities();
-        // save changes once operation has been completed
+        /// <summary>save changes once operation has been completed</summary>
         void SaveChanges();
     }
 }

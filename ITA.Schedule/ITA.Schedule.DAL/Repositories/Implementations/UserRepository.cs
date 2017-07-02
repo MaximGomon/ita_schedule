@@ -11,25 +11,30 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class UserRepository : CrudRepository<User>, IUserRepository
     {
-        // returns user or null if there is no user with such login and password in the db
+        /// <summary>returns user or null if there is no user with such login and password in the db</summary>
         public User AuthorizeApp(string login, string password)
         {
             return Get(x => x.Login == login && x.Password == password).FirstOrDefault();
         }
 
-        // attach student to a user
+        public User GetByLogin(string login)
+        {
+            return Get(x => x.Login == login).FirstOrDefault();
+        }
+
+        /// <summary>attach student to a user</summary>
         public Student AttachStudent(Guid studentId)
         {
             return ContextDb.Students.FirstOrDefault(x => x.Id == studentId);
         }
 
-        // attach teacher to a user
+        /// <summary>attach teacher to a user</summary>
         public Teacher AttachTeacher(Guid teachreId)
         {
             return ContextDb.Teachers.FirstOrDefault(x => x.Id == teachreId);
         }
 
-        // set access group
+        /// <summary>set access group</summary>
         public SecurityGroup SetSecurityGroup(string groupName)
         {
             return ContextDb.SecurityGroups.FirstOrDefault(x => x.Name == groupName);

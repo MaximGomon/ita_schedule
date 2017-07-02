@@ -13,75 +13,75 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class CrudRepository<TEntity> : ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
-        // declare protected context to be accessible in the derived repositories
+        /// <summary>declare protected context to be accessible in the derived repositories
         protected ScheduleDbContext ContextDb { get; } = new ScheduleDbContext();
 
-        // add an entity to the DB
+        /// <summary>add an entity to the DB</summary>
         public virtual void Add(TEntity entity)
         {
             ContextDb.Set<TEntity>().Add(entity);
             SaveChanges();
         }
 
-        // add range of entities to the DB
+        /// <summary>add range of entities to the DB</summary>
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             ContextDb.Set<TEntity>().AddRange(entities);
             SaveChanges();
         }
 
-        // get a entity from the DB by Id
+        /// <summary>get a entity from the DB by Id</summary>
         public virtual TEntity GetById(Guid id)
         {
             return ContextDb.Set<TEntity>().Find(id);
         }
 
-        // get by predicate
+        /// <summary>get by predicate</summary>
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
         {
             return ContextDb.Set<TEntity>().Where(predicate);
         }
 
-        // delete an entity by ID
+        /// <summary>delete an entity by ID</summary>
         public virtual void Delete(Guid id)
         {
             Delete(GetById(id));
         }
 
-        // delete an entity itself
+        /// <summary>delete an entity itself</summary>
         public virtual void Delete(TEntity entity)
         {
             entity.IsDeleted = true;
             Update(entity);
         }
 
-        // activate inactive entity
+        /// <summary> activate inactive entity</summary>
         public void Activate(Guid id)
         {
             Activate(GetById(id));
         }
 
-        // activate an entity itself
+        /// <summary>activate an entity itself</summary>
         public void Activate(TEntity entity)
         {
             entity.IsDeleted = false;
             Update(entity);
         }
 
-        // update an entity
+        /// <summary>update an entity</summary>
         public virtual void Update(TEntity entity)
         {
             ContextDb.Set<TEntity>().AddOrUpdate<TEntity>(entity);
             SaveChanges();
         }
 
-        // get all entities from the DB
+        /// <summary>get all entities from the DB</summary>
         public virtual IQueryable<TEntity> GetAllEntities()
         {
             return ContextDb.Set<TEntity>();
         }
 
-        // save changes after performing an operation
+        /// <summary>save changes after performing an operation</summary>
         public virtual void SaveChanges()
         {
             ContextDb.SaveChanges();

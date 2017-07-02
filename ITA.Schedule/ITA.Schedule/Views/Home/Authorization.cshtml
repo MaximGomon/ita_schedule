@@ -1,11 +1,7 @@
 ﻿@model ITA.Schedule.Models.UserViewModel
 @using ITA.Schedule.Models
-@{AlertsMessege alertLogin = ViewBag.AlertLogin;}
-@{AlertsMessege alertRegister = ViewBag.AlertRegister;}
-
-@{
-    Layout = null;
-}
+@{AlertsMessege alert = ViewBag.AlertsMessege;}
+@{Layout = null;}
 
 <!DOCTYPE html>
 
@@ -15,13 +11,10 @@
     <title>Authorization</title>
     
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Content/validator.min.js"></script>
 
     <style>
         body {
-            background-color: #c7b39b;
+            background-color: #4B75A4;
             /*background-image: url(/Content/images/Hexagon-1.jpg);*/
             background-size: 100%;
         }
@@ -35,6 +28,22 @@
 <body>
 
     <div class="modal-dialog" role="document" style="margin-top: 10%">
+
+        <!-- Alert -->
+        <div id="AleartConteinerLogin">
+
+            @{
+                if (alert != null)
+                {
+                    <div class="alert @alert.ClassNames[(int) alert.Status]" role="alert">
+                        <strong>@alert.Tittle</strong> @alert.Text
+                    </div>
+                }
+            }
+
+        </div>
+        <!--end Alert -->
+
         <div class="modal-content">
 
             <ul class="nav nav-tabs" role="tablist">
@@ -49,25 +58,13 @@
             <div class="tab-content">
 
                 <div class="tab-pane active" id="login" role="tabpanel" style="">
+
                     <div class="modal-body">
 
                         <div data-toggle="validator" role="form" id="login-form">
+
                             @using (Html.BeginForm("Login", "Home", FormMethod.Post))
                             {                                
-                                <!-- Alert -->
-                                <div id="AleartConteinerLogin">
-
-                                    @{
-                                        if (alertLogin != null)
-                                        {
-                                            <div class="alert @alertLogin.ClassNames[(int) alertLogin.Status]" role="alert">
-                                                <strong>@alertLogin.Tittle</strong> @alertLogin.Text
-                                            </div>
-                                        }
-                                    }
-
-                                </div>
-                                <!--end Alert -->
 
                                 <div class="form-group">
                                     <div class="input-group">
@@ -91,30 +88,21 @@
                                 </div>
 
                             }
+
                         </div>
+
                     </div>
                     
                 </div>
 
                 <div class="tab-pane" id="profile" role="tabpanel">
 
-                    <div data-toggle="validator" role="form" id="Register-form">
-                        @using (Html.BeginForm("Register", "Home", FormMethod.Post))
-                        {
-                            <div class="modal-body">
+                    <div class="modal-body">
 
-                                <!-- Alert -->
-                                <div id="AleartConteinerRegister">
-                                    @{
-                                        if (alertRegister != null)
-                                        {
-                                <div class="alert @alertRegister.ClassNames[(int) alertRegister.Status]" role="alert">
-                                    <strong>@alertRegister.Tittle</strong> @alertRegister.Text
-                                </div>
-                                    }
-                                    }
-                                </div>
-                                <!--end Alert -->
+                        <div data-toggle="validator" role="form" id="Register-form">
+                            
+                            @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+                            {
 
                                 <div class="form-group">
                                     <div class="input-group">
@@ -155,26 +143,27 @@
                                     </div>
                                     @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
                                 </div>
-                                                                
+
                                 <button class="btn btn-primary" type="submit">Register</button>
 
-                            </div>
-                        }
+                            }
+                        </div>
 
                     </div>
+
+                </div>
 
             </div>
 
         </div>
     </div>
-    <script>
-        function SetRadioBtnInput(value) {
-            document.getElementById("selectorRegister").value = value;
-        }
-    </script>
-    <script src="~/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <!-- script made for highlight not valid input field -->
     <script>
         (function ($) {
             var defaultOptions = {
@@ -200,5 +189,7 @@
             };
         })(jQuery);
     </script>
+    <!-- end script -->
+
 </body>
 </html>

@@ -8,7 +8,7 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface IStudentRepository : ICrudRepository<Student>
     {
-        // attach subgroup to a student
+        /// <summary>attach subgroup to a student</summary>
         SubGroup AttachSubgroup(Guid subgroupId);
 
         

@@ -13,7 +13,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class TeacherRepository : CrudRepository<Teacher>, ITeacherRepository
     {
-        // Method to add particular subject from a teacher
+        /// <summary>Method to add particular subject from a teacher</summary>
         public void AddSubjectToTeacher(Guid teacherId, Guid subjecId)
         {
             var teacher = GetById(teacherId);
@@ -21,7 +21,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             Update(teacher);
         }
 
-        // Method to delete particular subject from a teacher
+        /// <summary>Method to delete particular subject from a teacher</summary>
         public void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId)
         {
             var teacher = GetById(teacherId);
@@ -29,7 +29,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             Update(teacher);
         }
 
-        // set teacher busy on a particular day
+        /// <summary>set teacher busy on a particular day</summary>
         public bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
@@ -46,7 +46,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             }
         }
 
-        // set teacher free on a particular day
+        /// <summary>set teacher free on a particular day</summary>
         public bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
@@ -63,7 +63,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             }
         }
 
-        // set teacher active on a particular day
+        /// <summary>set teacher active on a particular day</summary>
         public bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
@@ -80,7 +80,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             }
         }
 
-        // set teacher inactive on a particular day
+        /// <summary>set teacher inactive on a particular day</summary>
         public bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day)
         {
             var teacher = GetById(teacherId);
@@ -97,13 +97,13 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             }
         }
 
-        // gets all teachers with subjects which they lead
+        /// <summary>gets all teachers with subjects which they lead</summary>
         public override IQueryable<Teacher> GetAllEntities()
         {
             return ContextDb.Set<Teacher>().Include(x => x.Subjects);
         }
 
-        // gets all teachers with subjects which they lead
+        /// <summary>gets all teachers with subjects which they lead</summary>
         public override Teacher GetById(Guid id)
         {
             return ContextDb.Set<Teacher>()

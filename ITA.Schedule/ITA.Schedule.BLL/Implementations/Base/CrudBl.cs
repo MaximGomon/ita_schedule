@@ -37,9 +37,9 @@ namespace ITA.Schedule.BLL.Implementations.Base
             return Repository.GetById(id);
         }
         //insert an entity to db
-        public void Insert(TEntity entity)
+        public Guid Insert(TEntity entity)
         {
-            Repository.Add(entity);
+            return Repository.Add(entity);
         }
         //insert entities array to db
         public void InsertRange(IEnumerable<TEntity> range)

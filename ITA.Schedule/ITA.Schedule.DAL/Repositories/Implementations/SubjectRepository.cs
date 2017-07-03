@@ -8,6 +8,8 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class SubjectRepository : CrudRepository<Subject>, ISubjectRepository
     {
-         
+        public SubjectRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

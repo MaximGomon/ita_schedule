@@ -25,5 +25,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             subgroup.Students.Remove(ContextDb.Students.FirstOrDefault(x => x.Id == studentId));
             Update(subgroup);
         }
+
+        public SubgroupRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

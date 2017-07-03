@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ using ITA.Schedule.Entity.Entities;
 using ITA.Schedule.Util;
 
 using System.Net.Mail;
+using ITA.Schedule.BLL;
 using ITA.Schedule.Logs.Filters;
 using NLog;
 using NLog.Fluent;
@@ -21,7 +23,7 @@ namespace ITA.Schedule.Controllers
 {
     public class HomeController : Controller
     {
-
+        //ScheduleUnitOfWork _unitOfWork = new ScheduleUnitOfWork();
         // GET: Authorization
         [ActionLog]
         public ActionResult Authorization()
@@ -31,6 +33,10 @@ namespace ITA.Schedule.Controllers
             TempData["AlertLogin"] = null;
             TempData["AlertRegister"] = null;
 
+            //var teacher = new Teacher();
+            //Guid teacherId = _unitOfWork.Teacher.Insert(teacher);
+            //var entity = new User {Teacher = teacher};
+            //Guid userId = _unitOfWork.User.Insert(entity);
             return View();
         }
         [ActionLog]

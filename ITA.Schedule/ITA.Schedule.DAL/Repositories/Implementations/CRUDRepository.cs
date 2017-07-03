@@ -14,13 +14,19 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     public class CrudRepository<TEntity> : ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
         // declare protected context to be accessible in the derived repositories
-        protected ScheduleDbContext ContextDb { get; } = new ScheduleDbContext();
+        protected readonly ScheduleDbContext ContextDb;
+
+        public CrudRepository(ScheduleDbContext context)
+        {
+            ContextDb = context;
+        }
 
         // add an entity to the DB
-        public virtual void Add(TEntity entity)
+        public virtual Guid Add(TEntity entity)
         {
             ContextDb.Set<TEntity>().Add(entity);
             SaveChanges();
+            return entity.Id;
         }
 
         // add range of entities to the DB

@@ -16,5 +16,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         {
             return ContextDb.Set<TDEntity>().FirstOrDefault(x => x.Code == code);
         }
+
+        public DictionaryRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     public interface ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
         // add an entity to DB
-        void Add(TEntity entity);
+        Guid Add(TEntity entity);
         // add range of entities to DB
         void Add(IEnumerable<TEntity> range);
         // get an entity from DB using ID

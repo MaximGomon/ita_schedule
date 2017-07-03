@@ -33,5 +33,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             return base.Get(predicate)
                 .Include(x => x.SubGroups);
         }*/
+
+        public GroupRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

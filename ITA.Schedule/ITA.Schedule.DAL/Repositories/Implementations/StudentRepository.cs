@@ -14,5 +14,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
         {
             return ContextDb.SubGroups.FirstOrDefault(x => x.Id == subgroupId);
         }
+
+        public StudentRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

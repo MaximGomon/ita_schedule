@@ -5,6 +5,8 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
 {
     public class SecurityGroupRepository : CrudRepository<SecurityGroup>, ISecurityGroupRepository
     {
-         
+        public SecurityGroupRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

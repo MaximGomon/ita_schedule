@@ -111,5 +111,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
                 .Include(x => x.Subjects)
                 .FirstOrDefault();
         }
+
+        public TeacherRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

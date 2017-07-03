@@ -43,5 +43,9 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
                 .Include(x => x.SecurityGroup)
                 .FirstOrDefault();
         }
+
+        public UserRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

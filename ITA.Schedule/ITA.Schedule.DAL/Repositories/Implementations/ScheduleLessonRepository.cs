@@ -247,5 +247,8 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             return null;
         }
 
+        public ScheduleLessonRepository(ScheduleDbContext context) : base(context)
+        {
+        }
     }
 }

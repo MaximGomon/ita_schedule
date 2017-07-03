@@ -14,7 +14,7 @@ namespace ITA.Schedule.BLL.Interface.Base
         TEntity GetById(Guid id);
         void Remove(Guid id);
         void Update(TEntity entity);
-        void Insert(TEntity entity);
+        Guid Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entity);
         void SaveChanges();
         void Activate(Guid id);

@@ -1,4 +1,4 @@
-﻿@model ITA.Schedule.Models.UserViewModel
+﻿@model UserViewModel
 @using ITA.Schedule.Models
 @{AlertsMessege alert = ViewBag.AlertsMessege;}
 @{Layout = null;}
@@ -71,7 +71,7 @@
                                         @Html.LabelFor(x => x.Email, new { @class = "input-group-addon"})
                                         @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "YourEmail@gmail.com", @type = "email" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="form-group">
@@ -79,7 +79,7 @@
                                         @Html.LabelFor(x => x.Password, new { @class = "input-group-addon"})
                                         @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Enter your password", @type = "password" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="inline">
@@ -109,7 +109,7 @@
                                         @Html.LabelFor(x => x.FirstName, new { @class = "input-group-addon"})
                                         @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", @placeholder = "First Name", @type = "text" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="form-group">
@@ -117,7 +117,7 @@
                                         @Html.LabelFor(x => x.LastName, new { @class = "input-group-addon"})
                                         @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", @placeholder = "Last Name", @type = "text" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="form-group">
@@ -125,7 +125,7 @@
                                         @Html.LabelFor(x => x.Email, new { @class = "input-group-addon" })
                                         @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "YourEmail@gmail.com", @type = "email" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="form-group">
@@ -133,7 +133,7 @@
                                         @Html.LabelFor(x => x.Password, new { @class = "input-group-addon" })
                                         @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block" })
                                 </div>
 
                                 <div class="form-group">
@@ -141,7 +141,7 @@
                                         @Html.LabelFor(x => x.Role, new { @class = "input-group-addon" })
                                         @Html.EnumDropDownListFor(x => x.Role, new { @class = "form-control" })
                                     </div>
-                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "help-block with-errors" })
+                                    @Html.ValidationMessageFor(x => x.Role, null, new { @class = "help-block" })
                                 </div>
 
                                 <button class="btn btn-primary" type="submit">Register</button>

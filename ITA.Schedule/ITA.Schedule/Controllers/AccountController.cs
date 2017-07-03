@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ITA.Schedule.BLL;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Logs.Filters;
@@ -14,14 +15,14 @@ namespace ITA.Schedule.Controllers
 
     public class AccountController : Controller
     {
+        ScheduleUnitOfWork UnitOfWork = new ScheduleUnitOfWork();
         // GET: Account
         [ActionLog]
         public ActionResult Show()
         {
             var people = new PeopleViewModel();
 
-            var teaccherBl = new TeacherBl(new TeacherRepository());
-            var teacher = teaccherBl.Get(t => t.Name == "Maxim Gomon")
+            var teacher = UnitOfWork.Teacher.Get(t => t.Name == "Maxim Gomon")
                 .Include(t => t.Subjects)
                 .Include(t => t.TeacherAllTimes)
                 .FirstOrDefault();

@@ -9,9 +9,7 @@ using ITA.Schedule.Util;
 
 namespace ITA.Schedule.Models
 {
-    /// <summary>
-    /// User base model
-    /// </summary>
+    /// <summary>User base model</summary>
     public class UserViewModel
     {
         [Required(ErrorMessage = "Enter your Email addres")]
@@ -22,20 +20,20 @@ namespace ITA.Schedule.Models
 
         [Required(ErrorMessage = "Enter your Password")]
         [StringLength(15, MinimumLength = 6, ErrorMessage = "Password should be at least 6 characters and not longer than 15 characters")]
-        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Password should be without special characters")]
+        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Password should contain only latin letters and without special characters")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "First name your first name")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First name should be at least 3 characters and not longer than 50 characters")]
-        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "FirstName should be without special characters")]
+        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "First name should contain only latin letters and without special characters")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name your first name")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Last name should be at least 3 characters and not longer than 50 characters")]
-        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Last Name should be without special characters")]
+        [RegularExpression("^[A-Za-z0-9]+$", ErrorMessage = "Last name should contain only latin letters and without special characters")]
         public string LastName { get; set; }
 
-        public enum _roles
+        public enum Roles
         {
             [Display(Name = "Student")]
             Student,
@@ -43,7 +41,7 @@ namespace ITA.Schedule.Models
             Teacher,
         }
         [Required(ErrorMessage = "Choose your role")]
-        public _roles Role { get; set;}
+        public Roles Role { get; set;}
 
         public Guid StudentId { get; set; }
         public Guid TeacherId { get; set; }

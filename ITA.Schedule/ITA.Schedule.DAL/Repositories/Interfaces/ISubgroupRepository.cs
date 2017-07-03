@@ -8,10 +8,10 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface ISubgroupRepository : ICrudRepository<SubGroup>
     {
-        // add a student to a subgroup
+        /// <summary>add a student to a subgroup</summary>
         void AddStudentToSubgroup(Guid subgroupId, Guid studentId);
 
-        // remove a student from a subgroup
+        /// <summary>remove a student from a subgroup</summary>
         void RemoveStudentFromSubgroup(Guid subgroupId, Guid studentId);
     }
 }

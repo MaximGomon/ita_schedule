@@ -12,10 +12,15 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// <typeparam name="TEntity"></typeparam>
     public interface ICrudRepository<TEntity> where TEntity : IdEntity, IEntity
     {
-        ScheduleDbContext Context { get; }
-        /// <summary>add an entity to DB </summary>
+<<<<<<< HEAD
+        // add an entity to DB
         Guid Add(TEntity entity);
+        // add range of entities to DB
+=======
+        /// <summary>add an entity to DB </summary>
+        void Add(TEntity entity);
         /// <summary>add range of entities to DB</summary>
+>>>>>>> 76da8a9b739b4abae44347c1b33c29669c4434e9
         void Add(IEnumerable<TEntity> range);
         /// <summary>get an entity from DB using ID</summary>
         TEntity GetById(Guid id);

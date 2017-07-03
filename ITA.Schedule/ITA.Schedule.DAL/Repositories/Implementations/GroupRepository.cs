@@ -12,7 +12,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class GroupRepository : CrudRepository<Group>, IGroupRepository
     {
-        // add a subgroup to a group
+        /// <summary>add a subgroup to a group</summary>
         public void AddSubgroupToGroup(Guid groupId, Guid subgroupId)
         {
             var group = GetById(groupId);
@@ -20,7 +20,7 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
             Update(group);
         }
 
-        // remove a subgroup from a group
+        /// <summary>remove a subgroup from a group</summary>
         public void UnlinkSubgroupFromGroup(Guid groupId, Guid subgroupId)
         {
             var group = GetById(groupId);

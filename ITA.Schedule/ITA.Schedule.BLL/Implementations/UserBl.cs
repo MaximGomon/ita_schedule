@@ -22,7 +22,13 @@ namespace ITA.Schedule.BLL.Implementations
             return Repository.AuthorizeApp(login, password);
         }
 
-        // create new user and insert to the Db
+        public User GetByLogin(string login)
+        {
+            _logger.Info("GetByLogin ({0})", login);
+            return Repository.GetByLogin(login);
+        }
+
+        ///<summary>create new user and insert to the Db</summary>
         public bool CreateNewUser(string login, string password, Guid ownerId, UserType type)
         {
             _logger.Info("CreateNewUser ({0} , {1} , {2} , {3})", login, password, ownerId, type);
@@ -81,21 +87,21 @@ namespace ITA.Schedule.BLL.Implementations
             return true;
         }
 
-        // attach student to the user
+        ///<summary>attach student to the user</summary>
         public Student AttachStudent(Guid studentId)
         {
             _logger.Info("AttachStudent ({0})", studentId);
             return Repository.AttachStudent(studentId);
         }
 
-        // attache teacher to the user
+        ///<summary>attache teacher to the user</summary>
         public Teacher AttachTeacher(Guid teachreId)
         {
             _logger.Info("AttachTeacher ({0})", teachreId);
             return Repository.AttachTeacher(teachreId);
         }
 
-        // set user security group
+        ///<summary>set user security group</summary>
         public SecurityGroup SetSecurityGroup(string groupName)
         {
             _logger.Info("SetSecurityGroup ({0})", groupName);

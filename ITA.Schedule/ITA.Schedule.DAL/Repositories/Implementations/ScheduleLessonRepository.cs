@@ -12,13 +12,13 @@ namespace ITA.Schedule.DAL.Repositories.Implementations
     /// </summary>
     public class ScheduleLessonRepository : CrudRepository<ScheduleLesson>, IScheduleLessonRepository
     {
-        // check if a teacher has scheduled lessons
+        /// <summary>check if a teacher has scheduled lessons</summary>
         public bool IsWithScheduledLessons(Guid teacherId)
         {
             return ContextDb.Set<ScheduleLesson>().Any(x => x.Teacher.Id == teacherId);
         }
 
-        //Get lessons for student by filter
+        /// <summary>Get lessons for student by filter</summary>
         public IEnumerable<ScheduleLesson> GetStudentScheduleLessonsByFilter(Guid subgroupId, DateTime date, Guid teacherId, Guid subjectId, TimePeriod period)
         {
             if (teacherId == Guid.Empty)

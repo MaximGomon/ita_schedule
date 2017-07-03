@@ -7,16 +7,16 @@ namespace ITA.Schedule.BLL.Interface
 {
     interface IUserBl : ICrudBl<User>
     {
-        // authorize user in the app
+        /// <summary>authorize user in the app</summary>
         User AuthorizeApp(string login, string password);
 
-        // create new user, get user data from HTML form
+        /// <summary>create new user, get user data from HTML form</summary>
         bool CreateNewUser(string login, string password, Guid ownerId, UserType type);
-        // attach student to the user
+        /// <summary>attach student to the user</summary>
         Student AttachStudent(Guid studentId);
-        // attach teacher to a user
+        /// <summary>attach teacher to a user</summary>
         Teacher AttachTeacher(Guid teachreId);
-        // set access group
+        /// <summary>set access group</summary>
         SecurityGroup SetSecurityGroup(string groupName);
     }
 }

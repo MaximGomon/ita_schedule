@@ -9,17 +9,17 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface ITeacherRepository : ICrudRepository<Teacher>
     {
-        // adding a subject to a teacher
+        /// <summary>adding a subject to a teacher</summary>
         void AddSubjectToTeacher(Guid teacherId, Guid subjecId);
-        // delete subject from a teacher
+        /// <summary>delete subject from a teacher</summary>
         void DeleteSubjectFromTeacher(Guid teacherId, Guid subjecId);
-        // set teacher busy on a particular day
+        /// <summary>set teacher busy on a particular day</summary>
         bool SetTeacherBusy(Guid teacherId, LessonTime lessonTime, DateTime day);
-        // set teacher free on a particular day
+        /// <summary>set teacher free on a particular day</summary>
         bool SetTeacherFree(Guid teacherId, LessonTime lessonTime, DateTime day);
-        // set teacher active on a particular day
+        /// <summary>set teacher active on a particular day</summary>
         bool SetTeacherActive(Guid teacherId, LessonTime lessonTime, DateTime day);
-        // set teacher inactive on a particular day
+        /// <summary>set teacher inactive on a particular day</summary>
         bool SetTeacherInactive(Guid teacherId, LessonTime lessonTime, DateTime day);
     }
 }

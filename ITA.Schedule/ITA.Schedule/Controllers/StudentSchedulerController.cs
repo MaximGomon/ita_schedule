@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ITA.Schedule.BLL;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL;
 using ITA.Schedule.DAL.Repositories.Implementations;
@@ -18,6 +19,7 @@ namespace ITA.Schedule.Controllers
    
     public class StudentSchedulerController : Controller
     {
+        ScheduleUnitOfWork UnitOfWork = new ScheduleUnitOfWork();
         [ActionLog]
         // GET: Scheduler
         public ActionResult Index()
@@ -40,17 +42,13 @@ namespace ITA.Schedule.Controllers
         }
 
         [ActionLog]
-        private static void FillDefaultDropDown(UserFilterViewModel student)
+        private void FillDefaultDropDown(UserFilterViewModel student)
         {
-            var teachers = new TeacherBl(new TeacherRepository()).GetAll();
-
-            var subjects = new SubjectBl(new SubjectRepository()).GetAll();
-
             student.Filter.FirstList=
-                teachers.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
+                UnitOfWork.Teacher.GetAll().Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
 
             student.Filter.SecondList =
-                subjects.Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
+                UnitOfWork.Subject.GetAll().Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Name.ToString()}).ToList();
         }
 
         [ActionLog]

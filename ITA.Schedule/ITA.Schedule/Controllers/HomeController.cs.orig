@@ -1,11 +1,23 @@
+<<<<<<< HEAD
 ﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+=======
+﻿using System.Web.Mvc;
+>>>>>>> 76da8a9b739b4abae44347c1b33c29669c4434e9
 using ITA.Schedule.Models;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
 
+<<<<<<< HEAD
+using System.Net.Mail;
 using ITA.Schedule.BLL;
+=======
+>>>>>>> 76da8a9b739b4abae44347c1b33c29669c4434e9
 using ITA.Schedule.Logs.Filters;
 
 
@@ -13,11 +25,23 @@ namespace ITA.Schedule.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ScheduleUnitOfWork _unitOfWork = new ScheduleUnitOfWork();
+        //ScheduleUnitOfWork _unitOfWork = new ScheduleUnitOfWork();
         // GET: Authorization
         [ActionLog]
         public ActionResult Authorization()
         {
+<<<<<<< HEAD
+            ViewBag.AlertLogin = TempData["AlertLogin"];
+            ViewBag.AlertRegister = TempData["AlertRegister"];
+            TempData["AlertLogin"] = null;
+            TempData["AlertRegister"] = null;
+
+            //var teacher = new Teacher();
+            //Guid teacherId = _unitOfWork.Teacher.Insert(teacher);
+            //var entity = new User {Teacher = teacher};
+            //Guid userId = _unitOfWork.User.Insert(entity);
+=======
+>>>>>>> 76da8a9b739b4abae44347c1b33c29669c4434e9
             return View();
         }
 
@@ -57,13 +81,13 @@ namespace ITA.Schedule.Controllers
 
         public bool TryToAuthorizeUser(out User user, UserViewModel userModel)
         {
-            user = _unitOfWork.User.AuthorizeApp(userModel.Email, userModel.Password);
+            user = new UserBl(new UserRepository()).AuthorizeApp(userModel.Email, userModel.Password);
             return user == null;
         }
 
         public bool GetUserByLogin(out User user, UserViewModel userModel)
         {
-            user = _unitOfWork.User.GetByLogin(userModel.Email);
+            user = new UserBl(new UserRepository()).GetByLogin(userModel.Email);
             return user != null;
         }
 

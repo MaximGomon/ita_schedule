@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
+using ITA.Schedule.BLL;
 using ITA.Schedule.BLL.Implementations;
 using ITA.Schedule.DAL.Repositories.Implementations;
 using ITA.Schedule.Entity.Entities;
@@ -18,22 +19,23 @@ namespace ITA.Schedule.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly TeacherBl _teacherBl;
-        private readonly StudentBl _studentBl;
-        private readonly SubjectBl _subjectBl;
-        private readonly UserBl _userBl;
-        private readonly GroupBl _groupBl;
+        ScheduleUnitOfWork UnitOfWork = new ScheduleUnitOfWork();
+        //private readonly TeacherBl _teacherBl;
+        //private readonly StudentBl _studentBl;
+        //private readonly SubjectBl _subjectBl;
+        //private readonly UserBl _userBl;
+        //private readonly GroupBl _groupBl;
         //private static Logger _logger;
         
 
         public AdminController()
         {
-            _teacherBl = new TeacherBl(new TeacherRepository());
-            _studentBl = new StudentBl(new StudentRepository());
-            _subjectBl = new SubjectBl(new SubjectRepository());
-            _groupBl = new GroupBl(new GroupRepository(), new SubgroupRepository());
-           // _logger = LogManager.GetCurrentClassLogger();
-            _userBl = new UserBl(new UserRepository());
+           // _teacherBl = new TeacherBl(new TeacherRepository());
+           // _studentBl = new StudentBl(new StudentRepository());
+           // _subjectBl = new SubjectBl(new SubjectRepository());
+           // _groupBl = new GroupBl(new GroupRepository(), new SubgroupRepository());
+           //// _logger = LogManager.GetCurrentClassLogger();
+           // _userBl = new UserBl(new UserRepository());
         }
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace ITA.Schedule.Controllers
         {
             //ShedulerLogger();
 
-            var studentsDb = _studentBl.GetAll().ToList();
+            var studentsDb = UnitOfWork.Student.GetAll().ToList();
 
             var students = studentsDb.Select(student => new ShowStudentModel().ConvertStudentToModel(student)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Group).ThenBy(x => x.Subgroup).ThenBy(x => x.Name);
 
@@ -62,7 +64,7 @@ namespace ITA.Schedule.Controllers
         {
            // ShedulerLogger();
 
-            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+            var groups = UnitOfWork.Group.Get(x => !x.IsDeleted).ToList();
 
             var addUserModels = new List<AddStudentModel>();
 
@@ -88,7 +90,7 @@ namespace ITA.Schedule.Controllers
         {
           //  ShedulerLogger();
 
-            if (!_studentBl.AddNewStudent(student.Name, student.SubgroupId))
+            if (!UnitOfWork.Student.AddNewStudent(student.Name, student.SubgroupId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -103,7 +105,7 @@ namespace ITA.Schedule.Controllers
         {
             var updateStudentModel = new StudentUpdateModel() { Groups = new List<AddStudentModel>()};
 
-            var student = _studentBl.GetById(id);
+            var student = UnitOfWork.Student.GetById(id);
 
             if (student == null)
             {
@@ -118,7 +120,7 @@ namespace ITA.Schedule.Controllers
                 updateStudentModel.StudentGroupId = student.SubGroup.Group.Id;
             }
             
-            var groups = _groupBl.Get(x => !x.IsDeleted).ToList();
+            var groups = UnitOfWork.Group.Get(x => !x.IsDeleted).ToList();
 
             foreach (var group in groups)
             {
@@ -140,9 +142,9 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateStudent(StudentModel studentToUpdate)
         {
-            var student = _studentBl.GetById(studentToUpdate.StudentId);
+            var student = UnitOfWork.Student.GetById(studentToUpdate.StudentId);
             if (student == null ||
-                !_studentBl.UpdateStudent(studentToUpdate.StudentId, studentToUpdate.Name, studentToUpdate.SubgroupId))
+                !UnitOfWork.Student.UpdateStudent(studentToUpdate.StudentId, studentToUpdate.Name, studentToUpdate.SubgroupId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -155,7 +157,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeStudentStatus(Guid id)
         {
-            var student = _studentBl.GetById(id);
+            var student = UnitOfWork.Student.GetById(id);
 
             if (student == null)
             {
@@ -170,14 +172,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateStudent(Guid id)
         {
-            var student = _studentBl.GetById(id);
+            var student = UnitOfWork.Student.GetById(id);
 
             if (student == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _studentBl.Remove(id);
+            UnitOfWork.Student.Remove(id);
 
             return RedirectToAction("ShowStudents");
         }
@@ -187,14 +189,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateStudent(Guid id)
         {
-            var student = _studentBl.GetById(id);
+            var student = UnitOfWork.Student.GetById(id);
 
             if (student == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _studentBl.Activate(id);
+            UnitOfWork.Student.Activate(id);
 
             return RedirectToAction("ShowStudents");
         }
@@ -211,7 +213,7 @@ namespace ITA.Schedule.Controllers
         {
             //ShedulerLogger();
 
-            var usersDb = _userBl.GetAll().ToList();
+            var usersDb = UnitOfWork.User.GetAll().ToList();
 
             var users = usersDb.Select(user => new ShowUserModel().ConvertUserToModel(user)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Type).ThenBy(x => x.Owner);
             
@@ -224,11 +226,11 @@ namespace ITA.Schedule.Controllers
         public ActionResult AddUser()
         {
             // get all teachers and students from the db to check who of them is binded to a user
-            var teachersDb = _teacherBl.GetAll().ToList();
-            var studentsDb = _studentBl.GetAll().ToList();
+            var teachersDb = UnitOfWork.Teacher.GetAll().ToList();
+            var studentsDb = UnitOfWork.Student.GetAll().ToList();
 
             // get all users from the db
-            var users = _userBl.GetAll().ToList();
+            var users = UnitOfWork.User.GetAll().ToList();
 
             // create new list of Ids to filter assigned users for the view
             var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
@@ -265,7 +267,7 @@ namespace ITA.Schedule.Controllers
             }
 
             // try to insert new user to the Db
-            if (!_userBl.CreateNewUser(newUser.Email.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
+            if (!UnitOfWork.User.CreateNewUser(newUser.Email.Trim(), newUser.Password.Trim(), ownerId, newUser.TypeOfUser))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -277,7 +279,7 @@ namespace ITA.Schedule.Controllers
         [ActionLog]
         public ActionResult VerifyLogin(string Login)
         {
-            return Json(!_userBl.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
+            return Json(!UnitOfWork.User.GetAll().Any(x => x.Login.ToLower().Equals(Login.ToLower())), JsonRequestBehavior.AllowGet);
         }
 
         // Update user initial screen
@@ -286,7 +288,7 @@ namespace ITA.Schedule.Controllers
         public ActionResult UpdateUser(Guid id)
         {
             // check if user exists
-            var user = _userBl.Get(x => x.Id == id).FirstOrDefault();
+            var user = UnitOfWork.User.Get(x => x.Id == id).FirstOrDefault();
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -303,17 +305,17 @@ namespace ITA.Schedule.Controllers
             }
 
             // get all logins from the db and pass them to the view
-            var loginsDb = _userBl.GetAll().ToList().Select(x => x.Login.ToLower()).ToList();
+            var loginsDb = UnitOfWork.User.GetAll().ToList().Select(x => x.Login.ToLower()).ToList();
             loginsDb.Remove(user.Login.ToLower());
 
             ViewBag.Logins = loginsDb;
 
             // get all teachers and students from the db to check who of them is binded to a user
-            var teachersDb = _teacherBl.GetAll().ToList();
-            var studentsDb = _studentBl.GetAll().ToList();
+            var teachersDb = UnitOfWork.Teacher.GetAll().ToList();
+            var studentsDb = UnitOfWork.Student.GetAll().ToList();
 
             // get all users from the db
-            var users = _userBl.GetAll().ToList();
+            var users = UnitOfWork.User.GetAll().ToList();
 
             // create new list of Ids to filter assigned users for the view
             var usersWithId = users.Where(x => x.Student == null).Select(x => x.Teacher.Id).ToList();
@@ -334,7 +336,7 @@ namespace ITA.Schedule.Controllers
         public ActionResult UpdateUser(UserUpdateModel user)
         {
             // get user from the Db
-            var userToUpdate = _userBl.GetById(user.Id);
+            var userToUpdate = UnitOfWork.User.GetById(user.Id);
             
             // check if we got a correct user
             if (userToUpdate == null)
@@ -360,7 +362,7 @@ namespace ITA.Schedule.Controllers
                 case UserType.Admin:
                 case UserType.Teacher:
                     {
-                        var owner = _userBl.AttachTeacher(user.TeacherId);
+                        var owner = UnitOfWork.User.AttachTeacher(user.TeacherId);
                         if (owner == null)
                         {
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -372,7 +374,7 @@ namespace ITA.Schedule.Controllers
                     break;
                 case UserType.Student:
                     {
-                        var owner = _userBl.AttachStudent(user.StudentId);
+                        var owner = UnitOfWork.User.AttachStudent(user.StudentId);
                         if (owner == null)
                         {
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -386,9 +388,9 @@ namespace ITA.Schedule.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            userToUpdate.SecurityGroup = _userBl.SetSecurityGroup(user.TypeOfUser.ToString());
+            userToUpdate.SecurityGroup = UnitOfWork.User.SetSecurityGroup(user.TypeOfUser.ToString());
 
-            _userBl.Update(userToUpdate);
+            UnitOfWork.User.Update(userToUpdate);
 
             return RedirectToAction("ShowUsers");
         }
@@ -398,7 +400,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeUserStatus(Guid id)
         {
-            var user = _userBl.GetById(id);
+            var user = UnitOfWork.User.GetById(id);
 
             if (user == null)
             {
@@ -413,14 +415,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateUser(Guid id)
         {
-            var user = _userBl.GetById(id);
+            var user = UnitOfWork.User.GetById(id);
 
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _userBl.Remove(id);
+            UnitOfWork.User.Remove(id);
 
             return RedirectToAction("ShowUsers");
         }
@@ -430,14 +432,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateUser(Guid id)
         {
-            var user = _userBl.GetById(id);
+            var user = UnitOfWork.User.GetById(id);
 
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _userBl.Activate(id);
+            UnitOfWork.User.Activate(id);
 
             return RedirectToAction("ShowUsers");
         }
@@ -452,7 +454,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowSubjects()
         {
-            var subjectsDb = _subjectBl.GetAll().ToList();
+            var subjectsDb = UnitOfWork.Subject.GetAll().ToList();
 
             var subjects = subjectsDb.Select(subject => new SubjectModel().ConvertSubjectToModel(subject)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
@@ -464,7 +466,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult AddSubject()
         {
-            var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
+            var subjectCodes = UnitOfWork.Subject.GetAll().Select(subject => subject.Code).ToList();
 
             return PartialView("AddSubject", subjectCodes);
         }
@@ -480,14 +482,14 @@ namespace ITA.Schedule.Controllers
             }
             newSubject.Name = newSubject.Name.Trim();
 
-            var subjectCodes = _subjectBl.GetAll().Select(subject => subject.Code).ToList();
+            var subjectCodes = UnitOfWork.Subject.GetAll().Select(subject => subject.Code).ToList();
 
             if (newSubject.Code == 0 || subjectCodes.Exists(x => x == newSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            _subjectBl.Insert(newSubject);
+
+            UnitOfWork.Subject.Insert(newSubject);
 
             return RedirectToAction("ShowSubjects");
         }
@@ -497,7 +499,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateSubject(Guid id)
         {
-            var subject = _subjectBl.GetById(id);
+            var subject = UnitOfWork.Subject.GetById(id);
 
             if (subject == null)
             {
@@ -507,7 +509,7 @@ namespace ITA.Schedule.Controllers
             var updateSubjectModel = new SubjectUpdateModel()
             {
                 Subject = subject,
-                SubjectCodes = _subjectBl.GetAll().Select(x => x.Code).ToList()
+                SubjectCodes = UnitOfWork.Subject.GetAll().Select(x => x.Code).ToList()
             };
 
             updateSubjectModel.SubjectCodes.Remove(subject.Code);
@@ -520,7 +522,7 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateSubject(SubjectUpdatedModel updatedSubject)
         {
-            if (!_subjectBl.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
+            if (!UnitOfWork.Subject.UpdateSubject(updatedSubject.Id, updatedSubject.Name.Trim(), updatedSubject.Code))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -533,7 +535,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeSubjectStatus(Guid id)
         {
-            var subject = _subjectBl.GetById(id);
+            var subject = UnitOfWork.Subject.GetById(id);
 
             if (subject == null)
             {
@@ -548,14 +550,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateSubject(Guid id)
         {
-            var subject = _subjectBl.GetById(id);
+            var subject = UnitOfWork.Subject.GetById(id);
 
             if (subject == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _subjectBl.Remove(id);
+            UnitOfWork.Subject.Remove(id);
             return RedirectToAction("ShowSubjects");
         }
 
@@ -564,14 +566,14 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateSubject(Guid id)
         {
-            var subject = _subjectBl.GetById(id);
+            var subject = UnitOfWork.Subject.GetById(id);
 
             if (subject == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            _subjectBl.Activate(id);
+            UnitOfWork.Subject.Activate(id);
             return RedirectToAction("ShowSubjects");
         }
 
@@ -585,7 +587,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ShowTeachers()
         {
-            var teachersDb = _teacherBl.GetAll().ToList();
+            var teachersDb = UnitOfWork.Teacher.GetAll().ToList();
             
             var teachers = teachersDb.Select(teacher => new TeacherModel().ConvertTeacherToModel(teacher)).ToList().OrderBy(x => x.Status).ThenBy(x => x.Name);
 
@@ -602,7 +604,7 @@ namespace ITA.Schedule.Controllers
                 Subjects = new List<SubjectModel>()
             };
 
-            var dbSubjects = _subjectBl.GetAll().ToList();
+            var dbSubjects = UnitOfWork.Subject.GetAll().ToList();
 
             foreach (var subject in dbSubjects)
             {
@@ -624,13 +626,13 @@ namespace ITA.Schedule.Controllers
 
             var newTeacher = new Teacher() {Name = addedTeacher.Name};
 
-            _teacherBl.Insert(newTeacher);
+            UnitOfWork.Teacher.Insert(newTeacher);
 
             if (addedTeacher.SubjectIds != null)
             {
                 foreach (var subjectId in addedTeacher.SubjectIds)
                 {
-                    _teacherBl.AddSubjectToTeacher(newTeacher.Id, subjectId);
+                    UnitOfWork.Teacher.AddSubjectToTeacher(newTeacher.Id, subjectId);
                 }
             }
 
@@ -643,7 +645,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult UpdateTeacher(Guid id)
         {
-            var teacher = _teacherBl.GetById(id);
+            var teacher = UnitOfWork.Teacher.GetById(id);
 
             if (teacher == null)
             {
@@ -656,7 +658,7 @@ namespace ITA.Schedule.Controllers
                 Subjects = new List<SubjectModel>()
             };
 
-            var dbSubjects = _subjectBl.GetAll().ToList();
+            var dbSubjects = UnitOfWork.Subject.GetAll().ToList();
 
             foreach (var subject in dbSubjects)
             {
@@ -671,7 +673,7 @@ namespace ITA.Schedule.Controllers
         [HttpPost]
         public ActionResult UpdateTeacher(TeacherUpdatedModel updatedTeacher)
         {
-            if (!_teacherBl.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
+            if (!UnitOfWork.Teacher.UpdateTeacher(updatedTeacher.Id, updatedTeacher.Name.Trim(), updatedTeacher.SubjectIds))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -685,7 +687,7 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ChangeTeacherStatus(Guid id)
         {
-            var teacher = _teacherBl.GetById(id);
+            var teacher = UnitOfWork.Teacher.GetById(id);
 
             if (teacher == null)
             {
@@ -700,13 +702,13 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult DeactivateTeacher(Guid id)
         {
-            var teacher = _teacherBl.GetById(id);
+            var teacher = UnitOfWork.Teacher.GetById(id);
 
             if (teacher == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _teacherBl.Remove(id);
+            UnitOfWork.Teacher.Remove(id);
             return RedirectToAction("ShowTeachers");
         }
 
@@ -715,13 +717,13 @@ namespace ITA.Schedule.Controllers
         [HttpGet]
         public ActionResult ActivateTeacher(Guid id)
         {
-            var teacher = _teacherBl.GetById(id);
+            var teacher = UnitOfWork.Teacher.GetById(id);
 
             if (teacher == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _teacherBl.Activate(id);
+            UnitOfWork.Teacher.Activate(id);
             return RedirectToAction("ShowTeachers");
         }
     }

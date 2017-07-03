@@ -11,7 +11,7 @@ namespace ITA.Schedule.BLL.Implementations
 {
     public class StudentBl : CrudBll<IStudentRepository, Student>, IStudentBl
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public StudentBl(IStudentRepository repository) : base(repository)
         {
         }
@@ -36,7 +36,7 @@ namespace ITA.Schedule.BLL.Implementations
                 return;
             }
 
-            var newSubGroup = new SubGroupBl(new SubgroupRepository()).GetById(newSubGroupId);
+            var newSubGroup = new SubGroupBl(new SubgroupRepository(Repository.Context)).GetById(newSubGroupId);
             student.SubGroup = newSubGroup;
             _logger.Info("ReplaceToAnotherSubGroup ({0} , {1})", studentId, newSubGroupId);
         }

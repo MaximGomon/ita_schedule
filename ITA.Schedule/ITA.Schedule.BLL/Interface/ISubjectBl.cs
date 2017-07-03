@@ -7,7 +7,7 @@ namespace ITA.Schedule.BLL.Interface
 {
     interface ISubjectBl : ICrudBl<Subject>
     {
-        // update subject method
+        /// <summary> update subject method</summary>
         bool UpdateSubject(Guid subjectId, string newSubjectName, int code);
     }
 }

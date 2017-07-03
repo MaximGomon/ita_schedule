@@ -8,13 +8,15 @@ namespace ITA.Schedule.DAL.Repositories.Interfaces
     /// </summary>
     public interface IUserRepository : ICrudRepository<User>
     {
-        // authorize user in the app
+        /// <summary>authorize user in the app</summary>
         User AuthorizeApp(string login, string password);
-        // attach student to the user
+        /// <summary>get user by login-email to avoid register user with same email</summary>
+        User GetByLogin(string login);
+        /// <summary>attach student to the user</summary>
         Student AttachStudent(Guid studentId);
-        // attach teacher to a user
+        /// <summary>attach teacher to a user</summary>
         Teacher AttachTeacher(Guid teachreId);
-        // set access group
+        /// <summary>set access group</summary>
         SecurityGroup SetSecurityGroup(string groupName);
     }
 }

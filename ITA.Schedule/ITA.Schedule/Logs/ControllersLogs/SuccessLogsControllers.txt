@@ -384,3 +384,7 @@
                     2017-07-13 17:25:21.2501)EPUAVINW0180Info:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-07-13 17:25:51.5026)EPUAVINW0180Info:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-11-05 20:52:48.6532)DESKTOP-BD72A39Info:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-11-06 23:34:56.0173)DESKTOP-BD72A39Info:ActionResult Login () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-11-06 23:34:56.1068)DESKTOP-BD72A39Info:AuthorizeApp (sdfsdfdf@sddfsdf.fsx , asdasd)              
+                    2017-11-06 23:37:13.0542)DESKTOP-BD72A39Info:ActionResult Register () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-11-06 23:37:13.0752)DESKTOP-BD72A39Info:GetByLogin (sdfsdfdf@sddfsdf.fsx)              

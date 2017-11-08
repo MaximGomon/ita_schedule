@@ -388,3 +388,5 @@
                     2017-11-06 23:34:56.1068)DESKTOP-BD72A39Info:AuthorizeApp (sdfsdfdf@sddfsdf.fsx , asdasd)              
                     2017-11-06 23:37:13.0542)DESKTOP-BD72A39Info:ActionResult Register () is succesfull ITA.Schedule.Controllers.HomeController              
                     2017-11-06 23:37:13.0752)DESKTOP-BD72A39Info:GetByLogin (sdfsdfdf@sddfsdf.fsx)              
+                    2017-11-08 20:16:19.1416)DESKTOP-BD72A39Info:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              
+                    2017-11-08 21:26:36.9216)DESKTOP-BD72A39Info:ActionResult Authorization () is succesfull ITA.Schedule.Controllers.HomeController              

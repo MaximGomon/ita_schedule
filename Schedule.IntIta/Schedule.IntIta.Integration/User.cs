@@ -32,7 +32,7 @@ namespace Schedule.IntIta.Integration
             return this;
         }
 
-        public void Update(User user, int Id)
+        public void Update(int id, User user)
         {
             
         }
@@ -42,6 +42,16 @@ namespace Schedule.IntIta.Integration
             return false;
         }
 
+        public void AddGrant(Grant grant)
+        {
+            for (var i = 0; i < Grants.Length; i++)
+            {
+                if (Grants[i] == null)
+                {
+                    Grants[i] = grant;
+                }
+            }
+        }
     }
     
 }

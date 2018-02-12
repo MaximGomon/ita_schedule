@@ -2,7 +2,7 @@
 
 namespace Schedule.IntIta.Integration
 {
-    class User
+    class User : IUser
     {
         public string Login { get; set; }
         public string Email { get; set; }

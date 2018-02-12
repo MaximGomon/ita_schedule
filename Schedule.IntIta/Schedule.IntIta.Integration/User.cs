@@ -8,6 +8,7 @@ namespace Schedule.IntIta.Integration
     {
         public string Login { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,19 +21,20 @@ namespace Schedule.IntIta.Integration
 
         public User() {}
         
-        public User(string log, string e, string fn, string ln, UserType uT)
+        public User(string log, string e,string pass, string fn, string ln, UserType uT)
         {
             Login = log;
             Email = e;
+            Password = pass;
             FirstName = fn;
             LastName = ln;
             UType = uT;
             Grants = new List<Grant>();
         }
 
-        public User Create()
+        public bool CreateNewUser()
         {
-            return new User();
+            return false;
         }
 
         public User Get(int id)

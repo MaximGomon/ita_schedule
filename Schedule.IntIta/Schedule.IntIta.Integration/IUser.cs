@@ -6,7 +6,7 @@ namespace Schedule.IntIta.Integration
 {
     interface IUser
     {
-        User Create();
+        bool CreateNewUser();
         User Get(int id);
         void Update(int id, User user);
         void Delete(int id);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Schedule.IntIta.Integration.Enums;
 
 namespace Schedule.IntIta.Integration
 {
@@ -11,33 +9,35 @@ namespace Schedule.IntIta.Integration
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Grant[] Grants;
+        public UserType UType { get; set; }
 
         public User() {}
 
-        public User(string log, string e, string fn, string ln)
+        public User(string log, string e, string fn, string ln, UserType uT)
         {
             Login = log;
             Email = e;
             FirstName = fn;
             LastName = ln;
+            UType = uT;
         }
 
-        public User CreateUser()
+        public User Create()
         {
             return new User();
         }
 
-        public User ReadUser(int id)
+        public User Get(int id)
         {
             return this;
         }
 
-        public void UpdateUser(User user, int Id)
+        public void Update(User user, int Id)
         {
             
         }
 
-        public bool DeleteUser(int id)
+        public bool Delete(int id)
         {
             return false;
         }

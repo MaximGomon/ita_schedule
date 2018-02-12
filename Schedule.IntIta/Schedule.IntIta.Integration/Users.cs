@@ -10,7 +10,7 @@ namespace Schedule.IntIta.Integration
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Grant[] grants;
+        public Grant[] Grants;
     }
     
 }

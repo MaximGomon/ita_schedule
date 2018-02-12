@@ -4,16 +4,8 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    class Subject
+    public class Subject : DeletableEntity
     {
-        public Guid Id { get; set; }
-        public string Name
-        {
-            get => Name;
-            set
-            {
-                if (value.Length > 0) Name = value;
-            }
-        }
+        public string Name { get; set; }
     }
 }

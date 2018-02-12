@@ -9,7 +9,7 @@ namespace Schedule.IntIta.Integration
         User Create();
         User Get(int id);
         void Update(int id, User user);
-        bool Delete(int id);
+        void Delete(int id);
         void AddGrant(Grant grant);
     }
 }

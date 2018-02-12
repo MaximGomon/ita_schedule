@@ -1,10 +1,10 @@
 ﻿namespace Schedule.IntIta.Integration.Enums
 {
-    enum UserType
+    public enum UserType
     {
-        Admin,
-        Teacher,
-        Student
+        Admin = 'A',
+        Teacher = 'T',
+        Student = 'S'
     }
 
 }

@@ -1,4 +1,6 @@
-﻿using Schedule.IntIta.Integration.Enums;
+﻿using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Integration.Enums;
+using System.Collections.Generic;
 
 namespace Schedule.IntIta.Integration
 {
@@ -6,13 +8,18 @@ namespace Schedule.IntIta.Integration
     {
         public string Login { get; set; }
         public string Email { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Grant[] Grants;
+
         public UserType UType { get; set; }
+        public List<Grant> Grants;
+
+        public virtual Teacher Teacher { get; set; }
+
 
         public User() {}
-
+        
         public User(string log, string e, string fn, string ln, UserType uT)
         {
             Login = log;
@@ -20,6 +27,7 @@ namespace Schedule.IntIta.Integration
             FirstName = fn;
             LastName = ln;
             UType = uT;
+            Grants = new List<Grant>();
         }
 
         public User Create()
@@ -34,23 +42,22 @@ namespace Schedule.IntIta.Integration
 
         public void Update(int id, User user)
         {
+            this.Login = user.Login;
+            this.Email = user.Email;
+            this.FirstName = user.FirstName;
+            this.Grants = user.Grants;
+            this.LastName = user.LastName;
             
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
-            return false;
+            
         }
 
         public void AddGrant(Grant grant)
         {
-            for (var i = 0; i < Grants.Length; i++)
-            {
-                if (Grants[i] == null)
-                {
-                    Grants[i] = grant;
-                }
-            }
+            Grants.Add(grant);
         }
     }
     

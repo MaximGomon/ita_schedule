@@ -7,9 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="4.4.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Schedule.IntIta.BusinessLogic\Schedule.IntIta.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Schedule.IntIta.DataAccess\Schedule.IntIta.DataAccess.csproj" />
+    <ProjectReference Include="..\Schedule.IntIta.Domain.Models\Schedule.IntIta.Domain.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,3 +10,4 @@ namespace Schedule.IntIta.BusinessLogic
         TimeSlot Read(int id);
         void Update(TimeSlot modifiedTimeSlot);
     }
+}

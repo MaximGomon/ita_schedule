@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Schedule.IntIta.Domain.Models
+﻿namespace Schedule.IntIta.Domain.Models
 {
     public class Grant : IdEntity
     {

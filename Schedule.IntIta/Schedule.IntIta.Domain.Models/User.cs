@@ -1,5 +1,4 @@
-﻿using Schedule.IntIta.Domain.Models;
-using Schedule.IntIta.Domain.Models.Enumerations;
+﻿using Schedule.IntIta.Domain.Models.Enumerations;
 
 namespace Schedule.IntIta.Domain.Models
 {
@@ -14,7 +13,5 @@ namespace Schedule.IntIta.Domain.Models
 
         public UserType UserType { get; set; }
         public Grant[] Grants;
-
     }
-    
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
 
@@ -31,7 +29,7 @@ namespace Schedule.IntIta.BusinessLogic
 
         public void Delete(int id)
         {
-            if (_repository.GetAll().Any(x => int.Equals(x.Id, id)))
+            if (_repository.GetAll().Any(x => Equals(x.Id, id)))
             {
                 _repository.Delete(id);
             }
@@ -41,16 +39,13 @@ namespace Schedule.IntIta.BusinessLogic
             }
         }
 
-        public User Read(int id)//типу так потрібно кожну функцію зробити??
+        public User Read(int id)
         {
-            if(_repository.GetAll().Any( x => int.Equals(x.Id, id)))
+            if(_repository.GetAll().Any( x => Equals(x.Id, id)))
             {
                 return _repository.Get(id);
             }
-            else
-            {
-                throw new ArgumentException("User with the same Id is not found"); 
-            }
+            throw new ArgumentException("User with the same Id is not found");
         }
 
         public void Update(User modifiedUser)

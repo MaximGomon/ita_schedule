@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Schedule.IntIta.Integration;
+using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.DataAccess
 {

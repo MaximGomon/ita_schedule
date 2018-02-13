@@ -1,7 +1,7 @@
 ﻿using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
 
-namespace Schedule.IntIta.Integration
+namespace Schedule.IntIta.Domain.Models
 {
     public class User
     {

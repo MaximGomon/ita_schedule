@@ -1,6 +1,5 @@
 ﻿using Schedule.IntIta.Domain.Models;
-using Schedule.IntIta.Integration.Enums;
-using System.Collections.Generic;
+using Schedule.IntIta.Domain.Models.Enumerations;
 
 namespace Schedule.IntIta.Integration
 {

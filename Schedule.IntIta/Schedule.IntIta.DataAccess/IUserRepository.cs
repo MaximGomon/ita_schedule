@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Schedule.IntIta.Integration;
 
 namespace Schedule.IntIta.DataAccess
 {

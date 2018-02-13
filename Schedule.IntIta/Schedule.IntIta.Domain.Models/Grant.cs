@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Schedule.IntIta.Integration
+namespace Schedule.IntIta.Domain.Models
 {
     public class Grant
     {

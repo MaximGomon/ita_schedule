@@ -1,4 +1,4 @@
-﻿namespace Schedule.IntIta.Integration.Enums
+﻿namespace Schedule.IntIta.Domain.Models.Enumerations
 {
     public enum UserType
     {

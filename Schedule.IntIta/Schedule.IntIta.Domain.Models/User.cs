@@ -3,7 +3,7 @@ using Schedule.IntIta.Domain.Models.Enumerations;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class User
+    public class User : IdEntity
     {
         public string Login { get; set; }
         public string Email { get; set; }

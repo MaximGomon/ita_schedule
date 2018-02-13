@@ -4,7 +4,7 @@ using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.DataAccess
 {
-    class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         public void Delete(int id)
         {

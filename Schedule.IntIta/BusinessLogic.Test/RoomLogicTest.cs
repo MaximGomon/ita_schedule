@@ -1,22 +1,31 @@
 using System.Linq;
 using FakeItEasy;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using NUnit.Framework;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Domain.Models.Enumerations;
+//using Assert = NUnit.Framework.Assert;
 
 namespace BusinessLogic.Test
 {
-    [TestFixture]
+    //[TestFixture]
+    [TestClass]
     public class RoomLogicTest
     {
-        [Test]
+        //[Test]
+        [TestMethod]
         public void CreateRoomTest()
         {
             //Create test Room item
             Room myCustomRoom = new Room()
             {
-                Id = 12
+                Id = 12,
+                Name = "TEst",
+                IsDeleted = false,
+                RoomStatus = RoomStatus.Active,
+                SeatNumber = 12
             };
             //Create mock for IRoomRepository
             IRoomRepository repository = A.Fake<IRoomRepository>();
@@ -29,7 +38,6 @@ namespace BusinessLogic.Test
             {
                 resultRoom = new Room()
                 {
-                    //((Room)call.Arguments[0]) get input function parameter
                     Id = ((Room)call.Arguments[0]).Id
                 };
             });
@@ -39,8 +47,8 @@ namespace BusinessLogic.Test
 
             roomLogic.Add(myCustomRoom);
 
-            Assert.NotNull(resultRoom);
-            Assert.AreEqual(resultRoom.Id, myCustomRoom.Id);
+            Assert.IsNotNull(resultRoom);
+            Assert.AreEqual(myCustomRoom.Id, resultRoom.Id);
         }
     }
 }

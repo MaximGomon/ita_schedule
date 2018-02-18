@@ -3,7 +3,7 @@ using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.DataAccess
 {
-    class TimeSlotRepository : ITimeSlotRepository
+    public class TimeSlotRepository : ITimeSlotRepository
     {
         public void Insert(TimeSlot item)
         {

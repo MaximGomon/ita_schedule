@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Schedule.Intita.ApiRequest;
+using Schedule.IntIta.Domain.Models;
 
 namespace BusinessLogic.Test
 {
@@ -14,7 +15,7 @@ namespace BusinessLogic.Test
         {
 
             //Create istanse of ApiRequestHelper
-            ApiRequest apiRequest = new ApiRequest();
+            ApiRequest<TestGroup> apiRequest = new ApiRequest<TestGroup>();
 
             //Send request
             var response = apiRequest.Url("https://sso.intita.com/api/offline/groups") //API url
@@ -23,6 +24,16 @@ namespace BusinessLogic.Test
                             .Send(); //send request
 
             Assert.IsNotNull(response);
+
+            if(response.IsDeserializeSuccess)
+            Assert.IsTrue(response.Response[0] is TestGroup group);
         }
+    }
+
+    
+    internal class TestGroup : IEntity
+    {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }

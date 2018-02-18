@@ -30,7 +30,7 @@ namespace Schedule.Intita.ApiRequest
 
             httpRequest.Method = _httpMethod.ToString().ToUpper();
 
-            if (_httpMethod != RequestType.Get)
+            if (_httpMethod == RequestType.Get)
             {
                 httpRequest.ContentType = _contentType.GetDisplayText();
                 if (_requestBody != null)
@@ -71,14 +71,14 @@ namespace Schedule.Intita.ApiRequest
 
                     response.ContentAsString = responseString;
                     response.StatusCode = int.Parse(webResponse.StatusCode.ToString("D"));
-                    response.Response = (string)JsonConvert.DeserializeObject(responseString);
+                    response.Response = responseString;
+                    //response.Response = (string)JsonConvert.DeserializeObject(responseString);
                     response.IsDeserializeSuccess = response.Response != null;
                 }
                 catch (WebException ex)
                 {
                     Console.WriteLine("Error, please check 'AccessToken' in appsettings.json.");
                 }
-                
             }
             
             return response;
@@ -122,7 +122,7 @@ namespace Schedule.Intita.ApiRequest
             return this;
         }
 
-        public void ValidateForSend()
+        private void ValidateForSend()
         {
             string validationError = String.Empty;
             if (_requestUri == String.Empty)

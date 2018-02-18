@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Schedule.Intita.ApiRequest\Schedule.Intita.ApiRequest.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.BusinessLogic\Schedule.IntIta.BusinessLogic.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.DataAccess\Schedule.IntIta.DataAccess.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.Domain.Models\Schedule.IntIta.Domain.Models.csproj" />

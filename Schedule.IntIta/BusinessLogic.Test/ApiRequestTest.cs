@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta.Domain.Models;
 
@@ -15,7 +16,7 @@ namespace BusinessLogic.Test
         {
 
             //Create istanse of ApiRequestHelper
-            ApiRequest<TestGroup> apiRequest = new ApiRequest<TestGroup>();
+            ApiRequest<List<TestGroup>> apiRequest = new ApiRequest<List<TestGroup>>();
 
             //Send request
             var response = apiRequest.Url("https://sso.intita.com/api/offline/groups") //API url
@@ -25,8 +26,9 @@ namespace BusinessLogic.Test
 
             Assert.IsNotNull(response);
 
-            if(response.IsDeserializeSuccess)
-            Assert.IsTrue(response.Response[0] is TestGroup group);
+            if (response.IsDeserializeSuccess)
+                Assert.IsTrue(response.Response[0] is TestGroup group);
+
         }
     }
 

@@ -12,7 +12,7 @@ using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.Intita.ApiRequest
 {
-    public class ApiRequest<TResponse> where TResponse : IEntity
+    public class ApiRequest<TResponse>
     {
         private string _requestUri;
         private string _requestBody;
@@ -73,7 +73,7 @@ namespace Schedule.Intita.ApiRequest
                     
                     response.ContentAsString = responseString;
                     response.StatusCode = int.Parse(webResponse.StatusCode.ToString("D"));
-                    response.Response = JsonConvert.DeserializeObject<TResponse[]>(responseString);
+                    response.Response = JsonConvert.DeserializeObject<TResponse>(responseString);
                     response.IsDeserializeSuccess = response.Response != null;
                 }
                 catch (WebException)

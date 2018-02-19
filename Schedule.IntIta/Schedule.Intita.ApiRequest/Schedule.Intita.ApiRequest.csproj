@@ -9,4 +9,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Schedule.IntIta.Domain.Models\Schedule.IntIta.Domain.Models.csproj" />
+  </ItemGroup>
+
 </Project>

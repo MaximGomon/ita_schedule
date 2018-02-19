@@ -7,10 +7,12 @@ using System.Text;
 using Newtonsoft.Json;
 using Schedule.Intita.ApiRequest.Enumerations;
 using Microsoft.Extensions.Configuration;
+using Schedule.IntIta.Domain.Models;
+
 
 namespace Schedule.Intita.ApiRequest
 {
-    public class ApiRequest
+    public class ApiRequest<TResponse> where TResponse : IEntity
     {
         private string _requestUri;
         private string _requestBody;
@@ -19,18 +21,18 @@ namespace Schedule.Intita.ApiRequest
         private readonly Dictionary<string, string> _headers = new Dictionary<string, string>();
         private AuthenticationConfig _authenticationConfig;
 
-        public static IConfiguration Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
         
-        public ApiResponse Send()
+        public ApiResponse<TResponse> Send()
         {
             ValidateForSend();
 
-            var response = new ApiResponse();
+            var response = new ApiResponse<TResponse>();
             var httpRequest = (HttpWebRequest)WebRequest.Create(_requestUri);
 
             httpRequest.Method = _httpMethod.ToString().ToUpper();
 
-            if (_httpMethod != RequestType.Get)
+            if (_httpMethod == RequestType.Get)
             {
                 httpRequest.ContentType = _contentType.GetDisplayText();
                 if (_requestBody != null)
@@ -64,21 +66,21 @@ namespace Schedule.Intita.ApiRequest
                 {
                     var webResponse = (HttpWebResponse)httpRequest.GetResponse();
 
-                    using (var streamReader = new StreamReader(webResponse.GetResponseStream()))
+                    using (var streamReader = new StreamReader(webResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                     {
                         responseString = streamReader.ReadToEnd();
                     }
-
+                    
                     response.ContentAsString = responseString;
                     response.StatusCode = int.Parse(webResponse.StatusCode.ToString("D"));
-                    response.Response = (string)JsonConvert.DeserializeObject(responseString);
+                    response.Response = JsonConvert.DeserializeObject<TResponse[]>(responseString);
                     response.IsDeserializeSuccess = response.Response != null;
                 }
-                catch (WebException ex)
+                catch (WebException)
                 {
                     Console.WriteLine("Error, please check 'AccessToken' in appsettings.json.");
+                    Console.WriteLine($"ResponseString: {responseString}");
                 }
-                
             }
             
             return response;
@@ -97,13 +99,13 @@ namespace Schedule.Intita.ApiRequest
             return Configuration["AccessToken"];
         }
 
-        public ApiRequest Authenticate(AuthenticationConfig config)
+        public ApiRequest<TResponse> Authenticate(AuthenticationConfig config)
         {
             _authenticationConfig = config.Copy();
             return this;
         }
 
-        public ApiRequest Authenticate()
+        public ApiRequest<TResponse> Authenticate()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -122,7 +124,7 @@ namespace Schedule.Intita.ApiRequest
             return this;
         }
 
-        public void ValidateForSend()
+        private void ValidateForSend()
         {
             string validationError = String.Empty;
             if (_requestUri == String.Empty)
@@ -139,7 +141,7 @@ namespace Schedule.Intita.ApiRequest
             }
         }
 
-        private string GetHeaders()
+        public string GetHeaders()
         {
             var result = String.Empty;
             foreach (var header in _headers)
@@ -152,55 +154,55 @@ namespace Schedule.Intita.ApiRequest
             return result;
         }
 
-        public ApiRequest AddHeader(string name, string value)
+        public ApiRequest<TResponse> AddHeader(string name, string value)
         {
             _headers.Add(name, value);
             return this;
         }
 
-        public ApiRequest ContentType(ContentTypes type)
+        public ApiRequest<TResponse> ContentType(ContentTypes type)
         {
             _contentType = type;
             return this;
         }
 
-        public ApiRequest Body(string jsonString)
+        public ApiRequest<TResponse> Body(string jsonString)
         {
             _requestBody = jsonString;
             return this;
         }
 
-        public ApiRequest Body(object o)
+        public ApiRequest<TResponse> Body(object o)
         {
             _requestBody = JsonConvert.SerializeObject(o);
             return this;
         }
 
-        public ApiRequest Url(string url)
+        public ApiRequest<TResponse> Url(string url)
         {
             _requestUri = url;
             return this;
         }
 
-        public ApiRequest Get()
+        public ApiRequest<TResponse> Get()
         {
             _httpMethod = RequestType.Get;
             return this;
         }
 
-        public ApiRequest Delete()
+        public ApiRequest<TResponse> Delete()
         {
             _httpMethod = RequestType.Delete;
             return this;
         }
 
-        public ApiRequest Post()
+        public ApiRequest<TResponse> Post()
         {
             _httpMethod = RequestType.Post;
             return this;
         }
 
-        public ApiRequest Put()
+        public ApiRequest<TResponse> Put()
         {
             _httpMethod = RequestType.Put;
             return this;

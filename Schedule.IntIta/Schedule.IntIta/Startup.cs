@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Schedule.IntIta.Integration.Authentication;
 
 namespace Schedule.IntIta
 {
@@ -21,6 +18,11 @@ namespace Schedule.IntIta
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication()
+                .AddOAuth(
+                    "Intita",
+                    options => AuthenticationMiddlewareInt.SetOAuth2Options(options)
+                );
             services.AddMvc();
         }
 

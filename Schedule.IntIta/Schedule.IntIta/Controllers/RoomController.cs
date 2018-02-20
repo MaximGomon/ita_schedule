@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Domain.Models;
@@ -59,12 +56,6 @@ namespace Schedule.IntIta.Controllers
             List<Room> model = new List<Room> { room1, room2, room3, room4, room5 };
 
             return View(model);
-        }
-
-        // GET: Room/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Room/Create

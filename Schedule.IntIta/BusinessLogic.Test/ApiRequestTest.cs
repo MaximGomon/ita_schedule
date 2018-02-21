@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta.Domain.Models;
@@ -14,7 +15,6 @@ namespace BusinessLogic.Test
         [TestMethod]
         public void GetGroupsApiRequestTest()
         {
-
             //Create istanse of ApiRequestHelper
             ApiRequest<List<TestGroup>> apiRequest = new ApiRequest<List<TestGroup>>();
 
@@ -28,11 +28,9 @@ namespace BusinessLogic.Test
 
             if (response.IsDeserializeSuccess)
                 Assert.IsTrue(response.Response[0] is TestGroup group);
-
         }
     }
 
-    
     internal class TestGroup : IEntity
     {
         public int id { get; set; }

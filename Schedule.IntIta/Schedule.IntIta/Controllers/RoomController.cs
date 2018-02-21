@@ -1,14 +1,33 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
+using AutoMapper;
+using Schedule.IntIta.DataAccess;
 
 namespace Schedule.IntIta.Controllers
 {
     public class RoomController : Controller
     {
+
+        private readonly IMapper _mapper;
+
+        public RoomController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         // GET: Room
+        public ActionResult Test(RoomRepository roomRepository)
+        {
+            
+            var result = _mapper.Map<Room>(roomRepository);
+            
+            return View();
+        }
+
         public ActionResult Index()
         {
             Room room1 = new Room

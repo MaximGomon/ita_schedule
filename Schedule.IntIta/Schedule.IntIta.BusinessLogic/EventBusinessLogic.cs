@@ -6,16 +6,16 @@ using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.BusinessLogic
 {
-    public class LessonBusinessLogic : ILessonBusinessLogic
+    public class EventBusinessLogic : IEventBusinessLogic
     {
-        private readonly ILessonRepository _repository;
+        private readonly IEventRepository _repository;
 
-        public LessonBusinessLogic(ILessonRepository repository)
+        public EventBusinessLogic(IEventRepository repository)
         {
             _repository = repository;
         }
 
-        public void Add(Lesson item)
+        public void Add(Event item)
         {
             
             _repository.Insert(item);
@@ -23,12 +23,12 @@ namespace Schedule.IntIta.BusinessLogic
         
         
 
-        public Lesson Read(int id)
+        public Event Read(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(Lesson modifiedItem)
+        public void Update(Event modifiedItem)
         {
             throw new System.NotImplementedException();
         }

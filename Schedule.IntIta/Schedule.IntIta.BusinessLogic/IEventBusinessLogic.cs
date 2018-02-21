@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Schedule.IntIta.BusinessLogic
 {
-    public interface ILessonBusinessLogic
+    public interface IEventBusinessLogic
     {
-        void Add(Lesson item);
-        Lesson Read(int id);
-        void Update(Lesson modifiedItem);
+        void Add(Event item);
+        Event Read(int id);
+        void Update(Event modifiedItem);
         void Delete(int id);
     }
 }

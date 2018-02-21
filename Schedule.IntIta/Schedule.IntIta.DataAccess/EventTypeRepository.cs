@@ -5,21 +5,21 @@ using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.DataAccess
 {
-    public class LessonRepository : ILessonRepository
+    public class EventTypeRepository : IEventTypeRepository
     {
-        public void Insert(Lesson item)
+        public void Insert(EventType item)
         {
             throw new System.NotImplementedException();
         }
 
-        public Lesson Get(int id)
+        public EventType Get(int id)
         {
             throw new System.NotImplementedException();
         }
 
-      
 
-        public void Update(Lesson modifiedItem)
+
+        public void Update(EventType modifiedItem)
         {
             throw new System.NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace Schedule.IntIta.DataAccess
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Lesson> GetAll()
+        public IEnumerable<EventType> GetAll()
         {
             throw new NotImplementedException();
         }

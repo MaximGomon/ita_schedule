@@ -5,7 +5,7 @@ using Schedule.Intita.ApiRequest;
 
 namespace Schedule.IntIta.Cache.Cache
 {
-    class CacheDataProvider <T> : IDataProvider<T>
+    public class CacheDataProvider <T> : IDataProvider<T>
     {
         public IEnumerable<T> GetData()
         {

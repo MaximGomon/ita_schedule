@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UserRepository.cs" />
+    <ProjectReference Include="..\Schedule.Intita.ApiRequest\Schedule.Intita.ApiRequest.csproj" />
   </ItemGroup>
+
 </Project>

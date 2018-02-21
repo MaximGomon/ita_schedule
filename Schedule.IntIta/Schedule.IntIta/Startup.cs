@@ -1,3 +1,4 @@
+using AspNet.Security.OAuth.Intita;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -32,19 +33,12 @@ namespace Schedule.IntIta
                     options.LoginPath = "/login";
                     options.LogoutPath = "/signout";
                 })
-
-                //.AddIntita(options =>
-                //{
-                //    options.ClientId = "22";
-                //    options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
-                //})
-                .AddOpenIdConnect(options =>
+                .AddIntita(options =>
                 {
                     options.ClientId = "22";
                     options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
-                })
-                ;
-
+                });
+            
             services.AddMvc();
         }
 

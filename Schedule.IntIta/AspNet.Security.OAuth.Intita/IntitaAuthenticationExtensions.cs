@@ -2,8 +2,9 @@
 using AspNet.Security.OAuth.Intita;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace AspNet.Security.OAuth.Intita
 {
     public static class IntitaAuthenticationExtensions
     {

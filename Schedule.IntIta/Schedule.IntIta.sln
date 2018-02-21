@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schedule.IntIta", "Schedule.IntIta\Schedule.IntIta.csproj", "{72FCF581-0AE1-4C70-91AF-36B82537FE66}"
 EndProject
@@ -21,7 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{76
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schedule.Intita.ApiRequest", "Schedule.Intita.ApiRequest\Schedule.Intita.ApiRequest.csproj", "{8C124CF4-0BAC-4A87-953A-16F852BFC535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule.IntIta.Cache.Cache", "Schedule.IntIta.Cache.Cache\Schedule.IntIta.Cache.Cache.csproj", "{E25294A4-17EF-4A81-84F7-45D083E6C4F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schedule.IntIta.Cache.Cache", "Schedule.IntIta.Cache.Cache\Schedule.IntIta.Cache.Cache.csproj", "{E25294A4-17EF-4A81-84F7-45D083E6C4F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E5F38CF4-93F9-4239-885A-2E19C7E4F17F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNet.Security.OAuth.Intita", "AspNet.Security.OAuth.Intita\AspNet.Security.OAuth.Intita.csproj", "{141B7F88-C0F6-45A6-9757-A4196C032AEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,10 @@ Global
 		{E25294A4-17EF-4A81-84F7-45D083E6C4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E25294A4-17EF-4A81-84F7-45D083E6C4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E25294A4-17EF-4A81-84F7-45D083E6C4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141B7F88-C0F6-45A6-9757-A4196C032AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141B7F88-C0F6-45A6-9757-A4196C032AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141B7F88-C0F6-45A6-9757-A4196C032AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141B7F88-C0F6-45A6-9757-A4196C032AEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +82,8 @@ Global
 		{DB465DEB-4DCB-4F10-8801-89D194467607} = {E3FAC598-2335-4A26-A56A-8937C652F168}
 		{8C124CF4-0BAC-4A87-953A-16F852BFC535} = {76A6DEDD-9B1D-46C1-8592-EA7259172A73}
 		{E25294A4-17EF-4A81-84F7-45D083E6C4F3} = {76A6DEDD-9B1D-46C1-8592-EA7259172A73}
+		{E5F38CF4-93F9-4239-885A-2E19C7E4F17F} = {76A6DEDD-9B1D-46C1-8592-EA7259172A73}
+		{141B7F88-C0F6-45A6-9757-A4196C032AEA} = {E5F38CF4-93F9-4239-885A-2E19C7E4F17F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B14FA693-4C2E-498E-9DDF-8CB052898D56}

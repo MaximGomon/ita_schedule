@@ -1,35 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Schedule.IntIta.Cache.Cache
 {
     public class CacheManager<T> : ICacheManager<T>
     {
+        private Timer _timer;
         private ICacheStore<T> _store;
         private IDataProvider<T> _dataProvider;
         public CacheManager(ICacheStore<T> store, IDataProvider<T> provider)
         {
+            _timer = new Timer((e) =>
+            {
+                if (_store.IsLoaded == true)
+                {
+                    _store.Clean();
+                }
+
+            }, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
             _store = store;
             _dataProvider = provider;
-            Call();
-            
+                        
         }
-        public void Call()
+        public IEnumerable<T> Call()
         {
-            bool flag = false;
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromMinutes(15);
-            var timer = new Timer((e) =>
+            if(_store.IsLoaded == false)
             {
-                _store.Clean();
-                flag = true;
-
-            }, null,startTimeSpan, periodTimeSpan);
-            if (flag == true)
-            {
-               _store.SetData(_dataProvider.GetData());
+                _store.SetData(_dataProvider.GetData());
             }
-            
+           return _store.GetData();
         }
     }
 }

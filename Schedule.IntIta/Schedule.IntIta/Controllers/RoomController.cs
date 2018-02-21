@@ -6,6 +6,7 @@ using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
 using AutoMapper;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -20,10 +21,8 @@ namespace Schedule.IntIta.Controllers
         }
 
         // GET: Room
-        public ActionResult Test(RoomRepository roomRepository)
+        public ActionResult Test()
         {
-            
-            var result = _mapper.Map<Room>(roomRepository);
             
             return View();
         }

@@ -29,7 +29,6 @@ namespace BusinessLogic.Test
             };
             //Create mock for IRoomRepository
             IRoomRepository repository = A.Fake<IRoomRepository>();
-
             Room resultRoom = null;
             //Mock invocation of method GetAll
             A.CallTo(() => repository.GetAll()).Returns(Enumerable.Empty<Room>());

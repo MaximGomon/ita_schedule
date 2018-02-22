@@ -20,8 +20,8 @@ namespace Schedule.IntIta
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper();
             services.AddMvc();
+            services.AddAutoMapper();
 
             services.AddAuthentication(options =>
                 {
@@ -39,7 +39,6 @@ namespace Schedule.IntIta
                     options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
                 });
             
-            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -48,7 +47,13 @@ namespace Schedule.IntIta
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
+
         }
     }
 

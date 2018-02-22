@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta
 {
@@ -8,7 +9,7 @@ namespace Schedule.IntIta
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserRepository>();
+            CreateMap<User, UserViewModel>();
         }
     }
 }

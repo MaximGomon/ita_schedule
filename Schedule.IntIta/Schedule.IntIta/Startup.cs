@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
@@ -20,7 +21,10 @@ namespace Schedule.IntIta
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
             services.AddAutoMapper();
 
             services.AddAuthentication(options =>

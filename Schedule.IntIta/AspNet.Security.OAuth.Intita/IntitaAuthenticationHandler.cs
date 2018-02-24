@@ -51,44 +51,44 @@ namespace AspNet.Security.OAuth.Intita
 
             // When the email address is not public, retrieve it from
             // the emails endpoint if the user:email scope is specified.
-            //if (!string.IsNullOrEmpty(Options.UserEmailsEndpoint) &&
-            //    !identity.HasClaim(claim => claim.Type == ClaimTypes.Email) && Options.Scope.Contains("user:email"))
-            //{
-            //    var address = await GetEmailAsync(tokens);
-            //    if (!string.IsNullOrEmpty(address))
-            //    {
-            //        identity.AddClaim(new Claim(ClaimTypes.Email, address, ClaimValueTypes.String, Options.ClaimsIssuer));
-            //    }
-            //}
+            if (!string.IsNullOrEmpty(Options.UserEmailsEndpoint) &&
+                !identity.HasClaim(claim => claim.Type == ClaimTypes.Email) && Options.Scope.Contains("user:email"))
+            {
+                var address = await GetEmailAsync(tokens);
+                if (!string.IsNullOrEmpty(address))
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Email, address, ClaimValueTypes.String, Options.ClaimsIssuer));
+                }
+            }
 
             await Options.Events.CreatingTicket(context);
 
             return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
         }
-        //protected virtual async Task<string> GetEmailAsync([NotNull] OAuthTokenResponse tokens)
-        //{
-        //    var request = new HttpRequestMessage(HttpMethod.Get, Options.UserEmailsEndpoint);
-        //    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
+        protected virtual async Task<string> GetEmailAsync([NotNull] OAuthTokenResponse tokens)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, Options.UserEmailsEndpoint);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
 
-        //    // Failed requests shouldn't cause an error: in this case, return null to indicate that the email address cannot be retrieved.
-        //    var response = await Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, Context.RequestAborted);
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        Logger.LogWarning("An error occurred while retrieving the email address associated with the logged in user: " +
-        //                          "the remote server returned a {Status} response with the following payload: {Headers} {Body}.",
-        //            /* Status: */ response.StatusCode,
-        //            /* Headers: */ response.Headers.ToString(),
-        //            /* Body: */ await response.Content.ReadAsStringAsync());
+            // Failed requests shouldn't cause an error: in this case, return null to indicate that the email address cannot be retrieved.
+            var response = await Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, Context.RequestAborted);
+            if (!response.IsSuccessStatusCode)
+            {
+                Logger.LogWarning("An error occurred while retrieving the email address associated with the logged in user: " +
+                                  "the remote server returned a {Status} response with the following payload: {Headers} {Body}.",
+                    /* Status: */ response.StatusCode,
+                    /* Headers: */ response.Headers.ToString(),
+                    /* Body: */ await response.Content.ReadAsStringAsync());
 
-        //        return null;
-        //    }
+                return null;
+            }
 
-        //    var payload = JArray.Parse(await response.Content.ReadAsStringAsync());
+            var payload = JArray.Parse(await response.Content.ReadAsStringAsync());
 
-        //    return (from address in payload.AsJEnumerable()
-        //        where address.Value<bool>("primary")
-        //        select address.Value<string>("email")).FirstOrDefault();
-        //}
+            return (from address in payload.AsJEnumerable()
+                    where address.Value<bool>("primary")
+                    select address.Value<string>("email")).FirstOrDefault();
+        }
     }
 }

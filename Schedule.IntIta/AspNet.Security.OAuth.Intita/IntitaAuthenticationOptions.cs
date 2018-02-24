@@ -26,6 +26,6 @@ namespace AspNet.Security.OAuth.Intita
             ClaimActions.MapJsonKey("urn:intita:name", "name");
             ClaimActions.MapJsonKey("urn:intita:url", "url");
         }
-        //public string UserEmailsEndpoint { get; set; } = IntitaAuthenticationDefaults.UserEmailsEndpoint;
+        public string UserEmailsEndpoint { get; set; } = IntitaAuthenticationDefaults.UserEmailsEndpoint;
     }
 }

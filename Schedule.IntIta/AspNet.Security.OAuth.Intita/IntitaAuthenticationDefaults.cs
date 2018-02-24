@@ -38,11 +38,11 @@ namespace AspNet.Security.OAuth.Intita
         /// <summary>
         /// Default value for <see cref="OAuthOptions.UserInformationEndpoint"/>.
         /// </summary>
-        //public const string UserInformationEndpoint = "https://api.github.com/user";
+        public const string UserInformationEndpoint = "https://api.github.com/api/user";
 
         /// <summary>
         /// Default value for <see cref="IntitaAuthenticationOptions.UserEmailsEndpoint"/>.
         /// </summary>
-        //public const string UserEmailsEndpoint = "https://api.github.com/user/emails";
+        public const string UserEmailsEndpoint = "https://api.github.com/api/user/emails";
     }
 }

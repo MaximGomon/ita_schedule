@@ -26,7 +26,7 @@ namespace Schedule.IntIta.DataAccess
             throw new NotImplementedException();
         }
 
-        public void Update(User modifiedItem)
+        public void Update(User modifiedUser)
         {
             throw new NotImplementedException();
         }

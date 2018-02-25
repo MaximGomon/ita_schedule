@@ -41,6 +41,7 @@ namespace Schedule.IntIta
                 {
                     options.ClientId = "22";
                     options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
+                    options.SaveTokens = true;
                 });
             
         }

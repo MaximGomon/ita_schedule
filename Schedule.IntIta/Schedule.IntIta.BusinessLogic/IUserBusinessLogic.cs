@@ -9,7 +9,7 @@ namespace Schedule.IntIta.BusinessLogic
     {
         void Add(User item);
         User Read(int id);
-        void Update(User modifiedItem);
+        void Update(User modifiedUser);
         void Delete(int id);
     }
 }

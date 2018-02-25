@@ -23,7 +23,7 @@ namespace AspNet.Security.OAuth.Intita
         /// <summary>
         /// Default value for <see cref="RemoteAuthenticationOptions.CallbackPath"/>.
         /// </summary>
-        public const string CallbackPath = "/signin-intita";
+        public const string CallbackPath = "https://www.getpostman.com/oauth2/callback";
 
         /// <summary>
         /// Default value for <see cref="OAuthOptions.AuthorizationEndpoint"/>.

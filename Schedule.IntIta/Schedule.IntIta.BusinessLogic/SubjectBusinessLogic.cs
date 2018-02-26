@@ -15,14 +15,7 @@ namespace Schedule.IntIta.BusinessLogic
         }
         public void Add(Subject item)
         {
-            if (string.IsNullOrEmpty(item.Name))
-                throw new ValidationException("Parameter Name must have value!");
-
-            if (_repository.GetAll().Any(x => string.Equals(x.Name, item.Name)))
-                throw new ArgumentException("Subject with the same name already exists!");
-
             _repository.Insert(item);
-
         }
         public Subject Read(int id)
         {

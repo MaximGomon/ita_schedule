@@ -19,28 +19,8 @@ namespace Schedule.IntIta.Controllers
 
         public ActionResult Index()
         {
-            List<Event> model = new List<Event>();
-            TimeSlot ts = new TimeSlot
-            {
-                StartTime = DateTime.Now,
-                EndTime = DateTime.MaxValue
-            };
-            EventType et = new EventType {Name = "Lesson"};
-
-            Event event1 = new Event()
-            {
-                Comments = "comment",
-                Id = 1,
-                Date = ts,
-                TypeOfEvent = et,
-                GroupId = 1,
-                InitiatorId = 1,
-                RoomId = 1,
-                SubjectId = 1
-            };
-            model.Add(event1);
-
-            return View(model);
+            
+            return View();
         }
 
         // GET: Room/Create

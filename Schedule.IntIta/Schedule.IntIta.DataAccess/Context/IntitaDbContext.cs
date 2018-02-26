@@ -29,7 +29,7 @@ namespace Schedule.IntIta.DataAccess.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;UserId=schedule;Password=jAWe37h412;database=schedule;port=3307");
+            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=1111;database=schedule;");
         }
     }
 }

@@ -14,9 +14,10 @@ namespace Schedule.IntIta.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Index(int id)
+        
+        public IActionResult SearchResult(int id)
         {
+            ViewBag.UserId = id;
             return View();
         }
     }

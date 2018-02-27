@@ -4,8 +4,10 @@
 }
 <h2>Index</h2>
 
-<form method="post" action="">
+<form id="auth"  action="/Search/SearchResult" method="post">
     <p>Get user by Id:</p>
-    <p><input type="text" name="IdField" value="@Html.EditorFor()" /><input type="submit"  value="Send" /></p>
+    <p><input form ="auth" type="text" name="id" value="" />
+        <input type="submit" form="auth" value="Send" />
+    </p>
 </form>
 

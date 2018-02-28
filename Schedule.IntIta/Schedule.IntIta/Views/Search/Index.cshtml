@@ -1,0 +1,13 @@
+﻿@model Schedule.IntIta.Domain.Models.User
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Index</h2>
+
+<form id="auth"  action="/Search/SearchResult" method="post">
+    <p>Get user by Id:</p>
+    <p><input form ="auth" type="text" name="id" value="" />
+        <input type="submit" form="auth" value="Send" />
+    </p>
+</form>
+

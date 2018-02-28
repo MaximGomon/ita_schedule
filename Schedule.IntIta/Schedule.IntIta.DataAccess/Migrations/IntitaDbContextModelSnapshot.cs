@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models.Enumerations;
 using System;
@@ -22,23 +21,6 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("Schedule.IntIta.Domain.Models.DeletableEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeletableEntities");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("DeletableEntity");
-                });
-
             modelBuilder.Entity("Schedule.IntIta.Domain.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -51,6 +33,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     b.Property<int>("GroupId");
 
                     b.Property<int>("InitiatorId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int>("RoomId");
 
@@ -72,6 +56,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -86,11 +72,29 @@ namespace Schedule.IntIta.DataAccess.Migrations
 
                     b.Property<string>("Code");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Grants");
+                });
+
+            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("NumberOfStudents");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Schedule.IntIta.Domain.Models.Office", b =>
@@ -100,11 +104,69 @@ namespace Schedule.IntIta.DataAccess.Migrations
 
                     b.Property<string>("Adress");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Office");
+                });
+
+            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("RoomStatus");
+
+                    b.Property<int>("SeatNumber");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Schedule.IntIta.Domain.Models.SubGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("GroupId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("NumberOfStudents");
+
+                    b.Property<int?>("SubGroupTimeSlotId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("SubGroupTimeSlotId");
+
+                    b.ToTable("SubGroups");
+                });
+
+            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Schedule.IntIta.Domain.Models.Teacher", b =>
@@ -115,6 +177,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName");
 
@@ -132,6 +196,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
 
                     b.Property<int>("IdType");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime>("StartTime");
 
                     b.HasKey("Id");
@@ -143,6 +209,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -162,6 +230,8 @@ namespace Schedule.IntIta.DataAccess.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("Login");
@@ -173,70 +243,6 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Group", b =>
-                {
-                    b.HasBaseType("Schedule.IntIta.Domain.Models.DeletableEntity");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("NumberOfStudents");
-
-                    b.ToTable("Group");
-
-                    b.HasDiscriminator().HasValue("Group");
-                });
-
-            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Room", b =>
-                {
-                    b.HasBaseType("Schedule.IntIta.Domain.Models.DeletableEntity");
-
-                    b.Property<string>("Name")
-                        .HasColumnName("Room_Name");
-
-                    b.Property<int>("RoomStatus");
-
-                    b.Property<int>("SeatNumber");
-
-                    b.ToTable("Room");
-
-                    b.HasDiscriminator().HasValue("Room");
-                });
-
-            modelBuilder.Entity("Schedule.IntIta.Domain.Models.SubGroup", b =>
-                {
-                    b.HasBaseType("Schedule.IntIta.Domain.Models.DeletableEntity");
-
-                    b.Property<int?>("GroupId");
-
-                    b.Property<string>("Name")
-                        .HasColumnName("SubGroup_Name");
-
-                    b.Property<int>("NumberOfStudents")
-                        .HasColumnName("SubGroup_NumberOfStudents");
-
-                    b.Property<int?>("SubGroupTimeSlotId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("SubGroupTimeSlotId");
-
-                    b.ToTable("SubGroup");
-
-                    b.HasDiscriminator().HasValue("SubGroup");
-                });
-
-            modelBuilder.Entity("Schedule.IntIta.Domain.Models.Subject", b =>
-                {
-                    b.HasBaseType("Schedule.IntIta.Domain.Models.DeletableEntity");
-
-                    b.Property<string>("Name")
-                        .HasColumnName("Subject_Name");
-
-                    b.ToTable("Subject");
-
-                    b.HasDiscriminator().HasValue("Subject");
                 });
 
             modelBuilder.Entity("Schedule.IntIta.Domain.Models.Event", b =>

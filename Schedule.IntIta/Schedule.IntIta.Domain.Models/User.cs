@@ -2,7 +2,7 @@
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class User : IdEntity
+    public class User : DeletableEntity
     {
         public string Login { get; set; }
         public string Email { get; set; }

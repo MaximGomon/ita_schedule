@@ -3,7 +3,7 @@
 namespace Schedule.IntIta.Domain.Models
 {
     /// <summary>Represents the type of time slot.</summary>
-    public class TimeSlotTypes : IdEntity
+    public class TimeSlotTypes : DeletableEntity
     {
         /// <summary>Represents the name of type. This field must be [Required].</summary>
         [Required, MinLength(2), MaxLength(20)]

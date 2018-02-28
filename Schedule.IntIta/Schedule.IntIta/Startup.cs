@@ -21,10 +21,13 @@ namespace Schedule.IntIta
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
+
+            services.AddMvc();
+
             services.AddAutoMapper();
 
             services.AddAuthentication(options =>

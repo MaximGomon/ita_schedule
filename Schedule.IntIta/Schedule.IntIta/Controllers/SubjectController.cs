@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Domain.Models;
 using AutoMapper;
+using Schedule.IntIta.BusinessLogic;
+using Schedule.IntIta.DataAccess;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -38,12 +41,15 @@ namespace Schedule.IntIta.Controllers
         // POST: Room/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SubjectViewModel model)
         {
+            Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
             try
             {
-                // TODO: Add insert logic here
-
+                Console.WriteLine("sdfdfas");
+                SubjectRepository subjectR = new SubjectRepository();
+                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
+                subjectBL.Add(sub);
                 return RedirectToAction(nameof(Index));
             }
             catch

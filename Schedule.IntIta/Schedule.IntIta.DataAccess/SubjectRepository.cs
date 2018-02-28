@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.DataAccess.Context;
 
 namespace Schedule.IntIta.DataAccess
 {
@@ -8,7 +9,11 @@ namespace Schedule.IntIta.DataAccess
     {
         public void Insert(Subject item)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.Subjects.Add(item);
+                context.SaveChanges();
+            }
         }
 
         public Subject Get(int id)

@@ -17,7 +17,6 @@ namespace Schedule.IntIta.BusinessLogic
 
         public void Add(Event item)
         {
-            
             _repository.Insert(item);
         }
         

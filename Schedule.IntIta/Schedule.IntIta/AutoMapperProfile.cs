@@ -10,7 +10,8 @@ namespace Schedule.IntIta
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserViewModel>();
+            CreateMap<UserViewModel, User>();
+            CreateMap<EventViewModel, Event>();
             CreateMap<SubjectViewModel, Subject>();
         }
     }

@@ -2,11 +2,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h2>Search</h2>
+<h2>Enter email or name to search: </h2>
 
 <form id="auth"  action="/Search/SearchResult" method="post">
-    <p>Get user by Id:</p>
-    <p><input form ="auth" type="text" value=""  name ="id"/>
+    <p><input form ="auth" type="text" value=""  name ="str"/>
         <input type="submit" form="auth" value="Send" />
     </p>
 </form>

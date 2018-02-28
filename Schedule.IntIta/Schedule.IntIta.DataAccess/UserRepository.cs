@@ -15,22 +15,15 @@ namespace Schedule.IntIta.DataAccess
         public User Get(int id)
         {
             return UserIntegration.GetUserList().Find(x => x.Id == id);
-            throw new NotImplementedException();
+        }
+
+        public List<User> GetByStr(string searchStr)
+        {
+            return UserIntegration.GetUserByStr(searchStr);
         }
 
         public IEnumerable<User> GetAll()
         {
-            //List<User> testList = new List<User>();
-            //testList.Add(new User()
-            //{
-            //    Email = "someEmail@gmail.com",
-            //    FirstName = "Name",
-            //    LastName = "SerName",
-            //    Id = 2,
-            //    Login = "SomeLogin",
-            //    Password = "somePassword"
-            //});
-            //return testList;
             return UserIntegration.GetUserList();
         }
 

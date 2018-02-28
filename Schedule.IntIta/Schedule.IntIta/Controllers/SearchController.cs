@@ -19,11 +19,10 @@ namespace Schedule.IntIta.Controllers
             return View();
         }
         
-        public IActionResult SearchResult(int id)
+        public IActionResult SearchResult(string str)
         {
             UserBusinessLogic userBusinessLogic = new UserBusinessLogic(_repository);
-            List<User> users = new List<User> {userBusinessLogic.Read(id)};
-            ViewBag.UserId = id;
+            List<User> users = userBusinessLogic.ReadByStr(str);
             return View(users);
         }
     }

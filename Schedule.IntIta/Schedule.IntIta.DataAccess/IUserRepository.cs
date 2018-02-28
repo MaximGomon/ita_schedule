@@ -7,6 +7,7 @@ namespace Schedule.IntIta.DataAccess
     {
         void Insert(User item);
         User Get(int id);
+        List<User> GetByStr(string searchStr);
         void Update(User modifiedUser);
         void Delete(int id);
         IEnumerable<User> GetAll();

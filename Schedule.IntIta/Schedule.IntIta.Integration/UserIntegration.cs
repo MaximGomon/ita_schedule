@@ -21,9 +21,25 @@ namespace Schedule.IntIta.Integration
                 .Authenticate()
                 .Get()
                 .Send();
-            foreach (var integrativeUser in response.Response)
+            tmp = ConvertToUser(response.Response);
+            return tmp;
+        }
+
+        public static List<User> GetUserByStr(string searchStr)
+        {
+            string reqUrl = "https://sso.intita.com/api/user/search?q=" + searchStr;
+            ApiRequest<List<UserIntegrativeModel>> apiRequest = new ApiRequest<List<UserIntegrativeModel>>();
+            var response = apiRequest.Url(reqUrl).Authenticate().Get().Send();
+
+            return ConvertToUser(response.Response);
+        }
+
+        private static List<User> ConvertToUser(List<UserIntegrativeModel> modelList)
+        {
+            List<User> users = new List<User>();
+            foreach (var integrativeUser in modelList)
             {
-                tmp.Add(new User()
+                users.Add(new User()
                 {
                     Email = integrativeUser.Email,
                     FirstName = integrativeUser.FirstName,
@@ -31,7 +47,8 @@ namespace Schedule.IntIta.Integration
                     Id = integrativeUser.Id
                 });
             }
-            return tmp;
+
+            return users;
         }
     }
 }

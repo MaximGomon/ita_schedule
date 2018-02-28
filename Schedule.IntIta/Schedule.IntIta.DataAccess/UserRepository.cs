@@ -14,7 +14,7 @@ namespace Schedule.IntIta.DataAccess
 
         public User Get(int id)
         {
-            
+            return UserIntegration.GetUserList().Find(x => x.Id == id);
             throw new NotImplementedException();
         }
 

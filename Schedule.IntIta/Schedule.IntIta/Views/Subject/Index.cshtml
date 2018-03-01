@@ -9,7 +9,7 @@
     
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
-    <tr>
+    <tr style="color: red">
         <th>
             @Html.DisplayNameFor(model => model.Id)
         </th>
@@ -18,6 +18,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayName("Control buttons")
         </th>
     </tr>
     </thead>

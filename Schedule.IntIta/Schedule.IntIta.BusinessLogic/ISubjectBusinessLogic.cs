@@ -1,4 +1,5 @@
-﻿using Schedule.IntIta.Domain.Models;
+﻿using System.Collections.Generic;
+using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.BusinessLogic
 {
@@ -8,5 +9,6 @@ namespace Schedule.IntIta.BusinessLogic
         Subject Read(int id);
         void Update(Subject modifiedItem);
         void Delete(int id);
+        IEnumerable<Subject> GetAll();
     }
 }

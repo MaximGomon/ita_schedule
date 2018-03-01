@@ -8,7 +8,6 @@ namespace Schedule.IntIta.DataAccess
     {
         void Insert(Subject item);
         Subject Get(int id);
-        IEnumerable<Subject> GetFreeRooms(DateTime forDate);
         void Update(Subject modifiedItem);
         void Delete(int id);
         IEnumerable<Subject> GetAll();

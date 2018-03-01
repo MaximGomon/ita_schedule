@@ -28,7 +28,7 @@ namespace Schedule.IntIta.Integration
         [JsonProperty("email")]
         public string Email { get; set; }
 
-    { 
+     
         public static List<User> GetUserList()
         {
             List<User> tmp = new List<User>();

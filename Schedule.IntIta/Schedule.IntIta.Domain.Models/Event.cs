@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class Event : IdEntity
+    public class Event : DeletableEntity
     {
         public EventType TypeOfEvent { get; set; }
         public int SubjectId { get; set; }

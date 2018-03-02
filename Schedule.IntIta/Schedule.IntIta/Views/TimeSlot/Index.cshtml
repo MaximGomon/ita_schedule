@@ -1,0 +1,55 @@
+﻿@using Schedule.IntIta.Domain.Models
+@model IEnumerable<Schedule.IntIta.Domain.Models.TimeSlot>
+
+<h2>Rooms</h2>
+
+<p>
+    <a asp-action="Create">Create new timeslot</a>
+</p>
+
+<table class="table-responsive table-striped table-bordered table-hover ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.IdType)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </td>
+                <td>
+                   @Html.DisplayNameFor(model => model.IdType)
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

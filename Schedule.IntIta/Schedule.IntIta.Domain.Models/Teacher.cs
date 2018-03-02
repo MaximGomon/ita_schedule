@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class Teacher : IdEntity
+    public class Teacher : DeletableEntity
     {
         public int Id { get; set; } //for test
         public string FirstName { get; set; }

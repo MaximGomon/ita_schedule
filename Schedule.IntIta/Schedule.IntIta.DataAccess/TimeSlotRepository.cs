@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.DataAccess.Context;
+using System.Linq;
 
 namespace Schedule.IntIta.DataAccess
 {
@@ -7,27 +9,53 @@ namespace Schedule.IntIta.DataAccess
     {
         public void Insert(TimeSlot item)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.TimeSlots.Add(item);
+                context.SaveChanges();
+            }
+            
         }
-
+        
         public TimeSlot Get(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var timeslot = context.TimeSlots.Find(id);
+                return timeslot;
+            }
         }
 
         public void Update(TimeSlot modifiedItem)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var oldTimeSlot = context.TimeSlots.Find(modifiedItem.Id);
+                oldTimeSlot.IdType = modifiedItem.IdType;
+                oldTimeSlot.StartTime = modifiedItem.StartTime;
+                oldTimeSlot.EndTime = modifiedItem.EndTime;
+                context.SaveChanges();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var deletableItem = context.TimeSlots.Find(id);
+                context.TimeSlots.Remove(deletableItem);
+            }
+               
         }
 
         public IEnumerable<TimeSlot> GetAll()
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                IEnumerable<TimeSlot> timeslotList = context.TimeSlots.ToList();
+                return timeslotList;
+            }
+               
         }
     }
 }

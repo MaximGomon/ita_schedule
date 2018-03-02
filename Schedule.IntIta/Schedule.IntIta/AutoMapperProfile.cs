@@ -12,6 +12,7 @@ namespace Schedule.IntIta
         {
             CreateMap<User, UserViewModel>();
             CreateMap<SubjectViewModel, Subject>();
+            CreateMap<TimeSlotTypeViewModel,TimeSlot>();
         }
     }
 }

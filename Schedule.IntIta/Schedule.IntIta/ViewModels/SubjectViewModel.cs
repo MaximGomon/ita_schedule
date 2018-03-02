@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Schedule.IntIta.Domain.Models;
 
-namespace Schedule.IntIta.Controllers
+namespace Schedule.IntIta.ViewModels
 {
-    public class SubjectViewModel
+    public class SubjectViewModel : DeletableEntity
     {
         public int Id { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Integration;
 
 namespace BusinessLogic.Test
 {
@@ -16,10 +17,10 @@ namespace BusinessLogic.Test
         public void GetGroupsApiRequestTest()
         {
             //Create istanse of ApiRequestHelper
-            ApiRequest<List<TestGroup>> apiRequest = new ApiRequest<List<TestGroup>>();
+            ApiRequest<List<UserIntegration>> apiRequest = new ApiRequest<List<UserIntegration>>();
 
             //Send request
-            var response = apiRequest.Url("https://sso.intita.com/api/offline/groups") //API url
+            var response = apiRequest.Url("https://sso.intita.com/api/user/search?q=m") //API url
                             .Authenticate() //add default or own authenticate
                             .Get() //GET, POST, PUT, DELETE
                             .Send(); //send request
@@ -27,7 +28,7 @@ namespace BusinessLogic.Test
             Assert.IsNotNull(response);
 
             if (response.IsDeserializeSuccess)
-                Assert.IsTrue(response.Response[0] is TestGroup group);
+                Assert.IsTrue(response.Response[0] is UserIntegration ui);
         }
     }
 

@@ -9,7 +9,6 @@ namespace Schedule.IntIta.DataAccess.Context
     public class IntitaDbContext : DbContext
     {
         public DbSet<Event> Events { get; set; }
-        public DbSet<DeletableEntity> DeletableEntities { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Grant> Grants { get; set; }
         public DbSet<Group> Groups { get; set; }

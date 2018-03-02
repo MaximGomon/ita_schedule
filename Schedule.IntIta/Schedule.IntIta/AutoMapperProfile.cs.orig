@@ -13,10 +13,11 @@ namespace Schedule.IntIta
             CreateMap<UserViewModel, User>();
             CreateMap<EventViewModel, Event>();
             CreateMap<SubjectViewModel, Subject>();
-
-            CreateMap<TimeSlotTypeViewModel, TimeSlot>();
-
+<<<<<<< HEAD
+            CreateMap<TimeSlotTypeViewModel,TimeSlot>();
+=======
+            CreateMap<Subject, SubjectViewModel > ();
+>>>>>>> 64bc754bd673db682906b48d82711bc9ba9c713b
         }
     }
- 
-} 
+}

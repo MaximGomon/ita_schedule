@@ -6,6 +6,7 @@ using Schedule.IntIta.Domain.Models;
 using AutoMapper;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -19,20 +20,8 @@ namespace Schedule.IntIta.Controllers
         }
         public ActionResult Index()
         {
-            Subject room1 = new Subject
-            {
-                Id = 1,
-                Name = "Subj 1"
-            };
-            Subject room2 = new Subject
-            {
-                Id = 2,
-                Name = "Subj 2"
-            };
-
-            List<Subject> model = new List<Subject> { room1, room2 };
-
-            return View(model);
+            SubjectRepository subjectR = new SubjectRepository();
+            return View(subjectR.GetAll());
         }
         public ActionResult Create()
         {
@@ -46,7 +35,6 @@ namespace Schedule.IntIta.Controllers
             Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
             try
             {
-                Console.WriteLine("sdfdfas");
                 SubjectRepository subjectR = new SubjectRepository();
                 SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
                 subjectBL.Add(sub);
@@ -59,17 +47,28 @@ namespace Schedule.IntIta.Controllers
         }
         public ActionResult Edit(int id)
         {
-
-            return View();
+            try
+            {
+                SubjectRepository subjectR = new SubjectRepository();
+                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
+                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel> (subjectBL.Get(id));
+                return View(sub);
+            }
+            catch
+            {
+                return View();
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(SubjectViewModel model)
         {
+            Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
             try
             {
-                // TODO: Add update logic here
-
+                SubjectRepository subjectR = new SubjectRepository();
+                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
+                subjectBL.Update(sub);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -79,7 +78,17 @@ namespace Schedule.IntIta.Controllers
         }
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                SubjectRepository subjectR = new SubjectRepository();
+                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
+                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(subjectBL.Get(id));
+                return View(sub);
+            }
+            catch
+            {
+                return View();
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,8 +96,9 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                SubjectRepository subjectR = new SubjectRepository();
+                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
+                subjectBL.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Integration;
 
 namespace Schedule.IntIta.DataAccess
 {
@@ -13,12 +14,17 @@ namespace Schedule.IntIta.DataAccess
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            return UserIntegration.GetUserList().Find(x => x.Id == id);
+        }
+
+        public List<User> GetByStr(string searchStr)
+        {
+            return UserIntegration.GetUserByStr(searchStr);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return UserIntegration.GetUserList();
         }
 
         public void Insert(User item)

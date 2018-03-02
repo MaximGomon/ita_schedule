@@ -15,6 +15,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -29,11 +30,27 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    NumberOfStudents = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,11 +60,42 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Adress = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Office", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    RoomStatus = table.Column<int>(nullable: false),
+                    SeatNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +106,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -73,6 +122,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EndTime = table.Column<DateTime>(nullable: false),
                     IdType = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -86,6 +136,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Type = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -101,6 +152,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     LastName = table.Column<string>(nullable: true),
                     Login = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -109,42 +161,6 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeletableEntities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Discriminator = table.Column<string>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    NumberOfStudents = table.Column<int>(nullable: true),
-                    Room_Name = table.Column<string>(nullable: true),
-                    RoomStatus = table.Column<int>(nullable: true),
-                    SeatNumber = table.Column<int>(nullable: true),
-                    GroupId = table.Column<int>(nullable: true),
-                    SubGroup_Name = table.Column<string>(nullable: true),
-                    SubGroup_NumberOfStudents = table.Column<int>(nullable: true),
-                    SubGroupTimeSlotId = table.Column<int>(nullable: true),
-                    Subject_Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeletableEntities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeletableEntities_DeletableEntities_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "DeletableEntities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DeletableEntities_TimeSlots_SubGroupTimeSlotId",
-                        column: x => x.SubGroupTimeSlotId,
-                        principalTable: "TimeSlots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +173,7 @@ namespace Schedule.IntIta.DataAccess.Migrations
                     DateId = table.Column<int>(nullable: true),
                     GroupId = table.Column<int>(nullable: false),
                     InitiatorId = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     RoomId = table.Column<int>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false),
                     TypeOfEventId = table.Column<int>(nullable: true)
@@ -178,15 +195,34 @@ namespace Schedule.IntIta.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_DeletableEntities_GroupId",
-                table: "DeletableEntities",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeletableEntities_SubGroupTimeSlotId",
-                table: "DeletableEntities",
-                column: "SubGroupTimeSlotId");
+            migrationBuilder.CreateTable(
+                name: "SubGroups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    GroupId = table.Column<int>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    NumberOfStudents = table.Column<int>(nullable: false),
+                    SubGroupTimeSlotId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubGroups_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SubGroups_TimeSlots_SubGroupTimeSlotId",
+                        column: x => x.SubGroupTimeSlotId,
+                        principalTable: "TimeSlots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Events_DateId",
@@ -197,13 +233,20 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 name: "IX_Events_TypeOfEventId",
                 table: "Events",
                 column: "TypeOfEventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubGroups_GroupId",
+                table: "SubGroups",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubGroups_SubGroupTimeSlotId",
+                table: "SubGroups",
+                column: "SubGroupTimeSlotId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "DeletableEntities");
-
             migrationBuilder.DropTable(
                 name: "Events");
 
@@ -212,6 +255,15 @@ namespace Schedule.IntIta.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Office");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "SubGroups");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "Teachers");
@@ -223,10 +275,13 @@ namespace Schedule.IntIta.DataAccess.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "TimeSlots");
+                name: "EventTypes");
 
             migrationBuilder.DropTable(
-                name: "EventTypes");
+                name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "TimeSlots");
         }
     }
 }

@@ -23,32 +23,9 @@ namespace Schedule.IntIta.Controllers
         // GET: TimeSlot
         public ActionResult Index()
         {
-            TimeSlot morningTimeSlot = new TimeSlot
-            {
-                Id = 1,
-                StartTime = new DateTime(2018, 3, 1, 8, 0, 0),
-                EndTime = new DateTime(2018, 3, 1, 12, 15, 0),
-                IdType = new TimeSlotTypes().Id,
-                IsDeleted = false
-            };
-            TimeSlot eveningTimeSlot = new TimeSlot
-            {
-                Id = 2,
-                StartTime = new DateTime(2018, 3, 1, 18, 0, 0),
-                EndTime = new DateTime(2018, 3, 1, 21, 15, 0),
-                IdType = new TimeSlotTypes().Id,
-                IsDeleted = false
-            };
-            TimeSlot eventTimeSlot = new TimeSlot
-            {
-                Id = 3,
-                StartTime = new DateTime(2018, 4, 1, 10, 0, 0),
-                EndTime = new DateTime(2018, 3, 1, 14, 0, 0),
-                IdType = new TimeSlotTypes().Id,
-                IsDeleted = false
-            };
-            List<TimeSlot> timeSlots = new List<TimeSlot> { morningTimeSlot, eveningTimeSlot,eventTimeSlot};
-            return View(timeSlots);
+            TimeSlotRepository tsRepo = new TimeSlotRepository();
+            return View(tsRepo.GetAll());
+            
         }
 
         public ActionResult Create()
@@ -67,7 +44,7 @@ namespace Schedule.IntIta.Controllers
                 Console.WriteLine("Something happened");
                 TimeSlotRepository tsRepo = new TimeSlotRepository();
                 TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
-                tsRepo.Insert(tSlot);
+                tsBLogic.Add(tSlot);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,18 +57,30 @@ namespace Schedule.IntIta.Controllers
         // GET: TimeSlot/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            try
+            {
+                TimeSlotRepository tsRepo = new TimeSlotRepository();
+                TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
+                TimeSlotViewModel tsModel = Mapper.Map<TimeSlot, TimeSlotViewModel>(tsBLogic.Read(id));
+                return View(tsModel);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: TimeSlot/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(TimeSlotViewModel tsModel)
         {
+            TimeSlot tSlot = Mapper.Map<TimeSlotViewModel, TimeSlot>(tsModel);
             try
             {
-                // TODO: Add update logic here
-
+                TimeSlotRepository tsRepo = new TimeSlotRepository();
+                TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
+                tsBLogic.Update(tSlot);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -100,10 +89,21 @@ namespace Schedule.IntIta.Controllers
             }
         }
 
+
         // GET: TimeSlot/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                TimeSlotRepository tsRepo = new TimeSlotRepository();
+                TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
+                TimeSlotViewModel tsModel = Mapper.Map<TimeSlot, TimeSlotViewModel>(tsBLogic.Read(id));
+                return View(tsModel);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: TimeSlot/Delete/5
@@ -113,8 +113,9 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                TimeSlotRepository tsRepo = new TimeSlotRepository();
+                TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
+                tsBLogic.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

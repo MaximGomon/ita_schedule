@@ -1,7 +1,7 @@
 ﻿@model Schedule.IntIta.ViewModels.TimeSlotViewModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Create";
 }
 
 <!DOCTYPE html>
@@ -15,24 +15,39 @@
 
 <h4>TimeSlotViewModel</h4>
 <hr />
-<div class="row">
+@using (Html.BeginForm("Create", "TimeSlot", FormMethod.Post))
+{<div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+                @Html.LabelFor(x => x.StartTime)
+                @Html.EditorFor(x => x.StartTime)
+                @Html.ValidationMessageFor(x => x.StartTime, null, new { @class = "field-validation-error" })
+             
+             </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.EndTime)
+                @Html.EditorFor(x => x.EndTime)
+                @Html.ValidationMessageFor(x => x.EndTime, null, new { @class = "field-validation-error" })
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(x => x.IsDeleted)
+                        @Html.DisplayNameFor(model => model.IsDeleted)
+                    </label>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="IdType" class="control-label"></label>
-                <input asp-for="IdType" class="form-control" />
-                <span asp-validation-for="IdType" class="text-danger"></span>
+                @Html.LabelFor(x => x.IdType)
+                @Html.EditorFor(x => x.IdType)
+                @Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Id)
+                @Html.EditorFor(x => x.Id)
+                @Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -40,10 +55,12 @@
         </form>
     </div>
 </div>
-
+}
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 </body>
 </html>

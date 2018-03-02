@@ -39,11 +39,14 @@ namespace Schedule.IntIta.BusinessLogic
 
         public TimeSlot Read(int id)
         {
-            if(_repository.GetAll().Any( x => Equals(x.Id, id)))
+            if (_repository.GetAll().Any(x => Equals(x.Id, id)))
             {
                 return _repository.Get(id);
             }
-            throw new ArgumentException("TimeSlot with the same Id is not found");
+            else
+            {
+                throw new ArgumentException("TimeSlot with the same Id is not found");
+            }
         }
 
         public void Update(TimeSlot modifiedTimeSlot)

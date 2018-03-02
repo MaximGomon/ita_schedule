@@ -1,7 +1,7 @@
 ﻿@model Schedule.IntIta.ViewModels.TimeSlotViewModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Delete";
 }
 
 <!DOCTYPE html>
@@ -18,24 +18,25 @@
     <h4>TimeSlotViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdType)
-        </dd>
+        <form asp-action="Delete">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Id)
+                @Html.DisplayFor(x => x.Id)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.IdType)
+                @Html.DisplayFor(x => x.IdType)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.StartTime)
+                @Html.DisplayFor(x => x.StartTime)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.EndTime)
+                @Html.DisplayFor(x => x.EndTime)
+            </div>
+         </form>
+
     </dl>
     
     <form asp-action="Delete">

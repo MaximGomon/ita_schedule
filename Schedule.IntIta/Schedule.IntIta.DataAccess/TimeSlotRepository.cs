@@ -44,6 +44,8 @@ namespace Schedule.IntIta.DataAccess
             {
                 var deletableItem = context.TimeSlots.Find(id);
                 context.TimeSlots.Remove(deletableItem);
+                context.SaveChanges();
+
             }
                
         }

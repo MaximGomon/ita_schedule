@@ -1,7 +1,7 @@
 ﻿@using Schedule.IntIta.Domain.Models
 @model IEnumerable<Schedule.IntIta.Domain.Models.TimeSlot>
 
-<h2>Rooms</h2>
+<h2>TimeSlots</h2>
 
 <p>
     <a asp-action="Create">Create new timeslot</a>
@@ -23,9 +23,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
 
-
-            <th></th>
+            <th>
+                @Html.DisplayName("Control buttons")
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -44,7 +48,9 @@
                 <td>
                    @Html.DisplayNameFor(model => model.IdType)
                 </td>
-                
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })

@@ -21,10 +21,13 @@ namespace Schedule.IntIta
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
+
+            services.AddMvc();
+
             services.AddAutoMapper();
 
             services.AddAuthentication(options =>
@@ -41,6 +44,7 @@ namespace Schedule.IntIta
                 {
                     options.ClientId = "22";
                     options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
+                    options.SaveTokens = true;
                 });
             
         }

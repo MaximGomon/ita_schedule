@@ -23,7 +23,10 @@ namespace Schedule.IntIta.Controllers
         // GET: Room
         public ActionResult Test()
         {
-            
+
+            //UserViewModel userViewModel = new UserViewModel();
+            //var result = _mapper.Map<Room>(userViewModel);
+
             return View();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
@@ -46,6 +47,11 @@ namespace Schedule.IntIta.BusinessLogic
                 return _repository.Get(id);
             }
             throw new ArgumentException("User with the same Id is not found");
+        }
+
+        public List<User> ReadByStr(string searchStr)
+        {
+            return _repository.GetByStr(searchStr);
         }
 
         public void Update(User modifiedUser)

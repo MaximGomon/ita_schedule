@@ -1,0 +1,23 @@
+﻿using AutoMapper;
+using Schedule.IntIta.Controllers;
+using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.ViewModels;
+
+namespace Schedule.IntIta
+{
+    public class AutoMapperProfile : Profile
+    {
+        public AutoMapperProfile()
+        {
+            CreateMap<UserViewModel, User>();
+            CreateMap<EventViewModel, Event>();
+            CreateMap<SubjectViewModel, Subject>();
+<<<<<<< HEAD
+            CreateMap<TimeSlotTypeViewModel,TimeSlot>();
+=======
+            CreateMap<Subject, SubjectViewModel > ();
+>>>>>>> 64bc754bd673db682906b48d82711bc9ba9c713b
+        }
+    }
+}

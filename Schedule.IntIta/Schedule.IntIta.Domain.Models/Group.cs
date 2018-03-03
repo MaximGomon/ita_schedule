@@ -1,7 +1,7 @@
 ﻿
 namespace Schedule.IntIta.Domain.Models
 {
-     public class Group : DeletableEntity
+     public class Group : IdEntity
     {
         public string Name { get; set; }
         public int NumberOfStudents { get; set; }

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Schedule.IntIta.Domain.Models.Event>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Events</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table-responsive table-striped table-bordered table-hover ">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfEvent.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InitiatorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.TypeOfEvent.Name)
+        </th>
+        <th>
+            @Html.DisplayFor(modelItem => item.Date.StartTime)
+        </th>
+        <th>
+            @Html.DisplayFor(modelItem => item.Date.EndTime)
+        </th>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InitiatorId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroupId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
+            @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

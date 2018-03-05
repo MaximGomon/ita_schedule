@@ -25,7 +25,8 @@ namespace BusinessLogic.Test
                 Name = "TEst",
                 IsDeleted = false,
                 RoomStatus = RoomStatus.Active,
-                SeatNumber = 12
+                SeatNumber = 12,
+                Office = new Office()
             };
             //Create mock for IRoomRepository
             IRoomRepository repository = A.Fake<IRoomRepository>();

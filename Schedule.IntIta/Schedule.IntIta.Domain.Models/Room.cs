@@ -7,5 +7,6 @@ namespace Schedule.IntIta.Domain.Models
         public int SeatNumber { get; set; }
         public string Name { get; set; }
         public RoomStatus RoomStatus { get; set; }
+        public Office Office { get; set; }
     }
 }

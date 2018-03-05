@@ -1,44 +1,46 @@
-﻿@model Schedule.IntIta.Domain.Models.Room
+﻿@using Domain.Models
+@using Domain.Models.Enumerations
+@model Schedule.IntIta.ViewModels.RoomViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
 
-<h4>Room</h4>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>RoomViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SeatNumber" class="control-label"></label>
-                <input asp-for="SeatNumber" class="form-control" />
-                <span asp-validation-for="SeatNumber" class="text-danger"></span>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+                @Html.ValidationMessageFor(x => x.Name, null, new {@class = "field-validation-error"})
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                @Html.LabelFor(x => x.SeatNumber)
+                @Html.EditorFor(x => x.SeatNumber)
+                @Html.ValidationMessageFor(x => x.SeatNumber, null, new { @class = "field-validation-error" })
             </div>
-            <div class="form-group">
-                <label asp-for="RoomStatus" class="control-label"></label>
-                <input asp-for="RoomStatus" class="form-control" />
-                <span asp-validation-for="RoomStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(x => x.RoomStatus)
+                @Html.DropDownListFor(x => x.RoomStatus, new SelectList(Enum.GetValues(typeof(RoomStatus))),"Select status")
+                @Html.ValidationMessageFor(x => x.RoomStatus, null, new { @class = "field-validation-error" })
+            </div>*@
+            @*<div class="form-group">
+                @Html.LabelFor(x => x.Office)
+                @Html.DropDownListFor(x => x.Office, new SelectList(IEnumerable<Office>.typeof(RoomStatus)), "Select status")
+                @Html.ValidationMessageFor(x => x.RoomStatus, null, new { @class = "field-validation-error" })
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -53,3 +55,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</body>
+</html>

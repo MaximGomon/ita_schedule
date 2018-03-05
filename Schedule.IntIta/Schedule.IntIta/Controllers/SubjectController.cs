@@ -13,10 +13,12 @@ namespace Schedule.IntIta.Controllers
     public class SubjectController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly ISubjectBusinessLogic _subjectBusinessLogic;
 
-        public SubjectController(IMapper mapper)
+        public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic)
         {
             _mapper = mapper;
+            _subjectBusinessLogic = subjectBusinessLogic;
         }
         public ActionResult Index()
         {
@@ -35,9 +37,7 @@ namespace Schedule.IntIta.Controllers
             Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
             try
             {
-                SubjectRepository subjectR = new SubjectRepository();
-                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
-                subjectBL.Add(sub);
+                _subjectBusinessLogic.Add(sub);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -49,9 +49,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                SubjectRepository subjectR = new SubjectRepository();
-                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
-                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel> (subjectBL.Get(id));
+                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
                 return View(sub);
             }
             catch
@@ -66,9 +64,7 @@ namespace Schedule.IntIta.Controllers
             Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
             try
             {
-                SubjectRepository subjectR = new SubjectRepository();
-                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
-                subjectBL.Update(sub);
+                _subjectBusinessLogic.Update(sub);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,9 +76,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                SubjectRepository subjectR = new SubjectRepository();
-                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
-                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(subjectBL.Get(id));
+                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
                 return View(sub);
             }
             catch
@@ -96,9 +90,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                SubjectRepository subjectR = new SubjectRepository();
-                SubjectBusinessLogic subjectBL = new SubjectBusinessLogic(subjectR);
-                subjectBL.Delete(id);
+                _subjectBusinessLogic.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

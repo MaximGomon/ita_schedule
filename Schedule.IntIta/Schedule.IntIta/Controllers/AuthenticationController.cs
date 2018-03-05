@@ -8,10 +8,10 @@ namespace Schedule.IntIta.Controllers
 {
     public class AuthenticationController : Controller
     {
-        [HttpGet("~/signin")]
+        [HttpGet("/signin")]
         public async Task<IActionResult> SignIn() => View("SignIn", await HttpContext.GetExternalProvidersAsync());
 
-        [HttpPost("~/signin")]
+        [HttpPost("/signin")]
         public async Task<IActionResult> SignIn([FromForm] string provider)
         {
             // Note: the "provider" parameter corresponds to the external
@@ -29,7 +29,7 @@ namespace Schedule.IntIta.Controllers
             // Instruct the middleware corresponding to the requested external identity
             // provider to redirect the user agent to its own authorization endpoint.
             // Note: the authenticationScheme parameter must match the value configured in Startup.cs
-            return Challenge(new AuthenticationProperties { RedirectUri = "/room/index" }, provider);
+            return Challenge(new AuthenticationProperties { RedirectUri = "/api/home/welcome" }, provider);
         }
 
         [HttpGet("~/signout"), HttpPost("~/signout")]

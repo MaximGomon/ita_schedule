@@ -8,22 +8,22 @@ namespace AspNet.Security.OAuth.Intita
         /// <summary>
         /// Default value for <see cref="AuthenticationScheme.Name"/>.
         /// </summary>
-        public const string AuthenticationScheme = "Intita";
+        public const string AuthenticationScheme = "IntIta";
 
         /// <summary>
         /// Default value for <see cref="AuthenticationScheme.DisplayName"/>.
         /// </summary>
-        public const string DisplayName = "Intita";
+        public const string DisplayName = "IntIta";
 
         /// <summary>
         /// Default value for <see cref="AuthenticationSchemeOptions.ClaimsIssuer"/>.
         /// </summary>
-        public const string Issuer = "Intita";
+        public const string Issuer = "IntIta";
 
         /// <summary>
         /// Default value for <see cref="RemoteAuthenticationOptions.CallbackPath"/>.
         /// </summary>
-        public const string CallbackPath = "/about";
+        public const string CallbackPath = "/api/home/welcome";
 
         /// <summary>
         /// Default value for <see cref="OAuthOptions.AuthorizationEndpoint"/>.
@@ -38,11 +38,7 @@ namespace AspNet.Security.OAuth.Intita
         /// <summary>
         /// Default value for <see cref="OAuthOptions.UserInformationEndpoint"/>.
         /// </summary>
-        public const string UserInformationEndpoint = "https://api.github.com/api/user";
-
-        /// <summary>
-        /// Default value for <see cref="IntitaAuthenticationOptions.UserEmailsEndpoint"/>.
-        /// </summary>
-        public const string UserEmailsEndpoint = "https://api.github.com/api/user/emails";
+        public const string UserInformationEndpoint = "https://sso.intita.com/api/user";
+        
     }
 }

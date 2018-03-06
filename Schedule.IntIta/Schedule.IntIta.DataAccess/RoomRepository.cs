@@ -11,12 +11,21 @@ namespace Schedule.IntIta.DataAccess
     {
         public void Insert(Room item)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.Rooms.Add(item);
+                context.SaveChanges();
+            }
         }
 
         public Room Get(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var room = context.Rooms
+                    .Single(s => s.Id == id);
+                return room;
+            }
         }
 
         public IEnumerable<Room> GetFreeRooms(DateTime forDate)
@@ -26,12 +35,22 @@ namespace Schedule.IntIta.DataAccess
 
         public void Update(Room modifiedItem)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.Rooms.Update(modifiedItem);
+                context.SaveChanges();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var room = context.Rooms
+                    .Single(s => s.Id == id);
+                room.IsDeleted = true;
+                context.SaveChanges();
+            }
         }
 
         public IEnumerable<Room> GetAll()

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
@@ -29,6 +31,18 @@ namespace Schedule.IntIta.Controllers
             }
 
             return View(model);
+        // GET: Room
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+        public ActionResult Index()
+        {
+            RoomRepository roomsR = new RoomRepository();
+            
+            return View(roomsR.GetAll().Select(x =>
+                Mapper.Map<Room, RoomViewModel>(x)));
         }
 
         // GET: Room/Create
@@ -81,7 +95,17 @@ namespace Schedule.IntIta.Controllers
         // GET: Room/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                RoomRepository roomR = new RoomRepository();
+                RoomBusinessLogic roomBL = new RoomBusinessLogic(roomR);
+                RoomViewModel room = Mapper.Map<Room, RoomViewModel>(roomBL.Get(id));
+                return View(room);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: Room/Delete/5

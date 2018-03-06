@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 
 
@@ -34,7 +36,10 @@ namespace Schedule.IntIta.DataAccess
 
         public IEnumerable<Room> GetAll()
         {
-            throw new NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                return context.Rooms.ToList();
+            }
         }
     }
 }

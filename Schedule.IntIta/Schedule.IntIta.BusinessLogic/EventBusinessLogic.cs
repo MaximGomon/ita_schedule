@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
@@ -19,22 +20,26 @@ namespace Schedule.IntIta.BusinessLogic
         {
             _repository.Insert(item);
         }
-        
-        
 
         public Event Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
 
         public void Update(Event modifiedItem)
         {
-            throw new System.NotImplementedException();
+            _repository.Update(modifiedItem);
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            _repository.Delete(id);
         }
+
+        public IEnumerable<Event> GetAll()
+        {
+            return _repository.GetAll();
+        }
+
     }
 }

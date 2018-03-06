@@ -1,4 +1,5 @@
-﻿using Schedule.IntIta.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.ViewModels
 {

@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,7 +16,7 @@ namespace Schedule.IntIta.Controllers
     public class EventController : Controller
     {
         private readonly IMapper _mapper;
-        private IntitaDbContext db = new IntitaDbContext();
+        private readonly IntitaDbContext _db = new IntitaDbContext();
 
         public EventController(IMapper mapper)
         {
@@ -22,16 +25,26 @@ namespace Schedule.IntIta.Controllers
 
         public ActionResult Index()
         {
-            
-            return View();
+            EventBusinessLogic eventBusinessLogic = new EventBusinessLogic(new EventRepository());
+            var events = eventBusinessLogic.GetAll();
+            List<EventViewModel> model = new List<EventViewModel>();
+
+            foreach (var item in events)
+            {
+                model.Add(_mapper.Map<EventViewModel>(item));
+            }
+
+            return View(model);
         }
 
         // GET: Room/Create
         public ActionResult Create()
         {
             //TODO: перенести все в репозиторий
-            SelectList eventTypes = new SelectList(db.EventTypes, "Id", "Name");
-            ViewBag.EventTypes = eventTypes;
+            SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
+            SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
+            ViewData["eventTypes"] = eventTypes;
+            ViewData["timeSlotTypes"] = timeSlotTypes;
 
             return View();
         }
@@ -58,18 +71,20 @@ namespace Schedule.IntIta.Controllers
         // GET: Room/Edit/5
         public ActionResult Edit(int id)
         {
-
-            return View();
+            EventBusinessLogic eventBusinessLogic = new EventBusinessLogic(new EventRepository());
+            var model = _mapper.Map<EventViewModel>(eventBusinessLogic.Read(id));
+            return View(model);
         }
 
         // POST: Room/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EventViewModel postEvent)
         {
             try
             {
-                // TODO: Add update logic here
+                EventBusinessLogic eventBusinessLogic = new EventBusinessLogic(new EventRepository());
+                eventBusinessLogic.Update(_mapper.Map<Event>(postEvent));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -88,11 +103,12 @@ namespace Schedule.IntIta.Controllers
         // POST: Room/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, EventViewModel deleteEvent)
         {
             try
             {
-                // TODO: Add delete logic here
+                EventBusinessLogic eventBusinessLogic = new EventBusinessLogic(new EventRepository());
+                eventBusinessLogic.Delete(id);
 
                 return RedirectToAction(nameof(Index));
             }

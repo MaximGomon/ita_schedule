@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Schedule.IntIta.Domain.Models.Event>
+﻿@model IEnumerable<ViewModels.EventViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Events";
 }
-
 <h2>Events</h2>
 
 <p>
@@ -75,8 +74,8 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-            @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
+            @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id=item.Id})
         </td>
     </tr>
 }

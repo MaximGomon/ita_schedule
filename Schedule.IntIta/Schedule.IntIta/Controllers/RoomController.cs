@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Schedule.IntIta.Domain.Models;
-using Schedule.IntIta.Domain.Models.Enumerations;
 using AutoMapper;
+using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.ViewModels;
 
@@ -12,7 +10,6 @@ namespace Schedule.IntIta.Controllers
 {
     public class RoomController : Controller
     {
-
         private readonly IMapper _mapper;
 
         public RoomController(IMapper mapper)
@@ -20,61 +17,16 @@ namespace Schedule.IntIta.Controllers
             _mapper = mapper;
         }
 
-        // GET: Room
-        public ActionResult Test()
-        {
-
-            //UserViewModel userViewModel = new UserViewModel();
-            //var result = _mapper.Map<Room>(userViewModel);
-
-            return View();
-        }
-
         public ActionResult Index()
         {
-            Room room1 = new Room
-            {
-                Id = 1,
-                IsDeleted = false,
-                Name = "Sea Room",
-                SeatNumber = 30,
-                RoomStatus = RoomStatus.Active
-            };
-            Room room2 = new Room
-            {
-                Id = 2,
-                IsDeleted = false,
-                Name = "Magenta Room",
-                SeatNumber = 20,
-                RoomStatus = RoomStatus.Active
-            };
-            Room room3 = new Room
-            {
-                Id = 3,
-                IsDeleted = false,
-                Name = "Relax Room",
-                SeatNumber = 10,
-                RoomStatus = RoomStatus.Active
-            };
-            Room room4 = new Room
-            {
-                Id = 4,
-                IsDeleted = false,
-                Name = "Square space",
-                SeatNumber = 30,
-                RoomStatus = RoomStatus.Active
-            };
-            Room room5 = new Room
-            {
-                Id = 5,
-                IsDeleted = false,
-                Name = "Long space",
-                SeatNumber = 40,
-                RoomStatus = RoomStatus.Active
-            };
+            RoomBusinessLogic roomBusinessLogic = new RoomBusinessLogic(new RoomRepository());
+            var rooms = roomBusinessLogic.GetAll();
+            List<RoomViewModel> model = new List<RoomViewModel>();
 
-
-            List<Room> model = new List<Room> { room1, room2, room3, room4, room5 };
+            foreach (var item in rooms)
+            {
+                model.Add(_mapper.Map<RoomViewModel>(item));
+            }
 
             return View(model);
         }

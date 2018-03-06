@@ -1,5 +1,4 @@
-﻿@using Schedule.IntIta.Domain.Models
-@model IEnumerable<Schedule.IntIta.Domain.Models.Room>
+﻿@model IEnumerable<ViewModels.RoomViewModel>
 
 <h2>Rooms</h2>
 
@@ -23,7 +22,7 @@
             @Html.DisplayNameFor(model => model.RoomStatus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
+            @Html.DisplayNameFor(model => model.IsDelete)
         </th>
         
 
@@ -46,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.RoomStatus)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
+            @Html.DisplayFor(modelItem => item.IsDelete)
         </td>
 
         <td>

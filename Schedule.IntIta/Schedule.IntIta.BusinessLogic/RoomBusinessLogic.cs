@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
@@ -39,6 +40,11 @@ namespace Schedule.IntIta.BusinessLogic
         public void Delete(int id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Room> GetAll()
+        {
+            return _repository.GetAll();
         }
     }
 }

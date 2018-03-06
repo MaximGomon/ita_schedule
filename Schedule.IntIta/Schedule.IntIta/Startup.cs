@@ -30,30 +30,30 @@ namespace Schedule.IntIta
 
             services.AddAutoMapper();
 
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
 
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/login";
-                    options.LogoutPath = "/signout";
-                })
-                .AddIntita(options =>
-                {
-                    options.ClientId = "22";
-                    options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
-                    options.SaveTokens = true;
-                });
-            
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = "/login";
+            //        options.LogoutPath = "/signout";
+            //    })
+            //    .AddIntita(options =>
+            //    {
+            //        options.ClientId = "22";
+            //        options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
+            //        options.SaveTokens = true;
+            //    });
+
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

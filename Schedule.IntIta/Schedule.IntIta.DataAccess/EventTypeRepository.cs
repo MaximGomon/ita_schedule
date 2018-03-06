@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta.DataAccess
@@ -17,8 +19,6 @@ namespace Schedule.IntIta.DataAccess
             throw new System.NotImplementedException();
         }
 
-
-
         public void Update(EventType modifiedItem)
         {
             throw new System.NotImplementedException();
@@ -31,7 +31,10 @@ namespace Schedule.IntIta.DataAccess
 
         public IEnumerable<EventType> GetAll()
         {
-            throw new NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                return context.EventTypes.ToList();
+            }
         }
     }
 }

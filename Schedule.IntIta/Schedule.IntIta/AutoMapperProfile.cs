@@ -14,7 +14,10 @@ namespace Schedule.IntIta
             CreateMap<EventViewModel, Event>();
             CreateMap<SubjectViewModel, Subject>();
             CreateMap<TimeSlotViewModel, TimeSlot>();
-
+            CreateMap<OfficeViewModel, Office>();
+            CreateMap<Office, OfficeViewModel>();
+            CreateMap<Room, RoomViewModel>();
+            CreateMap<RoomViewModel, Room>();
         }
     }
  

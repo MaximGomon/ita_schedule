@@ -37,6 +37,12 @@ namespace Schedule.IntIta
             services.AddSingleton<ISubjectRepository, SubjectRepository>();
             services.AddSingleton<ISubjectBusinessLogic, SubjectBusinessLogic>();
 
+            services.AddSingleton<IRoomBusinessLogic, RoomBusinessLogic>();
+            services.AddSingleton<IRoomRepository, RoomRepository>();
+
+            services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
+            services.AddSingleton<IOfficeRepository, OfficeRepository>();
+
             services
                 .AddAuthentication
                 (

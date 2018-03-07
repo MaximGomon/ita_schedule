@@ -31,16 +31,11 @@
                 @Html.EditorFor(x => x.SeatNumber)
                 @Html.ValidationMessageFor(x => x.SeatNumber, null, new { @class = "field-validation-error" })
             </div>
-            @*<div class="form-group">
-                @Html.LabelFor(x => x.RoomStatus)
-                @Html.DropDownListFor(x => x.RoomStatus, new SelectList(Enum.GetValues(typeof(RoomStatus))),"Select status")
-                @Html.ValidationMessageFor(x => x.RoomStatus, null, new { @class = "field-validation-error" })
-            </div>*@
-            @*<div class="form-group">
+            <div class="form-group">
                 @Html.LabelFor(x => x.Office)
-                @Html.DropDownListFor(x => x.Office, new SelectList(IEnumerable<Office>.typeof(RoomStatus)), "Select status")
+                @Html.DropDownList("OfficeID", ViewBag.Office as SelectList)
                 @Html.ValidationMessageFor(x => x.RoomStatus, null, new { @class = "field-validation-error" })
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

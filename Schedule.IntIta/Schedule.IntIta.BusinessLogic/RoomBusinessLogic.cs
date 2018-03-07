@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
@@ -21,7 +22,7 @@ namespace Schedule.IntIta.BusinessLogic
 
         public Room Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
         public Room Get(int id)
         {
@@ -35,6 +36,10 @@ namespace Schedule.IntIta.BusinessLogic
         public void Delete(int id)
         {
             _repository.Delete(id);
+        }
+        public IEnumerable<Room> GetAll()
+        {
+            return _repository.GetAll();
         }
     }
 }

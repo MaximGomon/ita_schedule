@@ -82,6 +82,36 @@ namespace Schedule.IntIta
             //        options.SaveTokens = true;
             //        // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
             //    });
+            services.AddSingleton<IRoomBusinessLogic, RoomBusinessLogic>();
+            services.AddSingleton<IRoomRepository, RoomRepository>();
+
+            services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
+            services.AddSingleton<IOfficeRepository, OfficeRepository>();
+
+            services
+                .AddAuthentication
+                (
+                    options =>
+                    {
+                        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultAuthenticateScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
+                        //options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    }
+                )
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/singin";
+                    options.LogoutPath = "/signout";
+                })
+                .AddOAuth<IntitaAuthenticationOptions, IntitaAuthenticationHandler>(IntitaAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.ClientId = "22";
+                    options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
+                    options.SaveTokens = true;
+                    // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
+                });
 
         }
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
@@ -14,10 +15,14 @@ namespace Schedule.IntIta.Controllers
     public class RoomController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IRoomBusinessLogic _roomBusinessLogic;
+        private readonly IRoomRepository _roomRepository;
 
-        public RoomController(IMapper mapper)
+        public RoomController(IMapper mapper, IRoomBusinessLogic roomBusinessLogic, IRoomRepository roomRepository)
         {
             _mapper = mapper;
+            _roomBusinessLogic = roomBusinessLogic;
+            _roomRepository = roomRepository;
         }
         /*
         public ActionResult Index()
@@ -35,29 +40,35 @@ namespace Schedule.IntIta.Controllers
             
         }*/
 
+        // GET: Room
+        //public ActionResult Test()
+        //{
+        //    return View();
+        //}
+
         public ActionResult Index()
         {
-            RoomRepository roomsR = new RoomRepository();
-            
-            return View(roomsR.GetAll().Select(x =>
+            return View(_roomRepository.GetAll().Select(x =>
                 Mapper.Map<Room, RoomViewModel>(x)));
         }
 
         // GET: Room/Create
         public ActionResult Create()
         {
+            ViewBag.Office = new SelectList(_roomRepository.GetAll(), "Id", "Name");
             return View();
         }
 
         // POST: Room/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(RoomViewModel model)
         {
+            Room room = Mapper.Map<RoomViewModel, Room>(model);
             try
             {
-                // TODO: Add insert logic here
-
+                room.RoomStatus = RoomStatus.Active;
+                _roomBusinessLogic.Add(room);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -69,19 +80,21 @@ namespace Schedule.IntIta.Controllers
         // GET: Room/Edit/5
         public ActionResult Edit(int id)
         {
+            OfficeRepository officeR = new OfficeRepository();
+            ViewBag.Office = new SelectList(officeR.GetAll(), "Id", "Name");
 
-            return View();
+            return View(Mapper.Map<Room, RoomViewModel>(_roomRepository.Get(id)));
         }
 
         // POST: Room/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(RoomViewModel model)
         {
+            Room room = Mapper.Map<RoomViewModel, Room>(model);
             try
             {
-                // TODO: Add update logic here
-
+                _roomBusinessLogic.Update(room);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -95,9 +108,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                RoomRepository roomR = new RoomRepository();
-                RoomBusinessLogic roomBL = new RoomBusinessLogic(roomR);
-                RoomViewModel room = Mapper.Map<Room, RoomViewModel>(roomBL.Get(id));
+                RoomViewModel room = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
                 return View(room);
             }
             catch
@@ -113,8 +124,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                _roomBusinessLogic.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

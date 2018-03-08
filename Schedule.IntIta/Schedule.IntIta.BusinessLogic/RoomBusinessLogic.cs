@@ -22,7 +22,7 @@ namespace Schedule.IntIta.BusinessLogic
 
         public Room Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
         public Room Get(int id)
         {

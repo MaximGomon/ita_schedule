@@ -13,11 +13,13 @@ namespace Schedule.IntIta
         {
             CreateMap<UserViewModel, User>();
             CreateMap<EventViewModel, Event>();
-            CreateMap<Event, EventViewModel>(); //todo
+            CreateMap<Event, EventViewModel>();
             CreateMap<SubjectViewModel, Subject>();
             CreateMap<TimeSlotViewModel, TimeSlot>();
             CreateMap<RoomViewModel, Room>();
             CreateMap<Room, RoomViewModel>();
+            CreateMap<EventTypeViewModel, EventType>();
+            CreateMap<EventType, EventTypeViewModel>();
         }
     }
  

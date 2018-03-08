@@ -35,7 +35,10 @@ namespace Schedule.IntIta.DataAccess
         {
             using (var context = new IntitaDbContext())
             {
-                return context.Events.Single(x => x.Id == id);
+                return context.Events
+                    .Include(p => p.TypeOfEvent)
+                    .Include(p => p.Date)
+                    .Single(x => x.Id == id);
             }
         }
 
@@ -43,6 +46,7 @@ namespace Schedule.IntIta.DataAccess
         {
             using (var context = new IntitaDbContext())
             {
+                modifiedItem.TypeOfEvent = context.EventTypes.Single(x => x.Id == modifiedItem.TypeOfEvent.Id);
                 context.Events.Update(modifiedItem);
                 context.SaveChanges();
             }
@@ -53,7 +57,8 @@ namespace Schedule.IntIta.DataAccess
             using (var context = new IntitaDbContext())
             {
                 var item = context.Events.First(x => x.Id == id);
-                context.Events.Remove(item);
+                item.IsDeleted = true;
+                context.SaveChanges();
             }
         }
 

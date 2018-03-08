@@ -6,7 +6,7 @@ namespace Schedule.IntIta.ViewModels
     public class EventViewModel
     {
         public int Id { get; set; }
-        public bool IsDelete { get; set; }
+        public bool IsDeleted { get; set; }
         public EventType TypeOfEvent { get; set; }
         public int SubjectId { get; set; }
         public int InitiatorId { get; set; }

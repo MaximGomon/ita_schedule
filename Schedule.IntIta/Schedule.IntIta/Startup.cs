@@ -29,8 +29,8 @@ namespace Schedule.IntIta
         {
             services.AddMvc(options =>
             {
-                options.Filters.Add(new RequireHttpsAttribute());
-                options.Filters.Add(new ErrorFilter());
+                //options.Filters.Add(new RequireHttpsAttribute());
+                //options.Filters.Add(new ErrorFilter());
             });
             services.AddAutoMapper();
 
@@ -53,31 +53,35 @@ namespace Schedule.IntIta
 
             services.AddSingleton<ISubjectRepository, SubjectRepository>();
             services.AddSingleton<ISubjectBusinessLogic, SubjectBusinessLogic>();
+            services.AddSingleton<IEventBusinessLogic, EventBusinessLogic>();
+            services.AddSingleton<IEventRepository, EventRepository>();
+            services.AddSingleton<IEventTypeBusinessLogic, EventTypeBusinessLogic>();
+            services.AddSingleton<IEventTypeRepository, EventTypeRepository>();
 
-            services
-                .AddAuthentication
-                (
-                    options =>
-                    {
-                        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        options.DefaultAuthenticateScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
-                        //options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    }
-                )
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/singin";
-                    options.LogoutPath = "/signout";
-                })
-                .AddOAuth<IntitaAuthenticationOptions, IntitaAuthenticationHandler>(IntitaAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.ClientId = "22";
-                    options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
-                    options.SaveTokens = true;
-                    // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
-                });
+            //services
+            //    .AddAuthentication
+            //    (
+            //        options =>
+            //        {
+            //            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //            //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //            options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //            options.DefaultAuthenticateScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
+            //            //options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        }
+            //    )
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = "/singin";
+            //        options.LogoutPath = "/signout";
+            //    })
+            //    .AddOAuth<IntitaAuthenticationOptions, IntitaAuthenticationHandler>(IntitaAuthenticationDefaults.AuthenticationScheme, options =>
+            //    {
+            //        options.ClientId = "22";
+            //        options.ClientSecret = "KCzNty3tuxoJ8z1kZ1MmPeGa1FaisPU2dCjkXkLK";
+            //        options.SaveTokens = true;
+            //        // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
+            //    });
 
         }
 
@@ -90,7 +94,7 @@ namespace Schedule.IntIta
 
             //app.UseAuthentication();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

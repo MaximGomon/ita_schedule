@@ -1,5 +1,5 @@
 ﻿@using ViewModels
-@model ViewModels.EventViewModel
+@model ViewModels.EventTypeViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -19,16 +19,10 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.TypeOfEvent.Name)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TypeOfEvent.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         
     </dl>

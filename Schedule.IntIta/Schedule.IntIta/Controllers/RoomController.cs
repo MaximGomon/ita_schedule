@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
@@ -18,7 +19,7 @@ namespace Schedule.IntIta.Controllers
         {
             _mapper = mapper;
         }
-
+        /*
         public ActionResult Index()
         {
             RoomBusinessLogic roomBusinessLogic = new RoomBusinessLogic(new RoomRepository());
@@ -31,11 +32,8 @@ namespace Schedule.IntIta.Controllers
             }
 
             return View(model);
-        // GET: Room
-        public ActionResult Test()
-        {
-            return View();
-        }
+            
+        }*/
 
         public ActionResult Index()
         {

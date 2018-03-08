@@ -11,22 +11,38 @@ namespace Schedule.IntIta.DataAccess
     {
         public void Insert(EventType item)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.EventTypes.Add(item);
+                context.SaveChanges();
+            }
         }
 
         public EventType Get(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                return context.EventTypes.Single(x => x.Id == id);
+            }
         }
 
         public void Update(EventType modifiedItem)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.EventTypes.Update(modifiedItem);
+                context.SaveChanges();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                var item = context.EventTypes.First(x => x.Id == id);
+                item.IsDeleted = true;
+                context.SaveChanges();
+            }
         }
 
         public IEnumerable<EventType> GetAll()

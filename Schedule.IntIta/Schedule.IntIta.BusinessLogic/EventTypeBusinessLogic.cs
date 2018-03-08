@@ -24,17 +24,17 @@ namespace Schedule.IntIta.BusinessLogic
         
         public EventType Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
 
         public void Update(EventType modifiedItem)
         {
-            throw new System.NotImplementedException();
+            _repository.Update(modifiedItem);
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            _repository.Delete(id);
         }
 
         public IEnumerable<EventType> GetAll()

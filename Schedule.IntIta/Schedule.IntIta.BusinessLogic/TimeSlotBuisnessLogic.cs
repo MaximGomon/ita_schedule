@@ -51,7 +51,7 @@ namespace Schedule.IntIta.BusinessLogic
 
         public void Update(TimeSlot modifiedTimeSlot)
         {
-            throw new NotImplementedException();
+            _repository.Update(modifiedTimeSlot);
         }
     }
 }

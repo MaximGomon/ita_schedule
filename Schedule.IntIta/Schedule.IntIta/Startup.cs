@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Schedule.IntIta
 {
@@ -54,7 +56,7 @@ namespace Schedule.IntIta
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseMiddleware<ErrorWrappingMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -65,4 +67,28 @@ namespace Schedule.IntIta
         }
     }
 
+}
+public class ErrorWrappingMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public ErrorWrappingMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        try
+        {
+            await _next.Invoke(context);
+            return;
+        }
+        catch (System.Exception ex)
+        {
+
+            //context.Response.Body = 
+            context.Response.StatusCode = 500;
+        }
+    }
 }

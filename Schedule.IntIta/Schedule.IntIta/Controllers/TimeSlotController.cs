@@ -9,6 +9,8 @@ using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.BusinessLogic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -28,30 +30,62 @@ namespace Schedule.IntIta.Controllers
             
         }
 
+        [HttpGet]
         public ActionResult Create()
+            
         {
+             TimeSlotTypesRepository tsRepo = new TimeSlotTypesRepository();
+             var items = tsRepo.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Type }).ToList();
+             ViewBag.Types = new SelectList(items, "Id", "Type");
+            //TimeSlotViewModel tsModel = new TimeSlotViewModel() { Statuses = items }; 
+            // return View(tsModel);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         // GET: TimeSlot/Create
+        //public ActionResult Create(DateTime StartTime, DateTime EndTime, string IdType)
+        //{
+        //    using (var stream = new System.IO.MemoryStream())
+        //    {
+        //        Request.Body.CopyTo(stream);
+        //        stream.Position = 0;
+        //        var bytes = new byte[(int)Request.ContentLength];
+        //        stream.Read(bytes, 0, bytes.Length);
+        //        var text = Encoding.Default.GetString(bytes);
+        //    }
+
+        //        TimeSlot timeSlot = new TimeSlot();
+        //    //timeSlot.IdType = id;
+        //    return RedirectToAction("Index");
+
+        //}
         public ActionResult Create(TimeSlotViewModel tsModel)
         {
+            int SelectValue = tsModel.IdType;
+            ViewBag.SelectedValue = tsModel.IdType;
+            // TimeSlotTypeViewModel tstModel = new TimeSlotTypeViewModel();
+            //TimeSlotTypesRepository tstRepo = new TimeSlotTypesRepository();
             TimeSlot tSlot = Mapper.Map<TimeSlotViewModel, TimeSlot>(tsModel);
+           
+            // TimeSlotTypes tTSLot = Mapper.Map<TimeSlotTypeViewModel, TimeSlotTypes>(tstModel);
             try
             {
                 Console.WriteLine("Something happened");
+                List<TimeSlotViewModel> listTimeSlotViewModel = new List<TimeSlotViewModel>();   
                 TimeSlotRepository tsRepo = new TimeSlotRepository();
                 TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
+                ///   tSlot.IdType = tTSLot.Id;
                 tsBLogic.Add(tSlot);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
             }
-            
+
         }
 
         // GET: TimeSlot/Edit/5

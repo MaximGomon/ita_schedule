@@ -1,7 +1,13 @@
-﻿@model IEnumerable<Schedule.IntIta.Domain.Models.Event>
+﻿@using Domain.Models
+@model IEnumerable<ViewModels.EventViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Events";
+
+    List<Subject> listSubjects = ViewBag.Subject;
+    List<User> listUsers = ViewBag.User;
+    List<Room> listRooms = ViewBag.Room;
+    List<Group> listGroups = ViewBag.Group;
 }
 
 <h2>Events</h2>
@@ -39,7 +45,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Comments)
         </th>
-
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -59,24 +67,29 @@
             @Html.DisplayFor(modelItem => item.Date.EndTime)
         </th>
         <td>
-            @Html.DisplayFor(modelItem => item.SubjectId)
+            @Html.DisplayFor(x => listSubjects.Single(s => s.Id == item.SubjectId).Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.InitiatorId)
+            @Html.DisplayFor(p => listUsers.Single(k => k.Id == item.InitiatorId).LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RoomId)
+            @Html.DisplayFor(p => listRooms.Single(k => k.Id == item.RoomId).Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
+            @Html.DisplayFor(p => listGroups.Single(k => k.Id == item.GroupId).Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Comments)
         </td>
-
         <td>
-            @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-            @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
+        @*
+            @(item.IsDeleted ? "y" : "n")
+        *@
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id=item.Id})
         </td>
     </tr>
 }

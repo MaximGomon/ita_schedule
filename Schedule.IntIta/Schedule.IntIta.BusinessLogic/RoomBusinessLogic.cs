@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
@@ -16,29 +17,30 @@ namespace Schedule.IntIta.BusinessLogic
         }
         public void Add(Room item)
         {
-            if (string.IsNullOrEmpty(item.Name))
-                throw new ValidationException("Parameter Name must have value!");
-         
-            if(_repository.GetAll().Any(x => string.Equals(x.Name, item.Name)))
-                throw new ArgumentException("Room with the same name already exists!");
-
             _repository.Insert(item);
-
         }
 
         public Room Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
-
+        public Room Get(int id)
+        {
+            return _repository.Get(id);
+        }
         public void Update(Room modifiedItem)
         {
-            throw new System.NotImplementedException();
+            _repository.Update(modifiedItem);
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            _repository.Delete(id);
+        }
+
+        public IEnumerable<Room> GetAll()
+        {
+            return _repository.GetAll();
         }
     }
 }

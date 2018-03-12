@@ -4,49 +4,63 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
 
 <h4>TimeSlotViewModel</h4>
 <hr />
-<div class="row">
+@using (Html.BeginForm("Create", "TimeSlot", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.IdType)
+
+    <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
-            </div>
+                @Html.LabelFor(x => x.StartTime)
+                @Html.EditorFor(x => x.StartTime)
+                @Html.ValidationMessageFor(x => x.StartTime, null, new { @class = "field-validation-error" })
+             
+             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdType" class="control-label"></label>
-                <select asp-for="IdType"
-                        class="form-control"
-                        asp-items ="@(new SelectList(@ViewBag.Types,"Id","Type"))"></select>
-                
+                @Html.LabelFor(x => x.EndTime)
+                @Html.EditorFor(x => x.EndTime)
+                @Html.ValidationMessageFor(x => x.EndTime, null, new { @class = "field-validation-error" })
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                        @Html.EditorFor(x => x.IsDeleted)
+                        @Html.DisplayNameFor(model => model.IsDeleted)
                     </label>
                 </div>
+                @Html.DropDownListFor(x => x.IdType, Model.Statuses, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })
             </div>
-            
+            <div class="form-group">
+                @*@Html.LabelFor(x => x.Id)*@
+                @*@Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
+        @*</form>*@
     </div>
 </div>
-
+}
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

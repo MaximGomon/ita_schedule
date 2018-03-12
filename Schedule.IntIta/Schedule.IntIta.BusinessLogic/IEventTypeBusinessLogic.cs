@@ -11,5 +11,6 @@ namespace Schedule.IntIta.BusinessLogic
         EventType Read(int id);
         void Update(EventType modifiedItem);
         void Delete(int id);
+        IEnumerable<EventType> GetAll();
     }
 }

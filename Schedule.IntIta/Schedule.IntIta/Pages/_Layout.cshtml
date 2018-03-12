@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Schedule.IntIta.Domain.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,6 +35,9 @@
                     <li><a asp-page="/Index">Home</a></li>
                     <li><a asp-page="/About">About</a></li>
                     <li><a asp-page="/Contact">Contact</a></li>
+                    <li>@Html.ActionLink("Subjects", "Index", "Subject")</li>
+                    <li>@Html.ActionLink("Rooms", "Index", "Room")</li>
+                    <li>@Html.ActionLink("Offices", "Index", "Office")</li>
                     <form action="/Search">
                         <p><input type="submit" value="Search"></p>
                     </form>

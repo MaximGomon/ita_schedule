@@ -1,43 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Domain.Models.Enumerations;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
-    public class SubjectController : Controller
+    public class OfficeController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly ISubjectBusinessLogic _subjectBusinessLogic;
+        private readonly IOfficeBusinessLogic _officeBusinessLogic;
 
-        public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic)
+        public OfficeController(IMapper mapper, IOfficeBusinessLogic officeBusinessLogic)
         {
             _mapper = mapper;
-            _subjectBusinessLogic = subjectBusinessLogic;
+            _officeBusinessLogic = officeBusinessLogic;
         }
+
         public ActionResult Index()
         {
-            SubjectRepository subjectR = new SubjectRepository();
-            return View(subjectR.GetAll());
+            OfficeRepository officeR = new OfficeRepository();
+            return View(officeR.GetAll().Select(x =>
+                Mapper.Map<Office, OfficeViewModel>(x)));
         }
+        // GET: Create
         public ActionResult Create()
         {
             return View();
         }
-        // POST: Room/Create
+        // POST: Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SubjectViewModel model)
+        public ActionResult Create(OfficeViewModel model)
         {
-            Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
+            Office office = Mapper.Map<OfficeViewModel, Office>(model);
             try
             {
-                _subjectBusinessLogic.Add(sub);
+                _officeBusinessLogic.Add(office);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -49,8 +55,8 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
-                return View(sub);
+                OfficeViewModel office = Mapper.Map<Office, OfficeViewModel>(_officeBusinessLogic.Read(id));
+                return View(office);
             }
             catch
             {
@@ -59,12 +65,12 @@ namespace Schedule.IntIta.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SubjectViewModel model)
+        public ActionResult Edit(OfficeViewModel model)
         {
-            Subject sub = Mapper.Map<SubjectViewModel, Subject>(model);
+            Office office = Mapper.Map<OfficeViewModel, Office>(model);
             try
             {
-                _subjectBusinessLogic.Update(sub);
+                _officeBusinessLogic.Update(office);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -76,8 +82,8 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
-                return View(sub);
+                OfficeViewModel office = Mapper.Map<Office, OfficeViewModel>(_officeBusinessLogic.Read(id));
+                return View(office);
             }
             catch
             {
@@ -90,7 +96,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                _subjectBusinessLogic.Delete(id);
+                _officeBusinessLogic.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -98,5 +104,6 @@ namespace Schedule.IntIta.Controllers
                 return View();
             }
         }
+
     }
 }

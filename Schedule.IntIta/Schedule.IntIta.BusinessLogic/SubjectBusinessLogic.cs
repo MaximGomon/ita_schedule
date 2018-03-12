@@ -20,7 +20,7 @@ namespace Schedule.IntIta.BusinessLogic
         }
         public Subject Read(int id)
         {
-            throw new System.NotImplementedException();
+            return _repository.Get(id);
         }
         public void Update(Subject modifiedItem)
         {
@@ -29,10 +29,6 @@ namespace Schedule.IntIta.BusinessLogic
         public void Delete(int id)
         {
             _repository.Delete(id);
-        }
-        public Subject Get(int id)
-        {
-            return _repository.Get(id);
         }
         public IEnumerable<Subject> GetAll()
         {

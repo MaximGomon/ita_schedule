@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 
@@ -11,9 +12,23 @@ namespace Schedule.IntIta.DataAccess
     {
         public void Insert(Room item)
         {
+            //using (var context = new IntitaDbContext())
+            //{
+            //    context.Rooms.Add(item);
+            //    context.SaveChanges();
+            //}
             using (var context = new IntitaDbContext())
             {
-                context.Rooms.Add(item);
+                Room newRoom = new Room()
+                {
+                    Name = item.Name,
+                    SeatNumber = item.SeatNumber,
+                    OfficeId = item.OfficeId,
+                    IsDeleted = item.IsDeleted,
+                    RoomStatus = item.RoomStatus,
+                };
+                context.Rooms.Add(newRoom);
+                //newRoom.OfficeId = context.Office.First(x => x.Id == item.O.Id);//context.Office.First(x => x.Id == item.OfficeId);
                 context.SaveChanges();
             }
             //using (var context = new IntitaDbContext())
@@ -51,7 +66,7 @@ namespace Schedule.IntIta.DataAccess
         {
             using (var context = new IntitaDbContext())
             {
-                //modifiedItem.IdOffice = context.Office.Single(x => x.Id == modifiedItem.IdOffice);
+                //modifiedItem.OfficeId = context.Office.Single(x => x.Id == modifiedItem.OfficeId);
                 context.Rooms.Update(modifiedItem);
                 context.SaveChanges();
             }

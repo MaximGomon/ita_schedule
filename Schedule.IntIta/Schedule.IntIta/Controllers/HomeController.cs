@@ -9,9 +9,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Schedule.IntIta.Controllers
 {
-    [Route("api/home")]
+    //[Route("api/home")]
     public class HomeController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         //[Authorize]
         [HttpGet("welcome", Name = "Welcome")]
         // GET: Auth
@@ -25,6 +30,8 @@ namespace Schedule.IntIta.Controllers
         {
             return View("Welcome");
         }
+
+       
     }
 
     public class ErrorFilter : ExceptionFilterAttribute

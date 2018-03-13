@@ -44,45 +44,31 @@ namespace Schedule.IntIta.Controllers
             {
                 model.Add(_mapper.Map<RoomViewModel>(item));
             }
-            //ViewBag.Office = _db.Office.ToList();
             return View(model);
         }
 
         // GET: Room/Create
-        //public ActionResult Create()
-        //{
-        //    SelectList officesList = new SelectList(_db.Office, "Id", "Name");
-
-        //    ViewData["officesList"] = officesList;
-        //    return View();
-        //}
-
-        //[HttpGet]
-        //public ActionResult Create()
-        //{
-        //    var items = _roomRepository.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-        //    RoomViewModel ofModel = new RoomViewModel() { Offices = new SelectList(items, "Value", "Text") };
-        //    return View(ofModel);
-        //}
         [HttpGet]
         public ActionResult Create()
         {
             OfficeRepository officeRepository = new OfficeRepository();
-            var items = officeRepository.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            RoomViewModel roomModel = new RoomViewModel() { Offices = new SelectList(items, "Value", "Text") };
+            var items = officeRepository.GetAll()
+                .Select(x => new SelectListItem {Value = x.Id.ToString(), Text = x.Name}).ToList();
+            RoomViewModel roomModel = new RoomViewModel() {Offices = new SelectList(items, "Value", "Text")};
             return View(roomModel);
         }
+
         // POST: Room/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
         public ActionResult Create(RoomViewModel officeModel)
         {
             Room room = Mapper.Map<RoomViewModel, Room>(officeModel);
+
             try
             {
                 room.RoomStatus = RoomStatus.Active;
-                _roomBusinessLogic.Add(room);
+                _roomBusinessLogic.Add(_mapper.Map<Room>(room));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -147,15 +133,6 @@ namespace Schedule.IntIta.Controllers
             {
                 return View();
             }
-            //try
-            //{
-            //    RoomViewModel room = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
-            //    return View();
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
 
         // POST: Room/Delete/5

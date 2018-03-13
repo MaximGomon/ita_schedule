@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Domain.Models.Enumerations;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
@@ -17,6 +19,7 @@ namespace Schedule.IntIta.Controllers
         private readonly IMapper _mapper;
         private readonly IRoomBusinessLogic _roomBusinessLogic;
         private readonly IRoomRepository _roomRepository;
+        private readonly IntitaDbContext _db = new IntitaDbContext();
 
         public RoomController(IMapper mapper, IRoomBusinessLogic roomBusinessLogic, IRoomRepository roomRepository)
         {
@@ -24,22 +27,7 @@ namespace Schedule.IntIta.Controllers
             _roomBusinessLogic = roomBusinessLogic;
             _roomRepository = roomRepository;
         }
-        /*
-        public ActionResult Index()
-        {
-            RoomBusinessLogic roomBusinessLogic = new RoomBusinessLogic(new RoomRepository());
-            var rooms = roomBusinessLogic.GetAll();
-            List<RoomViewModel> model = new List<RoomViewModel>();
-
-            foreach (var item in rooms)
-            {
-                model.Add(_mapper.Map<RoomViewModel>(item));
-            }
-
-            return View(model);
-            
-        }*/
-
+        
         // GET: Room
         //public ActionResult Test()
         //{
@@ -48,23 +36,49 @@ namespace Schedule.IntIta.Controllers
 
         public ActionResult Index()
         {
-            return View(_roomRepository.GetAll().Select(x =>
-                Mapper.Map<Room, RoomViewModel>(x)));
+            var rooms = _roomRepository.GetAll();
+
+            List<RoomViewModel> model = new List<RoomViewModel>();
+
+            foreach (var item in rooms)
+            {
+                model.Add(_mapper.Map<RoomViewModel>(item));
+            }
+            //ViewBag.Office = _db.Office.ToList();
+            return View(model);
         }
 
         // GET: Room/Create
+        //public ActionResult Create()
+        //{
+        //    SelectList officesList = new SelectList(_db.Office, "Id", "Name");
+
+        //    ViewData["officesList"] = officesList;
+        //    return View();
+        //}
+
+        //[HttpGet]
+        //public ActionResult Create()
+        //{
+        //    var items = _roomRepository.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+        //    RoomViewModel ofModel = new RoomViewModel() { Offices = new SelectList(items, "Value", "Text") };
+        //    return View(ofModel);
+        //}
+        [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.Office = new SelectList(_roomRepository.GetAll(), "Id", "Name");
-            return View();
+            OfficeRepository officeRepository = new OfficeRepository();
+            var items = officeRepository.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            RoomViewModel roomModel = new RoomViewModel() { Offices = new SelectList(items, "Value", "Text") };
+            return View(roomModel);
         }
-
         // POST: Room/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RoomViewModel model)
+        
+        public ActionResult Create(RoomViewModel officeModel)
         {
-            Room room = Mapper.Map<RoomViewModel, Room>(model);
+            Room room = Mapper.Map<RoomViewModel, Room>(officeModel);
             try
             {
                 room.RoomStatus = RoomStatus.Active;
@@ -78,20 +92,35 @@ namespace Schedule.IntIta.Controllers
         }
 
         // GET: Room/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    OfficeRepository officeR = new OfficeRepository();
+        //    ViewBag.Office = new SelectList(officeR.GetAll(), "Id", "Name");
+
+        //    return View(Mapper.Map<Room, RoomViewModel>(_roomRepository.Get(id)));
+        //}
         public ActionResult Edit(int id)
         {
-            OfficeRepository officeR = new OfficeRepository();
-            ViewBag.Office = new SelectList(officeR.GetAll(), "Id", "Name");
-
-            return View(Mapper.Map<Room, RoomViewModel>(_roomRepository.Get(id)));
+            try
+            {
+                OfficeRepository OffRepo = new OfficeRepository();
+                var items = OffRepo.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                RoomViewModel roomModel = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
+                roomModel.Offices = new SelectList(items, "Value", "Text");
+                
+                return View(roomModel);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: Room/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoomViewModel model)
+        public ActionResult Edit(RoomViewModel Model)
         {
-            Room room = Mapper.Map<RoomViewModel, Room>(model);
+            Room room = Mapper.Map<RoomViewModel, Room>(Model);
             try
             {
                 _roomBusinessLogic.Update(room);
@@ -108,13 +137,25 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                RoomViewModel room = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
-                return View(room);
+                OfficeRepository OffRepo = new OfficeRepository();
+                var items = OffRepo.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                RoomViewModel roomModel = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
+                roomModel.Offices = new SelectList(items, "Value", "Text");
+                return View(roomModel);
             }
             catch
             {
                 return View();
             }
+            //try
+            //{
+            //    RoomViewModel room = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
+            //    return View();
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         // POST: Room/Delete/5

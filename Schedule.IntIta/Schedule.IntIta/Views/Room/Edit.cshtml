@@ -1,4 +1,5 @@
 ﻿@using Domain.Models.Enumerations
+@using Schedule.IntIta.Domain.Models.Enumerations
 @model Schedule.IntIta.ViewModels.RoomViewModel
 
 @{
@@ -29,13 +30,13 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.RoomStatus)
-                @Html.DropDownList("StudentGender",
-                    Html.GetEnumSelectList<RoomStatus>(),
+                @Html.DropDownList("RoomStatus", Html.GetEnumSelectList<RoomStatus>(),
                     "Select status", new {@class = ""})
+                @*@Html.DropDownListFor(m => m.RoomStatus, ViewBag.RoomStatus as IEnumerable<SelectListItem>)*@
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.Office)
-                @Html.DropDownList("OfficeID", ViewBag.Office as SelectList)
+                @Html.LabelFor(x => x.OfficeId)
+                @Html.DropDownListFor(x => x.OfficeId, Model.Offices, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.RoomStatus, null, new { @class = "field-validation-error" })
             </div>
             

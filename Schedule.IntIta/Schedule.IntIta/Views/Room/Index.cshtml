@@ -1,61 +1,19 @@
-﻿@model IEnumerable<ViewModels.RoomViewModel>
-﻿@model IEnumerable<Schedule.IntIta.ViewModels.RoomViewModel>
+﻿@using Domain.Models
+@model IEnumerable<ViewModels.RoomViewModel>
 
-<h2 style="color: blueviolet">Room(ы)</h2>
+@{
+    ViewData["Title"] = "Rooms";
+    List<Office> officesList = ViewBag.Office;
+}
+
+<h2>Rooms</h2>
 
 <p>
-    <a asp-action="Create">+New room</a>
+    <a asp-action="Create">Create New</a>
 </p>
-
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SeatNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoomStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDelete)
-        </th>
-        
-
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SeatNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDelete)
-        </td>
-
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id})
-        </td>
-    </tr>
-}
-        <tr style="color: red">
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
@@ -69,14 +27,12 @@
                 @Html.DisplayNameFor(model => model.RoomStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Office)
+                @Html.DisplayNameFor(model => model.OfficeId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsDeleted)
             </th>
-            <th>
-                @Html.DisplayName("Control buttons")
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -86,17 +42,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
-                <td>
+                <th>
                     @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
+                </th>
+                <th>
                     @Html.DisplayFor(modelItem => item.SeatNumber)
-                </td>
-                <td>
+                </th>
+                <th>
                     @Html.DisplayFor(modelItem => item.RoomStatus)
-                </td>
+                </th>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Office)
+                    @Html.DisplayFor(x => officesList.Single(s => s.Id == item.OfficeId).Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsDeleted)

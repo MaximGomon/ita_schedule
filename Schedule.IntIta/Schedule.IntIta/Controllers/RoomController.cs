@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Domain.Models.Enumerations;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers

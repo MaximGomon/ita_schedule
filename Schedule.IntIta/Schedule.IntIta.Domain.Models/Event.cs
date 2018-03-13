@@ -1,4 +1,7 @@
-﻿namespace Schedule.IntIta.Domain.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Schedule.IntIta.Domain.Models
 {
     public class Event : DeletableEntity
     {

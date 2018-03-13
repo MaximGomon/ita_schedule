@@ -24,7 +24,6 @@ namespace BusinessLogic.Test
             var superSecretPassword = crypto.Encrypt(somepass);
             var returnPass = crypto.Decrypt(superSecretPassword);
 
-
             Assert.IsNotNull(returnPass);
             Assert.AreEqual(somepass, returnPass);
         }

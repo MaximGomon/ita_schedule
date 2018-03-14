@@ -139,5 +139,24 @@ namespace Schedule.IntIta.Controllers
                 return View();
             }
         }
+
+        public JsonResult GetEvents()
+        {
+            var events = _eventBusinessLogic.GetAll();
+            List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();
+
+            foreach (var item in events)
+            {
+                var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
+                calendarEvent.Group = _db.Groups.Single(x => x.Id == item.GroupId);
+                calendarEvent.Initiator = _db.Users.Single(x => x.Id == item.InitiatorId);
+                calendarEvent.Room = _db.Rooms.Single(x => x.Id == item.RoomId);
+                calendarEvent.Subject = _db.Subjects.Single(x => x.Id == item.SubjectId);
+                list.Add(calendarEvent);
+            }
+
+
+            return new JsonResult(list);
+        }
     }
 }

@@ -1,20 +1,10 @@
 ﻿using Schedule.IntIta.Domain.Models;
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.Domain.Models.Enumerations;
 
 namespace Schedule.IntIta.ViewModels
 {
-    /*
-    public class RoomViewModel
-    {
-        public int Id { get; set; }
-        public bool IsDelete { get; set; }
-        public int SeatNumber { get; set; }
-        public string Name { get; set; }
-        public RoomStatus RoomStatus { get; set; }
-    }
-    */
-
     public class RoomViewModel : DeletableEntity
     {
         [Required]
@@ -25,6 +15,7 @@ namespace Schedule.IntIta.ViewModels
         [Required]
         public RoomStatus RoomStatus { get; set; }
         [Required]
-        public Office Office { get; set; }
+        public int OfficeId { get; set; }
+        public SelectList Offices { get; set; }
     }
 }

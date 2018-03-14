@@ -1,15 +1,13 @@
-﻿@using Domain.Models
-@model ViewModels.EventViewModel
+﻿@model Schedule.IntIta.ViewModels.EventViewModel
 
 @{
     ViewData["Title"] = "Edit";
     var fa = Model;
 }
 
-<h2>Edit</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         @using (Html.BeginForm())
         {
             <fieldset>

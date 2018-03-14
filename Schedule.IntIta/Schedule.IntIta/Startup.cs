@@ -89,7 +89,6 @@ namespace Schedule.IntIta
 
             services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
             services.AddSingleton<IOfficeRepository, OfficeRepository>();
-
             services
                 .AddAuthentication
                 (

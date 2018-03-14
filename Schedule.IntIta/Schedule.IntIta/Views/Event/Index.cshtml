@@ -42,10 +42,20 @@
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.InitiatorId)</a>
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color">
+                    <p><input type="text" name="sInitiator" value="@ViewData["InitiatorFilter"]" /></p>
+                </div>
+            </form>
             @*@Html.DisplayNameFor(model => model.InitiatorId)*@
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.RoomId)</a>
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color">
+                    <p><input type="text" name="sRoom" value="@ViewData["RoomFilter"]" /></p>
+                </div>
+            </form>
             @*@Html.DisplayNameFor(model => model.RoomId)*@
         </th>
         <th>

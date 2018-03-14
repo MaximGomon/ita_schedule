@@ -24,7 +24,7 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
-        public async Task<IActionResult> Index(string sortOrder, string sType, string sGroup)
+        public async Task<IActionResult> Index(string sortOrder, string sType, string sGroup, string sInitiator, string sRoom)
         //public ActionResult Index(string sortOrder)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
@@ -33,6 +33,8 @@ namespace Schedule.IntIta.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "group_desc" : "";
             ViewData["TypeFilter"] = sType;
             ViewData["GroupFilter"] = sGroup;
+            ViewData["RoomFilter"] = sRoom;
+            ViewData["InitiatorFilter"] = sInitiator;
 
 
             var events = _eventBusinessLogic.GetAll();
@@ -47,6 +49,16 @@ namespace Schedule.IntIta.Controllers
                 var group = _db.Groups.ToList().Where(x => x.Name.Contains(sGroup)).Select(x => (int?)x.Id);
                 //events = events.Where(x => group.Contains(x.GroupId)).ToList();
                 events = events.Where(x => x.GroupId.HasValue && group.Contains(x.GroupId.Value)).ToList();
+            }
+            if (!String.IsNullOrEmpty(sRoom))
+            {
+                var rooms = _db.Rooms.ToList().Where(x => x.Name.Contains(sRoom)).Select(x => (int?)x.Id);
+                events = events.Where(x => x.RoomId.HasValue && rooms.Contains(x.RoomId.Value)).ToList();
+            }
+            if (!String.IsNullOrEmpty(sInitiator))
+            {
+                var users = _db.Users.ToList().Where(x => x.LastName.Contains(sInitiator)).Select(x => (int?)x.Id);
+                events = events.Where(x => x.InitiatorId.HasValue && users.Contains(x.InitiatorId.Value)).ToList();
             }
 
             switch (sortOrder)

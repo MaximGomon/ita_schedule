@@ -52,8 +52,17 @@
                     @Html.DisplayFor(modelItem => item.IsDeleted)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @if (item.IsDeleted)
+                    {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "btn", @disabled = true })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "btn"})
+                    }|
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+
                 </td>
             </tr>
         }

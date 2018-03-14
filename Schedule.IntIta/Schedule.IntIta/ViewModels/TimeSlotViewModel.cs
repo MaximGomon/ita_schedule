@@ -15,10 +15,7 @@ namespace Schedule.IntIta.ViewModels
         public DateTime StartTime { get; set; }
         [Required]
         public DateTime EndTime { get; set; }
-        [ForeignKey("Id")]
-        public int IdType { get; set; }
-
-        public dynamic Status { get; set; }
-        public IEnumerable<SelectListItem> Statuses { get; set; }
+        public int TypeId { get; set; }
+        public SelectList Types { get; set; }
     }
 }

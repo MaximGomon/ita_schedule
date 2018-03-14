@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,10 +24,62 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> Index(string sortOrder, string sType, string sGroup, string sInitiator, string sRoom)
+        //public ActionResult Index(string sortOrder)
         {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "initiator_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "room_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "group_desc" : "";
+            ViewData["TypeFilter"] = sType;
+            ViewData["GroupFilter"] = sGroup;
+            ViewData["RoomFilter"] = sRoom;
+            ViewData["InitiatorFilter"] = sInitiator;
+
+
             var events = _eventBusinessLogic.GetAll();
-            
+
+            if (!String.IsNullOrEmpty(sType))
+            {
+                //events = events.Where(s => s.Comments.Contains(sType));
+                events = events.Where(s => s.TypeOfEvent.Name.Contains(sType));
+            }
+            if (!String.IsNullOrEmpty(sGroup))
+            {
+                var group = _db.Groups.ToList().Where(x => x.Name.Contains(sGroup)).Select(x => (int?)x.Id);
+                //events = events.Where(x => group.Contains(x.GroupId)).ToList();
+                events = events.Where(x => x.GroupId.HasValue && group.Contains(x.GroupId.Value)).ToList();
+            }
+            if (!String.IsNullOrEmpty(sRoom))
+            {
+                var rooms = _db.Rooms.ToList().Where(x => x.Name.Contains(sRoom)).Select(x => (int?)x.Id);
+                events = events.Where(x => x.RoomId.HasValue && rooms.Contains(x.RoomId.Value)).ToList();
+            }
+            if (!String.IsNullOrEmpty(sInitiator))
+            {
+                var users = _db.Users.ToList().Where(x => x.LastName.Contains(sInitiator)).Select(x => (int?)x.Id);
+                events = events.Where(x => x.InitiatorId.HasValue && users.Contains(x.InitiatorId.Value)).ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "type_desc":
+                    events = events.OrderByDescending(s => s.TypeOfEvent);
+                    break;
+                case "initiator_desc":
+                    events = events.OrderBy(s => s.InitiatorId);
+                    break;
+                case "room_desc":
+                    events = events.OrderByDescending(s => s.RoomId);
+                    break;
+                case "group_desc":
+                    events = events.OrderByDescending(s => s.GroupId);
+                    break;
+                default:
+                    events = events.OrderBy(s => s.RoomId);
+                    break;
+            }
+
             List<EventViewModel> model = new List<EventViewModel>();
 
             foreach (var item in events)
@@ -39,7 +93,7 @@ namespace Schedule.IntIta.Controllers
             ViewBag.Room = _db.Rooms.ToList();
             ViewBag.Group = _db.Groups.ToList();
 
-            return View(model);
+            return View(model.ToList());
         }
 
         // GET: Room/Create

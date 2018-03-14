@@ -2,7 +2,6 @@
 @model IEnumerable<Schedule.IntIta.Domain.Models.TimeSlot>
 
 <h2>TimeSlots</h2>
-
 <p>
     <a asp-action="Create">Create new timeslot</a>
 </p>
@@ -19,7 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndTime)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.IdType)
             </th>
@@ -52,19 +51,19 @@
                     @Html.DisplayFor(modelItem => item.IsDeleted)
                 </td>
                 <td>
-                    @if (item.IsDeleted)
-                    {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "btn", @disabled = true })
+                   @if (item.IsDeleted)
+                   { 
+                    <input type="submit" value="Edit"class="btn btn-default" disabled />
+                    <input type="submit" value="Delete" class="btn btn-default" disabled />
                     }
-                    else
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "btn"})
-                    }|
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-
-
-                </td>
+                        else
+                        {
+                        <input type="submit" value="Edit" class="btn btn-default"onclick="location.href='@Url.Action("Edit","TimeSlot",new {id=item.Id})'" />
+                        <input type="submit" value="Delete"class="btn btn-default" onclick="location.href='@Url.Action("Delete","TimeSlot",new {id=item.Id})'" />
+                        }
+               </td>
             </tr>
         }
+        
     </tbody>
 </table>

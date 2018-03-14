@@ -28,9 +28,12 @@ namespace Schedule.IntIta.Controllers
         {
             TimeSlotRepository tsRepo = new TimeSlotRepository();
             return View(tsRepo.GetAll().ToList());
-            
         }
+        public ActionResult HideLink()
+        {
 
+            return View();
+        }
         [HttpGet]
         public ActionResult Create()
             
@@ -62,9 +65,7 @@ namespace Schedule.IntIta.Controllers
         //}
         public ActionResult Create(TimeSlotViewModel tsModel)
         {
-            //int SelectValue = int.Parse(tsModel.TypeId);
-            //ViewBag.SelectedValue = tsModel.TypeId;
-            TimeSlot tSlot = Mapper.Map<TimeSlotViewModel, TimeSlot>(tsModel);
+           TimeSlot tSlot = Mapper.Map<TimeSlotViewModel, TimeSlot>(tsModel);
            
            try
             {
@@ -73,8 +74,7 @@ namespace Schedule.IntIta.Controllers
                 TimeSlotRepository tsRepo = new TimeSlotRepository();
                 TimeSlotBuisnessLogic tsBLogic = new TimeSlotBuisnessLogic(tsRepo);
                 tsBLogic.Add(tSlot);
-                //return Json(JsonConvert.SerializeObject(tsModel));
-               return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {

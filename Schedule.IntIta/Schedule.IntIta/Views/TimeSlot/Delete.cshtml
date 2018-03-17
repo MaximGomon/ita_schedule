@@ -19,6 +19,7 @@
     <hr />
     <dl class="dl-horizontal">
         <form asp-action="Delete">
+            @Html.HiddenFor(x => x.Id);
             <div class="form-group">
                 @Html.LabelFor(x => x.Id)
                 @Html.DisplayFor(x => x.Id)

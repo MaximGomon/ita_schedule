@@ -89,6 +89,9 @@ namespace Schedule.IntIta
 
             services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
             services.AddSingleton<IOfficeRepository, OfficeRepository>();
+            services.AddSingleton<ITimeSlotRepository, TimeSlotRepository>();
+            services.AddSingleton<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
+            services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
             services
                 .AddAuthentication
                 (

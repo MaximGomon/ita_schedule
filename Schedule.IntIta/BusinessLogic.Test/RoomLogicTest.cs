@@ -26,7 +26,7 @@ namespace BusinessLogic.Test
                 IsDeleted = false,
                 RoomStatus = RoomStatus.Active,
                 SeatNumber = 12,
-                IdOffice = 1
+                OfficeId = 1
             };
             //Create mock for IRoomRepository
             IRoomRepository repository = A.Fake<IRoomRepository>();

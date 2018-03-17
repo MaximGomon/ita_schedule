@@ -42,11 +42,11 @@
                 @Html.DropDownListFor(x => x.TypeId, Model.Types, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.TypeId, null, new { @class = "field-validation-error" })
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(x => x.Id)
                 @Html.EditorFor(x=>x.Id)
                 @Html.ValidationMessageFor(x => x.Id, null, new { @class = "field-validation-error" })
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

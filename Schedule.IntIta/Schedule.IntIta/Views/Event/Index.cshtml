@@ -23,7 +23,7 @@
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.TypeOfEvent.Name)</a>
+            <a asp-action="Index" asp-route-sortOrder ="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.TypeOfEvent.Name)</a>
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
                     <p><input type="text" name="sType" value="@ViewData["TypeFilter"]" /></p>
@@ -41,31 +41,31 @@
             @Html.DisplayNameFor(model => model.SubjectId)
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.InitiatorId)</a>
+            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.InitiatorId)</a>*@
+            @Html.DisplayNameFor(model => model.InitiatorId)
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
                     <p><input type="text" name="sInitiator" value="@ViewData["InitiatorFilter"]" /></p>
                 </div>
             </form>
-            @*@Html.DisplayNameFor(model => model.InitiatorId)*@
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.RoomId)</a>
+            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.RoomId)</a>*@
+            @Html.DisplayNameFor(model => model.RoomId)
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
                     <p><input type="text" name="sRoom" value="@ViewData["RoomFilter"]" /></p>
                 </div>
             </form>
-            @*@Html.DisplayNameFor(model => model.RoomId)*@
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.GroupId)</a>
+            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.GroupId)</a>*@
+            @Html.DisplayNameFor(model => model.GroupId)
             <form asp-action="Index" method="get">
                 <div class="form-actions no-color">
                     <p><input type="text" name="sGroup" value="@ViewData["GroupFilter"]" /></p>
                 </div>
             </form>
-            @*@Html.DisplayNameFor(model => model.GroupId)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Comments)

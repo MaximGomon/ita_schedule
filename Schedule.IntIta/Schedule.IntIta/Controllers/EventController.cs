@@ -25,12 +25,8 @@ namespace Schedule.IntIta.Controllers
         }
 
         public async Task<IActionResult> Index(string sortOrder, string sType, string sGroup, string sInitiator, string sRoom)
-        //public ActionResult Index(string sortOrder)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "initiator_desc" : "";
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "room_desc" : "";
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "group_desc" : "";
             ViewData["TypeFilter"] = sType;
             ViewData["GroupFilter"] = sGroup;
             ViewData["RoomFilter"] = sRoom;
@@ -64,19 +60,10 @@ namespace Schedule.IntIta.Controllers
             switch (sortOrder)
             {
                 case "type_desc":
-                    events = events.OrderByDescending(s => s.TypeOfEvent);
-                    break;
-                case "initiator_desc":
-                    events = events.OrderBy(s => s.InitiatorId);
-                    break;
-                case "room_desc":
-                    events = events.OrderByDescending(s => s.RoomId);
-                    break;
-                case "group_desc":
-                    events = events.OrderByDescending(s => s.GroupId);
+                    events = events.OrderByDescending(s => s.TypeOfEvent.Name);
                     break;
                 default:
-                    events = events.OrderBy(s => s.RoomId);
+                    events = events.OrderBy(s => s.TypeOfEvent.Name);
                     break;
             }
 

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -79,11 +80,15 @@ namespace AspNet.Security.OAuth.Intita
             // OAuth2 3.3 space separated
             return string.Join(" ", Options.Scope);
         }
-
+        
         protected override async Task<HandleRequestResult> HandleRemoteAuthenticateAsync()
         {
+            if (Request.Cookies.ContainsKey("IntitaKey"))
+            {
+                return HandleRequestResult.Success(IntitaAuthenticationTicket.Ticket);
+            }
             var query = Request.Query;
-          //  var c = Request.Cookies;
+            
             var state = query["state"];
             var properties = Options.StateDataFormat.Unprotect(state);
 
@@ -92,11 +97,12 @@ namespace AspNet.Security.OAuth.Intita
                 return HandleRequestResult.Fail("The oauth state was missing or invalid.");
             }
 
+            
             // OAuth2 10.12 CSRF
-            if (!ValidateCorrelationId(properties))
-            {
-                return HandleRequestResult.Fail("Correlation failed.");
-            }
+            //if (!ValidateCorrelationId(properties))
+            //{
+            //    return HandleRequestResult.Fail("Correlation failed.");
+            //}
 
             var error = query["error"];
             if (!StringValues.IsNullOrEmpty(error))
@@ -169,11 +175,12 @@ namespace AspNet.Security.OAuth.Intita
 
                 properties.StoreTokens(authTokens);
             }
-
+            
             var ticket = await CreateTicketAsync(identity, properties, tokens);
             if (ticket != null)
             {
-                //Response.Cookies.Append("ticket", JsonConvert.SerializeObject(ticket, Formatting.None));
+                IntitaAuthenticationTicket.Ticket = ticket;
+                Response.Cookies.Append("IntitaKey", tokens.AccessToken);
                 return HandleRequestResult.Success(ticket);
             }
             else
@@ -181,7 +188,7 @@ namespace AspNet.Security.OAuth.Intita
                 return HandleRequestResult.Fail("Failed to retrieve user information from remote server.");
             }
         }
-
+        
         //protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(string code, string redirectUri)
         //{
         //    var tokenRequestParameters = new Dictionary<string, string>()

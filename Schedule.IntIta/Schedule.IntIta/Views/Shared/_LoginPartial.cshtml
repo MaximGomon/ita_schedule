@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Schedule.IntIta
+
+@if (User.Identity.IsAuthenticated)
+{
+    <li>@Html.ActionLink("", "Index", "Schedule", "", new { @class = "glyphicon glyphicon-user" })</li>
+    <li>@Html.ActionLink("Logout", "SignOut", "Authentication")</li>
+}
+else
+{
+    <li>@Html.ActionLink("Login", "SignIn", "Authentication")</li>
+}
+

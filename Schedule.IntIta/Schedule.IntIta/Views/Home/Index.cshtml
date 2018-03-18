@@ -1,7 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@using Microsoft.AspNetCore.Authentication
+@model AuthenticationScheme[]
+
+@{
+    ViewData["Title"] = "ShedulIta";
 }
 
-<h2>Index</h2>
+<div class="">
+    <h1>Authentication</h1>
+    
+    @foreach (var scheme in Model)
+    {
+        <form action="/signin" method="post">
+            <input type="hidden" name="Provider" value="@scheme.Name" />
+            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
 
-BEAUTY
+            <button class="btn btn-lg btn-success" type="submit">Войти через Intita.com</button>
+        </form>
+    }
+</div>

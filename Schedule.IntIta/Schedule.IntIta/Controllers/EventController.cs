@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
@@ -10,6 +11,7 @@ using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
         private readonly IMapper _mapper;

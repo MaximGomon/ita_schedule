@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ApplicationUser.cs" />
     <Compile Remove="UserRepository.cs" />
   </ItemGroup>
 </Project>

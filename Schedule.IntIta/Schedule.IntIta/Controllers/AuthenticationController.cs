@@ -8,8 +8,16 @@ namespace Schedule.IntIta.Controllers
 {
     public class AuthenticationController : Controller
     {
+        public async Task<IActionResult> SignIn()
+        {
+            return View(await HttpContext.GetExternalProvidersAsync());
+        }
+
         [HttpGet("/signin")]
-        public async Task<IActionResult> SignIn() => View("SignIn", await HttpContext.GetExternalProvidersAsync());
+        public async Task<IActionResult> SignIn([FromQuery]string returnUrl, string message)
+        {
+            return View(await HttpContext.GetExternalProvidersAsync());
+        }
 
         [HttpPost("/signin")]
         public async Task<IActionResult> SignIn([FromForm] string provider)
@@ -38,6 +46,7 @@ namespace Schedule.IntIta.Controllers
             // Instruct the cookies middleware to delete the local cookie created
             // when the user agent is redirected from the external identity provider
             // after a successful authentication flow (e.g Google or Facebook).
+            Response.Cookies.Delete("IntitaKey");
             return SignOut(new AuthenticationProperties { RedirectUri = "/" },
                 CookieAuthenticationDefaults.AuthenticationScheme);
         }

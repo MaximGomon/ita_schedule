@@ -32,8 +32,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Schedule", "Index", "Schedule")</li>
                     <li>@Html.ActionLink("Events", "Index", "Event")</li>
-                    <li>@Html.ActionLink("", "SignIn", "Authentication","", new { @class = "glyphicon glyphicon-user" })</li>
+                    @await Html.PartialAsync("_LoginPartial")
                 </ul>
+                
             </div>
         </div>
     </nav>

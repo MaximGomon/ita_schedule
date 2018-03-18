@@ -17,10 +17,11 @@ namespace Schedule.IntIta.Extensions
             }
 
             var schemes = context.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>();
-
-            return (from scheme in await schemes.GetAllSchemesAsync()
+            var b = from scheme in await schemes.GetAllSchemesAsync()
                 where !string.IsNullOrEmpty(scheme.DisplayName)
-                select scheme).ToArray();
+                select scheme;
+
+            return (b).ToArray();
         }
 
         public static async Task<bool> IsProviderSupportedAsync(this HttpContext context, string provider)

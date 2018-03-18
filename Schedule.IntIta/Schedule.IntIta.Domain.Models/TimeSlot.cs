@@ -8,12 +8,12 @@ namespace Schedule.IntIta.Domain.Models
     public class TimeSlot : DeletableEntity
     {
         /// <summary>Start time in full format with date and time. Must be datetime2 in MsSQL, or DATETIME in MsSql</summary>
-        [DisplayName("Дата начала")]
+        [DisplayName("StartTime")]
         [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
 
         /// <summary>End time in full format with date and time. Must be datetime2 in MsSQL, or DATETIME in MsSql</summary>
-        [DisplayName("Дана окончания")]
+        [DisplayName("EndTime")]
         [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
         

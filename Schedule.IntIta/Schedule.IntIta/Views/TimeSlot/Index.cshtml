@@ -9,10 +9,7 @@
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
+             <th>
                 @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
@@ -35,9 +32,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(model => item.StartTime)
                 </td>

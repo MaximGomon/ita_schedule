@@ -24,6 +24,11 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
+        public void Filter()
+        {
+            RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Index(string sortOrder, string sType, string sGroup, string sInitiator, string sRoom)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
@@ -37,13 +42,11 @@ namespace Schedule.IntIta.Controllers
 
             if (!String.IsNullOrEmpty(sType))
             {
-                //events = events.Where(s => s.Comments.Contains(sType));
                 events = events.Where(s => s.TypeOfEvent.Name.Contains(sType));
             }
             if (!String.IsNullOrEmpty(sGroup))
             {
                 var group = _db.Groups.ToList().Where(x => x.Name.Contains(sGroup)).Select(x => (int?)x.Id);
-                //events = events.Where(x => group.Contains(x.GroupId)).ToList();
                 events = events.Where(x => x.GroupId.HasValue && group.Contains(x.GroupId.Value)).ToList();
             }
             if (!String.IsNullOrEmpty(sRoom))

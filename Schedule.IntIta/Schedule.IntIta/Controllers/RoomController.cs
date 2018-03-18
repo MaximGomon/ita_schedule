@@ -11,6 +11,7 @@ using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
 using Schedule.IntIta.ViewModels;
+using Schedule.IntIta.Domain.Models.Enumerations;
 
 namespace Schedule.IntIta.Controllers
 {

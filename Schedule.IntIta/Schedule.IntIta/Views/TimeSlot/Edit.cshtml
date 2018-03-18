@@ -18,23 +18,25 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            @Html.HiddenFor(x => x.Id);
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @Html.LabelFor(x => x.StartTime);
-                @Html.EditorFor(x => x.StartTime);
+                @Html.LabelFor(x => x.StartTime)
+                @Html.EditorFor(x => x.StartTime)
              </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.EndTime);
-                @Html.EditorFor(x => x.EndTime);
+                @Html.LabelFor(x => x.EndTime)
+                @Html.EditorFor(x => x.EndTime)
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.IdType);
-                @Html.EditorFor(x => x.IdType);
+                @Html.LabelFor(x => x.TypeId)
+                @Html.DropDownListFor(x => x.TypeId, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.TypeId, null, new { @class = "field-validation-error" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.Id)
-                @Html.EditorFor(x => x.Id)
+                @Html.DisplayFor(x => x.Id)
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -16,10 +16,10 @@
 <h4>TimeSlotViewModel</h4>
 <hr />
 @using (Html.BeginForm("Create", "TimeSlot", FormMethod.Post))
-{<div class="row">
+{
+    <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @Html.LabelFor(x => x.StartTime)
                 @Html.EditorFor(x => x.StartTime)
@@ -38,22 +38,19 @@
                         @Html.DisplayNameFor(model => model.IsDeleted)
                     </label>
                 </div>
+                @Html.LabelFor(x => x.TypeId)
+                @Html.DropDownListFor(x => x.TypeId, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.TypeId, null, new { @class = "field-validation-error" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(x => x.IdType)
-                @Html.EditorFor(x => x.IdType)
-                @Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })
-            </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(x => x.Id)
-                @Html.EditorFor(x => x.Id)
-                @Html.ValidationMessageFor(x => x.IdType, null, new { @class = "field-validation-error" })
-            </div>
+                @Html.EditorFor(x=>x.Id)
+                @Html.ValidationMessageFor(x => x.Id, null, new { @class = "field-validation-error" })
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
-    </div>
+      </div>
 </div>
 }
 <div>

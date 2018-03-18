@@ -15,7 +15,10 @@ namespace Schedule.IntIta
             CreateMap<EventViewModel, Event>();
             CreateMap<Event, EventViewModel>();
             CreateMap<SubjectViewModel, Subject>();
-            CreateMap<TimeSlotViewModel, TimeSlot>();
+            CreateMap<TimeSlotViewModel, TimeSlot>()
+                 .ForMember(x => x.IdType, opt => opt.MapFrom(c => c.TypeId));
+            CreateMap<TimeSlot, TimeSlotViewModel>()
+                .ForMember(x => x.TypeId, opt => opt.MapFrom(c => c.IdType));
             CreateMap<RoomViewModel, Room>();
             CreateMap<Room, RoomViewModel>();
             CreateMap<EventTypeViewModel, EventType>();

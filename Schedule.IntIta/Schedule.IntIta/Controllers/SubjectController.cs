@@ -7,6 +7,7 @@ using AutoMapper;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.ViewModels;
+using System.Linq;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -14,6 +15,7 @@ namespace Schedule.IntIta.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISubjectBusinessLogic _subjectBusinessLogic;
+        private readonly ISubjectRepository _subjectRepository;
 
         public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic)
         {

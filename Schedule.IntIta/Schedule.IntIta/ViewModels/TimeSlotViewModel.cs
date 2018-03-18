@@ -1,7 +1,9 @@
-﻿using Schedule.IntIta.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Schedule.IntIta.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,12 +11,11 @@ namespace Schedule.IntIta.ViewModels
 {
     public class TimeSlotViewModel : DeletableEntity
     {
-        [Required, MinLength(2), MaxLength(20)]
+        [Required]
         public DateTime StartTime { get; set; }
-        [Required, MinLength(2), MaxLength(20)]
+        [Required]
         public DateTime EndTime { get; set; }
-        public int IdType { get; set; }
-
-
+        public int TypeId { get; set; }
+        public SelectList Types { get; set; }
     }
 }

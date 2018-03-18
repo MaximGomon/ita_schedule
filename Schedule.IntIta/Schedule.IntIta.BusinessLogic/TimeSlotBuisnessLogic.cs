@@ -3,25 +3,28 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
+using System.Collections.Generic;
 
 namespace Schedule.IntIta.BusinessLogic
 {
     public class TimeSlotBuisnessLogic : ITimeSlotBuisnessLogic
     {
         private readonly ITimeSlotRepository _repository;
+        private readonly ITimeSlotTypesRepository _timeSlotTypeRepository;
 
-        public TimeSlotBuisnessLogic(ITimeSlotRepository repository)
+        public TimeSlotBuisnessLogic(ITimeSlotRepository repository,ITimeSlotTypesRepository timeSlotTypeRepo)
         {
             _repository = repository;
+            _timeSlotTypeRepository = timeSlotTypeRepo;
         }
 
         public void Add(TimeSlot timeSlot)
         {
-            if(timeSlot.StartTime == null || timeSlot.EndTime == null) 
+            if (timeSlot.StartTime == null || timeSlot.EndTime == null)
             {
                 throw new ValidationException("Parameters StartTime and EndTime must have value");
             }
-            
+
             _repository.Insert(timeSlot);
         }
 
@@ -51,7 +54,16 @@ namespace Schedule.IntIta.BusinessLogic
 
         public void Update(TimeSlot modifiedTimeSlot)
         {
-            throw new NotImplementedException();
+            _repository.Update(modifiedTimeSlot);
+        }
+
+        public List<TimeSlot> GetAllTimeSlots()
+        {
+            return _repository.GetAll().ToList();
+        }
+        public List<TimeSlotTypes> GetAllTimeSlotTypes()
+        {
+            return _timeSlotTypeRepository.GetAll().ToList();
         }
     }
 }

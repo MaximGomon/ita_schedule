@@ -13,10 +13,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
+
 
 namespace Schedule.IntIta
 {
@@ -43,6 +45,9 @@ namespace Schedule.IntIta
             services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
             services.AddSingleton<IOfficeRepository, OfficeRepository>();
 
+            services.AddSingleton<ITimeSlotRepository, TimeSlotRepository>();
+            services.AddSingleton<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
+            services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
             services
                 .AddAuthentication
                 (
@@ -89,6 +94,12 @@ namespace Schedule.IntIta
 
             app.UseAuthentication();
             
+
+            app.UseAuthentication();
+            
+            //app.UseAuthentication();
+
+            //app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -98,6 +109,9 @@ namespace Schedule.IntIta
             });
         }
     }
+
+
+}
 
     public class ErrorWrappingMiddleware
     {
@@ -119,6 +133,6 @@ namespace Schedule.IntIta
             {
                 context.Response.StatusCode = 500;
             }
+
         }
     }
-}

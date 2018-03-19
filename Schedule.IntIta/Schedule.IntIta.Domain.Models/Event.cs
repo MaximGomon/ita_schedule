@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class Event : DeletableEntity
+    public class Event : DictionaryEntity
     {
         public EventType TypeOfEvent { get; set; }
         public int? SubjectId { get; set; }

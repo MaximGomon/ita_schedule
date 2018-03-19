@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class SubGroup : DeletableEntity
+    public class SubGroup : DictionaryEntity
     {
         public int GroupId { get; set;}
         public string Name { get; set; }

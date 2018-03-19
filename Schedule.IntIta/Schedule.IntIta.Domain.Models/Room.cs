@@ -2,7 +2,7 @@
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class Room : DeletableEntity
+    public class Room : DictionaryEntity
     {
         public int SeatNumber { get; set; }
         public string Name { get; set; }

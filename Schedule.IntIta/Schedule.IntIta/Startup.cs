@@ -1,23 +1,15 @@
 using System;
 using AspNet.Security.OAuth.Intita;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-
 using Schedule.IntIta.BusinessLogic;
-using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
-using Schedule.IntIta.DataAccess.Context;
 
 
 namespace Schedule.IntIta
@@ -93,19 +85,12 @@ namespace Schedule.IntIta
             app.UseMiddleware<ErrorWrappingMiddleware>();
 
             app.UseAuthentication();
-            
 
-            app.UseAuthentication();
-            
-            //app.UseAuthentication();
-
-            //app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Authentication}/{action=SignIn}/{id?}");
-                var r = routes.Routes;
             });
         }
     }

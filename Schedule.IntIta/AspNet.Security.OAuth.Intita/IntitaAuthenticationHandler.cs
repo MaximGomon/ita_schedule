@@ -182,6 +182,7 @@ namespace AspNet.Security.OAuth.Intita
                 IntitaAuthenticationTicket.Ticket = ticket;
                 Response.Cookies.Append("IntitaKey", tokens.AccessToken);
                 return HandleRequestResult.Success(ticket);
+                
             }
             else
             {

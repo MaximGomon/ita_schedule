@@ -201,7 +201,6 @@ namespace Schedule.IntIta.Controllers
                 list.Add(calendarEvent);
             }
 
-
             return new JsonResult(list);
         }
     }

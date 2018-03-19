@@ -3,6 +3,9 @@ body {
     padding-bottom: 20px;
 }
 
+
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -95,3 +98,61 @@ table th { padding: 10px; }
     margin: 3px;
 }
 
+.navbar-inverse {
+    background-color: #0095ff;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+    .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+        color: black;
+    }
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: black;
+}
+
+
+.main-greeting {
+    background-color: ghostwhite;
+    padding: 30px;
+}
+
+.main-info {
+    background-color: darkgrey;
+    background-color: lightskyblue;
+    padding: 20px;
+}
+
+.main-greeting-message {
+    text-align: center;
+    color: black;
+    font-size: 27px;
+    font-weight: bold;
+    padding: 40px;
+    font-family: 'Rammetto One', cursive;
+}
+
+.main-info-label {
+    font-family: 'Rammetto One', cursive;
+    font-size: 12px;
+    color: grey;
+    text-align: center;
+}
+
+.main-info-image img {
+    width: 700px;
+    margin: 20px;
+    box-shadow: 0 0 33px rgba(0,0,0,0.6);
+}
+
+.main-info-image {
+    text-align: center;
+    
+}

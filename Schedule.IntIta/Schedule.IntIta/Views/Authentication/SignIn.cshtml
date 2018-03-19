@@ -2,16 +2,24 @@
 @model AuthenticationScheme[]
 
 
+<hr />
 
+<div class="main-greeting">
+    
+    <div class="main-greeting-message">Feel yourself better with SchedulITA</div>
 
-<div class="jumbotron">
     @foreach (var scheme in Model)
     {
         <form action="/signin" method="post">
-            <input type="hidden" name="Provider" value="@scheme.Name" />
-            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" name="Provider" value="@scheme.Name"/>
+            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
 
             <button class="btn btn-lg btn-success center-block" type="submit">Войти через Intita.com</button>
         </form>
     }
+</div>
+<hr />
+<div class="main-info">
+    <div class="main-info-image"><img src="images/info-schedule.PNG"/></div>
+    <div class="main-info-label">Take your time with SchedulITA</div>
 </div>

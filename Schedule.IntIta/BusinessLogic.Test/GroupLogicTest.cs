@@ -5,6 +5,9 @@ using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Schedule.Intita.ApiRequest;
+using Schedule.IntIta.Integration;
+using Schedule.IntIta.Integration.IntegrationModels;
 
 namespace BusinessLogic.Test
 {
@@ -47,6 +50,7 @@ namespace BusinessLogic.Test
                 NumberOfStudents = 25,
                 Subgroups = new List<SubGroup>(){ testSubgroup,testSubgroup1,testSubgroup2 }
             };
+
             IGroupRepository groupRepo = A.Fake<IGroupRepository>();
             Group resultGroup = null;
             A.CallTo(() => groupRepo.GetAll()).Returns(Enumerable.Empty<Group>());
@@ -65,6 +69,21 @@ namespace BusinessLogic.Test
             Assert.AreEqual(testGroup.Id, resultGroup.Id);
         }
 
-
+        //public void GroupIntegrationTest()
+        //{
+        //    var apiGroupHandler = A.Fake<ApiRequest<GroupIntegrationModel>>();
+        //    A.CallTo(() => apiGroupHandler.Get()).Returns(null);
+        //    A.CallTo(() => apiGroupHandler.Authenticate()).Returns(null);
+        //    A.CallTo(() => apiGroupHandler.Send()).Returns(new ApiResponse<GroupIntegrationModel>()
+        //    {
+        //        Response = new GroupIntegrationModel()
+        //        {
+        //            Name = "A17",
+        //            Id = 10
+        //        }
+        //    });
+        //    IGroupIntegrationHandler integrationHandler = A.Fake<IGroupIntegrationHandler>();
+        //    var result = integrationHandler.GetGroupList();
+        //}
     }
 }

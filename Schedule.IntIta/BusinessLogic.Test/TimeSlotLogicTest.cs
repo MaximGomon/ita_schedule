@@ -24,6 +24,7 @@ namespace BusinessLogic.Test
             };
             //Create mock for IRoomRepository
             ITimeSlotRepository repository = A.Fake<ITimeSlotRepository>();
+            ITimeSlotTypesRepository trepository = A.Fake<ITimeSlotTypesRepository>();
 
             TimeSlot resultTimeSlot = null;
             //Mock invocation of method GetAll
@@ -38,7 +39,7 @@ namespace BusinessLogic.Test
             });
 
             //Create logic item for testing
-            TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository);
+            TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository, trepository);
 
             timeSlotLogic.Add(myCustomTimeSlot);
 

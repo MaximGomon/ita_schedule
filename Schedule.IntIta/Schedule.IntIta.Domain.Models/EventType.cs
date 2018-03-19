@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class EventType : DeletableEntity
+    public class EventType : DictionaryEntity
     {
         [DisplayName("Тип ивента")]
         public string Name { get; set; }

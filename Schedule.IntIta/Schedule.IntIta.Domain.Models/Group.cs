@@ -1,10 +1,12 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Schedule.IntIta.Domain.Models
 {
-     public class Group : IdEntity
+     public class Group : DictionaryEntity
     {
         public string Name { get; set; }
         public int NumberOfStudents { get; set; }
-        public SubGroup[] Subgroups { get; set; }
+        public List<SubGroup> Subgroups { get; set; }
     }
 }

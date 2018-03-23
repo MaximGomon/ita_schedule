@@ -10,16 +10,16 @@ namespace Schedule.IntIta.DataAccess.Context
     {
         public DbSet<Event> Events { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
-        //public DbSet<Grant> Grants { get; set; }
-        //public DbSet<Group> Groups { get; set; }
+        public DbSet<Grant> Grants { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Office> Office { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        //public DbSet<SubGroup> SubGroups { get; set; }
+        public DbSet<SubGroup> SubGroups { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        //public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }
         public DbSet<TimeSlotTypes> TimeSlotTypes { get; set; }
-        //public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         //public IntitaDbContext(DbContextOptions<IntitaDbContext> options)
         //    : base(options)

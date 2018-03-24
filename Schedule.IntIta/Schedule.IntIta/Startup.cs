@@ -48,6 +48,8 @@ namespace Schedule.IntIta
             services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
             services.AddSingleton<IGroupRepository, GroupRepository>();
             services.AddSingleton<IUserIntegration, UserIntegration>();
+            services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
+            services.AddSingleton<IUserRepository,UserRepository>();
 
             services
                 .AddAuthentication
@@ -75,6 +77,7 @@ namespace Schedule.IntIta
                     options.SaveTokens = true;
                     // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
                 });
+            
 
            
 

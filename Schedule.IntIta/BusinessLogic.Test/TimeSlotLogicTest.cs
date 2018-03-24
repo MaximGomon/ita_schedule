@@ -24,12 +24,7 @@ namespace BusinessLogic.Test
             };
             //Create mock for IRoomRepository
             ITimeSlotRepository repository = A.Fake<ITimeSlotRepository>();
-<<<<<<< HEAD
             ITimeSlotTypesRepository trepo = A.Fake<ITimeSlotTypesRepository>();
-=======
-            ITimeSlotTypesRepository trepository = A.Fake<ITimeSlotTypesRepository>();
-
->>>>>>> f0f5fc0a45397c6fd0a16ddd8dcc35c03390022c
             TimeSlot resultTimeSlot = null;
             //Mock invocation of method GetAll
             A.CallTo(() => repository.GetAll()).Returns(Enumerable.Empty<TimeSlot>());
@@ -43,11 +38,7 @@ namespace BusinessLogic.Test
             });
 
             //Create logic item for testing
-<<<<<<< HEAD
             TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository,trepo);
-=======
-            TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository, trepository);
->>>>>>> f0f5fc0a45397c6fd0a16ddd8dcc35c03390022c
 
             timeSlotLogic.Add(myCustomTimeSlot);
 

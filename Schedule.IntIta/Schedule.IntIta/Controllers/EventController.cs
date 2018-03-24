@@ -42,8 +42,9 @@ namespace Schedule.IntIta.Controllers
                     initiatorFilter != null ?
                     (x.InitiatorId != null 
                     && 
-                    _eventBusinessLogic.GetAllUsers().Select(w => w.Id).ToList().Contains(x.InitiatorId.Value)) : true
-                    &&
+                    //_eventBusinessLogic.GetAllUsers().Select(w => w.Id).ToList().Contains(x.InitiatorId.Value)) : true
+                    //_eventBusinessLogic.FindUsers(): true
+                    //&&
                     eventTypeFilter != null ?
                     (x.TypeOfEvent != null
                     && 
@@ -57,7 +58,7 @@ namespace Schedule.IntIta.Controllers
                     GroupFilter != null ?
                     (x.GroupId != null
                     &&
-                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(x.GroupId.Value)): true);
+                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(x.GroupId.Value)): true):true);
 
             foreach (var item in events)
             {

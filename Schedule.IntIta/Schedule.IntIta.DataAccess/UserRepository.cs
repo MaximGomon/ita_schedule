@@ -18,20 +18,20 @@ namespace Schedule.IntIta.DataAccess
             throw new NotImplementedException();
         }
 
-        public User Get(int id)
+        public User GetById(int? id)
         {
-            return _userIntegration.GetUserList().FirstOrDefault(x => x.Id == id);
+            return _userIntegration.FindUserById(id);
         }
 
         public List<User> GetByStr(string searchStr)
         {
-            return _userIntegration.GetUserByStr(searchStr);
+            return _userIntegration.FindUsers(searchStr);
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _userIntegration.GetUserList();
-        }
+        //public IEnumerable<User> GetAll()
+        //{
+        //    return _userIntegration.FindUsers();
+        //}
 
         public void Insert(User item)
         {

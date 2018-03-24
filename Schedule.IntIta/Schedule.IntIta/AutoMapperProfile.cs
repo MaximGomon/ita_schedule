@@ -6,19 +6,15 @@ using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Integration;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta
 {
     public class AutoMapperProfile : Profile
     {
-        private readonly IntitaDbContext _db = new IntitaDbContext();
+        public IntitaDbContext _db = new IntitaDbContext();
 
-        public string GetUser(int? id)
-        {
-            var user = _db.Users.FirstOrDefault(x => x.Id == id);
-            return String.Concat(user.FirstName," " ,user.LastName);
-        }
         public string GetRoom(int? id)
         {
             var room = _db.Rooms.FirstOrDefault(x => x.Id == id);
@@ -35,8 +31,8 @@ namespace Schedule.IntIta
             CreateMap<EventViewModel, Event>();
 
             CreateMap<Event, EventViewModel>()
-                .ForMember(x => x.InitiatorName, w => w.MapFrom(c => GetUser(c.InitiatorId)))
-                .ForMember(x=> x.RoomName, w => w.MapFrom(c => GetRoom(c.RoomId)))
+                .ForMember(x => x.InitiatorName, x => x.ResolveUsing<EventInitiatorResolver>())
+                .ForMember(x => x.RoomName, w => w.MapFrom(c => GetRoom(c.RoomId)))
                 .ForMember(x => x.GroupName, w => w.MapFrom(c => GetGroup(c.GroupId)));
 
             CreateMap<SubjectViewModel, Subject>();
@@ -58,5 +54,16 @@ namespace Schedule.IntIta
             CreateMap<Event, CalendarEventViewModel>();
         }
     }
- 
-} 
+
+    public class EventInitiatorResolver : IValueResolver<Event, EventViewModel, string>
+    {
+        public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
+        {
+            IUserIntegration userIntegration = new UserIntegration();
+            UserRepository userRepository = new UserRepository(userIntegration);
+            var user = userRepository.GetById(source.InitiatorId);
+            return String.Concat(user.FirstName, " ", user.LastName);
+            
+        }
+    }
+}

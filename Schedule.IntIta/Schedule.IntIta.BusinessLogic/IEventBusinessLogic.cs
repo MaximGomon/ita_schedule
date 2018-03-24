@@ -15,6 +15,6 @@ namespace Schedule.IntIta.BusinessLogic
         IEnumerable<Event> GetAll();
         IEnumerable<Room> GetAllRooms();
         IEnumerable<Group> GetAllGroups();
-        IEnumerable<User> GetAllUsers();
+        List<User> FindUsers(string searchStr);
     }
 }

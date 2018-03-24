@@ -57,10 +57,9 @@ namespace Schedule.IntIta.BusinessLogic
         {
             return _repGroups.GetAll();
         }
-
-        public IEnumerable<User> GetAllUsers()
+        public List<User> FindUsers(string searchStr)
         {
-            return _integrUsers.GetUserList();
+            return _integrUsers.FindUsers(searchStr);
         }
     }
 }

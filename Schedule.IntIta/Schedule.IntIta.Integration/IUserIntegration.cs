@@ -6,8 +6,7 @@ namespace Schedule.IntIta.Integration
 {
     public interface IUserIntegration
     {
-        List<User> GetUserList();
-        List<User> GetUserByStr(string searchStr);
-
+        List<User> FindUsers(string searchStr);
+        User FindUserById(int? id);
     }
 }

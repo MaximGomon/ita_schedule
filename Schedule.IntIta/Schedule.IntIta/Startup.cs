@@ -1,23 +1,20 @@
 using System;
+using System.Globalization;
+using System.Net;
 using AspNet.Security.OAuth.Intita;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-
+using Newtonsoft.Json;
+using Schedule.IntIta;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
-using Schedule.IntIta.DataAccess.Context;
 
 
 namespace Schedule.IntIta
@@ -90,22 +87,15 @@ namespace Schedule.IntIta
             app.UseBrowserLink();
             app.UseStaticFiles();
             app.UseExceptionHandler();
-            app.UseMiddleware<ErrorWrappingMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthentication();
-            
 
-            app.UseAuthentication();
-            
-            //app.UseAuthentication();
-
-            //app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Authentication}/{action=SignIn}/{id?}");
-                var r = routes.Routes;
             });
         }
     }
@@ -113,26 +103,43 @@ namespace Schedule.IntIta
 
 }
 
-    public class ErrorWrappingMiddleware
+public class ErrorHandlingMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public ErrorHandlingMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public ErrorWrappingMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context /* other dependencies */)
+    {
+        try
         {
-            _next = next;
+            await _next(context);
+            if (context.Response.StatusCode == (int) HttpStatusCode.NotFound) throw new InvalidOperationException("404");
+           
         }
-
-        public async Task Invoke(HttpContext context)
+        catch (Exception ex)
         {
-            try
-            {
-                await _next.Invoke(context);
-                return;
-            }
-            catch (Exception ex)
-            {
-                context.Response.StatusCode = 500;
-            }
-
+            await HandleExceptionAsync(context, ex);
         }
     }
+
+    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        var code = HttpStatusCode.InternalServerError; // 500 if unexpected
+
+        //if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
+        //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
+        //else if (exception is MyException) code = HttpStatusCode.BadRequest;
+        context.Response.StatusCode = (int)code;
+        //var result = JsonConvert.SerializeObject(new { Message = "<h1> Exception message is: " + exception.Message +"</h1>"+ "<h2>Exception was caused by: " + exception.Source + "</h2>"});
+        context.Response.ContentType = "text/HTML";
+        var result = new ErrorPageMaker(exception, context).PageMaker();//так делать нельзя, но я сделал как мог
+        
+        return context.Response.WriteAsync(result);
+    }
+    
+}
+    

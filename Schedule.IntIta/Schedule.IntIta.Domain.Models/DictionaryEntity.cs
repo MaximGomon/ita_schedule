@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Schedule.IntIta.Domain.Models
 {
-    public class Office : DictionaryEntity
+    public class DictionaryEntity : DeletableEntity
     {
-        public string Name { get; set; }
-        public string Adress { get; set; }
     }
 }

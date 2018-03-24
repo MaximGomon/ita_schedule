@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Schedule.IntIta.Domain.Models
 {
     /// <summary>Represents the time slot betwen start and end event.</summary>
-    public class TimeSlot : DeletableEntity
+    public class TimeSlot : DictionaryEntity
     {
         /// <summary>Start time in full format with date and time. Must be datetime2 in MsSQL, or DATETIME in MsSql</summary>
         [DisplayName("StartTime")]

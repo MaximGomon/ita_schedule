@@ -38,27 +38,28 @@ namespace Schedule.IntIta.Controllers
             
             var events = _eventBusinessLogic
                 .GetAll()
-                .Where(x =>
+                .Where(@event =>
                     initiatorFilter != null ?
-                    (x.InitiatorId != null 
+                    (@event.InitiatorId != null 
                     && 
-                    //_eventBusinessLogic.GetAllUsers().Select(w => w.Id).ToList().Contains(x.InitiatorId.Value)) : true
-                    //_eventBusinessLogic.FindUsers(): true
-                    //&&
+                    _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
+                        .Select(w => w.Id)//select only Ids of find users
+                        .Contains(@event.InitiatorId.Value)
+                    &&
                     eventTypeFilter != null ?
-                    (x.TypeOfEvent != null
+                    (@event.TypeOfEvent != null
                     && 
-                    x.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
+                    @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
                     &&
                     RoomFilter != null ?
-                    (x.RoomId != null
+                    (@event.RoomId != null
                     &&
-                    _eventBusinessLogic.GetAllRooms().Select(w => w.Id).Contains(x.RoomId.Value)) : true
+                    _eventBusinessLogic.GetAllRooms().Select(w => w.Id).Contains(@event.RoomId.Value)) : true
                     &&
                     GroupFilter != null ?
-                    (x.GroupId != null
+                    (@event.GroupId != null
                     &&
-                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(x.GroupId.Value)): true):true);
+                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(@event.GroupId.Value)): true):true);
 
             foreach (var item in events)
             {

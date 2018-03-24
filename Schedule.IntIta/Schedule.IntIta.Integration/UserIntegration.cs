@@ -24,6 +24,7 @@ namespace Schedule.IntIta.Integration
 
         public User FindUserById(int? id)
         {
+            return new User(){Id = id.Value};
             throw new NotImplementedException();
         }
         private List<User> ConvertToUser(List<UserIntegrativeModel> modelList)

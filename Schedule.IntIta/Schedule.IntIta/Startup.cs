@@ -15,6 +15,7 @@ using Schedule.IntIta;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.Integration;
 
 
 namespace Schedule.IntIta
@@ -45,6 +46,11 @@ namespace Schedule.IntIta
             services.AddSingleton<ITimeSlotRepository, TimeSlotRepository>();
             services.AddSingleton<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
             services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
+            services.AddSingleton<IGroupRepository, GroupRepository>();
+            services.AddSingleton<IUserIntegration, UserIntegration>();
+            services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
+            services.AddSingleton<IUserRepository,UserRepository>();
+
             services
                 .AddAuthentication
                 (
@@ -71,6 +77,7 @@ namespace Schedule.IntIta
                     options.SaveTokens = true;
                     // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
                 });
+            
 
            
 

@@ -42,6 +42,7 @@ namespace BusinessLogic.Test
             //Create logic item for testing
             //TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository,trepo);
             TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository, trepository);
+            TimeSlotBuisnessLogic timeSlotLogic = new TimeSlotBuisnessLogic(repository,trepo);
 
             timeSlotLogic.Add(myCustomTimeSlot);
 

@@ -15,38 +15,34 @@ namespace Schedule.IntIta.BusinessLogic
         {
             _repository = repository;
         }
-        public void Add(User user)
-        {
-            if(string.IsNullOrEmpty(user.Login))
-            {
-                throw new ValidationException("Parameter Login must have Value");
-            }
-            if(_repository.GetAll().Any(x => string.Equals(x.Login, user.Login)))
-            {
-                throw new ArgumentException("User with the same Login already exists!");
-            }
-            _repository.Insert(user);
-        }
+        //public void Add(User user)
+        //{
+        //    if(string.IsNullOrEmpty(user.Login))
+        //    {
+        //        throw new ValidationException("Parameter Login must have Value");
+        //    }
+        //    if(_repository.GetByStr().Any(x => string.Equals(x.Login, user.Login)))
+        //    {
+        //        throw new ArgumentException("User with the same Login already exists!");
+        //    }
+        //    _repository.Insert(user);
+        //}
 
-        public void Delete(int id)
-        {
-            if (_repository.GetAll().Any(x => Equals(x.Id, id)))
-            {
-                _repository.Delete(id);
-            }
-            else
-            {
-                throw new ArgumentException("User with the same Id is not found!");
-            }
-        }
+        //public void Delete(int id)
+        //{
+        //    if (_repository.GetAll().Any(x => Equals(x.Id, id)))
+        //    {
+        //        _repository.Delete(id);
+        //    }
+        //    else
+        //    {
+        //        throw new ArgumentException("User with the same Id is not found!");
+        //    }
+        //}
 
         public User Read(int id)
         {
-            if(_repository.GetAll().Any( x => Equals(x.Id, id)))
-            {
-                return _repository.Get(id);
-            }
-            throw new ArgumentException("User with the same Id is not found");
+            return _repository.GetById(id);
         }
 
         public List<User> ReadByStr(string searchStr)

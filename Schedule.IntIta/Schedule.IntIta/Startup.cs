@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net;
 using AspNet.Security.OAuth.Intita;
 using System.Threading.Tasks;
@@ -104,18 +105,20 @@ namespace Schedule.IntIta
 
 public class ErrorHandlingMiddleware
 {
-    private readonly RequestDelegate next;
+    private readonly RequestDelegate _next;
 
     public ErrorHandlingMiddleware(RequestDelegate next)
     {
-        this.next = next;
+        _next = next;
     }
 
     public async Task Invoke(HttpContext context /* other dependencies */)
     {
         try
         {
-            await next(context);
+            await _next(context);
+            if (context.Response.StatusCode == (int) HttpStatusCode.NotFound) throw new InvalidOperationException("404");
+           
         }
         catch (Exception ex)
         {

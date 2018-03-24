@@ -18,6 +18,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Schedule.Intita.ApiRequest;
+using Schedule.IntIta.Domain.Models;
 
 namespace AspNet.Security.OAuth.Intita
 {
@@ -30,7 +32,10 @@ namespace AspNet.Security.OAuth.Intita
             [NotNull] ISystemClock clock)
             : base(options, logger, encoder, clock)
         {
+
         }
+
+        
 
         protected override Task<object> CreateEventsAsync() => Task.FromResult<object>(new OAuthEvents());
 
@@ -87,6 +92,7 @@ namespace AspNet.Security.OAuth.Intita
             {
                 return HandleRequestResult.Success(IntitaAuthenticationTicket.Ticket);
             }
+            
             var query = Request.Query;
             
             var state = query["state"];
@@ -97,7 +103,6 @@ namespace AspNet.Security.OAuth.Intita
                 return HandleRequestResult.Fail("The oauth state was missing or invalid.");
             }
 
-            
             // OAuth2 10.12 CSRF
             //if (!ValidateCorrelationId(properties))
             //{
@@ -142,8 +147,6 @@ namespace AspNet.Security.OAuth.Intita
                 return HandleRequestResult.Fail("Failed to retrieve access token.");
             }
 
-            var identity = new ClaimsIdentity(ClaimsIssuer);
-
             if (Options.SaveTokens)
             {
                 var authTokens = new List<AuthenticationToken>();
@@ -175,14 +178,23 @@ namespace AspNet.Security.OAuth.Intita
 
                 properties.StoreTokens(authTokens);
             }
-            
+
+            ApiRequest<IntitaUser> apiRequest = new ApiRequest<IntitaUser>();
+            var response = apiRequest.Url("https://sso.intita.com/api/user/") //API url
+                .Authenticate(tokens.AccessToken) //add default or own authenticate
+                .Get() //GET, POST, PUT, DELETE
+                .Send(); //send request
+
+
+            var identity = new ClaimsIdentity(ClaimsIssuer);
+
             var ticket = await CreateTicketAsync(identity, properties, tokens);
             if (ticket != null)
             {
                 IntitaAuthenticationTicket.Ticket = ticket;
                 Response.Cookies.Append("IntitaKey", tokens.AccessToken);
+                Response.Cookies.Append("IntitaName", response.Response.FirstName);
                 return HandleRequestResult.Success(ticket);
-                
             }
             else
             {

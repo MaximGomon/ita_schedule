@@ -1,13 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Rendering
 @using Schedule.IntIta
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @if (User.Identity.IsAuthenticated)
 {
-    <li>@Html.ActionLink("", "Index", "Schedule", "", new { @class = "glyphicon glyphicon-user" })</li>
+    if (HttpContextAccessor.HttpContext.Request.Cookies["IntitaName"] != "")
+    {
+        <li>@Html.ActionLink($"{HttpContextAccessor.HttpContext.Request.Cookies["IntitaName"]}", "Index", "Schedule", "")</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("", "Index", "Schedule", "", new { @class = "glyphicon glyphicon-user" })</li>
+    }
+
+
     <li>@Html.ActionLink("Logout", "SignOut", "Authentication")</li>
 }
 else
 {
     <li>@Html.ActionLink("Login", "SignIn", "Authentication")</li>
 }
-

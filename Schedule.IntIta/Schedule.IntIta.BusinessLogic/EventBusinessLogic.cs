@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using AutoMapper;
+//using AutoMapper;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Integration;

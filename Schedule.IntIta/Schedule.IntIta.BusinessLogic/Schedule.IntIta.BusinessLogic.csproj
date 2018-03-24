@@ -9,4 +9,10 @@
     <ProjectReference Include="..\Schedule.IntIta.Domain.Models\Schedule.IntIta.Domain.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>C:\Users\Max\.nuget\packages\automapper\6.1.1\lib\netstandard1.3\AutoMapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

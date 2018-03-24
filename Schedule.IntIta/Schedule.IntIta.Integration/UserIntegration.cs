@@ -29,7 +29,7 @@ namespace Schedule.IntIta.Integration
         public string Email { get; set; }
 
      
-        public static List<User> GetUserList()
+        public List<User> GetUserList()
         {
             List<User> tmp = new List<User>();
             ApiRequest<List<UserIntegrativeModel>> apiRequest = new ApiRequest<List<UserIntegrativeModel>>();
@@ -41,7 +41,7 @@ namespace Schedule.IntIta.Integration
             return tmp;
         }
 
-        public static List<User> GetUserByStr(string searchStr)
+        public List<User> GetUserByStr(string searchStr)
         {
             string reqUrl = "https://sso.intita.com/api/user/search?q=" + searchStr;
             ApiRequest<List<UserIntegrativeModel>> apiRequest = new ApiRequest<List<UserIntegrativeModel>>();
@@ -50,7 +50,7 @@ namespace Schedule.IntIta.Integration
             return ConvertToUser(response.Response);
         }
 
-        private static List<User> ConvertToUser(List<UserIntegrativeModel> modelList)
+        private List<User> ConvertToUser(List<UserIntegrativeModel> modelList)
         {
             List<User> users = new List<User>();
             foreach (var integrativeUser in modelList)

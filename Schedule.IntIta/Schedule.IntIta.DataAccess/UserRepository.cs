@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Integration;
 
@@ -7,6 +8,11 @@ namespace Schedule.IntIta.DataAccess
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IUserIntegration _userIntegration;
+        public UserRepository(IUserIntegration userIntegration)
+        {
+            _userIntegration = userIntegration;
+        }
         public void Delete(int id)
         {
             throw new NotImplementedException();
@@ -14,17 +20,17 @@ namespace Schedule.IntIta.DataAccess
 
         public User Get(int id)
         {
-            return UserIntegration.GetUserList().Find(x => x.Id == id);
+            return _userIntegration.GetUserList().FirstOrDefault(x => x.Id == id);
         }
 
         public List<User> GetByStr(string searchStr)
         {
-            return UserIntegration.GetUserByStr(searchStr);
+            return _userIntegration.GetUserByStr(searchStr);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return UserIntegration.GetUserList();
+            return _userIntegration.GetUserList();
         }
 
         public void Insert(User item)

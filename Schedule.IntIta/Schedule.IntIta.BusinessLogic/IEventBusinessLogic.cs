@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Schedule.IntIta.Integration;
 
 namespace Schedule.IntIta.BusinessLogic
 {
@@ -12,5 +13,8 @@ namespace Schedule.IntIta.BusinessLogic
         void Update(Event modifiedItem);
         void Delete(int id);
         IEnumerable<Event> GetAll();
+        IEnumerable<Room> GetAllRooms();
+        IEnumerable<Group> GetAllGroups();
+        IEnumerable<User> GetAllUsers();
     }
 }

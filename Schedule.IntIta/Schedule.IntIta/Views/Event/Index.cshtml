@@ -15,21 +15,50 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
+         
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //read filters setting from ViewData and fill accordant field
+        });
+        function DoSort() {
+            $.ajax({
+                type: "POST",
+                url: @Url.Action("Filter", "Event"),
+                contentType: "application/json; charset=utf-8",
+                data: json.stringify([
+                    {
+                        SearchString: $('#sType').val(),
+                        EventField: 'TypeOfEvent'
+                    },
+                    {
+                        SearchString: $('#sInitiator').val(),
+                        EventField: 'InitiatorName'
+                    },
+                    {
+                        SearchString: $('#sRoom').val(),
+                        EventField: 'RoomName'
+                    },
+                    {
+                        SearchString: $('#sGroup').val(),
+                        EventField: 'GroupName'
+                    }
+                ]),
+                dataType: "json",
+                success: function(result) {},
+                error: function(result) {}
+            });
+        }
+    </script>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder ="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.TypeOfEvent.Name)</a>
-            <form asp-action="Index" method="get">
-                <div class="form-actions no-color">
-                    <p><input type="text" name="sType" value="@ViewData["TypeFilter"]" /></p>
-                </div>
-            </form>
-            @*@Html.DisplayNameFor(model => model.TypeOfEvent.Name)*@
+            <div class="form-actions no-color">
+                <p><input type="text" id="sType" value="@ViewData["TypeFilter"]" onclick="DoSort()"/></p>
+            </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date.StartTime)
@@ -41,35 +70,26 @@
             @Html.DisplayNameFor(model => model.SubjectId)
         </th>
         <th>
-            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.InitiatorId)</a>*@
             @Html.DisplayNameFor(model => model.InitiatorId)
-            <form asp-action="Index" method="get">
-                <div class="form-actions no-color">
-                    <p><input type="text" name="sInitiator" value="@ViewData["InitiatorFilter"]" /></p>
-                </div>
-            </form>
+            <div class="form-actions no-color">
+                <p><input type="text" id="sInitiator" value="@ViewData["InitiatorFilter"]"/></p>
+            </div>
         </th>
         <th>
-            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.RoomId)</a>*@
             @Html.DisplayNameFor(model => model.RoomId)
-            <form asp-action="Index" method="get">
-                <div class="form-actions no-color">
-                    <p><input type="text" name="sRoom" value="@ViewData["RoomFilter"]" /></p>
-                </div>
-            </form>
+            <div class="form-actions no-color">
+                <p><input type="text" id="sRoom" value="@ViewData["RoomFilter"]"/></p>
+            </div>
         </th>
         <th>
-            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.GroupId)</a>*@
             @Html.DisplayNameFor(model => model.GroupId)
-            <form asp-action="Index" method="get">
-                <div class="form-actions no-color">
-                    <p><input type="text" name="sGroup" value="@ViewData["GroupFilter"]" /></p>
-                </div>
-            </form>
+            <div class="form-actions no-color">
+                <p><input type="text" id="sGroup" value="@ViewData["GroupFilter"]"/></p>
+            </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Comments)
-            
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsDeleted)
@@ -78,46 +98,47 @@
     </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <th>
-            @Html.DisplayFor(modelItem => item.TypeOfEvent.Name)
-        </th>
-        <th>
-            @Html.DisplayFor(modelItem => item.Date.StartTime)
-        </th>
-        <th>
-            @Html.DisplayFor(modelItem => item.Date.EndTime)
-        </th>
-        <td>
-            @Html.DisplayFor(x => listSubjects.Single(s => s.Id == item.SubjectId).Name)
-        </td>
-        <td>
-            @Html.DisplayFor(p => listUsers.Single(k => k.Id == item.InitiatorId).LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(p => listRooms.Single(k => k.Id == item.RoomId).Name)
-        </td>
-        <td>
-            @Html.DisplayFor(p => listGroups.Single(k => k.Id == item.GroupId).Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-        @*
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.TypeOfEvent.Name)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Date.StartTime)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Date.EndTime)
+            </th>
+            <td>
+                @Html.DisplayFor(x => listSubjects.Single(s => s.Id == item.SubjectId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(p => listUsers.Single(k => k.Id == item.InitiatorId).LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(p => listRooms.Single(k => k.Id == item.RoomId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(p => listGroups.Single(k => k.Id == item.GroupId).Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @*
             @(item.IsDeleted ? "y" : "n")
         *@
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id=item.Id})
-        </td>
-    </tr>
-}
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id=item.Id})
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
+

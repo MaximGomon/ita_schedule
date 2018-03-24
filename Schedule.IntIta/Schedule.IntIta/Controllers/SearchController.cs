@@ -12,8 +12,14 @@ namespace Schedule.IntIta.Controllers
 {
     public class SearchController : Controller
     {
-        private readonly IUserRepository _repository = new UserRepository();
+        private readonly IUserRepository _userRepository;
+        private readonly IUserBusinessLogic _userBusinessLogic;
 
+        public SearchController(IUserRepository userRepository, IUserBusinessLogic userBusinessLogic)
+        {
+            _userRepository = userRepository;
+            _userBusinessLogic = userBusinessLogic;
+        }
         public IActionResult Index()
         {
             return View();
@@ -21,8 +27,8 @@ namespace Schedule.IntIta.Controllers
         
         public IActionResult SearchResult(string str)
         {
-            UserBusinessLogic userBusinessLogic = new UserBusinessLogic(_repository);
-            List<User> users = userBusinessLogic.ReadByStr(str);
+            //UserBusinessLogic userBusinessLogic = new UserBusinessLogic(_repository);
+            List<User> users = _userBusinessLogic.ReadByStr(str);
             return View(users);
         }
     }

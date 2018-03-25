@@ -6,9 +6,9 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    if (HttpContextAccessor.HttpContext.Request.Cookies["IntitaName"] != "")
+    if (User.Identity.Name != "")
     {
-        <li>@Html.ActionLink($"{HttpContextAccessor.HttpContext.Request.Cookies["IntitaName"]}", "Index", "Schedule", "")</li>
+        <li>@Html.ActionLink($"{User.Identity.Name}", "Index", "Schedule", "")</li>
     }
     else
     {

@@ -131,15 +131,21 @@ namespace AspNet.Security.OAuth.Intita
                 .Get() //GET, POST, PUT, DELETE
                 .Send(); //send request
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, response.Response.FirstName),
+            };
 
-            var identity = new ClaimsIdentity(ClaimsIssuer);
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "ApplicationCookie",
+                ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
+            //var identity = new ClaimsIdentity(new Claim(ClaimsIdentity.DefaultNameClaimType, "asdasd"),);
             var ticket = await CreateTicketAsync(identity, properties, tokens);
             if (ticket != null)
             {
                 Response.Cookies.Append("IntitaKey", tokens.AccessToken);
-                Response.Cookies.Append("IntitaName", response.Response.FirstName);
                 ticket.Properties.RedirectUri = "/Schedule/Index";
+                
                 return HandleRequestResult.Success(ticket);
             }
             else

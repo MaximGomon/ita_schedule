@@ -42,7 +42,7 @@ namespace Schedule.IntIta
             services.AddSingleton<IRoomRepository, RoomRepository>();
             services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
             services.AddSingleton<IOfficeRepository, OfficeRepository>();
-
+            services.AddSingleton<IGroupRepository, GroupRepository>();
             services.AddSingleton<ITimeSlotRepository, TimeSlotRepository>();
             services.AddSingleton<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
             services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
@@ -50,7 +50,8 @@ namespace Schedule.IntIta
             services.AddSingleton<IUserIntegration, UserIntegration>();
             services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
             services.AddSingleton<IUserRepository,UserRepository>();
-
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services
                 .AddAuthentication
                 (
@@ -93,6 +94,7 @@ namespace Schedule.IntIta
         {
             app.UseBrowserLink();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseExceptionHandler();
             app.UseMiddleware<ErrorHandlingMiddleware>();
 

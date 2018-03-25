@@ -34,51 +34,8 @@ namespace AspNet.Security.OAuth.Intita
         {
 
         }
-
         
-
         protected override Task<object> CreateEventsAsync() => Task.FromResult<object>(new OAuthEvents());
-
-        //protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
-        //{
-        //    var context = new OAuthCreatingTicketContext(new ClaimsPrincipal(identity), properties, Context, Scheme, Options, Backchannel, tokens);
-        //    await Events.CreatingTicket(context);
-        //    return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
-        //}
-
-
-        //protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
-        //{
-        //    if (string.IsNullOrEmpty(properties.RedirectUri))
-        //    {
-        //        properties.RedirectUri = CurrentUri;
-        //    }
-
-        //    // OAuth2 10.12 CSRF
-        //    GenerateCorrelationId(properties);
-
-        //    var authorizationEndpoint = BuildChallengeUrl(properties, BuildRedirectUri(Options.CallbackPath));
-        //    var redirectContext = new RedirectContext<OAuthOptions>(
-        //        Context, Scheme, Options,
-        //        properties, authorizationEndpoint);
-        //    await Events.RedirectToAuthorizationEndpoint(redirectContext);
-        //}
-
-        //protected override string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)
-        //{
-        //    var scope = FormatScope();
-
-        //    var state = Options.StateDataFormat.Protect(properties);
-        //    var parameters = new Dictionary<string, string>
-        //    {
-        //        { "client_id", Options.ClientId },
-        //        { "scope", scope },
-        //        { "response_type", "code" },
-        //        { "redirect_uri", redirectUri },
-        //        { "state", state },
-        //    };
-        //    return QueryHelpers.AddQueryString(Options.AuthorizationEndpoint, parameters);
-        //}
 
         protected override string FormatScope()
         {
@@ -88,11 +45,6 @@ namespace AspNet.Security.OAuth.Intita
         
         protected override async Task<HandleRequestResult> HandleRemoteAuthenticateAsync()
         {
-            if (Request.Cookies.ContainsKey("IntitaKey"))
-            {
-                return HandleRequestResult.Success(IntitaAuthenticationTicket.Ticket);
-            }
-            
             var query = Request.Query;
             
             var state = query["state"];
@@ -102,12 +54,6 @@ namespace AspNet.Security.OAuth.Intita
             {
                 return HandleRequestResult.Fail("The oauth state was missing or invalid.");
             }
-
-            // OAuth2 10.12 CSRF
-            //if (!ValidateCorrelationId(properties))
-            //{
-            //    return HandleRequestResult.Fail("Correlation failed.");
-            //}
 
             var error = query["error"];
             if (!StringValues.IsNullOrEmpty(error))
@@ -191,9 +137,9 @@ namespace AspNet.Security.OAuth.Intita
             var ticket = await CreateTicketAsync(identity, properties, tokens);
             if (ticket != null)
             {
-                IntitaAuthenticationTicket.Ticket = ticket;
                 Response.Cookies.Append("IntitaKey", tokens.AccessToken);
                 Response.Cookies.Append("IntitaName", response.Response.FirstName);
+                ticket.Properties.RedirectUri = "/Schedule/Index";
                 return HandleRequestResult.Success(ticket);
             }
             else
@@ -201,42 +147,5 @@ namespace AspNet.Security.OAuth.Intita
                 return HandleRequestResult.Fail("Failed to retrieve user information from remote server.");
             }
         }
-        
-        //protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(string code, string redirectUri)
-        //{
-        //    var tokenRequestParameters = new Dictionary<string, string>()
-        //    {
-        //        { "client_id", Options.ClientId },
-        //        { "redirect_uri", redirectUri },
-        //        { "client_secret", Options.ClientSecret },
-        //        { "code", code },
-        //        { "grant_type", "authorization_code" },
-        //    };
-
-        //    var requestContent = new FormUrlEncodedContent(tokenRequestParameters);
-
-        //    var requestMessage = new HttpRequestMessage(HttpMethod.Post, Options.TokenEndpoint);
-        //    requestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //    requestMessage.Content = requestContent;
-        //    var response = await Backchannel.SendAsync(requestMessage, Context.RequestAborted);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
-        //        return OAuthTokenResponse.Success(payload);
-        //    }
-        //    else
-        //    {
-        //        var error = "OAuth token endpoint failure: " + await Display(response);
-        //        return OAuthTokenResponse.Failed(new Exception(error));
-        //    }
-        //}
-        //private static async Task<string> Display(HttpResponseMessage response)
-        //{
-        //    var output = new StringBuilder();
-        //    output.Append("Status: " + response.StatusCode + ";");
-        //    output.Append("Headers: " + response.Headers.ToString() + ";");
-        //    output.Append("Body: " + await response.Content.ReadAsStringAsync() + ";");
-        //    return output.ToString();
-        //}
     }
 }

@@ -79,7 +79,7 @@ namespace Schedule.Intita.ApiRequest
                     response.Response = JsonConvert.DeserializeObject<TResponse>(responseString);
                     response.IsDeserializeSuccess = response.Response != null;
                 }
-                catch (WebException)
+                catch (WebException ex)
                 {
                     Console.WriteLine("Error, please check 'AccessToken' in appsettings.json.");
                     Console.WriteLine($"ResponseString: {responseString}");

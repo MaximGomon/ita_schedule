@@ -46,6 +46,7 @@
                 error: function(result) {}
             });
         }
+
     </script>
     <tr>
         <th>
@@ -68,19 +69,19 @@
         <th>
             @Html.DisplayNameFor(model => model.InitiatorId)
             <div class="form-actions no-color">
-                <p><input type="text" id="sInitiator" value="@ViewData["InitiatorFilter"]"/></p>
+                <p><input type="text" id="sInitiator" value="@ViewData["InitiatorFilter"] onclick="DoSort()"/></p>
             </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RoomId)
             <div class="form-actions no-color">
-                <p><input type="text" id="sRoom" value="@ViewData["RoomFilter"]"/></p>
+                <p><input type="text" id="sRoom" value="@ViewData["RoomFilter"] onclick="DoSort()"/></p>
             </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GroupId)
             <div class="form-actions no-color">
-                <p><input type="text" id="sGroup" value="@ViewData["GroupFilter"]"/></p>
+                <p><input type="text" id="sGroup" value="@ViewData["GroupFilter"] onclick="DoSort()"/></p>
             </div>
         </th>
         <th>

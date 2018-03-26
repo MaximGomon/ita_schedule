@@ -11,7 +11,6 @@ namespace Schedule.IntIta.DataAccess
         {
             using (var context = new IntitaDbContext())
             {
-                            
                 context.TimeSlots.Add(item);
                 context.SaveChanges();
             }
@@ -46,7 +45,6 @@ namespace Schedule.IntIta.DataAccess
                 var deletableItem = context.TimeSlots.Find(id);
                 deletableItem.IsDeleted = true;
                 context.SaveChanges();
-
             }
                
         }

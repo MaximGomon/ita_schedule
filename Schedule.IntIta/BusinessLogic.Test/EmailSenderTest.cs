@@ -30,14 +30,16 @@ namespace BusinessLogic.Test
                                  dHAgcGFzc3dvcmQ = "
 
             };
+
+            var d = Directory.GetCurrentDirectory();
             MailMessageAttachment mailMessageAttachment2 = new MailMessageAttachment()
             {
                 FileName = "imagetext.txt",
-                Base64String = File.ReadAllText("~\\TestImage\\imagetext.txt") 
+                Base64String = File.ReadAllText("..\\..\\..\\TestImage\\imagetext.txt") 
             };
             List<MailMessageAttachment> attachments = new List<MailMessageAttachment>() { mailMessageAttachment, mailMessageAttachment1, mailMessageAttachment2 };
             EmailMessage msg = new EmailMessage();
-            MailMessage createdMessage =  msg.CreateEmail(null, "tanyablin@gmail.com", "Test", "This is test e-mail for first test", null, null, attachments);
+            MailMessage createdMessage =  msg.CreateEmail("tanyablin@gmail.com", "tanyablin@gmail.com", "Test", "This is test e-mail for first test", null, null, attachments);
 
             ////Mock invocation of method GetAll
             //// Test 1 where From is Null

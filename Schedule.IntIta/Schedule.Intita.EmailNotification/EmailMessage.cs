@@ -15,10 +15,12 @@ namespace Schedule.Intita.EmailNotification
                 MailMessage msg = new MailMessage(from, to);
                 msg.Subject = subject;
                 msg.Body = body;
+                if(cc != null)
                 foreach (var link in cc)
                 {
                     msg.CC.Add(link);
                 }
+                if(bcc != null)
                 foreach (var link in bcc)
                 {
                     msg.Bcc.Add(link);
@@ -35,7 +37,7 @@ namespace Schedule.Intita.EmailNotification
                 }
                 return msg;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new ArgumentException("Message has not been sent");
             }

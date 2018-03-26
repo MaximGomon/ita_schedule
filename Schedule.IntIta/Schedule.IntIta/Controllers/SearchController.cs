@@ -31,5 +31,14 @@ namespace Schedule.IntIta.Controllers
             List<User> users = _userBusinessLogic.ReadByStr(str);
             return View(users);
         }
+        public ActionResult AutocompleteSearch(string str)
+        {
+            List<User> users = _userBusinessLogic.ReadByStr(str);
+            var models = users.Where(a => a.FirstName.Contains(str))
+                .Select(a => new { value = a.FirstName })
+                .Distinct();
+
+            return Json(models);
+        }
     }
 }

@@ -25,16 +25,19 @@ namespace Schedule.IntIta.Integration
         public Group GetGroupById(int groupId)
         {
             var apiRequest = new ApiRequest<GroupIntegrationModel>();
-            var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId + "/")
+            var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId)
                 .Authenticate()
                 .Get()
                 .Send();
-
+            if (response.StatusCode != 200)
+            {
+                //ToDo add login
+                return null;
+            }
             Group group = new Group()
             {
                 Id = response.Response.Id,
                 Name = response.Response.Name
-
             };
             return group;
         }
@@ -54,6 +57,9 @@ namespace Schedule.IntIta.Integration
             try
             {
                 List<Group> groups = new List<Group>();
+                if (modelList == null || !modelList.Any())
+                    return groups;
+
                 foreach (var item in modelList)
                 {
                     groups.Add(new Group()

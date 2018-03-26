@@ -71,6 +71,14 @@ namespace Schedule.IntIta
             GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
             try
             {
+                if (source == null)
+                {
+                    return "";
+                }
+                if (source.GroupId == null)
+                {
+                    return "";
+                }
                 var group = groupIntegration.GetGroupById((int)source.GroupId);
                 return group.Name;
             }

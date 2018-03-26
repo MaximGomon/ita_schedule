@@ -9,6 +9,7 @@ namespace Schedule.IntIta.DataAccess
     public class UserRepository : IUserRepository
     {
         private readonly IUserIntegration _userIntegration;
+
         public UserRepository(IUserIntegration userIntegration)
         {
             _userIntegration = userIntegration;

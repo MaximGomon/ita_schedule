@@ -102,7 +102,7 @@ namespace Schedule.Intita.ApiRequest
 
             Configuration = builder.Build();
 
-            return $"Bearer {_token}";
+            return $"Bearer {_token ?? Configuration["AccessToken"]}";
             //return Configuration["AccessToken"];
         }
 

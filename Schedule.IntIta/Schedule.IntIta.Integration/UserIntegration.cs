@@ -29,19 +29,26 @@ namespace Schedule.IntIta.Integration
         }
         private List<User> ConvertToUser(List<UserIntegrativeModel> modelList)
         {
-            List<User> users = new List<User>();
-            foreach (var integrativeUser in modelList)
+            try
             {
-                users.Add(new User()
+                List<User> users = new List<User>();
+                foreach (var integrativeUser in modelList)
                 {
-                    Email = integrativeUser.Email,
-                    FirstName = integrativeUser.FirstName,
-                    LastName = integrativeUser.SecondName,
-                    Id = integrativeUser.Id
-                });
-            }
+                    users.Add(new User()
+                    {
+                        Email = integrativeUser.Email,
+                        FirstName = integrativeUser.FirstName,
+                        LastName = integrativeUser.SecondName,
+                        Id = integrativeUser.Id
+                    });
+                }
 
-            return users;
+                return users;
+            }
+            catch 
+            {
+                return new List<User>(){new User(){Email = "", FirstName = "",Id = 0, LastName = "",Login = ""}};
+            }
         }
     }
 }

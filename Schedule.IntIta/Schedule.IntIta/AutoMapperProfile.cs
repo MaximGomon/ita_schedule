@@ -15,11 +15,6 @@ namespace Schedule.IntIta
     {
         public IntitaDbContext _db = new IntitaDbContext();
 
-        public string GetRoom(int? id)
-        {
-            var room = _db.Rooms.FirstOrDefault(x => x.Id == id);
-            return room.Name;
-        }
         public string GetGroup(int? id)
         {
             var group = _db.Groups.FirstOrDefault(x => x.Id == id);
@@ -32,8 +27,9 @@ namespace Schedule.IntIta
 
             CreateMap<Event, EventViewModel>()
                 .ForMember(x => x.InitiatorName, x => x.ResolveUsing<EventInitiatorResolver>())
-                .ForMember(x => x.RoomName, w => w.MapFrom(c => GetRoom(c.RoomId)))
-                .ForMember(x => x.GroupName, w => w.MapFrom(c => GetGroup(c.GroupId)));
+                .ForMember(x => x.RoomName, x => x.ResolveUsing<EventRoomResolver>())
+                .ForMember(x => x.GroupName, w => w.ResolveUsing<EventGroupResolver>())
+                .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>());
 
             CreateMap<SubjectViewModel, Subject>();
             CreateMap<TimeSlotViewModel, TimeSlot>()
@@ -63,7 +59,42 @@ namespace Schedule.IntIta
             UserRepository userRepository = new UserRepository(userIntegration);
             var user = userRepository.GetById(source.InitiatorId);
             return String.Concat(user.FirstName, " ", user.LastName);
-            
+        }
+    }
+
+    public class EventRoomResolver : IValueResolver<Event, EventViewModel, string>
+    {
+        public IntitaDbContext _db = new IntitaDbContext();
+        public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
+        {
+            var room = _db.Rooms.FirstOrDefault(x => x.Id == source.RoomId);
+            return room.Name;
+        }
+    }
+    public class EventGroupResolver : IValueResolver<Event, EventViewModel, string>
+    {
+        public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
+        {
+            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
+            try
+            {
+                var group = groupIntegration.GetGroupById((int)source.GroupId);
+                return group.Name;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+    }
+    public class EventSubjectResolver : IValueResolver<Event, EventViewModel, string>
+    {
+        public IntitaDbContext _db = new IntitaDbContext();
+        public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
+        {
+            var subject = _db.Subjects.FirstOrDefault(x => x.Id == source.SubjectId);
+            return subject.Name;
         }
     }
 }

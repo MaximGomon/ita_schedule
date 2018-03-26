@@ -3,11 +3,7 @@
 
 @{
     ViewData["Title"] = "Events";
-
-    List<Subject> listSubjects = ViewBag.Subject;
-    List<User> listUsers = ViewBag.User;
-    List<Room> listRooms = ViewBag.Room;
-    List<Group> listGroups = ViewBag.Group;
+    
 }
 
 <h2>Events</h2>
@@ -113,16 +109,16 @@
                 @Html.DisplayFor(modelItem => item.Date.EndTime)
             </th>
             <td>
-                @Html.DisplayFor(x => listSubjects.Single(s => s.Id == item.SubjectId).Name)
+                @Html.DisplayFor(modelItem => item.SubjectName)
             </td>
             <td>
-                @Html.DisplayFor(p => listUsers.Single(k => k.Id == item.InitiatorId).LastName)
+                @Html.DisplayFor(modelItem => item.InitiatorName)
             </td>
             <td>
-                @Html.DisplayFor(p => listRooms.Single(k => k.Id == item.RoomId).Name)
+                @Html.DisplayFor(modelItem => item.RoomName)
             </td>
             <td>
-                @Html.DisplayFor(p => listGroups.Single(k => k.Id == item.GroupId).Name)
+                @Html.DisplayFor(modelItem => item.GroupName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments)

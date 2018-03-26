@@ -64,19 +64,25 @@ namespace Schedule.Intita.ApiRequest
 
                 try
                 {
-                    var webResponse = (HttpWebResponse)httpRequest.GetResponse();
+                    var webResponse = (HttpWebResponse) httpRequest.GetResponse();
 
-                    using (var streamReader = new StreamReader(webResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+                    using (var streamReader =
+                        new StreamReader(webResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                     {
                         responseString = streamReader.ReadToEnd();
                     }
-                    
+
                     response.ContentAsString = responseString;
                     response.StatusCode = int.Parse(webResponse.StatusCode.ToString("D"));
                     response.Response = JsonConvert.DeserializeObject<TResponse>(responseString);
                     response.IsDeserializeSuccess = response.Response != null;
                 }
                 catch (WebException)
+                {
+                    Console.WriteLine("Error, please check 'AccessToken' in appsettings.json.");
+                    Console.WriteLine($"ResponseString: {responseString}");
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine("Error, please check 'AccessToken' in appsettings.json.");
                     Console.WriteLine($"ResponseString: {responseString}");

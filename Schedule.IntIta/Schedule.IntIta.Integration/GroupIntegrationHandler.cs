@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Integration.IntegrationModels;
 namespace Schedule.IntIta.Integration
 {
-    public interface IGroupIntegrationHandler
-    {
-        List<Group> GetGroupList();
-    }
-
     public class GroupIntegrationHandler : IGroupIntegrationHandler
     {
         public List<Group> GetGroupList()
@@ -25,11 +22,27 @@ namespace Schedule.IntIta.Integration
             }
             return groups;
         }
+        public Group GetGroupById(int groupId)
+        {
+            var apiRequest = new ApiRequest<GroupIntegrationModel>();
+            var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId + "/")
+                .Authenticate()
+                .Get()
+                .Send();
+
+            Group group = new Group()
+            {
+                Id = response.Response.Id,
+                Name = response.Response.Name
+
+            };
+            return group;
+        }
 
         private List<SubGroup> GetSubGroupsByGroupId(int groupId)
         {
             var apiRequest = new ApiRequest<List<SubGroupIntegrationModel>>();
-            var response = apiRequest.Url("http://sso.intita.com/api/offline/group" + groupId + "/subgroups")
+            var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId + "/subgroups")
                 .Authenticate()
                 .Get()
                 .Send();
@@ -38,31 +51,58 @@ namespace Schedule.IntIta.Integration
 
         private List<Group> ConvertToGroup(List<GroupIntegrationModel> modelList)
         {
-            List<Group> groups = new List<Group>();
-            foreach (var item in modelList)
+            try
             {
-                groups.Add(new Group()
+                List<Group> groups = new List<Group>();
+                foreach (var item in modelList)
                 {
-                    Id = item.Id,
-                    Name = item.Name
-                });
+                    groups.Add(new Group()
+                    {
+                        Id = item.Id,
+                        Name = item.Name
+                    });
+                }
+                return groups;
             }
-            return groups;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private List<SubGroup> ConvertToSubGroup(List<SubGroupIntegrationModel> modelList, int groupId)
         {
-            List<SubGroup> subgroups = new List<SubGroup>();
-            foreach (var item in modelList)
+            try
             {
-                subgroups.Add(new SubGroup()
+                List<SubGroup> subgroups = new List<SubGroup>();
+                if (modelList == null || !modelList.Any())
+                    return subgroups;
+
+                foreach (var item in modelList)
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    GroupId = groupId
-                });
+                    try
+                    {
+                        subgroups.Add(new SubGroup()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            GroupId = groupId
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+
+                }
+
+                return subgroups;
             }
-            return subgroups;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

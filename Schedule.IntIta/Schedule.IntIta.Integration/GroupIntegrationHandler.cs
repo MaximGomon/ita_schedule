@@ -11,7 +11,7 @@ namespace Schedule.IntIta.Integration
         public List<Group> GetGroupList()
         {
             var apiRequest = new ApiRequest<List<GroupIntegrationModel>>();
-            var response = apiRequest.Url("http://sso.intita.com/api/offline/groups")
+            var response = apiRequest.Url("http://sso.intita.com/api/offline/groups")//test
                 .Authenticate()
                 .Get()
                 .Send();

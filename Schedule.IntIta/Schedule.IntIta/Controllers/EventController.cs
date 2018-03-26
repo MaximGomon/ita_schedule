@@ -241,9 +241,12 @@ namespace Schedule.IntIta.Controllers
             foreach (var item in events)
             {
                 var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
-                calendarEvent.Group = _db.Groups.Single(x => x.Id == item.GroupId);
-                calendarEvent.Initiator = _db.Users.Single(x => x.Id == item.InitiatorId);
-                calendarEvent.Room = _db.Rooms.Single(x => x.Id == item.RoomId);
+                calendarEvent.Group = _eventBusinessLogic.GetAllGroups().FirstOrDefault(x => x.Id == item.GroupId);
+                //calendarEvent.Group = _db.Groups.Single(x => x.Id == item.GroupId);
+                calendarEvent.Initiator = _eventBusinessLogic.GetUsersById(item.InitiatorId);
+                //calendarEvent.Initiator = _db.Users.Single(x => x.Id == item.InitiatorId);
+                calendarEvent.Room = _eventBusinessLogic.GetAllRooms().FirstOrDefault(w => w.Id == item.RoomId);
+                //calendarEvent.Room = _db.Rooms.Single(x => x.Id == item.RoomId);
                 calendarEvent.Subject = _db.Subjects.Single(x => x.Id == item.SubjectId);
                 list.Add(calendarEvent);
             }

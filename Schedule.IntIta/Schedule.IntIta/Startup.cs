@@ -50,6 +50,8 @@ namespace Schedule.IntIta
             services.AddSingleton<IUserIntegration, UserIntegration>();
             services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
             services.AddSingleton<IUserRepository,UserRepository>();
+            services.AddSingleton<IGroupIntegrationHandler, GroupIntegrationHandler>();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
             services

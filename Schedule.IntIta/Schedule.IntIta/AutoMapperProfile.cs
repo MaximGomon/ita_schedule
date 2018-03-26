@@ -13,14 +13,7 @@ namespace Schedule.IntIta
 {
     public class AutoMapperProfile : Profile
     {
-        public IntitaDbContext _db = new IntitaDbContext();
-
-        public string GetGroup(int? id)
-        {
-            var group = _db.Groups.FirstOrDefault(x => x.Id == id);
-            return group.Name;
-        }
-        public AutoMapperProfile()
+       public AutoMapperProfile()
         {
             CreateMap<UserViewModel, User>();
             CreateMap<EventViewModel, Event>();

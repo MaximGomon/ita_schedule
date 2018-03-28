@@ -39,11 +39,11 @@ namespace BusinessLogic.Test
             };
             List<MailMessageAttachment> attachments = new List<MailMessageAttachment>() { mailMessageAttachment, mailMessageAttachment1, mailMessageAttachment2 };
             EmailMessage msg = new EmailMessage();
-            MailMessage createdMessage =  msg.CreateEmail("tanyablin@gmail.com", "tanyablin@gmail.com", "Test", "This is test e-mail for first test", null, null, attachments);
+            MailMessage createdMessage =  msg.CreateEmail(null, "tanyablin@gmail.com", "Test", "This is test e-mail for first test", null, null, attachments);
 
             ////Mock invocation of method GetAll
             //// Test 1 where From is Null
-            A.CallTo(() => msg.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
+            A.CallTo(() => smtpBehaviour.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
             {
                 var message = (MailMessage)x.Arguments[0];
                 //asserts
@@ -53,7 +53,7 @@ namespace BusinessLogic.Test
                 Assert.AreEqual(createdMessage.Attachments, message.Attachments);
 
             });
-            msg.SendMail(createdMessage, null);
+            smtpBehaviour.SendMail(createdMessage, null);
         }
         [TestMethod]
         public void EmailSenderTestMethod2()
@@ -78,7 +78,7 @@ namespace BusinessLogic.Test
             MailMessageAttachment mailMessageAttachment2 = new MailMessageAttachment()
             {
                 FileName = "imagetext.txt",
-                Base64String = File.ReadAllText("~\\TestImage\\imagetext.txt")
+                Base64String = File.ReadAllText("..\\..\\..\\TestImage\\imagetext.txt")
             };
             List<MailMessageAttachment> attachments = new List<MailMessageAttachment>() { mailMessageAttachment, mailMessageAttachment1, mailMessageAttachment2 };
             EmailMessage msg = new EmailMessage();
@@ -86,7 +86,7 @@ namespace BusinessLogic.Test
 
             ////Mock invocation of method GetAll
             //// Test 2 where To is Null
-            A.CallTo(() => msg.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
+            A.CallTo(() => smtpBehaviour.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
             {
                 var message = (MailMessage)x.Arguments[0];
                 //asserts
@@ -96,7 +96,7 @@ namespace BusinessLogic.Test
                 Assert.AreEqual(createdMessage.Attachments, message.Attachments);
 
             });
-            msg.SendMail(createdMessage, null);
+            smtpBehaviour.SendMail(createdMessage, null);
         }
         [TestMethod]
         public void EmailSenderTestMethod3()
@@ -121,7 +121,7 @@ namespace BusinessLogic.Test
             MailMessageAttachment mailMessageAttachment2 = new MailMessageAttachment()
             {
                 FileName = "imagetext.txt",
-                Base64String = File.ReadAllText("~\\TestImage\\imagetext.txt")
+                Base64String = File.ReadAllText("..\\..\\..\\TestImage\\imagetext.txt")
             };
             List<MailMessageAttachment> attachments = new List<MailMessageAttachment>() { mailMessageAttachment, mailMessageAttachment1, mailMessageAttachment2 };
             EmailMessage msg = new EmailMessage();
@@ -129,7 +129,7 @@ namespace BusinessLogic.Test
 
             ////Mock invocation of method GetAll
             //// Test 3 where Subject is Null
-            A.CallTo(() => msg.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
+            A.CallTo(() => smtpBehaviour.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
             {
                 var message = (MailMessage)x.Arguments[0];
                 //asserts
@@ -139,7 +139,7 @@ namespace BusinessLogic.Test
                 Assert.AreEqual(createdMessage.Attachments, message.Attachments);
 
             });
-            msg.SendMail(createdMessage, null);
+            smtpBehaviour.SendMail(createdMessage, null);
         }
         
 

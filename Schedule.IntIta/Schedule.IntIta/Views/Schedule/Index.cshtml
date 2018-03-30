@@ -2,6 +2,34 @@
     ViewData["Title"] = "Расписние";
 }
 
+<script>
+    var e = [];
+    var a = { start: "10.10.2018" };
+    e.push(a);
+
+    getFirstEventTime(e);
+
+    function getFirstEventTime(events) {
+        var currentDateTime = new Date();
+        var startTimeOfCurrentYear = (new Date(currentDateTime.getFullYear(), 0, 1)).getTime();
+        var currentTime = currentDateTime.getTime();
+        var pastTimeOfStartCurrentYear = currentTime - startTimeOfCurrentYear;
+        var hourOfMillisecs = 3600000;
+        var hoursOfOneWeek = 168;
+        var leftWeek = (pastTimeOfStartCurrentYear / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
+
+        events.forEach(function (item, i, arr) {
+            var itemTime = item.start;
+            var pastTimeOfStartCurrentYearForItem = itemTime - startTimeOfCurrentYear;
+            var leftWeekForItem = (pastTimeOfStartCurrentYearForItem / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
+            if (leftWeekForItem === leftWeek) {
+                console.log("aaaa");
+            }
+        });
+                
+    }
+</script>
+
 <h3>Расписание для M.Efremov</h3>
 
 <div id="calender"></div>
@@ -37,8 +65,7 @@
             $.ajax({
                 type: "GET",
                 url: "/event/GetEvents",
-                success: function(data) {
-                    console.log(data);
+                success: function (data) {
                     $.each(data, function (i, v) {
                         var rand = Math.floor(Math.random() * arr.length);
                         events.push({
@@ -58,6 +85,30 @@
                 }
             });
 
+            function getFirstEventTime(events) {
+                var currentDateTime = new Date();
+                var startTimeOfCurrentYear = (new Date(currentDateTime.getFullYear(), 0, 1)).getTime();
+                var currentTime = currentDateTime.getTime();
+                var pastTimeOfStartCurrentYear = currentTime - startTimeOfCurrentYear;
+                var hourOfMillisecs = 3600000;
+                var hoursOfOneWeek = 168;
+                var leftWeek = (pastTimeOfStartCurrentYear / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
+
+                var minTime = currentDateTime.getHours();
+                
+                events.forEach(function (item, i, arr) {
+                    var itemTime = item.start;
+                    var pastTimeOfStartCurrentYearForItem = itemTime - startTimeOfCurrentYear;
+                    var leftWeekForItem = (pastTimeOfStartCurrentYearForItem / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
+
+                    if (Math.trunc(leftWeekForItem) === Math.trunc(leftWeek)) {
+                        var itemDate = new Date(item.start);
+                        if (itemDate.getHours() < minTime) minTime = itemDate.getHours();
+                    }
+                });
+                return '' + minTime + ':00:00';
+            }
+
             function GenerateCalender(events) {
                 $('#calender').fullCalendar('destroy');
                 $('#calender').fullCalendar({
@@ -68,7 +119,8 @@
                     slotLabelInterval: '00:30:00',
                     slotLabelFormat: 'HH:mm',
                     minTime: '08:00:00',
-                    scrollTime: '08:00:00',
+                    scrollTime: getFirstEventTime(events),
+
                     timeFormat: 'H:mm',
                     displayEventEnd: true,
                     defaultView: 'agendaWeek',

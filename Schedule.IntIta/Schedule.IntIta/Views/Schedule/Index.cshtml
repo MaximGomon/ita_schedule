@@ -39,10 +39,12 @@
                 url: "/event/GetActiveEvents",
                 success: function (data) {
                     $.each(data, function (i, v) {
+                        console.log(data);
                         var rand = Math.floor(Math.random() * arr.length);
                         events.push({
-                            title: v.typeOfEvent.name + " " + v.subject.name + " " + v.room.name,
-                            description: v.subject.name + " " + v.comments,
+                            title: v.group.name + " " + v.typeOfEvent.name + " " + v.subject.name + " " + v.room.name,
+                            description: v.group.name + " " + v.subject.name + " " + v.comments,
+                            group: v.group.name,
                             start: moment(v.date.startTime),
                             end: v.date.endTime != null ? moment(v.date.endTime) : null,
                             color: arr[rand],
@@ -111,12 +113,12 @@
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
                         $description.append($('<p/>')
-                            .html('<b>Start:</b>' + "asdasdasd"));
+                            .html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
                         if (calEvent.end != null) {
                             $description.append($('<p/>')
-                                .html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                                .html('<b>End: </b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
                         }
-                        $description.append($('<p/>').html('<b>Description:</b>' + "asdasdasd"));
+                        $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal('show');

@@ -28,6 +28,25 @@ namespace Schedule.Intita.EmailNotification
         {
             return _client;
         }
+        public void SendMail(MailMessage msg, SmtpClient client)
+        {
+            try
+            {
+                client.Send(msg);
+            }
+            catch (SmtpFailedRecipientsException sfrEx)
+            {
+                Console.WriteLine("Failed to send : {0}", sfrEx.ToString());
+            }
+            catch (SmtpException sEx)
+            {
+                Console.WriteLine("Something went wrong : {0}", sEx.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception causght in MailSend(): {0}", ex.ToString());
+            }
+        }
 
     }
 }

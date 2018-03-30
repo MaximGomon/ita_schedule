@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Schedule.Intita.ApiRequest;
 using Schedule.IntIta;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Controllers;
@@ -99,7 +100,6 @@ namespace Schedule.IntIta
             app.UseSession();
             app.UseExceptionHandler();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>

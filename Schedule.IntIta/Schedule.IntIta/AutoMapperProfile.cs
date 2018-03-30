@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
@@ -68,7 +69,7 @@ namespace Schedule.IntIta
     {
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
-            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
+            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler(new HttpContextAccessor());
             try
             {
                 if (source == null)

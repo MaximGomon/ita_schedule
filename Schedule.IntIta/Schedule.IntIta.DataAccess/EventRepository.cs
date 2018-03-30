@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 
@@ -67,6 +65,17 @@ namespace Schedule.IntIta.DataAccess
             using (var context = new IntitaDbContext())
             {
                 var result = context.Events
+                    .Include(p => p.TypeOfEvent)
+                    .Include(p => p.Date);
+                return result.ToList();
+            }
+        }
+
+        public IEnumerable<Event> GetActive()
+        {
+            using (var context = new IntitaDbContext())
+            {
+                var result = context.Events.Where(x => x.IsDeleted == false)
                     .Include(p => p.TypeOfEvent)
                     .Include(p => p.Date);
                 return result.ToList();

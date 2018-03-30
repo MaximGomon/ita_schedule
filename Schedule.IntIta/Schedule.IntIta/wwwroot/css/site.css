@@ -156,3 +156,9 @@ table th { padding: 10px; }
     text-align: center;
     
 }
+
+.alert-message {
+    font-size: 20px;
+    color: red;
+    text-align: center;
+}

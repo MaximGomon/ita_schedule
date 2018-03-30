@@ -232,9 +232,9 @@ namespace Schedule.IntIta.Controllers
             }
         }
 
-        public JsonResult GetEvents()
+        public JsonResult GetActiveEvents()
         {
-            var events = _eventBusinessLogic.GetAll();
+            var events = _eventBusinessLogic.GetActive();
             List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();
             List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
 

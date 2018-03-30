@@ -18,6 +18,7 @@ namespace Schedule.IntIta.BusinessLogic
         List<User> FindUsers(string searchStr);
         User GetUsersById(int? id);
         Group GetGroupById(int? id);
+        IEnumerable<Event> GetActive();
 
 
     }

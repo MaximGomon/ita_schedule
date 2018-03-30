@@ -1,8 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
 @model AuthenticationScheme[]
 
 
 <hr />
+
+@if (Context.Request.QueryString.Value.Contains("ReturnUrl"))
+{
+    <div class="alert-message">Sorry, need to authenticate to continue :(</div>
+}
 
 <div class="main-greeting">
     

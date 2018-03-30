@@ -63,8 +63,10 @@ namespace Schedule.IntIta.BusinessLogic
         {
             return _integrGroups.GetGroupById(id);
         }
-
-
+        public IEnumerable<Event> GetActive()
+        {
+            return _repository.GetActive();
+        }
 
         public List<User> FindUsers(string searchStr)
         {

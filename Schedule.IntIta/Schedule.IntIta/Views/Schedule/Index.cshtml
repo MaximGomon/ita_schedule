@@ -2,34 +2,6 @@
     ViewData["Title"] = "Расписние";
 }
 
-<script>
-    var e = [];
-    var a = { start: "10.10.2018" };
-    e.push(a);
-
-    getFirstEventTime(e);
-
-    function getFirstEventTime(events) {
-        var currentDateTime = new Date();
-        var startTimeOfCurrentYear = (new Date(currentDateTime.getFullYear(), 0, 1)).getTime();
-        var currentTime = currentDateTime.getTime();
-        var pastTimeOfStartCurrentYear = currentTime - startTimeOfCurrentYear;
-        var hourOfMillisecs = 3600000;
-        var hoursOfOneWeek = 168;
-        var leftWeek = (pastTimeOfStartCurrentYear / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
-
-        events.forEach(function (item, i, arr) {
-            var itemTime = item.start;
-            var pastTimeOfStartCurrentYearForItem = itemTime - startTimeOfCurrentYear;
-            var leftWeekForItem = (pastTimeOfStartCurrentYearForItem / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
-            if (leftWeekForItem === leftWeek) {
-                console.log("aaaa");
-            }
-        });
-                
-    }
-</script>
-
 <h3>Расписание для M.Efremov</h3>
 
 <div id="calender"></div>
@@ -64,7 +36,7 @@
             var arr = ["red", "green", "blue"];
             $.ajax({
                 type: "GET",
-                url: "/event/GetEvents",
+                url: "/event/GetActiveEvents",
                 success: function (data) {
                     $.each(data, function (i, v) {
                         var rand = Math.floor(Math.random() * arr.length);

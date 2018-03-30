@@ -236,14 +236,14 @@ namespace Schedule.IntIta.Controllers
         {
             var events = _eventBusinessLogic.GetAll();
             List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();
-            //List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
+            List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
 
             foreach (var item in events)
             {
                 var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
                 //calendarEvent.Group = _eventBusinessLogic.GetAllGroups().FirstOrDefault(x => x.Id == item.GroupId);
-                //calendarEvent.Group = groups.FirstOrDefault(x => x.Id == item.GroupId);
-                calendarEvent.Group = _eventBusinessLogic.GetGroupById(item.GroupId);
+                calendarEvent.Group = groups.FirstOrDefault(x => x.Id == item.GroupId);
+                //calendarEvent.Group = _eventBusinessLogic.GetGroupById(item.GroupId);
                 //calendarEvent.Group = _db.Groups.Single(x => x.Id == item.GroupId);
                 calendarEvent.Initiator = _eventBusinessLogic.GetUsersById(item.InitiatorId);
                 //calendarEvent.Initiator = _db.Users.Single(x => x.Id == item.InitiatorId);

@@ -69,7 +69,7 @@ namespace Schedule.IntIta
     {
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
-            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler(new HttpContextAccessor());
+            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
             try
             {
                 if (source == null)

@@ -9,17 +9,17 @@ namespace Schedule.IntIta.Integration
 {
     public class GroupIntegrationHandler : IGroupIntegrationHandler
     {
-        private readonly IHttpContextAccessor _context;
-        public GroupIntegrationHandler(IHttpContextAccessor context)
+        private readonly String _token;
+        public GroupIntegrationHandler()
         {
-            _context = context;
+            _token = new HttpContextAccessor().HttpContext.Request.Cookies["IntitaKey"];
         }
         
         public List<Group> GetGroupList()
         {
             var apiRequest = new ApiRequest<List<GroupIntegrationModel>>();
             var response = apiRequest.Url("http://sso.intita.com/api/offline/groups")//test
-                .Authenticate(_context.HttpContext.Request.Cookies["IntitaKey"])
+                .Authenticate(_token)
                 .Get()
                 .Send();
             var groups = ConvertToGroup(response.Response);
@@ -34,7 +34,7 @@ namespace Schedule.IntIta.Integration
         {
             var apiRequest = new ApiRequest<GroupIntegrationModel>();
             var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId)
-                .Authenticate(_context.HttpContext.Request.Cookies["IntitaKey"])
+                .Authenticate(_token)
                 .Get()
                 .Send();
             if (response.StatusCode != 200)
@@ -55,7 +55,7 @@ namespace Schedule.IntIta.Integration
         {
             var apiRequest = new ApiRequest<List<SubGroupIntegrationModel>>();
             var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId + "/subgroups")
-                .Authenticate(_context.HttpContext.Request.Cookies["IntitaKey"])
+                .Authenticate(_token)
                 .Get()
                 .Send();
             return ConvertToSubGroup(response.Response, groupId);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;

@@ -1,12 +1,23 @@
-﻿@model Schedule.IntIta.Domain.Models.User
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    Layout = null;
 }
-<h2>Enter email or name to search: </h2>
+<html>
+<head>
+    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <input type="text" name="str" data-autocomplete-source="Search/AutocompleteSearch" />
+    <input type="submit" value="Поиск" />
 
-<form id="auth"  action="/Search/SearchResult" method="post">
-    <p><input form ="auth" type="text" value=""  name ="str"/>
-        <input type="submit" form="auth" value="Send" />
-    </p>
-</form>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function () {
+        $("[data-autocomplete-source]").each(function () {
+            var target = $(this);
+            target.autocomplete({ source: target.attr("data-autocomplete-source") });
+        });
+    });
+    </script>
+</body>
+</html>

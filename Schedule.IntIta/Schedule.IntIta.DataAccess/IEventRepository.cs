@@ -11,5 +11,6 @@ namespace Schedule.IntIta.DataAccess
         void Update(Event modifiedItem);
         void Delete(int id);
         IEnumerable<Event> GetAll();
+        IEnumerable<Event> GetActive();
     }
 }

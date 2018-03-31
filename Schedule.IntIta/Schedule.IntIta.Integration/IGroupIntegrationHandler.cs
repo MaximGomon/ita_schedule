@@ -6,6 +6,6 @@ namespace Schedule.IntIta.Integration
     public interface IGroupIntegrationHandler
     {
         List<Group> GetGroupList();
-        Group GetGroupById(int groupId);
+        Group GetGroupById(int? groupId);
     }
 }

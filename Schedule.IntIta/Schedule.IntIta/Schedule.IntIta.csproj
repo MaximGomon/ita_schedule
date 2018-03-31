@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspNet.Security.OAuth.Intita\AspNet.Security.OAuth.Intita.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.BusinessLogic\Schedule.IntIta.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Schedule.IntIta.Cache.Cache\Schedule.IntIta.Cache.Cache.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.DataAccess\Schedule.IntIta.DataAccess.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.Domain.Models\Schedule.IntIta.Domain.Models.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.Integration\Schedule.IntIta.Integration.csproj" />

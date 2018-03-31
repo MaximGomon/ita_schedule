@@ -9,7 +9,6 @@ using Schedule.Intita.ApiRequest.Enumerations;
 using Microsoft.Extensions.Configuration;
 using Schedule.IntIta.Domain.Models;
 
-
 namespace Schedule.Intita.ApiRequest
 {
     public class ApiRequest<TResponse>
@@ -27,10 +26,10 @@ namespace Schedule.Intita.ApiRequest
         public ApiResponse<TResponse> Send()
         {
             ValidateForSend();
-
+            
             var response = new ApiResponse<TResponse>();
             var httpRequest = (HttpWebRequest)WebRequest.Create(_requestUri);
-
+                
             httpRequest.Method = _httpMethod.ToString().ToUpper();
 
             if (_httpMethod == RequestType.Get)
@@ -53,7 +52,6 @@ namespace Schedule.Intita.ApiRequest
 
                 if (_authenticationConfig != null)
                 {
-                   
                     _headers.Add("Authorization", GetAccessToken());
                 }
 

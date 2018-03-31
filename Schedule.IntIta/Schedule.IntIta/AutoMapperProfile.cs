@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
@@ -16,7 +17,11 @@ namespace Schedule.IntIta
        public AutoMapperProfile()
         {
             CreateMap<UserViewModel, User>();
-            CreateMap<EventViewModel, Event>();
+            CreateMap<EventViewModel, Event>()
+                .ForMember(x => x.InitiatorId, c => c.MapFrom(n => n.InitiatorId))
+                .ForMember(x => x.RoomId, c => c.MapFrom(n => n.RoomId))
+                .ForMember(x => x.GroupId, c => c.MapFrom(n => n.GroupId))
+                .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId));
 
             CreateMap<Event, EventViewModel>()
                 .ForMember(x => x.InitiatorName, x => x.ResolveUsing<EventInitiatorResolver>())

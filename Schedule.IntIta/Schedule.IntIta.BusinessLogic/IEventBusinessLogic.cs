@@ -17,5 +17,9 @@ namespace Schedule.IntIta.BusinessLogic
         IEnumerable<Group> GetAllGroups();
         List<User> FindUsers(string searchStr);
         User GetUsersById(int? id);
+        Group GetGroupById(int? id);
+        IEnumerable<Event> GetActive();
+
+
     }
 }

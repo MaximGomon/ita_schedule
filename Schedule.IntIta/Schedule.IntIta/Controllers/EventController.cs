@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
+using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;

@@ -11,10 +11,12 @@ namespace BusinessLogic.Test
     public class EmailSenderTest
     {
         [TestMethod]
-        public void EmailSenderTestMethod1()
+        public void EmailTestFrom()
         {
-            SmtpBehaviour smtpBehaviour = new SmtpBehaviour("smtp@gmail.com", 567, "username", "password");
-            SmtpClient receivedClient = smtpBehaviour.GetClient();
+
+            ISmtpBehaviour smtpBehaviour =  A.Fake<ISmtpBehaviour>();
+             A.CallTo(() => smtpBehaviour.GetClient())
+                .Returns(new SmtpClient());
             MailMessageAttachment mailMessageAttachment = new MailMessageAttachment()
             {
                 FileName = "SomeFile.txt",
@@ -56,10 +58,11 @@ namespace BusinessLogic.Test
             smtpBehaviour.SendMail(createdMessage, null);
         }
         [TestMethod]
-        public void EmailSenderTestMethod2()
+        public void EmailTestTo()
         {
-            SmtpBehaviour smtpBehaviour = new SmtpBehaviour("smtp@gmail.com", 567, "username", "password");
-            SmtpClient receivedClient = smtpBehaviour.GetClient();
+            ISmtpBehaviour smtpBehaviour = A.Fake<ISmtpBehaviour>();
+            A.CallTo(() => smtpBehaviour.GetClient())
+               .Returns(new SmtpClient());
             MailMessageAttachment mailMessageAttachment = new MailMessageAttachment()
             {
                 FileName = "SomeFile.txt",
@@ -86,6 +89,7 @@ namespace BusinessLogic.Test
 
             ////Mock invocation of method GetAll
             //// Test 2 where To is Null
+       
             A.CallTo(() => smtpBehaviour.SendMail(A<MailMessage>.Ignored, A<SmtpClient>.Ignored)).Invokes(x =>
             {
                 var message = (MailMessage)x.Arguments[0];
@@ -99,10 +103,11 @@ namespace BusinessLogic.Test
             smtpBehaviour.SendMail(createdMessage, null);
         }
         [TestMethod]
-        public void EmailSenderTestMethod3()
+        public void EmailTestSubject()
         {
-            SmtpBehaviour smtpBehaviour = new SmtpBehaviour("smtp@gmail.com", 567, "username", "password");
-            SmtpClient receivedClient = smtpBehaviour.GetClient();
+            ISmtpBehaviour smtpBehaviour = A.Fake<ISmtpBehaviour>();
+            A.CallTo(() => smtpBehaviour.GetClient())
+               .Returns(new SmtpClient());
             MailMessageAttachment mailMessageAttachment = new MailMessageAttachment()
             {
                 FileName = "SomeFile.txt",

@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
@@ -26,8 +32,16 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
-        //[HttpPost]
-        public ActionResult Filter(List<FilterEvents> filterOptions)
+        [HttpGet]
+        public ActionResult FilterShow()
+        {
+            return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
+        }
+
+
+        [HttpPost]
+        //[CheckContentFilter]
+        public ActionResult Filter([FromBody]List<FilterEvents> filterOptions)
         {
             List<EventViewModel> models = new List<EventViewModel>();
 
@@ -35,20 +49,20 @@ namespace Schedule.IntIta.Controllers
             var eventTypeFilter = filterOptions.FirstOrDefault(x => x.EventField == "TypeOfEvent");
             var RoomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
             var GroupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
-            
+
             var events = _eventBusinessLogic
                 .GetAll()
                 .Where(@event =>
                     initiatorFilter != null ?
-                    (@event.InitiatorId != null 
-                    && 
+                    (@event.InitiatorId != null
+                    &&
                     _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
                         .Select(w => w.Id)//select only Ids of find users
                         .Contains(@event.InitiatorId.Value)
                     &&
                     eventTypeFilter != null ?
                     (@event.TypeOfEvent != null
-                    && 
+                    &&
                     @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
                     &&
                     RoomFilter != null ?
@@ -59,7 +73,7 @@ namespace Schedule.IntIta.Controllers
                     GroupFilter != null ?
                     (@event.GroupId != null
                     &&
-                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(@event.GroupId.Value)): true):true);
+                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(@event.GroupId.Value)) : true) : true);
 
             foreach (var item in events)
             {
@@ -73,66 +87,9 @@ namespace Schedule.IntIta.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index()
-
         {
-            List<FilterEvents> filters = new List<FilterEvents>();
-           
-
-            return RedirectToAction("Filter", filters);
-
-
-            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
-            //ViewData["TypeFilter"] = sType;
-            //ViewData["GroupFilter"] = sGroup;
-            //ViewData["RoomFilter"] = sRoom;
-            //ViewData["InitiatorFilter"] = sInitiator;
-
-            //var events = _eventBusinessLogic.GetAll();
-
-            //if (!String.IsNullOrEmpty(sType))
-            //{
-            //    events = events.Where(s => s.TypeOfEvent.Name.Contains(sType));
-            //}
-            //if (!String.IsNullOrEmpty(sGroup))
-            //{
-            //    var group = _db.Groups.ToList().Where(x => x.Name.Contains(sGroup)).Select(x => (int?)x.Id);
-            //    events = events.Where(x => x.GroupId.HasValue && group.Contains(x.GroupId.Value)).ToList();
-            //}
-            //if (!String.IsNullOrEmpty(sRoom))
-            //{
-            //    var rooms = _db.Rooms.ToList().Where(x => x.Name.Contains(sRoom)).Select(x => (int?)x.Id);
-            //    events = events.Where(x => x.RoomId.HasValue && rooms.Contains(x.RoomId.Value)).ToList();
-            //}
-            //if (!String.IsNullOrEmpty(sInitiator))
-            //{
-            //    var users = _db.Users.ToList().Where(x => x.LastName.Contains(sInitiator)).Select(x => (int?)x.Id);
-            //    events = events.Where(x => x.InitiatorId.HasValue && users.Contains(x.InitiatorId.Value)).ToList();
-            //}
-
-            //switch (sortOrder)
-            //{
-            //    case "type_desc":
-            //        events = events.OrderByDescending(s => s.TypeOfEvent.Name);
-            //        break;
-            //    default:
-            //        events = events.OrderBy(s => s.TypeOfEvent.Name);
-            //        break;
-            //}
-
-            //List<EventViewModel> model = new List<EventViewModel>();
-
-            //foreach (var item in events)
-            //{
-            //    model.Add(_mapper.Map<EventViewModel>(item));
-            //}
-
-            //ViewBag.Subject = _db.Subjects.ToList();
-            //ViewBag.User = _db.Users.ToList();
-            //ViewBag.Room = _db.Rooms.ToList();
-            //ViewBag.Group = _db.Groups.ToList();
-
-            //return View(model.ToList());
-            //return View();
+            //List<FilterEvents> filters = new List<FilterEvents>();
+            return RedirectToAction("FilterShow");
         }
 
         // GET: Room/Create
@@ -141,9 +98,9 @@ namespace Schedule.IntIta.Controllers
             //TODO: перенести все в репозиторий
             SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
             SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
-            SelectList userSelectList = new SelectList(_db.Users, "Id", "LastName");
+            SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
             SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
-            SelectList groupSelectList = new SelectList(_db.Groups, "Id", "Name");
+            SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
             SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
 
             ViewData["eventTypes"] = eventTypes;
@@ -252,6 +209,22 @@ namespace Schedule.IntIta.Controllers
             }
 
             return new JsonResult(list);
+        }
+    }
+
+    public class CheckContentFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            using (var stream = new MemoryStream())
+            {
+                context.HttpContext.Request.Body.CopyTo(stream);
+                stream.Position = 0;
+                var bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, bytes.Length);
+                var text = Encoding.Default.GetString(bytes);
+
+            }
         }
     }
 }

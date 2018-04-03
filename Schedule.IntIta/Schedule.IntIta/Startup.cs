@@ -17,7 +17,8 @@ using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Integration;
-
+using Schedule.IntIta.Cache.Cache;
+using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta
 {
@@ -34,6 +35,11 @@ namespace Schedule.IntIta
             services.AddAutoMapper();
             
             services.AddSingleton<ISubjectRepository, SubjectRepository>();
+
+            services.AddSingleton<ICacheStore<Group>, CacheStore<Group>>();
+            services.AddSingleton<IDataProvider<Group>, GroupDataProvider>();
+            services.AddSingleton<ICacheManager<Group>, CacheManager<Group>>();
+
             services.AddSingleton<ISubjectBusinessLogic, SubjectBusinessLogic>();
             services.AddSingleton<IEventBusinessLogic, EventBusinessLogic>();
             services.AddSingleton<IEventRepository, EventRepository>();

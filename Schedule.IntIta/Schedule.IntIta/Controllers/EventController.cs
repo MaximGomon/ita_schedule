@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
+using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
@@ -80,7 +81,10 @@ namespace Schedule.IntIta.Controllers
             }
 
             models = models.OrderBy(x => x.Date.StartTime).ToList();
-            ViewData["FilterSettings"] = filterOptions;
+            if (initiatorFilter != null) ViewBag.InitiatorName = initiatorFilter.SearchString;
+            if (eventTypeFilter != null) ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
+            if (RoomFilter != null) ViewBag.RoomName = RoomFilter.SearchString;
+            if (GroupFilter != null) ViewBag.GroupName = GroupFilter.SearchString;
             return View(nameof(Index), models);
             //return RedirectToAction(nameof(Index), models);
         }

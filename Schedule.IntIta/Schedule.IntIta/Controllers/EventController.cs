@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
-using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
@@ -47,8 +46,8 @@ namespace Schedule.IntIta.Controllers
 
             var initiatorFilter = filterOptions.FirstOrDefault(x => x.EventField == "InitiatorName");
             var eventTypeFilter = filterOptions.FirstOrDefault(x => x.EventField == "TypeOfEvent");
-            var RoomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
-            var GroupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
+            var roomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
+            var groupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
 
             var events = _eventBusinessLogic
                 .GetAll()
@@ -65,15 +64,15 @@ namespace Schedule.IntIta.Controllers
                     &&
                     @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
                     &&
-                    RoomFilter.SearchString.Length != 0 ?
+                    roomFilter.SearchString.Length != 0 ?
                     (@event.RoomId != null
                     &&
-                     _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(RoomFilter.SearchString)) : true
+                     _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(roomFilter.SearchString)) : true
                     &&
-                    GroupFilter.SearchString.Length != 0 ?
+                    groupFilter.SearchString.Length != 0 ?
                     (@event.GroupId != null
                     &&
-                     _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(GroupFilter.SearchString)) : true).ToList();
+                     _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(groupFilter.SearchString)) : true).ToList();
 
             foreach (var item in events)
             {
@@ -81,12 +80,14 @@ namespace Schedule.IntIta.Controllers
             }
 
             models = models.OrderBy(x => x.Date.StartTime).ToList();
-            if (initiatorFilter != null) ViewBag.InitiatorName = initiatorFilter.SearchString;
-            if (eventTypeFilter != null) ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
-            if (RoomFilter != null) ViewBag.RoomName = RoomFilter.SearchString;
-            if (GroupFilter != null) ViewBag.GroupName = GroupFilter.SearchString;
-            return View(nameof(Index), models);
-            //return RedirectToAction(nameof(Index), models);
+            ViewBag.InitiatorName = initiatorFilter.SearchString;
+            ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
+            ViewBag.RoomName = roomFilter.SearchString;
+            ViewBag.GroupName = groupFilter.SearchString;
+
+            //ViewData["FilterSettings"] = filterOptions;
+            //return View(nameof(Index), models);
+            return RedirectToAction(nameof(Index), models);
         }
 
         [HttpGet]

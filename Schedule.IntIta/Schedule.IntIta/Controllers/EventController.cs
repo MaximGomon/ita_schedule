@@ -82,7 +82,10 @@ namespace Schedule.IntIta.Controllers
             }
 
             models = models.OrderBy(x => x.Date.StartTime).ToList();
-            ViewData["FilterSettings"] = filterOptions;
+            if (initiatorFilter != null) ViewBag.InitiatorName = initiatorFilter.SearchString;
+            if (eventTypeFilter != null) ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
+            if (RoomFilter != null) ViewBag.RoomName = RoomFilter.SearchString;
+            if (GroupFilter != null) ViewBag.GroupName = GroupFilter.SearchString;
             return View(nameof(Index), models);
         }
 

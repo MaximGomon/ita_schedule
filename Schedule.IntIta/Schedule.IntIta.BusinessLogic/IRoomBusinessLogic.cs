@@ -7,6 +7,7 @@ namespace Schedule.IntIta.BusinessLogic
     {
         void Add(Room item);
         Room Read(int id);
+        Room Get(int id);
         void Update(Room modifiedItem);
         void Delete(int id);
         IEnumerable<Room> GetAll();

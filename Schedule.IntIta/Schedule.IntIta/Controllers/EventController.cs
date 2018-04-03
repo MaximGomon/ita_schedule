@@ -32,12 +32,11 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
-        [HttpGet]
-        public ActionResult FilterShow()
-        {
-            return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
-        }
-
+        //[HttpGet]
+        //public ActionResult FilterShow()
+        //{
+        //    return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
+        //}
 
         [HttpPost]
         //[CheckContentFilter]
@@ -53,27 +52,27 @@ namespace Schedule.IntIta.Controllers
             var events = _eventBusinessLogic
                 .GetAll()
                 .Where(@event =>
-                    initiatorFilter != null ?
+                    initiatorFilter.SearchString.Length != 0 ?
                     (@event.InitiatorId != null
                     &&
                     _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
                         .Select(w => w.Id)//select only Ids of find users
-                        .Contains(@event.InitiatorId.Value)
+                        .Contains(@event.InitiatorId.Value)) : true
                     &&
-                    eventTypeFilter != null ?
+                    eventTypeFilter.SearchString.Length != 0 ?
                     (@event.TypeOfEvent != null
                     &&
                     @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
                     &&
-                    RoomFilter != null ?
+                    RoomFilter.SearchString.Length != 0 ?
                     (@event.RoomId != null
                     &&
-                    _eventBusinessLogic.GetAllRooms().Select(w => w.Id).Contains(@event.RoomId.Value)) : true
+                     _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(RoomFilter.SearchString)) : true
                     &&
-                    GroupFilter != null ?
+                    GroupFilter.SearchString.Length != 0 ?
                     (@event.GroupId != null
                     &&
-                    _eventBusinessLogic.GetAllGroups().Select(w => w.Id).Contains(@event.GroupId.Value)) : true) : true);
+                     _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(GroupFilter.SearchString)) : true).ToList();
 
             foreach (var item in events)
             {
@@ -83,13 +82,15 @@ namespace Schedule.IntIta.Controllers
             models = models.OrderBy(x => x.Date.StartTime).ToList();
             ViewData["FilterSettings"] = filterOptions;
             return View(nameof(Index), models);
+            //return RedirectToAction(nameof(Index), models);
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             //List<FilterEvents> filters = new List<FilterEvents>();
-            return RedirectToAction("FilterShow");
+            //return RedirectToAction("FilterShow");
+            return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
         }
 
         // GET: Room/Create

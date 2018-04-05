@@ -89,6 +89,7 @@ namespace Schedule.IntIta.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            string myCookie = Request.Cookies["SomeCustomCookie"];
             //List<FilterEvents> filters = new List<FilterEvents>();
             return RedirectToAction("FilterShow");
         }

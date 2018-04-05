@@ -12,6 +12,11 @@ namespace Schedule.IntIta.Controllers
     {
         public IActionResult Index()
         {
+            string cookie = Request.Cookies["SomeCustomCookie"];
+            if (cookie == null)
+            {
+                Response.Cookies.Append("SomeCustomCookie", "Shut the hell up!");
+            }
             return View();
         }
     }

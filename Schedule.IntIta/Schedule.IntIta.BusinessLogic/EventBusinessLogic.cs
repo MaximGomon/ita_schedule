@@ -78,5 +78,10 @@ namespace Schedule.IntIta.BusinessLogic
         {
             return _integrUsers.FindUserById(id);
         }
+
+        public Room GetRoomById(int id)
+        {
+            return _repRooms.Get(id);
+        }
     }
 }

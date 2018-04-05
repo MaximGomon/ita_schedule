@@ -19,7 +19,6 @@ namespace Schedule.IntIta.BusinessLogic
         User GetUsersById(int? id);
         Group GetGroupById(int id);
         IEnumerable<Event> GetActive();
-
-
+        Room GetRoomById(int id);
     }
 }

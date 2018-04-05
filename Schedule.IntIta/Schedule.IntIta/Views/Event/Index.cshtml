@@ -45,12 +45,12 @@
                     ]),
                     dataType: "json",
                     success: function(result) {
-                        //console.log(result);
                         console.log("sucess", data);
 
                     },
                     error: function(err) {
                         console.log("error", err);
+                        location.reload();
                     }
                 });
             }
@@ -71,7 +71,7 @@
         </th>
         <th>
             <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sType" value="@ViewData["TypeFilter"]"/></p>
+                <p><input class ="filtering" type="text" id="sType" value="@ViewBag.TypeOfEvent"/></p>
             </div>
         </th>
         <th>
@@ -86,19 +86,19 @@
         <th>
             @Html.DisplayNameFor(model => model.InitiatorId)
             <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sInitiator" value="@ViewData["InitiatorFilter"]"/></p>
+                <p><input class ="filtering" type="text" id="sInitiator" value="@ViewBag.InitiatorName"/></p>
             </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RoomId)
             <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sRoom" value="@ViewData["RoomFilter"]"/></p>
+                <p><input class ="filtering" type="text" id="sRoom" value="@ViewBag.RoomName"/></p>
             </div>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GroupId)
             <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sGroup" value="@ViewData["GroupFilter"]"/></p>
+                <p><input class ="filtering" type="text" id="sGroup" value="@ViewBag.GroupName"/></p>
             </div>
         </th>
         <th>

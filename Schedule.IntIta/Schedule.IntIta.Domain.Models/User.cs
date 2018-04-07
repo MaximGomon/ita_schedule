@@ -4,6 +4,7 @@ namespace Schedule.IntIta.Domain.Models
 {
     public class User : DictionaryEntity
     {
+        public int? IntitaId { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

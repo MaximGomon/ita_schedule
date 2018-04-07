@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
@@ -10,6 +11,7 @@ using Schedule.IntIta.Integration;
 
 namespace Schedule.IntIta.Controllers
 {
+    [Authorize]
     public class SearchController : Controller
     {
         private readonly IUserRepository _userRepository;

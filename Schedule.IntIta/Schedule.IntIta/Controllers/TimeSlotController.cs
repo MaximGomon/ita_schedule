@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
 using Schedule.IntIta.BusinessLogic;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Schedule.IntIta.Controllers
 {
+    [Authorize]
     public class TimeSlotController : Controller
     {
         private readonly IMapper _mapper;

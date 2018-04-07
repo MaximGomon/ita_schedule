@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Integration;
 
@@ -29,6 +30,19 @@ namespace Schedule.IntIta.DataAccess
             return _userIntegration.FindUsers(searchStr);
         }
 
+        public List<User> GetLocalUserByStr(string searchStr)
+        {
+            using (var context = new IntitaDbContext())
+            {
+                var users = context.Users.Where(
+                    x => x.FirstName.Contains(searchStr) || 
+                    x.LastName.Contains(searchStr) ||
+                    x.Email.Contains(searchStr))
+                    .ToList();
+                return users;
+            }
+        }
+
         //public IEnumerable<User> GetAll()
         //{
         //    return _userIntegration.FindUsers();
@@ -36,7 +50,11 @@ namespace Schedule.IntIta.DataAccess
 
         public void Insert(User item)
         {
-            throw new NotImplementedException();
+            using (var context = new IntitaDbContext())
+            {
+                context.Users.Add(item);
+                context.SaveChanges();
+            }
         }
 
         public void Update(User modifiedUser)

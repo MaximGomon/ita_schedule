@@ -6,14 +6,20 @@
 
 @if (User.Identity.IsAuthenticated)
 {
+    if (User.IsInRole("Admin"))
+    {
+        <li>@Html.ActionLink($"Admin", "Index", "Admin", "")</li>
+    }
     if (User.Identity.Name != "")
     {
+
         <li>@Html.ActionLink($"{User.Identity.Name}", "Index", "Schedule", "")</li>
     }
     else
     {
         <li>@Html.ActionLink("", "Index", "Schedule", "", new { @class = "glyphicon glyphicon-user" })</li>
     }
+
 
 
     <li>@Html.ActionLink("Logout", "SignOut", "Authentication")</li>

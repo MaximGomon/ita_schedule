@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
@@ -13,6 +14,7 @@ using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OfficeController : Controller
     {
         private readonly IMapper _mapper;

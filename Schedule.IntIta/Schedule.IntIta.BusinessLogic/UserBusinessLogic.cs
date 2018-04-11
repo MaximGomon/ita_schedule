@@ -15,18 +15,18 @@ namespace Schedule.IntIta.BusinessLogic
         {
             _repository = repository;
         }
-        //public void Add(User user)
-        //{
-        //    if(string.IsNullOrEmpty(user.Login))
-        //    {
-        //        throw new ValidationException("Parameter Login must have Value");
-        //    }
-        //    if(_repository.GetByStr().Any(x => string.Equals(x.Login, user.Login)))
-        //    {
-        //        throw new ArgumentException("User with the same Login already exists!");
-        //    }
-        //    _repository.Insert(user);
-        //}
+        public void Add(User user)
+        {
+            //if (string.IsNullOrEmpty(user.Login))
+            //{
+            //    throw new ValidationException("Parameter Login must have Value");
+            //}
+            //if (_repository.GetByStr(user.Login).Any(x => string.Equals(x.Login, user.Login)))
+            //{
+            //    throw new ArgumentException("User with the same Login already exists!");
+            //}
+            _repository.Insert(user);
+        }
 
         //public void Delete(int id)
         //{
@@ -48,6 +48,11 @@ namespace Schedule.IntIta.BusinessLogic
         public List<User> ReadByStr(string searchStr)
         {
             return _repository.GetByStr(searchStr);
+        }
+
+        public List<User> GetLocalUserByStr(string searchStr)
+        {
+            return _repository.GetLocalUserByStr(searchStr);
         }
 
         public void Update(User modifiedUser)

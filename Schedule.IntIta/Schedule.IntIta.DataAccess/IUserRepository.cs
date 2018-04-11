@@ -11,5 +11,6 @@ namespace Schedule.IntIta.DataAccess
         void Update(User modifiedUser);
         void Delete(int id);
         //IEnumerable<User> GetAll();
+        List<User> GetLocalUserByStr(string searchStr);
     }
 }

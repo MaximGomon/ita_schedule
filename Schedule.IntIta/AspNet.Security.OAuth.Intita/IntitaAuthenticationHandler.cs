@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -11,13 +8,9 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta.Domain.Models;
 
@@ -135,6 +128,11 @@ namespace AspNet.Security.OAuth.Intita
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, response.Response.FirstName),
             };
+
+            if (response.Response.Id == 1294)
+            {
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin"));
+            }
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "ApplicationCookie",
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

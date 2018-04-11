@@ -1,10 +1,9 @@
 ﻿@using Schedule.IntIta.Domain.Models
 @using Schedule.IntIta.ViewModels
-@model IEnumerable<Schedule.IntIta.ViewModels.EventViewModel>
+@model FilterEvents
 
 @{
     ViewData["Title"] = "Events";
-    
 }
 
 <h2>Events</h2>
@@ -13,106 +12,51 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script type="text/javascript">   
-    function DoFilter() {
-        $(".filtering").keydown(function (eventObject) {
-            if (event.keyCode == 13) {
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("Filter", "Event")",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify([
-                        {
-                            SearchString: $('#sType').val(),
-                            EventField: 'TypeOfEvent'
-                        },
-                        {
-                            SearchString: $('#sInitiator').val(),
-                            EventField: 'InitiatorName'
-                        },
-                        {
-                            SearchString: $('#sRoom').val(),
-                            EventField: 'RoomName'
-                        },
-                        {
-                            SearchString: $('#sGroup').val(),
-                            EventField: 'GroupName'
-                        }
-                    ]),
-                    dataType: "json",
-                    success: function(result) {
-                        console.log("sucess", data);
-
-                    },
-                    error: function(err) {
-                        console.log("error", err);
-                        location.reload();
-                    }
-                });
-            }
-        });
-    }
-
-    $(document).ready(function () {
-       DoFilter();
-    });
-
-</script>
-
+@*<form asp-action="Index" method="Post">*@
+@*<div class="form-actions no-color">
+        <p>
+            Find by TypeOfEvent: <input class ="filtering" type="text" name="SearchTypeOfEvent" id="sType" value="@ViewBag.TypeOfEvent" /><br>
+            Find by InitiatorName: <input class="filtering" type="text" name="SearchInitiator" id="sInitiator" value="@ViewBag.TypeOfEvent" /><br>
+            Find by RoomName: <input class="filtering" type="text" name="SearchRoom" id="sRoom" value="@ViewBag.RoomName" /><br>
+            Find by GroupName: <input class="filtering" type="text" name="SearchGroup" id="sGroup" value="@ViewBag.GroupName" /><br>
+            <a asp-action="Index">Back to Full List</a> |
+            <input type="submit" value="Search" class="btn btn-default" />
+        </p>
+    </div>*@
+@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
+{
+    <fieldset>
+        <form asp-action="Filter">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                TypeOfEvent @Html.EditorFor(x => x.TypeOfEvent)<br>
+                InitiatorName @Html.EditorFor(x => x.InitiatorName)<br>
+                GroupName @Html.EditorFor(x => x.GroupName)<br>
+                RoomName @Html.EditorFor(x => x.RoomName)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </form>
+    </fieldset>
+}
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sType" value="@ViewBag.TypeOfEvent"/></p>
-            </div>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date.EndTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubjectId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InitiatorId)
-            <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sInitiator" value="@ViewBag.InitiatorName"/></p>
-            </div>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoomId)
-            <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sRoom" value="@ViewBag.RoomName"/></p>
-            </div>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupId)
-            <div class="form-actions no-color">
-                <p><input class ="filtering" type="text" id="sGroup" value="@ViewBag.GroupName"/></p>
-            </div>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comments)
-
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th></th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Start time</th>
+        <th>End time</th>
+        <th>Subject</th>
+        <th>Initiator</th>
+        <th>Room</th>
+        <th>Group</th>
+        <th>Comments</th>
+        <th>Deleted</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
+    @foreach (EventViewModel item in ViewBag.Data) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -142,9 +86,7 @@
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
-                @*
-            @(item.IsDeleted ? "y" : "n")
-        *@
+             
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>
             <td>
@@ -155,4 +97,6 @@
     }
     </tbody>
 </table>
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

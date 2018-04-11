@@ -2,9 +2,9 @@
 {
     public class FilterEvents
     {
-        public string TypeOfEvent;
-        public string InitiatorName;
-        public string RoomName;
-        public string GroupName;
+        public string TypeOfEvent { get; set; }
+        public string InitiatorName { get; set; }
+        public string RoomName { get; set; }
+        public string GroupName { get; set; }
     }
 }

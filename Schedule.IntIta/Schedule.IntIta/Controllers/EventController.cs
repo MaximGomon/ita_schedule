@@ -84,7 +84,45 @@ namespace Schedule.IntIta.Controllers
         [HttpPost]
         public ActionResult Filter(FilterEvents filtersEvents)
         {
-            return RedirectToAction(nameof(Index));
+            List<EventViewModel> models = new List<EventViewModel>();
+
+            var initiatorFilter = filtersEvents.InitiatorName;
+            var eventTypeFilter = filtersEvents.TypeOfEvent;
+            var roomFilter = filtersEvents.RoomName;
+            var groupFilter = filtersEvents.GroupName;
+
+            var events = _eventBusinessLogic
+                    .GetAll()
+                    .Where(@event =>
+                        initiatorFilter != null ?
+                        (@event.InitiatorId != null
+                        &&
+                        _eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
+                            .Select(w => w.Id)//select only Ids of find users
+                            .Contains(@event.InitiatorId.Value)) : true
+                        &&
+                        eventTypeFilter != null ?
+                        (@event.TypeOfEvent != null
+                        &&
+                        @event.TypeOfEvent.Name.ToUpper().Contains(eventTypeFilter.ToUpper())) : true
+                        &&
+                        roomFilter != null ?
+                        (@event.RoomId != null
+                        &&
+                         _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.ToUpper().Contains(roomFilter.ToUpper())) : true
+                        &&
+                        groupFilter != null ?
+                        (@event.GroupId != null
+                        &&
+                         _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.ToUpper().Contains(groupFilter.ToUpper())) : true).ToList();
+
+            foreach (var item in events)
+            {
+                models.Add(_mapper.Map<EventViewModel>(item));
+            }
+            ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
+            //return RedirectToAction(nameof(Index));
+            return View(nameof(Index));
         }
         //[HttpGet]
         public async Task<IActionResult> Index()

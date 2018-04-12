@@ -82,7 +82,6 @@ namespace Schedule.IntIta.Controllers
         //    return RedirectToAction(nameof(Index), new { models = models });
         //}
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Filter(FilterEvents filtersEvents)
         {
             return RedirectToAction(nameof(Index));

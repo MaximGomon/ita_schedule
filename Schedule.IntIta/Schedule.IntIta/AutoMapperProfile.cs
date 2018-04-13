@@ -59,7 +59,6 @@ namespace Schedule.IntIta
             return String.Concat(user.FirstName, " ", user.LastName);
         }
     }
-
     public class EventRoomResolver : IValueResolver<Event, EventViewModel, string>
     {
         public IntitaDbContext _db = new IntitaDbContext();

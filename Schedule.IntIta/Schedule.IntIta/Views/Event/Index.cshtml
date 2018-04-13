@@ -12,6 +12,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+
 @*<form asp-action="Index" method="Post">*@
 @*<div class="form-actions no-color">
         <p>
@@ -25,7 +26,7 @@
     </div>*@
 
 
-@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
+@*@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
 {
     <form asp-action="Filter">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -49,7 +50,7 @@
             <input type="submit" value="Filter" class="btn btn-default"/>
         </div>
     </form>
-}
+}*@
 @using (Html.BeginForm("Filter", "Event", FormMethod.Post))
 {
     <fieldset>
@@ -77,10 +78,6 @@
         </form>
     </fieldset>
 }
-
-            
-        
-
 <table class="table-responsive table-striped table-bordered table-hover ">
     <thead>
     <tr>
@@ -138,6 +135,6 @@
     }
     </tbody>
 </table>
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@

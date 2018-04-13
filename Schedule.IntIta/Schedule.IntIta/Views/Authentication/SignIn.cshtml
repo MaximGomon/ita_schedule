@@ -13,16 +13,27 @@
 <div class="main-greeting">
     
     <div class="main-greeting-message">Feel yourself better with SchedulITA</div>
-
-    @foreach (var scheme in Model)
+    
+    @if (User.Identity.IsAuthenticated)
     {
-        <form action="/signin" method="post">
-            <input type="hidden" name="Provider" value="@scheme.Name"/>
-            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
-
-            <button class="btn btn-lg btn-success center-block" type="submit">Click to SignIn with Intita.com</button>
+        <form method="get" action="@Url.Action("Index", "Schedule")">
+            <button class="btn btn-lg btn-success center-block" type="submit">Get schedule</button>
         </form>
     }
+    else
+    {
+        foreach (var scheme in Model)
+        {
+             <form action="/signin" method="post">
+                 <input type="hidden" name="Provider" value="@scheme.Name"/>
+                 <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
+
+                 <button class="btn btn-lg btn-success center-block" type="submit">Click to SignIn with Intita.com</button>
+             </form>
+        }    
+    }
+
+    
 </div>
 <hr />
 <div class="main-info">

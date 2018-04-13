@@ -33,7 +33,6 @@ namespace Schedule.IntIta.Controllers
         }
         
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Filter(FilterEvents filtersEvents)
         {
             List<EventViewModel> models = new List<EventViewModel>();

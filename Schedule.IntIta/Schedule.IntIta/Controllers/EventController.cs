@@ -31,56 +31,7 @@ namespace Schedule.IntIta.Controllers
             _mapper = mapper;
             _eventBusinessLogic = eventBusinessLogic;
         }
-
-        //[HttpPost]
-        ////[CheckContentFilter]
-        //public ActionResult Filter([FromBody]List<FilterEvents> filterOptions)
-        //{
-        //    List<EventViewModel> models = new List<EventViewModel>();
-
-        //    var initiatorFilter = filterOptions.FirstOrDefault(x => x.EventField == "InitiatorName");
-        //    var eventTypeFilter = filterOptions.FirstOrDefault(x => x.EventField == "TypeOfEvent");
-        //    var roomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
-        //    var groupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
-
-        //    var events = _eventBusinessLogic
-        //        .GetAll()
-        //        .Where(@event =>
-        //            initiatorFilter.SearchString.Length != 0 ?
-        //            (@event.InitiatorId != null
-        //            &&
-        //            _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
-        //                .Select(w => w.Id)//select only Ids of find users
-        //                .Contains(@event.InitiatorId.Value)) : true
-        //            &&
-        //            eventTypeFilter.SearchString.Length != 0 ?
-        //            (@event.TypeOfEvent != null
-        //            &&
-        //            @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
-        //            &&
-        //            roomFilter.SearchString.Length != 0 ?
-        //            (@event.RoomId != null
-        //            &&
-        //             _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(roomFilter.SearchString)) : true
-        //            &&
-        //            groupFilter.SearchString.Length != 0 ?
-        //            (@event.GroupId != null
-        //            &&
-        //             _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(groupFilter.SearchString)) : true).ToList();
-
-        //    foreach (var item in events)
-        //    {
-        //        models.Add(_mapper.Map<EventViewModel>(item));
-        //    }
-
-        //    models = models.OrderBy(x => x.Date.StartTime).ToList();
-        //    ViewBag.InitiatorName = initiatorFilter.SearchString;
-        //    ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
-        //    ViewBag.RoomName = roomFilter.SearchString;
-        //    ViewBag.GroupName = groupFilter.SearchString;
-
-        //    return RedirectToAction(nameof(Index), new { models = models });
-        //}
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Filter(FilterEvents filtersEvents)
@@ -122,14 +73,13 @@ namespace Schedule.IntIta.Controllers
                 models.Add(_mapper.Map<EventViewModel>(item));
             }
             ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
-            //return RedirectToAction(nameof(Index));
             return View(nameof(Index));
         }
         //[HttpGet]
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
-            return View(nameof(Index));
+            return View();
         }
 
         // GET: Room/Create
@@ -238,14 +188,9 @@ namespace Schedule.IntIta.Controllers
             foreach (var item in events)
             {
                 var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
-                //calendarEvent.Group = _eventBusinessLogic.GetAllGroups().FirstOrDefault(x => x.Id == item.GroupId);
                 calendarEvent.Group = groups.FirstOrDefault(x => x.Id == item.GroupId);
-                //calendarEvent.Group = _eventBusinessLogic.GetGroupById(item.GroupId);
-                //calendarEvent.Group = _db.Groups.Single(x => x.Id == item.GroupId);
                 calendarEvent.Initiator = _eventBusinessLogic.GetUsersById(item.InitiatorId);
-                //calendarEvent.Initiator = _db.Users.Single(x => x.Id == item.InitiatorId);
                 calendarEvent.Room = _eventBusinessLogic.GetAllRooms().FirstOrDefault(w => w.Id == item.RoomId);
-                //calendarEvent.Room = _db.Rooms.Single(x => x.Id == item.RoomId);
                 calendarEvent.Subject = _db.Subjects.Single(x => x.Id == item.SubjectId);
                 list.Add(calendarEvent);
             }

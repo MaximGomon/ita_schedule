@@ -92,7 +92,7 @@ namespace Schedule.IntIta.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index()
-        {
+        {// break point was here
             string myCookie = Request.Cookies["SomeCustomCookie"];
             //List<FilterEvents> filters = new List<FilterEvents>();
             //return RedirectToAction("FilterShow");

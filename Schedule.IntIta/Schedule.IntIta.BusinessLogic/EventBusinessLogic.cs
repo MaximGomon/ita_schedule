@@ -6,7 +6,6 @@ using Schedule.IntIta.Cache.Cache;
 //using AutoMapper;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
-
 using Schedule.IntIta.Integration;
 
 namespace Schedule.IntIta.BusinessLogic

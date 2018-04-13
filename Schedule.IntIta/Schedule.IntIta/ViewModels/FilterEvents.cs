@@ -2,7 +2,9 @@
 {
     public class FilterEvents
     {
-        public string SearchString;
-        public string EventField;
+        public string TypeOfEvent { get; set; }
+        public string InitiatorName { get; set; }
+        public string RoomName { get; set; }
+        public string GroupName { get; set; }
     }
 }

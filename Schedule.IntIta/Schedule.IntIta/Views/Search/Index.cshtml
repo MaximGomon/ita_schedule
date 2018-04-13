@@ -1,23 +1,38 @@
-﻿@{
-    Layout = null;
-}
-<html>
-<head>
-    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <input type="text" name="str" data-autocomplete-source="Search/AutocompleteSearch" />
-    <input type="submit" value="Поиск" />
+﻿@section Scripts {
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script type="text/javascript">
-    $(function () {
-        $("[data-autocomplete-source]").each(function () {
-            var target = $(this);
-            target.autocomplete({ source: target.attr("data-autocomplete-source") });
+        /*var v1 = [];
+
+        $('#AutoCc')[0].oninput = function () {
+            if ($('#AutoCc')[0].value.length >= 3) {
+                $.ajax({
+                    url: "/Search/AutocompleteSearch/?str=" + $('#AutoCc')[0].value,
+                    type: "GET",
+                    success: function (data) {
+                        if (data.length > 7) {
+                            v1 = data.slice(0, 8);
+                        } else
+                            v1 = data;
+                        console.log(v1);
+                        $('#AutoCc').autocomplete({ source: v1 });
+                    },
+                    error: function (error) {
+                    }
+                });    
+            }
+        }*/
+
+        $(document).ready(function() {
+            $('#AutoCc').autocomplete({
+                source: '/Search/AutocompleteSearch',
+                minLength: 3,
+                delay: 1000
+            });
         });
-    });
     </script>
-</body>
-</html>
+}
+
+<input id="AutoCc" type="text" name="AutoCc" />

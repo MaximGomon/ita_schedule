@@ -8,9 +8,11 @@ using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.ViewModels;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Schedule.IntIta.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SubjectController : Controller
     {
         private readonly IMapper _mapper;

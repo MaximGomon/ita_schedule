@@ -39,7 +39,7 @@ namespace Schedule.IntIta.Integration
                         Email = integrativeUser.Email,
                         FirstName = integrativeUser.FirstName,
                         LastName = integrativeUser.SecondName,
-                        Id = integrativeUser.Id
+                        IntitaId = integrativeUser.Id
                     });
                 }
 

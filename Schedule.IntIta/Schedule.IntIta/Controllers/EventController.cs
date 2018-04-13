@@ -32,71 +32,111 @@ namespace Schedule.IntIta.Controllers
             _eventBusinessLogic = eventBusinessLogic;
         }
 
-        //[HttpGet]
-        //public ActionResult FilterShow()
+        //[HttpPost]
+        ////[CheckContentFilter]
+        //public ActionResult Filter([FromBody]List<FilterEvents> filterOptions)
         //{
-        //    return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
-        //}
+        //    List<EventViewModel> models = new List<EventViewModel>();
 
+        //    var initiatorFilter = filterOptions.FirstOrDefault(x => x.EventField == "InitiatorName");
+        //    var eventTypeFilter = filterOptions.FirstOrDefault(x => x.EventField == "TypeOfEvent");
+        //    var roomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
+        //    var groupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
+
+        //    var events = _eventBusinessLogic
+        //        .GetAll()
+        //        .Where(@event =>
+        //            initiatorFilter.SearchString.Length != 0 ?
+        //            (@event.InitiatorId != null
+        //            &&
+        //            _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
+        //                .Select(w => w.Id)//select only Ids of find users
+        //                .Contains(@event.InitiatorId.Value)) : true
+        //            &&
+        //            eventTypeFilter.SearchString.Length != 0 ?
+        //            (@event.TypeOfEvent != null
+        //            &&
+        //            @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
+        //            &&
+        //            roomFilter.SearchString.Length != 0 ?
+        //            (@event.RoomId != null
+        //            &&
+        //             _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(roomFilter.SearchString)) : true
+        //            &&
+        //            groupFilter.SearchString.Length != 0 ?
+        //            (@event.GroupId != null
+        //            &&
+        //             _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(groupFilter.SearchString)) : true).ToList();
+
+        //    foreach (var item in events)
+        //    {
+        //        models.Add(_mapper.Map<EventViewModel>(item));
+        //    }
+
+        //    models = models.OrderBy(x => x.Date.StartTime).ToList();
+        //    ViewBag.InitiatorName = initiatorFilter.SearchString;
+        //    ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
+        //    ViewBag.RoomName = roomFilter.SearchString;
+        //    ViewBag.GroupName = groupFilter.SearchString;
+
+        //    return RedirectToAction(nameof(Index), new { models = models });
+        //}
         [HttpPost]
-        //[CheckContentFilter]
-        public ActionResult Filter([FromBody]List<FilterEvents> filterOptions)
+        public ActionResult Filter(FilterEvents filtersEvents)
         {
             List<EventViewModel> models = new List<EventViewModel>();
 
-            var initiatorFilter = filterOptions.FirstOrDefault(x => x.EventField == "InitiatorName");
-            var eventTypeFilter = filterOptions.FirstOrDefault(x => x.EventField == "TypeOfEvent");
-            var roomFilter = filterOptions.FirstOrDefault(x => x.EventField == "RoomName");
-            var groupFilter = filterOptions.FirstOrDefault(x => x.EventField == "GroupName");
+            var initiatorFilter = filtersEvents.InitiatorName;
+            var eventTypeFilter = filtersEvents.TypeOfEvent;
+            var roomFilter = filtersEvents.RoomName;
+            var groupFilter = filtersEvents.GroupName;
 
             var events = _eventBusinessLogic
-                .GetAll()
-                .Where(@event =>
-                    initiatorFilter.SearchString.Length != 0 ?
-                    (@event.InitiatorId != null
-                    &&
-                    _eventBusinessLogic.FindUsers(initiatorFilter.SearchString)//search users at INTITA
-                        .Select(w => w.Id)//select only Ids of find users
-                        .Contains(@event.InitiatorId.Value)) : true
-                    &&
-                    eventTypeFilter.SearchString.Length != 0 ?
-                    (@event.TypeOfEvent != null
-                    &&
-                    @event.TypeOfEvent.Name.Contains(eventTypeFilter.SearchString)) : true
-                    &&
-                    roomFilter.SearchString.Length != 0 ?
-                    (@event.RoomId != null
-                    &&
-                     _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.Contains(roomFilter.SearchString)) : true
-                    &&
-                    groupFilter.SearchString.Length != 0 ?
-                    (@event.GroupId != null
-                    &&
-                     _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.Contains(groupFilter.SearchString)) : true).ToList();
+                    .GetAll()
+                    .Where(@event =>
+                        initiatorFilter != null ?
+                        (@event.InitiatorId != null
+                        &&
+                        _eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
+                            .Select(w => w.Id)//select only Ids of find users
+                            .Contains(@event.InitiatorId.Value)) : true
+                        &&
+                        eventTypeFilter != null ?
+                        (@event.TypeOfEvent != null
+                        &&
+                        @event.TypeOfEvent.Name.ToUpper().Contains(eventTypeFilter.ToUpper())) : true
+                        &&
+                        roomFilter != null ?
+                        (@event.RoomId != null
+                        &&
+                         _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.ToUpper().Contains(roomFilter.ToUpper())) : true
+                        &&
+                        groupFilter != null ?
+                        (@event.GroupId != null
+                        &&
+                         _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.ToUpper().Contains(groupFilter.ToUpper())) : true).ToList();
 
             foreach (var item in events)
             {
                 models.Add(_mapper.Map<EventViewModel>(item));
             }
-
-            models = models.OrderBy(x => x.Date.StartTime).ToList();
-            ViewBag.InitiatorName = initiatorFilter.SearchString;
-            ViewBag.TypeOfEvent = eventTypeFilter.SearchString;
-            ViewBag.RoomName = roomFilter.SearchString;
-            ViewBag.GroupName = groupFilter.SearchString;
-
-            //ViewData["FilterSettings"] = filterOptions;
-            //return View(nameof(Index), models);
-            return RedirectToAction(nameof(Index), models);
+            ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
+            //return RedirectToAction(nameof(Index));
+            return View(nameof(Index));
         }
-
-        [HttpGet]
+        //[HttpGet]
         public async Task<IActionResult> Index()
+
         {// break point was here
-            string myCookie = Request.Cookies["SomeCustomCookie"];
+           // string myCookie = Request.Cookies["SomeCustomCookie"];
             //List<FilterEvents> filters = new List<FilterEvents>();
             //return RedirectToAction("FilterShow");
-            return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
+           // return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
+
+        
+            ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
+            return View(nameof(Index));
+
         }
 
         // GET: Room/Create

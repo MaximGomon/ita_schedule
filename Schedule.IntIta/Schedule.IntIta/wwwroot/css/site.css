@@ -162,3 +162,17 @@ table th { padding: 10px; }
     color: red;
     text-align: center;
 }
+
+.admin-item {
+    padding: 20px;
+    text-align: center
+}
+
+.admin-item img{
+    width: 64px;
+}
+
+.admin-item:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}

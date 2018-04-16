@@ -125,7 +125,7 @@ namespace Schedule.IntIta.Controllers
             return View(nameof(Index));
         }
         //[HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
             return View(nameof(Index));

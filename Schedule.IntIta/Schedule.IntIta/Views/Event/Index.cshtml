@@ -25,30 +25,7 @@
     </div>*@
 
 
-@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
-{
-    <form asp-action="Filter">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.TypeOfEvent)
-            @Html.EditorFor(x => x.TypeOfEvent)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.InitiatorName)
-            @Html.EditorFor(x => x.InitiatorName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.GroupName)
-            @Html.EditorFor(x => x.GroupName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.RoomName)
-            @Html.EditorFor(x => x.RoomName)
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Filter" class="btn btn-default"/>
-        </div>
-    </form>
+
 @using (Html.BeginForm("Filter", "Event", FormMethod.Post))
 {
     <fieldset>
@@ -137,6 +114,4 @@
     }
     </tbody>
 </table>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

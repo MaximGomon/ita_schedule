@@ -10,51 +10,34 @@ namespace Schedule.IntIta.DataAccess
 {
     public class RoomRepository : IRoomRepository
     {
+        private readonly IntitaDbContext _context;
+
+        public RoomRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Insert(Room item)
         {
-            //using (var context = new IntitaDbContext())
-            //{
-            //    context.Rooms.Add(item);
-            //    context.SaveChanges();
-            //}
-            using (var context = new IntitaDbContext())
+
+            Room newRoom = new Room()
             {
-                Room newRoom = new Room()
-                {
-                    Name = item.Name,
-                    SeatNumber = item.SeatNumber,
-                    OfficeId = item.OfficeId,
-                    IsDeleted = item.IsDeleted,
-                    RoomStatus = item.RoomStatus,
-                };
-                context.Rooms.Add(newRoom);
-                //newRoom.OfficeId = context.Office.First(x => x.Id == item.O.Id);//context.Office.First(x => x.Id == item.OfficeId);
-                context.SaveChanges();
-            }
-            //using (var context = new IntitaDbContext())
-            //{
-            //    Room newRoom = new Room()
-            //    {
-            //        Name = item.Name,
-            //        SeatNumber = item.SeatNumber,
-            //        Office = item.Office,
-            //        IsDeleted = item.IsDeleted,
-            //        RoomStatus = item.RoomStatus,
-            //    };
-            //    context.Rooms.Add(newRoom);
-            //    newRoom.Office = context.Office.First(x => x.Id == item.Office.Id);
-            //    context.SaveChanges();
-            //}
+                Name = item.Name,
+                SeatNumber = item.SeatNumber,
+                OfficeId = item.OfficeId,
+                IsDeleted = item.IsDeleted,
+                RoomStatus = item.RoomStatus,
+            };
+            _context.Rooms.Add(newRoom);
+            _context.SaveChanges();
+
         }
 
         public Room Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var room = context.Rooms
-                    .Single(s => s.Id == id);
-                return room;
-            }
+            var room = _context.Rooms
+                .Single(s => s.Id == id);
+            return room;
         }
 
         public IEnumerable<Room> GetFreeRooms(DateTime forDate)
@@ -64,37 +47,21 @@ namespace Schedule.IntIta.DataAccess
 
         public void Update(Room modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                //modifiedItem.OfficeId = context.Office.Single(x => x.Id == modifiedItem.OfficeId);
-                context.Rooms.Update(modifiedItem);
-                context.SaveChanges();
-            }
+            _context.Rooms.Update(modifiedItem);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var room = context.Rooms
-                    .Single(s => s.Id == id);
-                room.IsDeleted = true;
-                context.SaveChanges();
-            }
+            var room = _context.Rooms
+                .Single(s => s.Id == id);
+            room.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public IEnumerable<Room> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                return context.Rooms.ToList();
-            }
-            //using (var context = new IntitaDbContext())
-            //{
-            //    var result = context.Rooms
-            //        .Include(p => p.Office);
-            //    return result.ToList();
-            //}
+            return _context.Rooms.ToList();
         }
     }
 }

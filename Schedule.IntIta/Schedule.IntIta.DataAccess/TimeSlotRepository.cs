@@ -7,56 +7,41 @@ namespace Schedule.IntIta.DataAccess
 {
     public class TimeSlotRepository : ITimeSlotRepository
     {
+        private readonly IntitaDbContext _context;
+
         public void Insert(TimeSlot item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.TimeSlots.Add(item);
-                context.SaveChanges();
-            }
-            
+            _context.TimeSlots.Add(item);
+            _context.SaveChanges();
         }
-        
+
         public TimeSlot Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var timeslot = context.TimeSlots.Find(id);
-                return timeslot;
-            }
+
+            var timeslot = _context.TimeSlots.Find(id);
+            return timeslot;
         }
 
         public void Update(TimeSlot modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var oldTimeSlot = context.TimeSlots.Find(modifiedItem.Id);
-                oldTimeSlot.IdType = modifiedItem.IdType;
-                oldTimeSlot.StartTime = modifiedItem.StartTime;
-                oldTimeSlot.EndTime = modifiedItem.EndTime;
-                context.SaveChanges();
-            }
+            var oldTimeSlot = _context.TimeSlots.Find(modifiedItem.Id);
+            oldTimeSlot.IdType = modifiedItem.IdType;
+            oldTimeSlot.StartTime = modifiedItem.StartTime;
+            oldTimeSlot.EndTime = modifiedItem.EndTime;
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var deletableItem = context.TimeSlots.Find(id);
-                deletableItem.IsDeleted = true;
-                context.SaveChanges();
-            }
-               
+            var deletableItem = _context.TimeSlots.Find(id);
+            deletableItem.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public IEnumerable<TimeSlot> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                IEnumerable<TimeSlot> timeslotList = context.TimeSlots.ToList();
-                return timeslotList;
-            }
-               
+            IEnumerable<TimeSlot> timeslotList = _context.TimeSlots.ToList();
+            return timeslotList;
         }
     }
 }

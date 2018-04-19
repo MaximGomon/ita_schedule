@@ -11,15 +11,19 @@ namespace Schedule.IntIta.DataAccess
 {
     public class DictionaryRepository<TEntity> where TEntity : DictionaryEntity
     {
+        private readonly IntitaDbContext _context;
+
+        public DictionaryRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public TEntity GetEntityById(int Id)
         {
-            using (var context = new IntitaDbContext())
-            {
-               return context.Set<TEntity>().FirstOrDefault(x => x.Id == Id);
-            }
+            return _context.Set<TEntity>().FirstOrDefault(x => x.Id == Id);
         }
     }
 
 
-}    
-    
+}
+

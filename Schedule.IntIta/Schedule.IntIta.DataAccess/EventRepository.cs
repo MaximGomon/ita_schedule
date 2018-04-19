@@ -8,10 +8,17 @@ namespace Schedule.IntIta.DataAccess
 {
     public class EventRepository : IEventRepository
     {
+        private readonly IntitaDbContext _context;
+
+        public EventRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Insert(Event item)
         {
-            using (var context = new IntitaDbContext())
-            {
+            //using (var context = new IntitaDbContext())
+            //{
                 Event newEvent = new Event()
                 {
                     Comments = item.Comments,
@@ -23,63 +30,63 @@ namespace Schedule.IntIta.DataAccess
                     Date = item.Date,
                 };
 
-                context.Events.Add(newEvent);
-                newEvent.TypeOfEvent = context.EventTypes.First(x => x.Id == item.TypeOfEvent.Id);
-                context.SaveChanges();
-            }
+                _context.Events.Add(newEvent);
+                newEvent.TypeOfEvent = _context.EventTypes.First(x => x.Id == item.TypeOfEvent.Id);
+                _context.SaveChanges();
+            //}
         }
 
         public Event Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                return context.Events
+            //using (var context = new IntitaDbContext())
+            //{
+                return _context.Events
                     .Include(p => p.TypeOfEvent)
                     .Include(p => p.Date)
                     .Single(x => x.Id == id);
-            }
+            //}
         }
 
         public void Update(Event modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                modifiedItem.TypeOfEvent = context.EventTypes.Single(x => x.Id == modifiedItem.TypeOfEvent.Id);
-                context.Events.Update(modifiedItem);
-                context.SaveChanges();
-            }
+            //using (var context = new IntitaDbContext())
+            //{
+                modifiedItem.TypeOfEvent = _context.EventTypes.Single(x => x.Id == modifiedItem.TypeOfEvent.Id);
+            _context.Events.Update(modifiedItem);
+            _context.SaveChanges();
+            //}
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var item = context.Events.First(x => x.Id == id);
+            //using (var context = new IntitaDbContext())
+            //{
+                var item = _context.Events.First(x => x.Id == id);
                 item.IsDeleted = true;
-                context.SaveChanges();
-            }
+            _context.SaveChanges();
+            //}
         }
 
         public IEnumerable<Event> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                var result = context.Events
+            //using (var context = new IntitaDbContext())
+            //{
+                var result = _context.Events
                     .Include(p => p.TypeOfEvent)
                     .Include(p => p.Date);
                 return result.ToList();
-            }
+            //}
         }
 
         public IEnumerable<Event> GetActive()
         {
-            using (var context = new IntitaDbContext())
-            {
-                var result = context.Events.Where(x => x.IsDeleted == false)
+            //using (var context = new IntitaDbContext())
+            //{
+                var result = _context.Events.Where(x => x.IsDeleted == false)
                     .Include(p => p.TypeOfEvent)
                     .Include(p => p.Date);
                 return result.ToList();
-            }
+            //}
         }
     }
 }

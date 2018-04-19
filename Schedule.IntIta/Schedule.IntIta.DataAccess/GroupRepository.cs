@@ -8,56 +8,42 @@ namespace Schedule.IntIta.DataAccess
 {
     public class GroupRepository : IGroupRepository
     {
+        private readonly IntitaDbContext _context;
+        public GroupRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
 
         public void Insert(Group item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.Groups.Add(item);
-                context.SaveChanges();
-            }
+            _context.Groups.Add(item);
+            _context.SaveChanges();
         }
         public Group Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var group = context.Groups.Find(id);
-                return group;
-            }
+            var group = _context.Groups.Find(id);
+            return group;
         }
         public void Update(Group modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var oldGroup = context.Groups.Find(modifiedItem.Id);
-                oldGroup.Name = modifiedItem.Name;
-                oldGroup.NumberOfStudents = modifiedItem.NumberOfStudents;
-                oldGroup.Subgroups = modifiedItem.Subgroups;
-                context.SaveChanges();
-            }
-
+            var oldGroup = _context.Groups.Find(modifiedItem.Id);
+            oldGroup.Name = modifiedItem.Name;
+            oldGroup.NumberOfStudents = modifiedItem.NumberOfStudents;
+            oldGroup.Subgroups = modifiedItem.Subgroups;
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var deletableItem = context.Groups.Find(id);
-                deletableItem.IsDeleted = true;
-                context.SaveChanges();
-
-            }
-
+            var deletableItem = _context.Groups.Find(id);
+            deletableItem.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public IEnumerable<Group> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                IEnumerable<Group> groupList = context.Groups.ToList();
-                return groupList;
-            }
-
+            IEnumerable<Group> groupList = _context.Groups.ToList();
+            return groupList;
         }
     }
 }

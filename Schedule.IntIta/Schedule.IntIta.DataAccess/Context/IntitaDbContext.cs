@@ -21,14 +21,14 @@ namespace Schedule.IntIta.DataAccess.Context
         public DbSet<TimeSlotTypes> TimeSlotTypes { get; set; }
         public DbSet<User> Users { get; set; }
 
-        //public IntitaDbContext(DbContextOptions<IntitaDbContext> options)
-        //    : base(options)
-        //{
-        //}
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public IntitaDbContext(DbContextOptions<IntitaDbContext> options)
+            : base(options)
         {
-            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=1111;database=schedule;");
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql("server=localhost;UserId=root;Password=1111;database=schedule;");
+        //}
     }
 }

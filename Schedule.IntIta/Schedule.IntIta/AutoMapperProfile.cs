@@ -48,20 +48,30 @@ namespace Schedule.IntIta
             CreateMap<Event, CalendarEventViewModel>();
         }
     }
-
     public class EventInitiatorResolver : IValueResolver<Event, EventViewModel, string>
     {
+        private readonly IntitaDbContext _context;
+
+        public EventInitiatorResolver(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
             IUserIntegration userIntegration = new UserIntegration();
-            UserRepository userRepository = new UserRepository(userIntegration);
+            UserRepository userRepository = new UserRepository(userIntegration, _context);
             var user = userRepository.GetById(source.InitiatorId);
             return String.Concat(user.FirstName, " ", user.LastName);
         }
     }
     public class EventRoomResolver : IValueResolver<Event, EventViewModel, string>
     {
-        public IntitaDbContext _db = new IntitaDbContext();
+        private readonly IntitaDbContext _db;
+        public EventRoomResolver(IntitaDbContext context)
+        {
+            _db = context;
+        }
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
             var room = _db.Rooms.FirstOrDefault(x => x.Id == source.RoomId);
@@ -95,7 +105,11 @@ namespace Schedule.IntIta
     }
     public class EventSubjectResolver : IValueResolver<Event, EventViewModel, string>
     {
-        public IntitaDbContext _db = new IntitaDbContext();
+        private readonly IntitaDbContext _db;
+        public EventSubjectResolver(IntitaDbContext context)
+        {
+            _db = context;
+        }
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
             var subject = _db.Subjects.FirstOrDefault(x => x.Id == source.SubjectId);

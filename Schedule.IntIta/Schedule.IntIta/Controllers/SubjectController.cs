@@ -9,6 +9,7 @@ using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.ViewModels;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Schedule.IntIta.DataAccess.Context;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -18,15 +19,18 @@ namespace Schedule.IntIta.Controllers
         private readonly IMapper _mapper;
         private readonly ISubjectBusinessLogic _subjectBusinessLogic;
         private readonly ISubjectRepository _subjectRepository;
+        private readonly IntitaDbContext _context;
 
-        public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic)
+
+        public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic, IntitaDbContext context)
         {
             _mapper = mapper;
             _subjectBusinessLogic = subjectBusinessLogic;
+            _context = context;
         }
         public ActionResult Index()
         {
-            SubjectRepository subjectR = new SubjectRepository();
+            SubjectRepository subjectR = new SubjectRepository(_context);
             return View(subjectR.GetAll());
         }
         public ActionResult Create()

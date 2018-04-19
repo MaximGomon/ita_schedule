@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
@@ -17,18 +18,20 @@ namespace Schedule.IntIta.Controllers
     [Authorize(Roles = "Admin")]
     public class OfficeController : Controller
     {
+        private readonly IntitaDbContext _context;
         private readonly IMapper _mapper;
         private readonly IOfficeBusinessLogic _officeBusinessLogic;
 
-        public OfficeController(IMapper mapper, IOfficeBusinessLogic officeBusinessLogic)
+        public OfficeController(IMapper mapper, IOfficeBusinessLogic officeBusinessLogic, IntitaDbContext context)
         {
             _mapper = mapper;
             _officeBusinessLogic = officeBusinessLogic;
+            _context = context;
         }
 
         public ActionResult Index()
         {
-            OfficeRepository officeR = new OfficeRepository();
+            OfficeRepository officeR = new OfficeRepository(_context);
             return View(officeR.GetAll().Select(x =>
                 Mapper.Map<Office, OfficeViewModel>(x)));
         }

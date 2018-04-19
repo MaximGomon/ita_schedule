@@ -21,21 +21,15 @@ namespace Schedule.IntIta.Controllers
         private readonly IMapper _mapper;
         private readonly IRoomBusinessLogic _roomBusinessLogic;
         private readonly IRoomRepository _roomRepository;
-        private readonly IntitaDbContext _db = new IntitaDbContext();
+        private readonly IntitaDbContext _context;
 
-        public RoomController(IMapper mapper, IRoomBusinessLogic roomBusinessLogic, IRoomRepository roomRepository)
+        public RoomController(IMapper mapper, IRoomBusinessLogic roomBusinessLogic, IRoomRepository roomRepository, IntitaDbContext context)
         {
             _mapper = mapper;
             _roomBusinessLogic = roomBusinessLogic;
             _roomRepository = roomRepository;
+            _context = context;
         }
-        
-        // GET: Room
-        //public ActionResult Test()
-        //{
-        //    return View();
-        //}
-
         public ActionResult Index()
         {
             var rooms = _roomRepository.GetAll();
@@ -53,7 +47,7 @@ namespace Schedule.IntIta.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            OfficeRepository officeRepository = new OfficeRepository();
+            OfficeRepository officeRepository = new OfficeRepository(_context);
             var items = officeRepository.GetAll()
                 .Select(x => new SelectListItem {Value = x.Id.ToString(), Text = x.Name}).ToList();
             RoomViewModel roomModel = new RoomViewModel() {Offices = new SelectList(items, "Value", "Text")};
@@ -78,20 +72,11 @@ namespace Schedule.IntIta.Controllers
                 return View();
             }
         }
-
-        // GET: Room/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    OfficeRepository officeR = new OfficeRepository();
-        //    ViewBag.Office = new SelectList(officeR.GetAll(), "Id", "Name");
-
-        //    return View(Mapper.Map<Room, RoomViewModel>(_roomRepository.Get(id)));
-        //}
         public ActionResult Edit(int id)
         {
             try
             {
-                OfficeRepository OffRepo = new OfficeRepository();
+                OfficeRepository OffRepo = new OfficeRepository(_context);
                 var items = OffRepo.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                 RoomViewModel roomModel = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
                 roomModel.Offices = new SelectList(items, "Value", "Text");
@@ -125,7 +110,7 @@ namespace Schedule.IntIta.Controllers
         {
             try
             {
-                OfficeRepository OffRepo = new OfficeRepository();
+                OfficeRepository OffRepo = new OfficeRepository(_context);
                 var items = OffRepo.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                 RoomViewModel roomModel = Mapper.Map<Room, RoomViewModel>(_roomBusinessLogic.Read(id));
                 roomModel.Offices = new SelectList(items, "Value", "Text");

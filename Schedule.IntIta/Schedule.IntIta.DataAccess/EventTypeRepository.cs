@@ -9,48 +9,41 @@ namespace Schedule.IntIta.DataAccess
 {
     public class EventTypeRepository : IEventTypeRepository
     {
+        private readonly IntitaDbContext _context;
+
+        public EventTypeRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Insert(EventType item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.EventTypes.Add(item);
-                context.SaveChanges();
-            }
+            _context.EventTypes.Add(item);
+            _context.SaveChanges();
         }
 
         public EventType Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                return context.EventTypes.Single(x => x.Id == id);
-            }
+            return _context.EventTypes.Single(x => x.Id == id);
         }
 
         public void Update(EventType modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.EventTypes.Update(modifiedItem);
-                context.SaveChanges();
-            }
+            _context.EventTypes.Update(modifiedItem);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var item = context.EventTypes.First(x => x.Id == id);
-                item.IsDeleted = true;
-                context.SaveChanges();
-            }
+
+            var item = _context.EventTypes.First(x => x.Id == id);
+            item.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public IEnumerable<EventType> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                return context.EventTypes.ToList();
-            }
+            return _context.EventTypes.ToList();
         }
     }
 }

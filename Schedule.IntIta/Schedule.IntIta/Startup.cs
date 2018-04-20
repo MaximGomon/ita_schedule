@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta;
@@ -20,6 +22,7 @@ using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Integration;
 using Schedule.IntIta.Cache.Cache;
+using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 
 namespace Schedule.IntIta
@@ -42,9 +45,9 @@ namespace Schedule.IntIta
             services.AddSingleton<IDataProvider<Group>, GroupDataProvider>();
             services.AddSingleton<ICacheManager<Group>, CacheManager<Group>>();
 
-            services.AddSingleton<ISubjectBusinessLogic, SubjectBusinessLogic>();
-            services.AddSingleton<IEventBusinessLogic, EventBusinessLogic>();
-            services.AddSingleton<IEventRepository, EventRepository>();
+            services.AddScoped<ISubjectBusinessLogic, SubjectBusinessLogic>();
+            services.AddScoped<IEventBusinessLogic, EventBusinessLogic>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddSingleton<IEventTypeBusinessLogic, EventTypeBusinessLogic>();
             services.AddSingleton<IEventTypeRepository, EventTypeRepository>();
             services.AddSingleton<IRoomBusinessLogic, RoomBusinessLogic>();
@@ -60,6 +63,8 @@ namespace Schedule.IntIta
             services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
             services.AddSingleton<IUserRepository,UserRepository>();
             services.AddSingleton<IGroupIntegrationHandler, GroupIntegrationHandler>();
+            services.AddDbContext<IntitaDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("IntitaDbContext")));
 
             services.AddDistributedMemoryCache();
             services.AddSession();

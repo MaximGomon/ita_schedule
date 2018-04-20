@@ -9,11 +9,14 @@ namespace Schedule.IntIta.DataAccess
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IntitaDbContext _context;
+
         private readonly IUserIntegration _userIntegration;
 
-        public UserRepository(IUserIntegration userIntegration)
+        public UserRepository(IUserIntegration userIntegration, IntitaDbContext context)
         {
             _userIntegration = userIntegration;
+            _context = context;
         }
         public void Delete(int id)
         {
@@ -32,29 +35,19 @@ namespace Schedule.IntIta.DataAccess
 
         public List<User> GetLocalUserByStr(string searchStr)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var users = context.Users.Where(
-                    x => x.FirstName.Contains(searchStr) || 
-                    x.LastName.Contains(searchStr) ||
-                    x.Email.Contains(searchStr))
-                    .ToList();
-                return users;
-            }
+            var users = _context.Users.Where(
+                x => x.FirstName.Contains(searchStr) ||
+                x.LastName.Contains(searchStr) ||
+                x.Email.Contains(searchStr))
+                .ToList();
+            return users;
         }
 
-        //public IEnumerable<User> GetAll()
-        //{
-        //    return _userIntegration.FindUsers();
-        //}
 
         public void Insert(User item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.Users.Add(item);
-                context.SaveChanges();
-            }
+            _context.Users.Add(item);
+            _context.SaveChanges();
         }
 
         public void Update(User modifiedUser)

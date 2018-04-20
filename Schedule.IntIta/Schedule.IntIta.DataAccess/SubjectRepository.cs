@@ -8,52 +8,41 @@ namespace Schedule.IntIta.DataAccess
 {
     public class SubjectRepository : ISubjectRepository
     {
+        private readonly IntitaDbContext _context;
+        public SubjectRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
         public void Insert(Subject item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.Subjects.Add(item);
-                context.SaveChanges();
-            }
+            _context.Subjects.Add(item);
+            _context.SaveChanges();
         }
 
         public Subject Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var subject = context.Subjects
-                    .Single(s => s.Id == id);
-                return subject;
-            }
+            var subject = _context.Subjects
+                .Single(s => s.Id == id);
+            return subject;
         }
 
         public void Update(Subject modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.Subjects.Update(modifiedItem);
-                context.SaveChanges();
-            }
+            _context.Subjects.Update(modifiedItem);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var subject = context.Subjects
-                    .Single(s => s.Id == id);
-                subject.IsDeleted = true;
-                context.SaveChanges();
-            }   
+            var subject = _context.Subjects
+                .Single(s => s.Id == id);
+            subject.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public IEnumerable<Subject> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                //return context.Subjects.Where(s => s.IsDeleted == false).ToList();
-                return context.Subjects.ToList();
-            }
+            return _context.Subjects.ToList();
         }
     }
 }

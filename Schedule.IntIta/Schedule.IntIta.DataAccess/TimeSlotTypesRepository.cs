@@ -8,55 +8,38 @@ namespace Schedule.IntIta.DataAccess
 {
     public class TimeSlotTypesRepository : ITimeSlotTypesRepository
     {
+        private readonly IntitaDbContext _context;
+
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var removedTimeslotType = context.TimeSlotTypes.Find(id);
-                context.TimeSlotTypes.Remove(removedTimeslotType);
-            }
-                
+            var removedTimeslotType = _context.TimeSlotTypes.Find(id);
+            _context.TimeSlotTypes.Remove(removedTimeslotType);
         }
 
         public TimeSlotTypes Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var type = context.TimeSlotTypes.Find(id);
-                return type;
-            }
+            var type = _context.TimeSlotTypes.Find(id);
+            return type;
         }
 
         public IEnumerable<TimeSlotTypes> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                IEnumerable<TimeSlotTypes> timeSlotTypesList = context.TimeSlotTypes.ToList();
-                return timeSlotTypesList;
-            }
-            
+            IEnumerable<TimeSlotTypes> timeSlotTypesList = _context.TimeSlotTypes.ToList();
+            return timeSlotTypesList;
         }
 
         public void Insert(TimeSlotTypes item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.TimeSlotTypes.Add(item);
-                context.SaveChanges();
-            }
-               
+            _context.TimeSlotTypes.Add(item);
+            _context.SaveChanges();
         }
 
         public void Update(TimeSlotTypes modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var oldTimeSlotType = context.TimeSlotTypes.Find(modifiedItem.Id);
-                oldTimeSlotType.Id = modifiedItem.Id;
-                oldTimeSlotType.Type = modifiedItem.Type;
-                context.SaveChanges();
-            }
-           
+            var oldTimeSlotType = _context.TimeSlotTypes.Find(modifiedItem.Id);
+            oldTimeSlotType.Id = modifiedItem.Id;
+            oldTimeSlotType.Type = modifiedItem.Type;
+            _context.SaveChanges();
         }
     }
 }

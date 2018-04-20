@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
@@ -23,13 +18,14 @@ namespace Schedule.IntIta.Controllers
     public class EventController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IntitaDbContext _db = new IntitaDbContext();
+        private readonly IntitaDbContext _db;
         private readonly IEventBusinessLogic _eventBusinessLogic;
 
-        public EventController(IMapper mapper, IEventBusinessLogic eventBusinessLogic)
+        public EventController(IMapper mapper, IEventBusinessLogic eventBusinessLogic, IntitaDbContext db)
         {
             _mapper = mapper;
             _eventBusinessLogic = eventBusinessLogic;
+            _db = db;
         }
         
         [HttpPost]
@@ -77,6 +73,7 @@ namespace Schedule.IntIta.Controllers
         }
         //[HttpGet]
 
+
         // break point was here
            // string myCookie = Request.Cookies["SomeCustomCookie"];
             //List<FilterEvents> filters = new List<FilterEvents>();
@@ -85,6 +82,7 @@ namespace Schedule.IntIta.Controllers
              
 
         public ActionResult Index()
+
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
             //get from cookies RoomId

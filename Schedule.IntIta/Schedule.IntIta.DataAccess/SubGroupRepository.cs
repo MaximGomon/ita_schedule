@@ -9,60 +9,45 @@ namespace Schedule.IntIta.DataAccess
 {
     public class SubGroupRepository : ISubGroupRepository
     {
+        private readonly IntitaDbContext _context;
+        public SubGroupRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Delete(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var deletableItem = context.SubGroups.Find(id);
-                deletableItem.IsDeleted = true;
-                context.SaveChanges();
-
-            }
-
+            var deletableItem = _context.SubGroups.Find(id);
+            deletableItem.IsDeleted = true;
+            _context.SaveChanges();
         }
 
         public SubGroup Get(int id)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var subgroup = context.SubGroups.Find(id);
-                return subgroup;
-            }
-
+            var subgroup = _context.SubGroups.Find(id);
+            return subgroup;
         }
 
         public IEnumerable<SubGroup> GetAll()
         {
-            using (var context = new IntitaDbContext())
-            {
-                IEnumerable<SubGroup> subgroupList = context.SubGroups.ToList();
-                return subgroupList;
-            }
-
+            IEnumerable<SubGroup> subgroupList = _context.SubGroups.ToList();
+            return subgroupList;
         }
 
         public void Insert(SubGroup item)
         {
-            using (var context = new IntitaDbContext())
-            {
-                context.SubGroups.Add(item);
-                context.SaveChanges();
-            }
-
+            _context.SubGroups.Add(item);
+            _context.SaveChanges();
         }
 
         public void Update(SubGroup modifiedItem)
         {
-            using (var context = new IntitaDbContext())
-            {
-                var oldSubGroup = context.SubGroups.Find(modifiedItem.Id);
-                oldSubGroup.GroupId = modifiedItem.GroupId;
-                oldSubGroup.Name = modifiedItem.Name;
-                oldSubGroup.NumberOfStudents = modifiedItem.NumberOfStudents;
-                oldSubGroup.SubGroupTimeSlot = modifiedItem.SubGroupTimeSlot;
-                context.SaveChanges();
-            }
-
+            var oldSubGroup = _context.SubGroups.Find(modifiedItem.Id);
+            oldSubGroup.GroupId = modifiedItem.GroupId;
+            oldSubGroup.Name = modifiedItem.Name;
+            oldSubGroup.NumberOfStudents = modifiedItem.NumberOfStudents;
+            oldSubGroup.SubGroupTimeSlot = modifiedItem.SubGroupTimeSlot;
+            _context.SaveChanges();
         }
     }
 }

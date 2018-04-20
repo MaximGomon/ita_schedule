@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Schedule.IntIta.Cache.Cache;
-//using AutoMapper;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Integration;
@@ -14,15 +12,13 @@ namespace Schedule.IntIta.BusinessLogic
     {
         private readonly IEventRepository _repository;
         private readonly IRoomRepository _repRooms;
-        private readonly IGroupRepository _repGroups;
         private readonly ICacheManager<Group> _integrGroups;
         private readonly IUserIntegration _integrUsers;
 
-        public EventBusinessLogic(IEventRepository repository, IRoomRepository repRooms, IGroupRepository repGroups, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
+        public EventBusinessLogic(IEventRepository repository, IRoomRepository repRooms, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
         {
             _repository = repository;
             _repRooms = repRooms;
-            _repGroups = repGroups;
             _integrGroups = integrGroups;
             _integrUsers = integrUsers;
         }

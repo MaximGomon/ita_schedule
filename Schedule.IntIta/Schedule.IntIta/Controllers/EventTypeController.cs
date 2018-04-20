@@ -15,13 +15,14 @@ namespace Schedule.IntIta.Controllers
     public class EventTypeController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IntitaDbContext _db = new IntitaDbContext();
+        private readonly IntitaDbContext _context;
         private readonly IEventTypeBusinessLogic _eventTypeBusinessLogic;
 
-        public EventTypeController(IMapper mapper, IEventTypeBusinessLogic eventTypeBusinessLogic)
+        public EventTypeController(IMapper mapper, IEventTypeBusinessLogic eventTypeBusinessLogic, IntitaDbContext context)
         {
             _mapper = mapper;
             _eventTypeBusinessLogic = eventTypeBusinessLogic;
+            _context = context;
         }
 
         public ActionResult Index()

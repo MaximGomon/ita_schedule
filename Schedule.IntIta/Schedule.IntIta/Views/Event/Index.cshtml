@@ -12,45 +12,6 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
-@*<form asp-action="Index" method="Post">*@
-@*<div class="form-actions no-color">
-        <p>
-            Find by TypeOfEvent: <input class ="filtering" type="text" name="SearchTypeOfEvent" id="sType" value="@ViewBag.TypeOfEvent" /><br>
-            Find by InitiatorName: <input class="filtering" type="text" name="SearchInitiator" id="sInitiator" value="@ViewBag.TypeOfEvent" /><br>
-            Find by RoomName: <input class="filtering" type="text" name="SearchRoom" id="sRoom" value="@ViewBag.RoomName" /><br>
-            Find by GroupName: <input class="filtering" type="text" name="SearchGroup" id="sGroup" value="@ViewBag.GroupName" /><br>
-            <a asp-action="Index">Back to Full List</a> |
-            <input type="submit" value="Search" class="btn btn-default" />
-        </p>
-    </div>*@
-
-
-@*@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
-{
-    <form asp-action="Filter">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.TypeOfEvent)
-            @Html.EditorFor(x => x.TypeOfEvent)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.InitiatorName)
-            @Html.EditorFor(x => x.InitiatorName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.GroupName)
-            @Html.EditorFor(x => x.GroupName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.RoomName)
-            @Html.EditorFor(x => x.RoomName)
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Filter" class="btn btn-default"/>
-        </div>
-    </form>
-}*@
 @using (Html.BeginForm("Filter", "Event", FormMethod.Post))
 {
     <fieldset>

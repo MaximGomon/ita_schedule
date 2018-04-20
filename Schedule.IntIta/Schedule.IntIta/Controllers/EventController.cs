@@ -87,6 +87,9 @@ namespace Schedule.IntIta.Controllers
         public ActionResult Index()
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
+            //get from cookies RoomId
+            //Get from db roomName by roomId
+            //create filter
             return View();
 
         }

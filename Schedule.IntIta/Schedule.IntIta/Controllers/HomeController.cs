@@ -16,7 +16,6 @@ namespace Schedule.IntIta.Controllers
     {
         public ActionResult Index()
         {
-            
             return View();
         }
 
@@ -34,7 +33,6 @@ namespace Schedule.IntIta.Controllers
             return View("Welcome");
         }
 
-       
     }
 
     public class ErrorFilter : ExceptionFilterAttribute

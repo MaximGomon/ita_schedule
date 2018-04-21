@@ -71,6 +71,7 @@ namespace Schedule.IntIta.Controllers
             ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
             return View(nameof(Index));
         }
+        
         //[HttpGet]
         public IActionResult Index()
         {
@@ -84,7 +85,6 @@ namespace Schedule.IntIta.Controllers
             //TODO: перенести все в репозиторий
             SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
             SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
-            //SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
             SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
             SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
             SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
@@ -92,7 +92,6 @@ namespace Schedule.IntIta.Controllers
             ViewData["eventTypes"] = eventTypes;
             ViewData["timeSlotTypes"] = timeSlotTypes;
             ViewData["subjectSelectList"] = subjectSelectList;
-            //ViewData["userSelectList"] = userSelectList;
             ViewData["roomSelectList"] = roomSelectList;
             ViewData["groupSelectList"] = groupSelectList;
 
@@ -121,7 +120,7 @@ namespace Schedule.IntIta.Controllers
             SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
             SelectList userSelectList = new SelectList(_db.Users, "Id", "LastName");
             SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
-            SelectList groupSelectList = new SelectList(_db.Groups, "Id", "Name");
+            SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
             SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
 
             ViewData["eventTypes"] = eventTypes;

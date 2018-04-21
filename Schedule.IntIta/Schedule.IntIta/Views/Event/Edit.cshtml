@@ -5,6 +5,26 @@
     var fa = Model;
 }
 
+@section Scripts {
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#AutoCc').autocomplete({
+                source: '/Search/AutocompleteSearch',
+                minLength: 3,
+                delay: 1000
+            });
+        });
+    </script>
+}
+
+
+
+
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -29,7 +49,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.InitiatorId, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.DropDownListFor(model => Model.InitiatorId, ViewData["userSelectList"] as SelectList, htmlAttributes: new { @class = "form-control" })
+                        @Html.EditorFor(model => model.InitiatorFullName, new { htmlAttributes = new { @class = "form-control", @id = "AutoCc" } })
                         @Html.ValidationMessageFor(model => model.InitiatorId, "", new { @class = "text-danger" })
                     </div>
                 </div>

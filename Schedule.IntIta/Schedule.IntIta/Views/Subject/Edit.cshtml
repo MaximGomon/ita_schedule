@@ -3,6 +3,20 @@
 
 @{
     ViewData["Title"] = "Edit";
+    IEnumerable<String> colors = new List<string>()
+    {
+        "Red",
+        "Green",
+        "Blue",
+        "Aqua",
+        "BlueViolet",
+        "Brown",
+        "DarkMagenta",
+        "Lime",
+        "Yellow",
+        "Orange",
+        "Purple"
+    };
 }
 
 <!DOCTYPE html>
@@ -16,28 +30,32 @@
 
 <h4>Subject</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div class="form-group">
-                @Html.LabelFor(x => x.Id)
-                @Html.EditorFor(x => x.Id)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(x => x.Name)
-                @Html.EditorFor(x => x.Name)
-            </div>
-            @*<div class="form-group">
-                @Html.LabelFor(x => x.IsDeleted)
-                @Html.EditorFor(x => x.IsDeleted)
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+    
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <fieldset>
+                    <legend>Subjects</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Color)
+                        @Html.DropDownListFor(model => model.Color, new SelectList(colors), htmlAttributes: new {@class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.Color, null, new {@class = "field-validation-error"})
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default"/>
+                    </div>         
+                </fieldset>
+            }
+        </div>
     </div>
-</div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

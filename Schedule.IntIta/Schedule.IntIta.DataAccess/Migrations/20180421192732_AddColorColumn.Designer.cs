@@ -12,9 +12,10 @@ using System;
 namespace Schedule.IntIta.DataAccess.Migrations
 {
     [DbContext(typeof(IntitaDbContext))]
-    partial class IntitaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180421192732_AddColorColumn")]
+    partial class AddColorColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

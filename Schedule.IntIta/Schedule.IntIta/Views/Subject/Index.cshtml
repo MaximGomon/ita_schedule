@@ -17,6 +17,9 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.IsDeleted)
         </th>
         <th>
@@ -33,6 +36,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>

@@ -41,14 +41,13 @@
                 success: function (data) {
                     $.each(data, function (i, v) {
                         console.log(data);
-                        var rand = Math.floor(Math.random() * arr.length);
                         events.push({
                             title: v.group.name + " " + v.typeOfEvent.name + " " + v.subject.name + " " + v.room.name,
                             description: v.group.name + " " + v.subject.name + " " + v.comments,
                             group: v.group.name,
                             start: moment(v.date.startTime),
                             end: v.date.endTime != null ? moment(v.date.endTime) : null,
-                            color: arr[rand],
+                            color: v.subject.color,
                             allDay: false
                         });
                     });

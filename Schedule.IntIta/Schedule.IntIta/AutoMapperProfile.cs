@@ -29,6 +29,7 @@ namespace Schedule.IntIta
                 .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>());
 
             CreateMap<SubjectViewModel, Subject>();
+            CreateMap<Subject, SubjectViewModel>();
             CreateMap<TimeSlotViewModel, TimeSlot>()
                  .ForMember(x => x.IdType, opt => opt.MapFrom(c => c.TypeId));
             CreateMap<TimeSlot, TimeSlotViewModel>()

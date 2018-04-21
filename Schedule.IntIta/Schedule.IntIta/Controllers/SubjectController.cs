@@ -59,7 +59,7 @@ namespace Schedule.IntIta.Controllers
                 SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
                 return View(sub);
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

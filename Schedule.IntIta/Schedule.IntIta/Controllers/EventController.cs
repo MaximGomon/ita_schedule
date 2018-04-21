@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
+using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
@@ -20,12 +21,14 @@ namespace Schedule.IntIta.Controllers
         private readonly IMapper _mapper;
         private readonly IntitaDbContext _db;
         private readonly IEventBusinessLogic _eventBusinessLogic;
+        private readonly ICacheManager<Group> _groupCacheManager;
 
-        public EventController(IMapper mapper, IEventBusinessLogic eventBusinessLogic, IntitaDbContext db)
+        public EventController(ICacheManager<Group> groupsCacheManager, IMapper mapper, IEventBusinessLogic eventBusinessLogic, IntitaDbContext db)
         {
             _mapper = mapper;
             _eventBusinessLogic = eventBusinessLogic;
             _db = db;
+            _groupCacheManager = groupsCacheManager;
         }
         
         [HttpPost]
@@ -130,8 +133,7 @@ namespace Schedule.IntIta.Controllers
             ViewData["roomSelectList"] = roomSelectList;
             ViewData["groupSelectList"] = groupSelectList;
 
-            var model = _mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id));
-            return View(model);
+            return View(_mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id)));
         }
 
         // POST: Room/Edit/5

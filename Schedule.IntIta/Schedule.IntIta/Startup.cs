@@ -39,30 +39,30 @@ namespace Schedule.IntIta
             
             services.AddAutoMapper();
             
-            services.AddSingleton<ISubjectRepository, SubjectRepository>();
+            services.AddTransient<ISubjectRepository, SubjectRepository>();
 
             services.AddSingleton<ICacheStore<Group>, CacheStore<Group>>();
             services.AddSingleton<IDataProvider<Group>, GroupDataProvider>();
             services.AddSingleton<ICacheManager<Group>, CacheManager<Group>>();
 
-            services.AddScoped<ISubjectBusinessLogic, SubjectBusinessLogic>();
-            services.AddScoped<IEventBusinessLogic, EventBusinessLogic>();
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddSingleton<IEventTypeBusinessLogic, EventTypeBusinessLogic>();
-            services.AddSingleton<IEventTypeRepository, EventTypeRepository>();
-            services.AddSingleton<IRoomBusinessLogic, RoomBusinessLogic>();
-            services.AddSingleton<IRoomRepository, RoomRepository>();
-            services.AddSingleton<IOfficeBusinessLogic, OfficeBusinessLogic>();
-            services.AddSingleton<IOfficeRepository, OfficeRepository>();
-            services.AddSingleton<IGroupRepository, GroupRepository>();
-            services.AddSingleton<ITimeSlotRepository, TimeSlotRepository>();
-            services.AddSingleton<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
-            services.AddSingleton<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
-            services.AddSingleton<IGroupRepository, GroupRepository>();
-            services.AddSingleton<IUserIntegration, UserIntegration>();
-            services.AddSingleton<IUserBusinessLogic, UserBusinessLogic>();
-            services.AddSingleton<IUserRepository,UserRepository>();
-            services.AddSingleton<IGroupIntegrationHandler, GroupIntegrationHandler>();
+            services.AddTransient<ISubjectBusinessLogic, SubjectBusinessLogic>();
+            services.AddTransient<IEventBusinessLogic, EventBusinessLogic>();
+            services.AddTransient<IEventRepository, EventRepository>();
+            services.AddTransient<IEventTypeBusinessLogic, EventTypeBusinessLogic>();
+            services.AddTransient<IEventTypeRepository, EventTypeRepository>();
+            services.AddTransient<IRoomBusinessLogic, RoomBusinessLogic>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
+            services.AddTransient<IOfficeBusinessLogic, OfficeBusinessLogic>();
+            services.AddTransient<IOfficeRepository, OfficeRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<ITimeSlotRepository, TimeSlotRepository>();
+            services.AddTransient<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
+            services.AddTransient<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<IUserIntegration, UserIntegration>();
+            services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
+            services.AddTransient<IUserRepository,UserRepository>();
+            services.AddTransient<IGroupIntegrationHandler, GroupIntegrationHandler>();
             services.AddDbContext<IntitaDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("IntitaDbContext")));
 

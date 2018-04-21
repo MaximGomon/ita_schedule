@@ -84,7 +84,7 @@ namespace Schedule.IntIta.Controllers
             //TODO: перенести все в репозиторий
             SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
             SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
-            SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
+            //SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
             SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
             SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
             SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
@@ -92,7 +92,7 @@ namespace Schedule.IntIta.Controllers
             ViewData["eventTypes"] = eventTypes;
             ViewData["timeSlotTypes"] = timeSlotTypes;
             ViewData["subjectSelectList"] = subjectSelectList;
-            ViewData["userSelectList"] = userSelectList;
+            //ViewData["userSelectList"] = userSelectList;
             ViewData["roomSelectList"] = roomSelectList;
             ViewData["groupSelectList"] = groupSelectList;
 

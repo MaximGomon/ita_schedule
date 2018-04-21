@@ -18,13 +18,13 @@ namespace Schedule.IntIta
         {
             CreateMap<UserViewModel, User>();
             CreateMap<EventViewModel, Event>()
-                .ForMember(x => x.InitiatorId, c => c.MapFrom(n => n.InitiatorId))
+                .ForMember(x => x.InitiatorId, x => x.ResolveUsing<EventViewInitiatorResolver>())
                 .ForMember(x => x.RoomId, c => c.MapFrom(n => n.RoomId))
                 .ForMember(x => x.GroupId, c => c.MapFrom(n => n.GroupId))
                 .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId));
 
             CreateMap<Event, EventViewModel>()
-                .ForMember(x => x.InitiatorName, x => x.ResolveUsing<EventInitiatorResolver>())
+                .ForMember(x => x.InitiatorFullName, x => x.ResolveUsing<EventInitiatorResolver>())
                 .ForMember(x => x.RoomName, x => x.ResolveUsing<EventRoomResolver>())
                 .ForMember(x => x.GroupName, w => w.ResolveUsing<EventGroupResolver>())
                 .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>());
@@ -48,6 +48,26 @@ namespace Schedule.IntIta
             CreateMap<Event, CalendarEventViewModel>();
         }
     }
+
+    public class EventViewInitiatorResolver : IValueResolver<EventViewModel, Event, int?>
+    {
+        private readonly IntitaDbContext _context;
+
+        public EventViewInitiatorResolver(IntitaDbContext context)
+        {
+            _context = context;
+        }
+        
+        public int? Resolve(EventViewModel source, Event destination, int? destMember, ResolutionContext context)
+        {
+            IUserIntegration userIntegration = new UserIntegration();
+            UserRepository userRepository = new UserRepository(userIntegration, _context);
+            var user = userRepository.GetByFullName(source.InitiatorFullName);
+            return user.Id;
+        }
+    }
+
+
     public class EventInitiatorResolver : IValueResolver<Event, EventViewModel, string>
     {
         private readonly IntitaDbContext _context;
@@ -61,7 +81,7 @@ namespace Schedule.IntIta
         {
             IUserIntegration userIntegration = new UserIntegration();
             UserRepository userRepository = new UserRepository(userIntegration, _context);
-            var user = userRepository.GetById(source.InitiatorId);
+            var user = userRepository.GetLocalById(source.InitiatorId);
             return String.Concat(user.FirstName, " ", user.LastName);
         }
     }

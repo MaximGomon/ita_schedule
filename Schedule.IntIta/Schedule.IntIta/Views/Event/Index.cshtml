@@ -12,20 +12,6 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-@*<form asp-action="Index" method="Post">*@
-@*<div class="form-actions no-color">
-        <p>
-            Find by TypeOfEvent: <input class ="filtering" type="text" name="SearchTypeOfEvent" id="sType" value="@ViewBag.TypeOfEvent" /><br>
-            Find by InitiatorName: <input class="filtering" type="text" name="SearchInitiator" id="sInitiator" value="@ViewBag.TypeOfEvent" /><br>
-            Find by RoomName: <input class="filtering" type="text" name="SearchRoom" id="sRoom" value="@ViewBag.RoomName" /><br>
-            Find by GroupName: <input class="filtering" type="text" name="SearchGroup" id="sGroup" value="@ViewBag.GroupName" /><br>
-            <a asp-action="Index">Back to Full List</a> |
-            <input type="submit" value="Search" class="btn btn-default" />
-        </p>
-    </div>*@
-
-
-
 @using (Html.BeginForm("Filter", "Event", FormMethod.Post))
 {
     <fieldset>
@@ -87,7 +73,7 @@
                 @Html.DisplayFor(modelItem => item.SubjectName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InitiatorName)
+                @Html.DisplayFor(modelItem => item.InitiatorFullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomName)

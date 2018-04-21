@@ -23,67 +23,65 @@ namespace Schedule.IntIta.DataAccess
                     context.EventTypes.Add(eventType);
                 }
                 context.SaveChanges();
-                if (!context.Office.Any())
+            }
+            if (!context.Office.Any())
+            {
+                var offices = new Office[]
                 {
-                    var offices = new Office[]
-                    {
-                        new Office(){Name = "Undeground", Adress = "Unknown undeground"}, 
-                        new Office(){Name = "Near Harvard", Adress = "Second floor near Harvard"} 
-                    };
-                    foreach (var office in offices)
-                    {
-                        context.Office.Add(office);
-                    }
-                    context.SaveChanges();
-                }
-
-                if (!context.Rooms.Any())
+                    new Office(){Name = "Undeground", Adress = "Unknown undeground"},
+                    new Office(){Name = "Near Harvard", Adress = "Second floor near Harvard"}
+                };
+                foreach (var office in offices)
                 {
-                    var rooms = new Room[]
-                    {
-                        new Room(){RoomStatus = RoomStatus.Active, Name = "MagentaRoom", OfficeId = 1, SeatNumber = 30}, 
-                        new Room(){RoomStatus = RoomStatus.Active, Name = "SeaRoom", OfficeId = 1, SeatNumber = 40}, 
-                        new Room(){RoomStatus = RoomStatus.Active, Name = "RelaxRoom", OfficeId = 1, SeatNumber = 15}, 
-                        new Room(){RoomStatus = RoomStatus.Active, Name = "SquareRoom", OfficeId = 2, SeatNumber = 30}, 
-                        new Room(){RoomStatus = RoomStatus.Active, Name = "LongRoom", OfficeId = 2, SeatNumber = 50}
-                    };
-                    foreach (var room in rooms)
-                    {
-                        context.Rooms.Add(room);
-                    }
-                    context.SaveChanges();
+                    context.Office.Add(office);
                 }
-
-                if (!context.Subjects.Any())
+                context.SaveChanges();
+            }
+            if (!context.Rooms.Any())
+            {
+                var rooms = new Room[]
                 {
-                    var subjects = new Subject[]
-                    {
-                        new Subject() {Name = "High math"},
-                        new Subject() {Name = "Discrete math"},
-                        new Subject() {Name = "Magic c#"},
-                        new Subject() {Name = "JS"},
-                        new Subject() {Name = "Java"}
-                    };
-                    foreach (var subject in subjects)
-                    {
-                        context.Subjects.Add(subject);
-                    }
-                    context.SaveChanges();
-                }
-                if (!context.TimeSlotTypes.Any())
+                    new Room(){RoomStatus = RoomStatus.Active, Name = "MagentaRoom", OfficeId = 1, SeatNumber = 30},
+                    new Room(){RoomStatus = RoomStatus.Active, Name = "SeaRoom", OfficeId = 1, SeatNumber = 40},
+                    new Room(){RoomStatus = RoomStatus.Active, Name = "RelaxRoom", OfficeId = 1, SeatNumber = 15},
+                    new Room(){RoomStatus = RoomStatus.Active, Name = "SquareRoom", OfficeId = 2, SeatNumber = 30},
+                    new Room(){RoomStatus = RoomStatus.Active, Name = "LongRoom", OfficeId = 2, SeatNumber = 50}
+                };
+                foreach (var room in rooms)
                 {
-                    var timeSlotTypes = new TimeSlotTypes[]
-                    {
-                        new TimeSlotTypes() {Type = "Meeting"},
-                        new TimeSlotTypes() {Type = "Exam"},
-                        new TimeSlotTypes() {Type = "Lesson"}
-                    };
-                    foreach (var timeSlotType in timeSlotTypes)
-                    {
-                        context.TimeSlotTypes.Add(timeSlotType);
-                    }
-                    context.SaveChanges();
+                    context.Rooms.Add(room);
                 }
+                context.SaveChanges();
+            }
+            if (!context.Subjects.Any())
+            {
+                var subjects = new Subject[]
+                {
+                    new Subject() {Name = "High math"},
+                    new Subject() {Name = "Discrete math"},
+                    new Subject() {Name = "Magic c#"},
+                    new Subject() {Name = "JS"},
+                    new Subject() {Name = "Java"}
+                };
+                foreach (var subject in subjects)
+                {
+                    context.Subjects.Add(subject);
+                }
+                context.SaveChanges();
+            }
+            if (!context.TimeSlotTypes.Any())
+            {
+                var timeSlotTypes = new TimeSlotTypes[]
+                {
+                    new TimeSlotTypes() {Type = "Meeting"},
+                    new TimeSlotTypes() {Type = "Exam"},
+                    new TimeSlotTypes() {Type = "Lesson"}
+                };
+                foreach (var timeSlotType in timeSlotTypes)
+                {
+                    context.TimeSlotTypes.Add(timeSlotType);
+                }
+                context.SaveChanges();
             }
         }
     }

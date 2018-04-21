@@ -58,7 +58,7 @@ namespace Schedule.IntIta.Controllers
                         initiatorFilter != null ?
                         (@event.InitiatorId != null
                         &&
-                        _eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
+                        _eventBusinessLogic.FindLocalUsers(initiatorFilter.ToUpper())//search users at INTITA
                             .Select(w => w.Id)//select only Ids of find users
                             .Contains(@event.InitiatorId.Value)) : true
                         &&

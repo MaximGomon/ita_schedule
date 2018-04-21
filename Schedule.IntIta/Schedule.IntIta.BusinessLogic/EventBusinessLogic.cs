@@ -14,13 +14,16 @@ namespace Schedule.IntIta.BusinessLogic
         private readonly IRoomRepository _repRooms;
         private readonly ICacheManager<Group> _integrGroups;
         private readonly IUserIntegration _integrUsers;
+        private readonly IUserRepository _userRepository;
 
-        public EventBusinessLogic(IEventRepository repository, IRoomRepository repRooms, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
+
+        public EventBusinessLogic(IUserRepository userRepository, IEventRepository repository, IRoomRepository repRooms, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
         {
             _repository = repository;
             _repRooms = repRooms;
             _integrGroups = integrGroups;
             _integrUsers = integrUsers;
+            _userRepository = userRepository;
         }
 
         public void Add(Event item)
@@ -68,6 +71,10 @@ namespace Schedule.IntIta.BusinessLogic
         public List<User> FindUsers(string searchStr)
         {
             return _integrUsers.FindUsers(searchStr);
+        }
+        public List<User> FindLocalUsers(string searchStr)
+        {
+            return _userRepository.GetLocalUserByStr(searchStr);
         }
         public User GetUsersById(int? id)
         {

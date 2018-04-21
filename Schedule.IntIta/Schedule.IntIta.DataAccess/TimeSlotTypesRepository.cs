@@ -10,6 +10,11 @@ namespace Schedule.IntIta.DataAccess
     {
         private readonly IntitaDbContext _context;
 
+        public TimeSlotTypesRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Delete(int id)
         {
             var removedTimeslotType = _context.TimeSlotTypes.Find(id);

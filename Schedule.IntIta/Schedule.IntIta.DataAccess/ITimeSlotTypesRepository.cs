@@ -11,6 +11,5 @@ namespace Schedule.IntIta.DataAccess
         void Update(TimeSlotTypes modifiedItem);
         void Delete(int id);
         IEnumerable<TimeSlotTypes> GetAll();
-
     }
 }

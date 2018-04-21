@@ -11,5 +11,6 @@ namespace Schedule.IntIta.BusinessLogic
         void Delete(int id);
         TimeSlotTypes Read(int id);
         void Update(TimeSlotTypes modifiedTimeSlot);
+        IEnumerable<TimeSlotTypes> GetAll();
     }
 }

@@ -18,7 +18,6 @@ namespace Schedule.IntIta.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISubjectBusinessLogic _subjectBusinessLogic;
-        private readonly ISubjectRepository _subjectRepository;
         private readonly IntitaDbContext _context;
 
 

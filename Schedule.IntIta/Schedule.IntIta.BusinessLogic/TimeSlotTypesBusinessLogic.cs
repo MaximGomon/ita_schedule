@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.DataAccess;
 using System.Linq;
@@ -44,6 +45,11 @@ namespace Schedule.IntIta.BusinessLogic
         public void Update(TimeSlotTypes modifiedTimeSlot)
         {
             _repository.Update(modifiedTimeSlot);
+        }
+
+        public IEnumerable<TimeSlotTypes> GetAll()
+        {
+            return _repository.GetAll();
         }
     }
 }

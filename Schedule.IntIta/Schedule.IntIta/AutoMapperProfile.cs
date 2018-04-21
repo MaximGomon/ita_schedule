@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Schedule.IntIta.Cache.Cache;
-using Schedule.IntIta.Controllers;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
@@ -102,25 +99,19 @@ namespace Schedule.IntIta
     }
     public class EventGroupResolver : IValueResolver<Event, EventViewModel, string>
     {
-        private ICacheManager<Group> _groupsCacheManager;
+        private readonly ICacheManager<Group> _groupsCacheManager;
         public EventGroupResolver(ICacheManager<Group> groupsCacheManager)
         {
             _groupsCacheManager = groupsCacheManager;
         }
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
-            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
             try
             {
-                if (source == null)
+                if (source?.GroupId == null)
                 {
                     return "";
                 }
-                if (source.GroupId == null)
-                {
-                    return "";
-                }
-                //var group = groupIntegration.GetGroupById((int)source.GroupId);
                 var group = _groupsCacheManager.Call().FirstOrDefault(x => x.Id == source.GroupId);
                 return group.Name;
             }

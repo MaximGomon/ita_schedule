@@ -5,8 +5,6 @@ namespace Schedule.IntIta.ViewModels
 {
     public class SubjectViewModel : DeletableEntity
     {
-        public int Id { get; set; }
-
         [Required]
         [MinLength(2, ErrorMessage = "Fucking error massage")]
         [Display(Name = "Title")]

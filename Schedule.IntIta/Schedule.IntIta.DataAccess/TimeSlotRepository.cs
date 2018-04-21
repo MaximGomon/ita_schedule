@@ -9,6 +9,11 @@ namespace Schedule.IntIta.DataAccess
     {
         private readonly IntitaDbContext _context;
 
+        public TimeSlotRepository(IntitaDbContext context)
+        {
+            _context = context;
+        }
+
         public void Insert(TimeSlot item)
         {
             _context.TimeSlots.Add(item);

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Schedule.Intita.ApiRequest;
 using Schedule.IntIta;
@@ -36,7 +37,6 @@ namespace Schedule.IntIta
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddAutoMapper();
             
             services.AddTransient<ISubjectRepository, SubjectRepository>();
@@ -74,7 +74,6 @@ namespace Schedule.IntIta
                     options =>
                     {
                         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultAuthenticateScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -94,20 +93,42 @@ namespace Schedule.IntIta
                     options.SaveTokens = true;
                     // options.SignInScheme = IntitaAuthenticationDefaults.AuthenticationScheme;
                 });
-            
-
-           
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
-                //options.Filters.Add(new ErrorFilter());
             });
 
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<IntitaDbContext>().Database.Migrate();
+
+                    var services = serviceScope.ServiceProvider;
+                    try
+                    {
+                        var context = services.GetRequiredService<IntitaDbContext>();
+                        DbInitializer.Initialize(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(ex, "An error occurred while seeding the database.");
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                //Log.Error(ex, "Failed to migrate or seed database");
+            }
+            
             app.UseBrowserLink();
             app.UseStaticFiles();
             app.UseSession();
@@ -154,11 +175,7 @@ public class ErrorHandlingMiddleware
     {
         var code = HttpStatusCode.InternalServerError; // 500 if unexpected
 
-        //if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
-        //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
-        //else if (exception is MyException) code = HttpStatusCode.BadRequest;
         context.Response.StatusCode = (int)code;
-        //var result = JsonConvert.SerializeObject(new { Message = "<h1> Exception message is: " + exception.Message +"</h1>"+ "<h2>Exception was caused by: " + exception.Source + "</h2>"});
         context.Response.ContentType = "text/HTML";
         var result = new ErrorPageMaker(exception, context).PageMaker();//так делать нельзя, но я сделал как мог
         

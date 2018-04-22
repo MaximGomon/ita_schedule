@@ -88,7 +88,7 @@ namespace Schedule.IntIta.Controllers
         //[HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
+            ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>).OrderBy(x => x.Date.StartTime).ToList();
             return View();
         }
 

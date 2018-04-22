@@ -57,11 +57,12 @@ namespace Schedule.IntIta.DataAccess
             {
                 var subjects = new Subject[]
                 {
-                    new Subject() {Name = "High math", Color = "Red"},
-                    new Subject() {Name = "Discrete math", Color = "Yelow"},
+                    new Subject() {Name = "English", Color = "Red"},
+                    new Subject() {Name = "Course Projects", Color = "Yelow"},
                     new Subject() {Name = "Magic c#", Color = "Blue"},
                     new Subject() {Name = "JS", Color = "Green"},
-                    new Subject() {Name = "Java", Color = "Orange"}
+                    new Subject() {Name = "Java", Color = "Orange"},
+                    new Subject() {Name = "DB", Color = "Green"}
                 };
                 foreach (var subject in subjects)
                 {

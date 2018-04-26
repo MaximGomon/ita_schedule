@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AspNet.Security.OAuth.Intita\AspNet.Security.OAuth.Intita.csproj" />
+    <ProjectReference Include="..\Scedule.IntIta.QrCode\Schedule.IntIta.QrCode.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.BusinessLogic\Schedule.IntIta.BusinessLogic.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.Cache.Cache\Schedule.IntIta.Cache.Cache.csproj" />
     <ProjectReference Include="..\Schedule.IntIta.DataAccess\Schedule.IntIta.DataAccess.csproj" />

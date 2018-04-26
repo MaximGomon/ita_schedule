@@ -1,4 +1,5 @@
 ﻿@using Schedule.IntIta.Domain.Models
+@using Schedule.IntIta.QrCode
 @model IEnumerable< Schedule.IntIta.ViewModels.RoomViewModel>
 
 
@@ -32,7 +33,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsDeleted)
             </th>
-            <th></th>
+            <th>
+                
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -59,7 +62,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                    @Html.ActionLink("Generate QR Code", "DownloadFile", "Room",new { id = item.Id.ToString() })
                 </td>
             </tr>
         }

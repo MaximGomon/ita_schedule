@@ -5,7 +5,7 @@ using QRCoder;
 using Schedule.IntIta.Domain.Models;
 using System.DrawingCore;
 
-namespace Scedule.IntIta.QrCode
+namespace Schedule.IntIta.QrCode
 {
     public class QRCodeGen
     {
@@ -17,6 +17,12 @@ namespace Scedule.IntIta.QrCode
             Bitmap bitmap = qRCode.GetGraphic(20);
             return bitmap;
         }
-          
-     }
+        public  byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
+
+
+    }
 }

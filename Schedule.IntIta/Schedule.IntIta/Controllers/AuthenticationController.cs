@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.IntIta.Extensions;
+using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -16,6 +18,19 @@ namespace Schedule.IntIta.Controllers
         [HttpGet("/signin")]
         public async Task<IActionResult> SignIn([FromQuery]string returnUrl, string message)
         {
+            if (returnUrl != null)
+            {
+                string myCookie = Request.Cookies["RoomIdCookie"];
+                Regex regex = new Regex(@"\d+$");
+                Match match = regex.Match(returnUrl);
+                if (match != null)
+                {
+                    myCookie = match.Value;
+                    Response.Cookies.Append("RoomIdCookie", myCookie);
+                }
+            }
+           
+           // myCookie = "https://localhost:44310/Schedule/ByRoom?roomId=4"; FYI : this how should look like path to a concrete room schedule
             return View(await HttpContext.GetExternalProvidersAsync());
         }
 
@@ -37,7 +52,7 @@ namespace Schedule.IntIta.Controllers
             // Instruct the middleware corresponding to the requested external identity
             // provider to redirect the user agent to its own authorization endpoint.
             // Note: the authenticationScheme parameter must match the value configured in Startup.cs
-            
+
             return Challenge(new AuthenticationProperties { RedirectUri = "/api/home/welcome" }, provider);
         }
 

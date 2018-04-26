@@ -4,27 +4,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script type="text/javascript">
-        /*var v1 = [];
-
-        $('#AutoCc')[0].oninput = function () {
-            if ($('#AutoCc')[0].value.length >= 3) {
-                $.ajax({
-                    url: "/Search/AutocompleteSearch/?str=" + $('#AutoCc')[0].value,
-                    type: "GET",
-                    success: function (data) {
-                        if (data.length > 7) {
-                            v1 = data.slice(0, 8);
-                        } else
-                            v1 = data;
-                        console.log(v1);
-                        $('#AutoCc').autocomplete({ source: v1 });
-                    },
-                    error: function (error) {
-                    }
-                });    
-            }
-        }*/
-
+        
         $(document).ready(function() {
             $('#AutoCc').autocomplete({
                 source: '/Search/AutocompleteSearch',

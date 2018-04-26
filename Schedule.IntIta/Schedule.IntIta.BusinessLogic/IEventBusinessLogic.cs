@@ -20,5 +20,6 @@ namespace Schedule.IntIta.BusinessLogic
         Group GetGroupById(int id);
         IEnumerable<Event> GetActive();
         Room GetRoomById(int id);
+        List<User> FindLocalUsers(string searchStr);
     }
 }

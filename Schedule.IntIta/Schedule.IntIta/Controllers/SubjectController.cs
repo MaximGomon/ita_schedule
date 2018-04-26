@@ -18,7 +18,6 @@ namespace Schedule.IntIta.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISubjectBusinessLogic _subjectBusinessLogic;
-        private readonly ISubjectRepository _subjectRepository;
         private readonly IntitaDbContext _context;
 
 
@@ -60,7 +59,7 @@ namespace Schedule.IntIta.Controllers
                 SubjectViewModel sub = Mapper.Map<Subject, SubjectViewModel>(_subjectBusinessLogic.Read(id));
                 return View(sub);
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

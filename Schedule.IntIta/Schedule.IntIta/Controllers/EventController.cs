@@ -71,23 +71,12 @@ namespace Schedule.IntIta.Controllers
             ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
             return View(nameof(Index));
         }
-        //[HttpGet]
-
-
-        // break point was here
-           // string myCookie = Request.Cookies["SomeCustomCookie"];
-            //List<FilterEvents> filters = new List<FilterEvents>();
-            //return RedirectToAction("FilterShow");
-           // return View(nameof(Index), _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>));
-             
+                    
 
         public ActionResult Index()
 
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
-            //get from cookies RoomId
-            //Get from db roomName by roomId
-            //create filter
             return View();
 
         }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Schedule.IntIta.Controllers;
+using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
@@ -12,24 +10,26 @@ using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta
 {
+    
     public class AutoMapperProfile : Profile
     {
-       public AutoMapperProfile()
+        public AutoMapperProfile()
         {
             CreateMap<UserViewModel, User>();
             CreateMap<EventViewModel, Event>()
-                .ForMember(x => x.InitiatorId, c => c.MapFrom(n => n.InitiatorId))
+                .ForMember(x => x.InitiatorId, x => x.ResolveUsing<EventViewInitiatorResolver>())
                 .ForMember(x => x.RoomId, c => c.MapFrom(n => n.RoomId))
                 .ForMember(x => x.GroupId, c => c.MapFrom(n => n.GroupId))
                 .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId));
 
             CreateMap<Event, EventViewModel>()
-                .ForMember(x => x.InitiatorName, x => x.ResolveUsing<EventInitiatorResolver>())
+                .ForMember(x => x.InitiatorFullName, x => x.ResolveUsing<EventInitiatorResolver>())
                 .ForMember(x => x.RoomName, x => x.ResolveUsing<EventRoomResolver>())
                 .ForMember(x => x.GroupName, w => w.ResolveUsing<EventGroupResolver>())
                 .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>());
 
             CreateMap<SubjectViewModel, Subject>();
+            CreateMap<Subject, SubjectViewModel>();
             CreateMap<TimeSlotViewModel, TimeSlot>()
                  .ForMember(x => x.IdType, opt => opt.MapFrom(c => c.TypeId));
             CreateMap<TimeSlot, TimeSlotViewModel>()
@@ -48,6 +48,26 @@ namespace Schedule.IntIta
             CreateMap<Event, CalendarEventViewModel>();
         }
     }
+
+    public class EventViewInitiatorResolver : IValueResolver<EventViewModel, Event, int?>
+    {
+        private readonly IntitaDbContext _context;
+
+        public EventViewInitiatorResolver(IntitaDbContext context)
+        {
+            _context = context;
+        }
+        
+        public int? Resolve(EventViewModel source, Event destination, int? destMember, ResolutionContext context)
+        {
+            IUserIntegration userIntegration = new UserIntegration();
+            UserRepository userRepository = new UserRepository(userIntegration, _context);
+            var user = userRepository.GetByFullName(source.InitiatorFullName);
+            return user.Id;
+        }
+    }
+
+
     public class EventInitiatorResolver : IValueResolver<Event, EventViewModel, string>
     {
         private readonly IntitaDbContext _context;
@@ -61,7 +81,7 @@ namespace Schedule.IntIta
         {
             IUserIntegration userIntegration = new UserIntegration();
             UserRepository userRepository = new UserRepository(userIntegration, _context);
-            var user = userRepository.GetById(source.InitiatorId);
+            var user = userRepository.GetLocalById(source.InitiatorId);
             return String.Concat(user.FirstName, " ", user.LastName);
         }
     }
@@ -80,20 +100,20 @@ namespace Schedule.IntIta
     }
     public class EventGroupResolver : IValueResolver<Event, EventViewModel, string>
     {
+        private readonly ICacheManager<Group> _groupsCacheManager;
+        public EventGroupResolver(ICacheManager<Group> groupsCacheManager)
+        {
+            _groupsCacheManager = groupsCacheManager;
+        }
         public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
         {
-            GroupIntegrationHandler groupIntegration = new GroupIntegrationHandler();
             try
             {
-                if (source == null)
+                if (source?.GroupId == null)
                 {
                     return "";
                 }
-                if (source.GroupId == null)
-                {
-                    return "";
-                }
-                var group = groupIntegration.GetGroupById((int)source.GroupId);
+                var group = _groupsCacheManager.Call().FirstOrDefault(x => x.Id == source.GroupId);
                 return group.Name;
             }
             catch (Exception e)

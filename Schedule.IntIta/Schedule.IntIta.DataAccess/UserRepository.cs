@@ -28,6 +28,12 @@ namespace Schedule.IntIta.DataAccess
             return _userIntegration.FindUserById(id);
         }
 
+        public User GetLocalById(int? id)
+        {
+            return _context.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+
         public List<User> GetByStr(string searchStr)
         {
             return _userIntegration.FindUsers(searchStr);
@@ -41,6 +47,12 @@ namespace Schedule.IntIta.DataAccess
                 x.Email.Contains(searchStr))
                 .ToList();
             return users;
+        }
+
+        public User GetByFullName(string fullName)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.FirstName + " " + x.LastName == fullName);
+            return user;
         }
 
 

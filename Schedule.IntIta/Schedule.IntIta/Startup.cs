@@ -57,6 +57,7 @@ namespace Schedule.IntIta
             services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddTransient<ITimeSlotRepository, TimeSlotRepository>();
             services.AddTransient<ITimeSlotTypesRepository, TimeSlotTypesRepository>();
+            services.AddTransient<ITimeSlotTypeBusinessLogic, TimeSlotTypesBusinessLogic>();
             services.AddTransient<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
             services.AddTransient<IGroupRepository, GroupRepository>();
             services.AddTransient<IUserIntegration, UserIntegration>();
@@ -126,7 +127,7 @@ namespace Schedule.IntIta
             }
             catch (Exception ex)
             {
-                //Log.Error(ex, "Failed to migrate or seed database");
+                Console.WriteLine($"{ex}, Failed to migrate or seed database");
             }
             
             app.UseBrowserLink();

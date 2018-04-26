@@ -28,5 +28,6 @@ namespace Schedule.IntIta.ViewModels
         public TimeSlot Date { get; set; }
         [DisplayName("Комментарий")]
         public string Comments { get; set; }
+        public string InitiatorFullName { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.Domain.Models.Enumerations;
 using Schedule.IntIta.ViewModels;
+using Schedule.IntIta.QrCode;
 
 namespace Schedule.IntIta.Controllers
 {
@@ -136,6 +137,23 @@ namespace Schedule.IntIta.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult DownloadFile(string id)
+        {
+            string url;
+            string schema = Request.Scheme;
+            string host = Request.Host.Host;
+            string path = Request.Path;
+            if (Request.Host.Port.HasValue == true)
+            {
+                string port = Request.Host.Port.ToString();
+                url = schema + "://" + host + ":" + port + "/Schedule/Index" + "?RoomId=" + id;
+            }
+            else { url = schema + "://" + host + "/Schedule/Index" + "?RoomId=" + id; }
+            QRCodeGen qRCode = new QRCodeGen();
+            byte[] fileBytes = qRCode.ImageToByte(qRCode.GenerateQR(url));
+            string fileName = "QR.bmp";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

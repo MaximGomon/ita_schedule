@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
-using Schedule.IntIta.Cache.Cache;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
@@ -20,26 +19,14 @@ namespace Schedule.IntIta.Controllers
     public class EventController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IntitaDbContext _db;
         private readonly IEventBusinessLogic _eventBusinessLogic;
-        private readonly IEventTypeBusinessLogic _eventTypeBusinessLogic;
-        private readonly ITimeSlotTypeBusinessLogic _timeSlotTypeBusinessLogic;
-        private readonly ISubjectBusinessLogic _subjectBusinessLogic;
-        private readonly IRoomBusinessLogic _roomBusinessLogic;
-        
-        public EventController(
-            IMapper mapper,
-            IEventBusinessLogic eventBusinessLogic,
-            IEventTypeBusinessLogic eventTypeBusinessLogic,
-            ITimeSlotTypeBusinessLogic timeSlotTypeBusinessLogic,
-            ISubjectBusinessLogic subjectBusinessLogic,
-            IRoomBusinessLogic roomBusinessLogic)
+
+        public EventController(IMapper mapper, IEventBusinessLogic eventBusinessLogic, IntitaDbContext db)
         {
             _mapper = mapper;
             _eventBusinessLogic = eventBusinessLogic;
-            _eventTypeBusinessLogic = eventTypeBusinessLogic;
-            _timeSlotTypeBusinessLogic = timeSlotTypeBusinessLogic;
-            _subjectBusinessLogic = subjectBusinessLogic;
-            _roomBusinessLogic = roomBusinessLogic;
+            _db = db;
         }
         
         [HttpPost]
@@ -59,7 +46,7 @@ namespace Schedule.IntIta.Controllers
                         initiatorFilter != null ?
                         (@event.InitiatorId != null
                         &&
-                        _eventBusinessLogic.FindLocalUsers(initiatorFilter.ToUpper())//search users at INTITA
+                        _eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
                             .Select(w => w.Id)//select only Ids of find users
                             .Contains(@event.InitiatorId.Value)) : true
                         &&
@@ -86,26 +73,31 @@ namespace Schedule.IntIta.Controllers
             
             return View(nameof(Index));
         }
-        
-        //[HttpGet]
-        public IActionResult Index()
+                    
+
+        public ActionResult Index()
+
         {
-            ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>).OrderBy(x => x.Date.StartTime).ToList();
+            ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
             return View();
+
         }
 
         // GET: Room/Create
         public ActionResult Create()
         {
-            SelectList eventTypes = new SelectList(_eventTypeBusinessLogic.GetAll(), "Id", "Name");
-            SelectList timeSlotTypes = new SelectList(_timeSlotTypeBusinessLogic.GetAll(), "Id", "Type");
-            SelectList roomSelectList = new SelectList(_roomBusinessLogic.GetAll(), "Id", "Name");
+            //TODO: перенести все в репозиторий
+            SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
+            SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
+            SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
+            SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
             SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
-            SelectList subjectSelectList = new SelectList(_subjectBusinessLogic.GetAll(), "Id", "Name");
+            SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
 
             ViewData["eventTypes"] = eventTypes;
             ViewData["timeSlotTypes"] = timeSlotTypes;
             ViewData["subjectSelectList"] = subjectSelectList;
+            ViewData["userSelectList"] = userSelectList;
             ViewData["roomSelectList"] = roomSelectList;
             ViewData["groupSelectList"] = groupSelectList;
 
@@ -130,19 +122,22 @@ namespace Schedule.IntIta.Controllers
         // GET: Room/Edit/5
         public ActionResult Edit(int id)
         {
-            SelectList eventTypes = new SelectList(_eventTypeBusinessLogic.GetAll(), "Id", "Name");
-            SelectList timeSlotTypes = new SelectList(_timeSlotTypeBusinessLogic.GetAll(), "Id", "Type");
-            SelectList roomSelectList = new SelectList(_roomBusinessLogic.GetAll(), "Id", "Name");
-            SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
-            SelectList subjectSelectList = new SelectList(_subjectBusinessLogic.GetAll(), "Id", "Name");
+            SelectList eventTypes = new SelectList(_db.EventTypes, "Id", "Name");
+            SelectList timeSlotTypes = new SelectList(_db.TimeSlotTypes, "Id", "Type");
+            SelectList userSelectList = new SelectList(_db.Users, "Id", "LastName");
+            SelectList roomSelectList = new SelectList(_db.Rooms, "Id", "Name");
+            SelectList groupSelectList = new SelectList(_db.Groups, "Id", "Name");
+            SelectList subjectSelectList = new SelectList(_db.Subjects, "Id", "Name");
 
             ViewData["eventTypes"] = eventTypes;
             ViewData["timeSlotTypes"] = timeSlotTypes;
             ViewData["subjectSelectList"] = subjectSelectList;
+            ViewData["userSelectList"] = userSelectList;
             ViewData["roomSelectList"] = roomSelectList;
             ViewData["groupSelectList"] = groupSelectList;
 
-            return View(_mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id)));
+            var model = _mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id));
+            return View(model);
         }
 
         // POST: Room/Edit/5
@@ -197,7 +192,7 @@ namespace Schedule.IntIta.Controllers
                 calendarEvent.Group = groups.FirstOrDefault(x => x.Id == item.GroupId);
                 calendarEvent.Initiator = _eventBusinessLogic.GetUsersById(item.InitiatorId);
                 calendarEvent.Room = _eventBusinessLogic.GetAllRooms().FirstOrDefault(w => w.Id == item.RoomId);
-                calendarEvent.Subject = _subjectBusinessLogic.GetAll().Single(x => x.Id == item.SubjectId);
+                calendarEvent.Subject = _db.Subjects.Single(x => x.Id == item.SubjectId);
                 list.Add(calendarEvent);
             }
 

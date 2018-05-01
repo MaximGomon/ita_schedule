@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -82,6 +83,7 @@ namespace Schedule.IntIta.Controllers
                 models.Add(_mapper.Map<EventViewModel>(item));
             }
             ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
+            
             return View(nameof(Index));
         }
         

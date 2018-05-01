@@ -20,6 +20,7 @@ namespace Schedule.IntIta.DataAccess.Context
         public DbSet<TimeSlot> TimeSlots { get; set; }
         public DbSet<TimeSlotTypes> TimeSlotTypes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<RepeatTypes> RepeatTypes { get; set; }
 
         public IntitaDbContext(DbContextOptions<IntitaDbContext> options)
             : base(options)

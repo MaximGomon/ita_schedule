@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess.Context;
@@ -195,22 +192,6 @@ namespace Schedule.IntIta.Controllers
             }
 
             return new JsonResult(list);
-        }
-    }
-
-    public class CheckContentFilter : ActionFilterAttribute
-    {
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            using (var stream = new MemoryStream())
-            {
-                context.HttpContext.Request.Body.CopyTo(stream);
-                stream.Position = 0;
-                var bytes = new byte[stream.Length];
-                stream.Read(bytes, 0, bytes.Length);
-                var text = Encoding.Default.GetString(bytes);
-
-            }
         }
     }
 }

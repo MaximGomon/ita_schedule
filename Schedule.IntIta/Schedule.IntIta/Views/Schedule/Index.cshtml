@@ -1,7 +1,31 @@
-﻿@{
+﻿@using Schedule.IntIta.ViewModels
+@model FilterEvents
+
+@{
     ViewData["Title"] = "Расписние";
 }
-
+@using (Html.BeginForm("Filter", "Event", FormMethod.Post))
+{
+    <fieldset>
+        <form asp-action="GetEventsForSchedule">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br>
+            <div class="form-group">
+                <label>TypeOfEvent</label>
+                @Html.EditorFor(x => x.TypeOfEvent)
+                <label>InitiatorName</label>
+                @Html.EditorFor(x => x.InitiatorName)
+                <label>GroupName</label>
+                @Html.EditorFor(x => x.GroupName)
+                <label>RoomName</label>
+                @Html.EditorFor(x => x.RoomName)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-default" /> | <a asp-action="Index">Back to all..</a>
+            </div>
+        </form>
+    </fieldset>
+}
 
 <h3>Расписание</h3>
 
@@ -25,14 +49,14 @@
 </div>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="~/js/ru.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var events = [];
             var arr = ["red", "green", "blue"];
             $.ajax({
@@ -54,7 +78,7 @@
 
                     GenerateCalender(events);
                 },
-                error: function(error) {
+                error: function (error) {
                     alert('failed');
                 }
             });
@@ -69,7 +93,7 @@
                 var leftWeek = (pastTimeOfStartCurrentYear / hourOfMillisecs / hoursOfOneWeek).toFixed(2);
 
                 var minTime = currentDateTime.getHours();
-                
+
                 events.forEach(function (item, i, arr) {
                     var itemTime = item.start;
                     var pastTimeOfStartCurrentYearForItem = itemTime - startTimeOfCurrentYear;
@@ -104,7 +128,7 @@
                         right: 'month,agendaWeek,agendaDay'
                     },
                     buttonText: {
-                        agenda:   'Список'
+                        agenda: 'Список'
                     },
                     eventLimit: true,
                     eventColor: '#378006',

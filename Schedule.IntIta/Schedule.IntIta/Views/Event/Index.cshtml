@@ -43,6 +43,7 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>RepeatType</th>
         <th>Type</th>
         <th>Start time</th>
         <th>End time</th>
@@ -59,6 +60,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatTypeName)
             </td>
             <th>
                 @Html.DisplayFor(modelItem => item.TypeOfEvent.Name)

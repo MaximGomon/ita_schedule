@@ -15,15 +15,20 @@ namespace Schedule.IntIta.BusinessLogic
         private readonly ICacheManager<Group> _integrGroups;
         private readonly IUserIntegration _integrUsers;
         private readonly IUserRepository _userRepository;
+        private readonly IEventTypeRepository _eventTypesRepository;
+        private readonly ITimeSlotTypesRepository _timeSlotTypesRepository;
+        private readonly ISubjectRepository _subjectRepository;
 
-
-        public EventBusinessLogic(IUserRepository userRepository, IEventRepository repository, IRoomRepository repRooms, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
+        public EventBusinessLogic(ISubjectRepository subjectRepository, ITimeSlotTypesRepository timeSlotTypesRepository, IEventTypeRepository eventTypesRepository, IUserRepository userRepository, IEventRepository repository, IRoomRepository repRooms, IUserIntegration integrUsers, ICacheManager<Group> integrGroups)
         {
             _repository = repository;
             _repRooms = repRooms;
             _integrGroups = integrGroups;
             _integrUsers = integrUsers;
             _userRepository = userRepository;
+            _eventTypesRepository = eventTypesRepository;
+            _timeSlotTypesRepository = timeSlotTypesRepository;
+            _subjectRepository = subjectRepository;
         }
 
         public void Add(Event item)
@@ -85,5 +90,34 @@ namespace Schedule.IntIta.BusinessLogic
         {
             return _repRooms.Get(id);
         }
+
+        public IEnumerable<EventType> GetEventTypes()
+        {
+            return _eventTypesRepository.GetAll();
+        }
+        public IEnumerable<TimeSlotTypes> GetTimeSlotTypes()
+        {
+            return _timeSlotTypesRepository.GetAll();
+        }
+        public IEnumerable<Room> GetRooms()
+        {
+            return _repRooms.GetAll();
+        }
+        public IEnumerable<Subject> GetSubjects()
+        {
+            return _subjectRepository.GetAll();
+        }
+
+        public IEnumerable<RepeatTypes> GetRepeatTypes()
+        {
+            return new List<RepeatTypes> {
+                new RepeatTypes() {Id = 1, Type = "Не повторять"},
+                new RepeatTypes() {Id = 2, Type = "Каждый день"},
+                new RepeatTypes() {Id = 3, Type = "По будням"},
+                new RepeatTypes() {Id = 4, Type = "По будням и в субботу"},
+                new RepeatTypes() {Id = 5, Type = "Еженедельно"}
+            };
+        }
+
     }
 }

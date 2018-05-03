@@ -20,13 +20,15 @@ namespace Schedule.IntIta
                 .ForMember(x => x.InitiatorId, x => x.ResolveUsing<EventViewInitiatorResolver>())
                 .ForMember(x => x.RoomId, c => c.MapFrom(n => n.RoomId))
                 .ForMember(x => x.GroupId, c => c.MapFrom(n => n.GroupId))
-                .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId));
+                .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId))
+                .ForMember(x => x.RepeatType, c => c.MapFrom(n => n.RepeatTypeId));
 
             CreateMap<Event, EventViewModel>()
                 .ForMember(x => x.InitiatorFullName, x => x.ResolveUsing<EventInitiatorResolver>())
                 .ForMember(x => x.RoomName, x => x.ResolveUsing<EventRoomResolver>())
                 .ForMember(x => x.GroupName, w => w.ResolveUsing<EventGroupResolver>())
-                .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>());
+                .ForMember(x => x.SubjectName, w => w.ResolveUsing<EventSubjectResolver>())
+                .ForMember(x => x.RepeatTypeName, w => w.ResolveUsing<EventRepeatTypeResolver>());
 
             CreateMap<SubjectViewModel, Subject>();
             CreateMap<Subject, SubjectViewModel>();
@@ -134,6 +136,20 @@ namespace Schedule.IntIta
         {
             var subject = _db.Subjects.FirstOrDefault(x => x.Id == source.SubjectId);
             return subject.Name;
+        }
+    }
+    public class EventRepeatTypeResolver : IValueResolver<Event, EventViewModel, string>
+    {
+        private readonly IntitaDbContext _db;
+        public EventRepeatTypeResolver(IntitaDbContext context)
+        {
+            _db = context;
+        }
+        public string Resolve(Event source, EventViewModel destination, string destMember, ResolutionContext context)
+        {
+            if (source.RepeatType == null) return _db.RepeatTypes.FirstOrDefault(x => x.Id == 1).Type;
+            var repeatType = _db.RepeatTypes.FirstOrDefault(x => x.Id == source.RepeatType);
+            return repeatType.Type;
         }
     }
 }

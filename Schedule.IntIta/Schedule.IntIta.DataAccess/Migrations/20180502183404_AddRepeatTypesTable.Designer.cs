@@ -12,9 +12,10 @@ using System;
 namespace Schedule.IntIta.DataAccess.Migrations
 {
     [DbContext(typeof(IntitaDbContext))]
-    partial class IntitaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180502183404_AddRepeatTypesTable")]
+    partial class AddRepeatTypesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

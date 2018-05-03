@@ -28,6 +28,7 @@ namespace Schedule.IntIta.DataAccess
                     RoomId = item.RoomId,
                     SubjectId = item.SubjectId,
                     Date = item.Date,
+                    RepeatType = item.RepeatType,
                 };
 
                 _context.Events.Add(newEvent);

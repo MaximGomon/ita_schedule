@@ -21,5 +21,10 @@ namespace Schedule.IntIta.BusinessLogic
         IEnumerable<Event> GetActive();
         Room GetRoomById(int id);
         List<User> FindLocalUsers(string searchStr);
+        IEnumerable<EventType> GetEventTypes();
+        IEnumerable<TimeSlotTypes> GetTimeSlotTypes();
+        IEnumerable<Room> GetRooms();
+        IEnumerable<Subject> GetSubjects();
+        IEnumerable<RepeatTypes> GetRepeatTypes();
     }
 }

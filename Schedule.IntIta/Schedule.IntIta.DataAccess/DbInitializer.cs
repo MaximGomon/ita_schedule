@@ -84,6 +84,22 @@ namespace Schedule.IntIta.DataAccess
                 }
                 context.SaveChanges();
             }
+            if (!context.RepeatTypes.Any())
+            {
+                var repeatTypes = new RepeatTypes[]
+                {
+                    new RepeatTypes() {Type = "Не повторять"},
+                    new RepeatTypes() {Type = "Каждый день"},
+                    new RepeatTypes() {Type = "По будням"},
+                    new RepeatTypes() {Type = "По будням и в субботу"},
+                    new RepeatTypes() {Type = "Еженедельно"}
+                };
+                foreach (var repeatType in repeatTypes)
+                {
+                    context.RepeatTypes.Add(repeatType);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -29,5 +29,8 @@ namespace Schedule.IntIta.ViewModels
         [DisplayName("Комментарий")]
         public string Comments { get; set; }
         public string InitiatorFullName { get; set; }
+        public bool IsAllDay { get; set; }
+        public int? RepeatTypeId { get; set; }
+        public string RepeatTypeName { get; set; }
     }
 }

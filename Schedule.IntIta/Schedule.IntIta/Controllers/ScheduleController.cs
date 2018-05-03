@@ -39,8 +39,8 @@ namespace Schedule.IntIta.Controllers
            
             return View();
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public JsonResult GetEventsForSchedule(FilterEvents filtersEvents = null)
         {
             List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();

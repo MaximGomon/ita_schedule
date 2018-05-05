@@ -17,7 +17,7 @@
                 <div>Initiat.Name @Html.EditorFor(x => x.InitiatorName, new { @id = "InitiatorName" })</div>
                 <div>GroupName @Html.EditorFor(x => x.GroupName, new { @id = "GroupName" })</div>
                 <div>RoomName @Html.EditorFor(x => x.RoomName, new { @id = "RoomName" }) </div>
-                <div><input type="button" value="Search" onclick="filters()"></div>
+                <div><input type="button" value="Search" onclick="filters()" class="buttonSearch"></div>
             </div>
         </form>
     </fieldset>
@@ -50,7 +50,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="~/js/ru.js"></script>
     <script>
-        function filters(parameters) {
+        function filters() {
             var typeOfEvent = $("#TypeOfEvent").val();
             var initiatorName = $("#InitiatorName").val();
             var groupName = $("#GroupName").val();

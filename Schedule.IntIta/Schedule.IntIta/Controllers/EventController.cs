@@ -43,30 +43,12 @@ namespace Schedule.IntIta.Controllers
                     .GetAll()
                     .Where(@event =>
                         FilterByInitiator(@event, initiatorFilter)
-                        //initiatorFilter != null ?
-                        //(@event.InitiatorId != null
-                        //&&
-                        //_eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
-                        //    .Select(w => w.Id)//select only Ids of find users
-                        //    .Contains(@event.InitiatorId.Value)) : true
                         &&
-
-                        //eventTypeFilter != null ?
-                        //(@event.TypeOfEvent != null
-                        //&&
-                        //@event.TypeOfEvent.Name.ToUpper().Contains(eventTypeFilter.ToUpper())) : true
-                        //&&
-
-                        //roomFilter != null ?
-                        //(@event.RoomId != null
-                        //&&
-                        // _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.ToUpper().Contains(roomFilter.ToUpper())) : true
-                        //&&
+                        FilterByTypeOfEvent(@event, eventTypeFilter)
+                        &&
+                        FilterByRoom(@event, roomFilter)
+                        &&
                         FilterByGroup(@event, groupFilter)
-                        //groupFilter != null ?
-                        //(@event.GroupId != null
-                        //&&
-                        // _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.ToUpper().Contains(groupFilter.ToUpper())) : true
                 ).ToList();
 
             foreach (var item in events)
@@ -76,6 +58,42 @@ namespace Schedule.IntIta.Controllers
             ViewBag.Data = models.OrderBy(x => x.Date.StartTime).ToList();
             
             return View(nameof(Index));
+        }
+
+        [HttpPost]
+        public ActionResult GetEventsForSchedule(FilterEvents filtersEvents = null)
+        {
+            List<EventViewModel> models = new List<EventViewModel>();
+
+            var initiatorFilter = filtersEvents.InitiatorName;
+            var eventTypeFilter = filtersEvents.TypeOfEvent;
+            var roomFilter = filtersEvents.RoomName;
+            var groupFilter = filtersEvents.GroupName;
+
+            List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();
+            List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
+
+            var events = _eventBusinessLogic
+                    .GetAll()
+                    .Where(@event =>
+                    FilterByInitiator(@event, initiatorFilter)
+                    &&
+                    FilterByTypeOfEvent(@event, eventTypeFilter)
+                    &&
+                    FilterByRoom(@event, roomFilter)
+                    &&
+                    FilterByGroup(@event, groupFilter))
+                .ToList();
+            foreach (var item in events)
+            {
+                var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
+                calendarEvent.Group = groups.FirstOrDefault(x => x.Id == item.GroupId);
+                calendarEvent.Initiator = _eventBusinessLogic.GetUsersById(item.InitiatorId);
+                calendarEvent.Room = _eventBusinessLogic.GetAllRooms().FirstOrDefault(w => w.Id == item.RoomId);
+                calendarEvent.Subject = _eventBusinessLogic.GetSubjects().Single(x => x.Id == item.SubjectId);
+                list.Add(calendarEvent);
+            }
+            return new JsonResult(list);
         }
 
         private bool FilterByInitiator(Event @event, string initiatiorName)
@@ -96,21 +114,38 @@ namespace Schedule.IntIta.Controllers
             return false;
         }
 
+        private bool FilterByTypeOfEvent(Event @event, string eventTypeFilter)
+        {
+            if (String.IsNullOrEmpty(eventTypeFilter))
+                return true;
+            if (@event.TypeOfEvent == null)
+                return false;
+            if (@event.TypeOfEvent.Name.Contains(eventTypeFilter))
+                return true;
+            return false;
+        }
+
+        private bool FilterByRoom(Event @event, string roomFilter)
+        {
+            if (String.IsNullOrEmpty(roomFilter))
+                return true;
+            if (@event.RoomId == null)
+                return false;
+            var room = _eventBusinessLogic.GetRoomById(@event.RoomId.Value);
+            if (room.Name.Contains(roomFilter))
+                return true;
+            return false;
+        }
+
         private bool FilterByGroup(Event @event, string groupName)
         {
             if (String.IsNullOrEmpty(groupName))
                 return true;
-
             if (@event.GroupId == null)
                 return false;
-
             var group = _eventBusinessLogic.GetGroupById(@event.GroupId.Value);
-
             if (group.Name.Contains(groupName))
-            {
                 return true;
-            }
-
             return false;
         }
 

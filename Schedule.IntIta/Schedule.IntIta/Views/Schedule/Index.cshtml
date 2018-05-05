@@ -8,18 +8,16 @@
 
 <h3>Расписание</h3>
 
-@using (Html.BeginForm("GetEventsForSchedule", "Schedule", FormMethod.Post))
+@using (Html.BeginForm("GetEventsForSchedule", "Event", FormMethod.Post))
 {
     <fieldset>
-        <form asp-action="GetEventsForSchedule">
-            <div class="form-group">
-                <div>Typeofevent @Html.EditorFor(x => x.TypeOfEvent, new { @id = "TypeOfEvent" })</div>
-                <div>Initiat.Name @Html.EditorFor(x => x.InitiatorName, new { @id = "InitiatorName" })</div>
-                <div>GroupName @Html.EditorFor(x => x.GroupName, new { @id = "GroupName" })</div>
-                <div>RoomName @Html.EditorFor(x => x.RoomName, new { @id = "RoomName"}) </div>
-                <div><input type="button" value="Search" onclick="filters()" class="btn-info"></div>
-            </div>
-        </form>
+        <div class="form-group">
+            <div>Typeofevent @Html.EditorFor(x => x.TypeOfEvent, new { @id = "TypeOfEvent" })</div>
+            <div>Initiat.Name @Html.EditorFor(x => x.InitiatorName, new { @id = "InitiatorName" })</div>
+            <div>GroupName @Html.EditorFor(x => x.GroupName, new { @id = "GroupName" })</div>
+            <div>RoomName @Html.EditorFor(x => x.RoomName, new { @id = "RoomName"}) </div>
+            <div><input type="button" value="Search" onclick="filters()" class="btn-info"></div>
+        </div>
     </fieldset>
 }
 
@@ -65,7 +63,7 @@
             var arr = ["red", "green", "blue"];
             $.ajax({
                 type: "POST",
-                url: "/Schedule/GetEventsForSchedule",
+                url: "/Event/GetEventsForSchedule",
                 dataType: "json",
                 data: sendFilters,
                 success: function (data) {

@@ -42,27 +42,32 @@ namespace Schedule.IntIta.Controllers
             var events = _eventBusinessLogic
                     .GetAll()
                     .Where(@event =>
-                        initiatorFilter != null ?
-                        (@event.InitiatorId != null
+                        FilterByInitiator(@event, initiatorFilter)
+                        //initiatorFilter != null ?
+                        //(@event.InitiatorId != null
+                        //&&
+                        //_eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
+                        //    .Select(w => w.Id)//select only Ids of find users
+                        //    .Contains(@event.InitiatorId.Value)) : true
                         &&
-                        _eventBusinessLogic.FindUsers(initiatorFilter.ToUpper())//search users at INTITA
-                            .Select(w => w.Id)//select only Ids of find users
-                            .Contains(@event.InitiatorId.Value)) : true
-                        &&
-                        eventTypeFilter != null ?
-                        (@event.TypeOfEvent != null
-                        &&
-                        @event.TypeOfEvent.Name.ToUpper().Contains(eventTypeFilter.ToUpper())) : true
-                        &&
-                        roomFilter != null ?
-                        (@event.RoomId != null
-                        &&
-                         _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.ToUpper().Contains(roomFilter.ToUpper())) : true
-                        &&
-                        groupFilter != null ?
-                        (@event.GroupId != null
-                        &&
-                         _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.ToUpper().Contains(groupFilter.ToUpper())) : true).ToList();
+
+                        //eventTypeFilter != null ?
+                        //(@event.TypeOfEvent != null
+                        //&&
+                        //@event.TypeOfEvent.Name.ToUpper().Contains(eventTypeFilter.ToUpper())) : true
+                        //&&
+
+                        //roomFilter != null ?
+                        //(@event.RoomId != null
+                        //&&
+                        // _eventBusinessLogic.GetRoomById(@event.RoomId.Value).Name.ToUpper().Contains(roomFilter.ToUpper())) : true
+                        //&&
+                        FilterByGroup(@event, groupFilter)
+                        //groupFilter != null ?
+                        //(@event.GroupId != null
+                        //&&
+                        // _eventBusinessLogic.GetGroupById(@event.GroupId.Value).Name.ToUpper().Contains(groupFilter.ToUpper())) : true
+                ).ToList();
 
             foreach (var item in events)
             {
@@ -72,7 +77,43 @@ namespace Schedule.IntIta.Controllers
             
             return View(nameof(Index));
         }
-                    
+
+        private bool FilterByInitiator(Event @event, string initiatiorName)
+        {
+            if (String.IsNullOrEmpty(initiatiorName))
+                return true;
+
+            if (@event.InitiatorId == null)
+                return false;
+
+            var user = _eventBusinessLogic.FindLocalUsers(initiatiorName.ToUpper());
+
+            if(user.Select(x => x.Id).ToList().Contains(@event.InitiatorId.Value))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool FilterByGroup(Event @event, string groupName)
+        {
+            if (String.IsNullOrEmpty(groupName))
+                return true;
+
+            if (@event.GroupId == null)
+                return false;
+
+            var group = _eventBusinessLogic.GetGroupById(@event.GroupId.Value);
+
+            if (group.Name.Contains(groupName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         public ActionResult Index()
 

@@ -52,7 +52,8 @@
             var typeOfEvent = $("#TypeOfEvent").val();
             var initiatorName = $("#InitiatorName").val();
             var groupName = $("#GroupName").val();
-            var roomName = $("#RoomName").val();
+            //get roomName from cookies
+            var roomName = $("#RoomName").val(); //set data from cookies if not null/ If null -> use as is
             var sendFilters = {
                 TypeOfEvent: typeOfEvent,
                 InitiatorName: initiatorName,
@@ -156,12 +157,38 @@
         }
     </script>
     <script>
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        };
+        function del_cookie(name) {
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
         $(document).ready(function () {
+            var roomFromCookie = getCookie("RoomNameCookie");
+            var typeOfEvent = $("#TypeOfEvent").val();
+            var initiatorName = $("#InitiatorName").val();
+            var groupName = $("#GroupName").val();
+            $("#RoomName").val(roomFromCookie);
+            del_cookie("RoomNameCookie");
+            //get roomName from cookies
+            var roomName = roomFromCookie; //set data from cookies if not null/ If null -> use as is
+            var sendFilters = {
+                TypeOfEvent: typeOfEvent,
+                InitiatorName: initiatorName,
+                GroupName: groupName,
+                RoomName: roomName
+            };
+
             var events = [];
             var arr = ["red", "green", "blue"];
             $.ajax({
-                type: "GET",
-                url: "/event/GetActiveEvents",
+                type: "POST",
+                url: "/event/GetEventsForSchedule",
+                dataType: "json",
+                data: sendFilters,
                 success: function (data) {
                     $.each(data, function (i, v) {
                         console.log(data);

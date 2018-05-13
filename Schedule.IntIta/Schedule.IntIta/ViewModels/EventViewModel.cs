@@ -30,7 +30,7 @@ namespace Schedule.IntIta.ViewModels
         public string Comments { get; set; }
         public string InitiatorFullName { get; set; }
         public bool IsAllDay { get; set; }
-        public int? RepeatTypeId { get; set; }
+        public int RepeatType { get; set; }
         public string RepeatTypeName { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.DataAccess.Context;
 using Schedule.IntIta.Domain.Models;
+using Schedule.IntIta.Domain.Models.Enumerations;
 using Schedule.IntIta.ViewModels;
 
 namespace Schedule.IntIta.Controllers
@@ -71,6 +72,7 @@ namespace Schedule.IntIta.Controllers
             var groupFilter = filtersEvents.GroupName;
 
             List<CalendarEventViewModel> list = new List<CalendarEventViewModel>();
+            List<CalendarEventViewModel> resultList = new List<CalendarEventViewModel>();
             List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
 
             var events = _eventBusinessLogic
@@ -84,6 +86,7 @@ namespace Schedule.IntIta.Controllers
                     &&
                     FilterByGroup(@event, groupFilter))
                 .ToList();
+
             foreach (var item in events)
             {
                 var calendarEvent = _mapper.Map<CalendarEventViewModel>(item);
@@ -93,7 +96,111 @@ namespace Schedule.IntIta.Controllers
                 calendarEvent.Subject = _eventBusinessLogic.GetSubjects().Single(x => x.Id == item.SubjectId);
                 list.Add(calendarEvent);
             }
-            return new JsonResult(list);
+
+            foreach (var item in list)
+            {
+                /*
+                если тип ивента 1 то просто добавляем 
+                если 2 то перебирать все дни и добавлять по ивенту
+                если 3 то перебирать каждый день кроме субботы и воскресенья и добавлять по ивенту
+                если 4 то перебирать каждый день кроме воскресенья и добавлять по ивенту
+                если 5 то перебирать все дни, и если день такой же как и первый то добавлять
+                */
+                var currentDate = item.Date.StartTime;
+                var endDate = item.Date.EndTime;
+
+                switch (item.RepeatType)
+                {
+                    case null:
+                    case 0:
+                    case 1:
+                        resultList.Add(item);
+                        break;
+                    case 2:
+                        currentDate = item.Date.StartTime;
+                        endDate = item.Date.EndTime;
+
+                        while (currentDate <= endDate)
+                        {
+                            TimeSpan timeSpan = item.Date.EndTime.TimeOfDay - item.Date.StartTime.TimeOfDay;
+                            var currentEvent = (CalendarEventViewModel)item.Clone();         
+                            currentEvent.Date.EndTime = currentEvent.Date.StartTime + timeSpan;
+                            resultList.Add(currentEvent);
+                            currentDate = currentDate.AddDays(1);
+                            item.Date.StartTime = currentDate;
+                        }
+                        break;
+                    case 3:
+                        currentDate = item.Date.StartTime;
+                        endDate = item.Date.EndTime;
+
+                        while (currentDate <= endDate)
+                        {
+                            if (currentDate.DayOfWeek == DayOfWeek.Saturday)
+                            {
+                                currentDate = currentDate.AddDays(1);
+                                item.Date.StartTime = currentDate;
+                                continue;
+                            }
+                            if (currentDate.DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                currentDate = currentDate.AddDays(1);
+                                item.Date.StartTime = currentDate;
+                                continue;
+                            }
+                            TimeSpan timeSpan = item.Date.EndTime.TimeOfDay - item.Date.StartTime.TimeOfDay;
+                            var currentEvent = (CalendarEventViewModel)item.Clone();
+                            currentEvent.Date.EndTime = currentEvent.Date.StartTime + timeSpan;
+                            resultList.Add(currentEvent);
+                            currentDate = currentDate.AddDays(1);
+                            item.Date.StartTime = currentDate;
+                        }
+                        break;
+                    case 4:
+                        currentDate = item.Date.StartTime;
+                        endDate = item.Date.EndTime;
+
+                        while (currentDate <= endDate)
+                        {
+                            if (currentDate.DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                currentDate = currentDate.AddDays(1);
+                                item.Date.StartTime = currentDate;
+                                continue;
+                            }
+                            TimeSpan timeSpan = item.Date.EndTime.TimeOfDay - item.Date.StartTime.TimeOfDay;
+                            var currentEvent = (CalendarEventViewModel)item.Clone();
+                            currentEvent.Date.EndTime = currentEvent.Date.StartTime + timeSpan;
+                            resultList.Add(currentEvent);
+                            currentDate = currentDate.AddDays(1);
+                            item.Date.StartTime = currentDate;
+                        }
+                        break;
+                    case 5:
+                        currentDate = item.Date.StartTime;
+                        endDate = item.Date.EndTime;
+                        var day = item.Date.StartTime.DayOfWeek;
+                        while (currentDate <= endDate)
+                        {
+                            if (currentDate.DayOfWeek != day)
+                            {
+                                currentDate = currentDate.AddDays(1);
+                                item.Date.StartTime = currentDate;
+                                continue;
+                            }
+                            TimeSpan timeSpan = item.Date.EndTime.TimeOfDay - item.Date.StartTime.TimeOfDay;
+                            var currentEvent = (CalendarEventViewModel)item.Clone();
+                            currentEvent.Date.EndTime = currentEvent.Date.StartTime + timeSpan;
+                            resultList.Add(currentEvent);
+                            currentDate = currentDate.AddDays(1);
+                            item.Date.StartTime = currentDate;
+                        }
+                        break;
+                }
+
+            }
+
+            return new JsonResult(resultList);
         }
 
         private bool FilterByInitiator(Event @event, string initiatiorName)

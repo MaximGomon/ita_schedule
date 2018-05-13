@@ -21,7 +21,7 @@ namespace Schedule.IntIta
                 .ForMember(x => x.RoomId, c => c.MapFrom(n => n.RoomId))
                 .ForMember(x => x.GroupId, c => c.MapFrom(n => n.GroupId))
                 .ForMember(x => x.SubjectId, c => c.MapFrom(n => n.SubjectId))
-                .ForMember(x => x.RepeatType, c => c.MapFrom(n => n.RepeatTypeId));
+                .ForMember(x => x.RepeatType, c => c.MapFrom(n => n.RepeatType));
 
             CreateMap<Event, EventViewModel>()
                 .ForMember(x => x.InitiatorFullName, x => x.ResolveUsing<EventInitiatorResolver>())

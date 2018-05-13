@@ -36,9 +36,9 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.RepeatTypeId, htmlAttributes: new { @class = "control-label col-md-3" })
-                            @Html.DropDownListFor(model => model.RepeatTypeId, ViewData["repeatTypes"] as SelectList, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.RepeatTypeId, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.RepeatType, htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.DropDownListFor(model => Model.RepeatType, ViewData["repeatTypes"] as SelectList, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RepeatType, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

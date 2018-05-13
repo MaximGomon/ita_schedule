@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Schedule.IntIta.BusinessLogic;
 using Schedule.IntIta.Domain.Models;
 using Schedule.IntIta.ViewModels;
@@ -27,13 +28,14 @@ namespace Schedule.IntIta.Controllers
             if (myCookie != null)
             {
                 int roomId = Int32.Parse(myCookie);
-                FilterEvents filterEvents = new FilterEvents
-                {
-                    RoomName = _eventBusinessLogic.GetRoomById(roomId).Name
-                };
-                return RedirectToAction("Filter", "Event", filterEvents);
+                Response.Cookies.Append("RoomNameCookie", _eventBusinessLogic.GetRoomById(roomId).Name);
             }
-           
+
+            if (RoomId.HasValue)
+            {
+                Response.Cookies.Append("RoomNameCookie", _eventBusinessLogic.GetRoomById(RoomId.Value).Name);
+            }
+
             return View();
         }
         

@@ -151,17 +151,14 @@ namespace Schedule.IntIta.Controllers
 
 
         public ActionResult Index()
-
         {
             ViewBag.Data = _eventBusinessLogic.GetAll().Select(_mapper.Map<EventViewModel>);
             return View();
-
         }
 
         // GET: Room/Create
         public ActionResult Create()
         {
-            //TODO: перенести все в репозиторий
             SelectList eventTypes = new SelectList(_eventBusinessLogic.GetEventTypes(), "Id", "Name");
             SelectList timeSlotTypes = new SelectList(_eventBusinessLogic.GetTimeSlotTypes(), "Id", "Type");
             SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
@@ -202,20 +199,21 @@ namespace Schedule.IntIta.Controllers
         {
             SelectList eventTypes = new SelectList(_eventBusinessLogic.GetEventTypes(), "Id", "Name");
             SelectList timeSlotTypes = new SelectList(_eventBusinessLogic.GetTimeSlotTypes(), "Id", "Type");
-            //SelectList userSelectList = new SelectList(_eventBusinessLogic.Users, "Id", "LastName");
+            SelectList userSelectList = new SelectList(_eventBusinessLogic.FindUsers(""), "Id", "LastName");
             SelectList roomSelectList = new SelectList(_eventBusinessLogic.GetRooms(), "Id", "Name");
-            //SelectList groupSelectList = new SelectList(_eventBusinessLogic.Groups, "Id", "Name");
+            SelectList groupSelectList = new SelectList(_eventBusinessLogic.GetAllGroups(), "Id", "Name");
             SelectList subjectSelectList = new SelectList(_eventBusinessLogic.GetSubjects(), "Id", "Name");
+            SelectList repeatTypesSelectList = new SelectList(_eventBusinessLogic.GetRepeatTypes(), "Id", "Type");
 
             ViewData["eventTypes"] = eventTypes;
             ViewData["timeSlotTypes"] = timeSlotTypes;
             ViewData["subjectSelectList"] = subjectSelectList;
-            //ViewData["userSelectList"] = userSelectList;
+            ViewData["userSelectList"] = userSelectList;
             ViewData["roomSelectList"] = roomSelectList;
-            //ViewData["groupSelectList"] = groupSelectList;
+            ViewData["groupSelectList"] = groupSelectList;
+            ViewData["repeatTypes"] = repeatTypesSelectList;
 
-            var model = _mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id));
-            return View(model);
+            return View(_mapper.Map<EventViewModel>(_eventBusinessLogic.Read(id)));
         }
 
         // POST: Room/Edit/5

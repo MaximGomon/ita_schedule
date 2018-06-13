@@ -10,6 +10,5 @@ namespace Schedule.IntIta.Domain.Models
         public string Name { get; set; }
         public int NumberOfStudents { get; set; }
         public TimeSlot SubGroupTimeSlot { get; set; }
-        
     }
 }

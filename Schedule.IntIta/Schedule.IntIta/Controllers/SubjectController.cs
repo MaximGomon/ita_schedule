@@ -20,7 +20,6 @@ namespace Schedule.IntIta.Controllers
         private readonly ISubjectBusinessLogic _subjectBusinessLogic;
         private readonly IntitaDbContext _context;
 
-
         public SubjectController(IMapper mapper, ISubjectBusinessLogic subjectBusinessLogic, IntitaDbContext context)
         {
             _mapper = mapper;

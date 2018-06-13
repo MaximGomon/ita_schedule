@@ -7,5 +7,6 @@ namespace Schedule.IntIta.Integration
     {
         List<Group> GetGroupList();
         Group GetGroupById(int? groupId);
+        List<SubGroup> GetSubGroupsByGroupId(int groupId);
     }
 }

@@ -30,5 +30,19 @@
             <img src="../images/subjects.png"/>
             <div>Subjects</div>
         </div>
+        <div class="col-lg-3 admin-item" onclick="window.location.href = '@Url.Action("Generate", "Admin")';">
+            <img src="../images/generate.png" />
+            <div>Generate schedule</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 admin-item" onclick="window.location.href = '@Url.Action("Sync", "Group")';">
+            <img src="../images/syncgroup.png" />
+            <div>Synchronize groups from Intita</div>
+        </div>
+        <div class="col-lg-3 admin-item" onclick="window.location.href = '@Url.Action("Sync", "Subgroup")';">
+            <img src="../images/syncgroup.png" />
+            <div>Synchronize subgroups from Intita</div>
+        </div>
     </div>
 </div>

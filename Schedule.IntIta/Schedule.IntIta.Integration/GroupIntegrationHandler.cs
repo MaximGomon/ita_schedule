@@ -51,7 +51,7 @@ namespace Schedule.IntIta.Integration
             return group;
         }
 
-        private List<SubGroup> GetSubGroupsByGroupId(int groupId)
+        public List<SubGroup> GetSubGroupsByGroupId(int groupId)
         {
             var apiRequest = new ApiRequest<List<SubGroupIntegrationModel>>();
             var response = apiRequest.Url("http://sso.intita.com/api/offline/group/" + groupId + "/subgroups")
@@ -74,7 +74,7 @@ namespace Schedule.IntIta.Integration
                     groups.Add(new Group()
                     {
                         Id = item.Id,
-                        Name = item.Name
+                        Name = item.Name,
                     });
                 }
                 return groups;
@@ -102,7 +102,7 @@ namespace Schedule.IntIta.Integration
                         {
                             Id = item.Id,
                             Name = item.Name,
-                            GroupId = groupId
+                            GroupId = groupId,
                         });
                     }
                     catch (Exception e)

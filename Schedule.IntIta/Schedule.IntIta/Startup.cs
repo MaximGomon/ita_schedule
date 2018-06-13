@@ -38,7 +38,7 @@ namespace Schedule.IntIta
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper();
-            
+
             services.AddTransient<ISubjectRepository, SubjectRepository>();
 
             services.AddSingleton<ICacheStore<Group>, CacheStore<Group>>();
@@ -60,6 +60,7 @@ namespace Schedule.IntIta
             services.AddTransient<ITimeSlotTypeBusinessLogic, TimeSlotTypesBusinessLogic>();
             services.AddTransient<ITimeSlotBuisnessLogic, TimeSlotBuisnessLogic>();
             services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<ISubGroupRepository, SubGroupRepository>();
             services.AddTransient<IUserIntegration, UserIntegration>();
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddTransient<IUserRepository,UserRepository>();
@@ -178,7 +179,7 @@ public class ErrorHandlingMiddleware
 
         context.Response.StatusCode = (int)code;
         context.Response.ContentType = "text/HTML";
-        var result = new ErrorPageMaker(exception, context).PageMaker();//так делать нельзя, но я сделал как мог
+        var result = new ErrorPageMaker(exception, context).PageMaker();//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ
         
         return context.Response.WriteAsync(result);
     }

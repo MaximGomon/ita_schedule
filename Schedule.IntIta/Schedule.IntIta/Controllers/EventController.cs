@@ -76,7 +76,7 @@ namespace Schedule.IntIta.Controllers
             List<Group> groups = (List<Group>)_eventBusinessLogic.GetAllGroups();
 
             var events = _eventBusinessLogic
-                    .GetActive()
+                    .GetAll()
                     .Where(@event =>
                     FilterByInitiator(@event, initiatorFilter)
                     &&
